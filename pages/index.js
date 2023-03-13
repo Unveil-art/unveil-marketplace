@@ -1,13 +1,29 @@
 import React from "react";
 import Head from "../components/Head";
 
-import FloatingArt from "../components/Sections/FloatingArt";
+import FloatingArt from "../components/section/FloatingArt";
+import GridColThree from "../components/section/GridColThree";
+import Collection from "../components/section/Collection";
 
 export default function Home() {
   return (
     <>
       <Head />
       <FloatingArt />
+      <GridColThree />
+      <Collection
+        title="Rineke Dijkstra"
+        backgroundColor="#B8AE92"
+        imageMargin={true}
+      />
+      <Collection
+        oneLiner="New works, freshtalent. Discover the unseen."
+        oneLinerLink="View All"
+        oneLinerHref="/"
+        title="Latest collections"
+        color="#F0EDE4"
+        backgroundColor="#1C1110"
+      />
     </>
   );
 }

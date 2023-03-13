@@ -8,7 +8,7 @@
   }
   /* Buttons */
   .btn {
-    @apply font-graphik text-[11px] sm:text-[13px] leading-[16px] sm:leading-[25px] sm:px-[30px] sm:py-[10px] rounded-[10px] px-[20px] py-[7px];
+    @apply font-graphik text-[11px] md:text-[13px] leading-[16px] md:leading-[25px] md:px-[30px] md:py-[10px] rounded-[10px] px-[20px] py-[7px];
   }
   .btn-primary {
     @apply bg-unveilBlack text-unveilWhite border border-unveilBlack;
@@ -21,7 +21,7 @@
   /* Header */
   h1,
   .h1 {
-    @apply font-graphik text-[45px] sm:text-[110px] leading-[90%] tracking-[-0.06em];
+    @apply font-graphik text-[45px] md:text-[110px] leading-[90%] tracking-[-0.06em];
   }
   h2,
   .h2 {
@@ -29,39 +29,39 @@
   }
   h3,
   .h3 {
-    @apply font-graphik text-[30px] sm:text-[60px] leading-[110%] sm:leading-[100.6%] tracking-[-0.06em];
+    @apply font-graphik text-[30px] md:text-[60px] leading-[110%] md:leading-[100.6%] tracking-[-0.06em];
   }
   h4,
   .h4 {
-    @apply font-teodor text-[24px] sm:text-[44px] leading-[26px] sm:leading-[110%] tracking-[-0.03em] sm:tracking-[-0.02em];
+    @apply font-teodor text-[24px] md:text-[44px] leading-[26px] md:leading-[110%] tracking-[-0.03em] md:tracking-[-0.02em];
   }
   h5,
   .h5 {
-    @apply font-teodor font-light text-[11px] sm:text-[19px] leading-[16px] sm:leading-[25px];
+    @apply font-teodor font-light text-[11px] md:text-[19px] leading-[16px] md:leading-[25px];
   }
 
   /* S */
   .s1 {
-    @apply font-graphik text-[17px] sm:text-[24px] leading-[19px] sm:leading-[110.6%] tracking-[-0.03em] sm:tracking-[-0.04em];
+    @apply font-graphik text-[17px] md:text-[24px] leading-[19px] md:leading-[110.6%] tracking-[-0.03em] md:tracking-[-0.04em];
   }
   .s2 {
-    @apply font-teodor text-[16px] sm:text-[24px] leading-[100%] sm:leading-[26px] tracking-[-0.01em] sm:tracking-[-0.03em];
+    @apply font-teodor text-[16px] md:text-[24px] leading-[100%] md:leading-[26px] tracking-[-0.01em] md:tracking-[-0.03em];
   }
 
   /* Link */
   .l2 {
-    @apply font-teodor text-[10px] sm:text-[12px] leading-[19px] sm:leading-[24px] tracking-[0.05em] sm:tracking-[0.1em] uppercase;
+    @apply font-teodor text-[10px] md:text-[12px] leading-[19px] md:leading-[24px] tracking-[0.05em] md:tracking-[0.1em] uppercase;
   }
 
   /* Body */
   .b1 {
-    @apply font-teodor text-[24px] sm:text-[44px] leading-[26px] sm:leading-[130%] tracking-[-0.03em] sm:tracking-[-0.02em];
+    @apply font-teodor text-[24px] md:text-[44px] leading-[26px] md:leading-[130%] tracking-[-0.03em] md:tracking-[-0.02em];
   }
   .b2 {
     @apply font-teodor text-[18px] leading-[130%] tracking-[-0.01em];
   }
   .b3 {
-    @apply font-graphik text-[11px] sm:text-[16px] leading-[16px] sm:leading-[25px];
+    @apply font-graphik text-[11px] md:text-[16px] leading-[16px] md:leading-[25px];
   }
   .b4 {
     @apply font-graphik text-[13px] leading-[25px];
