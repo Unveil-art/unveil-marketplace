@@ -4,6 +4,7 @@ import Head from "../components/Head";
 import FloatingArt from "../components/section/FloatingArt";
 import GridColThree from "../components/section/GridColThree";
 import Collection from "../components/section/Collection";
+import TrustedPartners from "../components/section/TrustedPartners";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         backgroundColor="#B8AE92"
         imageMargin={true}
       />
+      <TrustedPartners />
       <Collection
         oneLiner="New works, freshtalent. Discover the unseen."
         oneLinerLink="View All"
