@@ -4,15 +4,15 @@ import Currency from "./svg/Currency";
 
 const CollectionDetails = ({ imageMargin, color, backgroundColor }) => {
   return (
-    <div className="md:flex-row flex-col flex gap-[30px]">
+    <div className="md:flex-row flex-col flex gap-[30px] relative">
       <div
         className={`${
           imageMargin ? "md:mb-10 md:ml-10" : ""
         } w-full md:w-[65svw] aspect-square pr-10 md:pr-0`}
       >
-        <div className="bg-unveilGreen w-full h-full block"></div>
+        <div className="block w-full h-full bg-unveilGreen"></div>
       </div>
-      <div className="md:ml-0 ml-10 md:mb-0 mb-[55px]">
+      <div className="md:ml-0 ml-10 md:mb-0 mb-[55px] sticky top-10 pb-10 left-0 h-fit">
         <h6
           className="w-fit rounded-full px-2 l2 mb-[15px]"
           style={{ border: `solid 1px ${color}` }}

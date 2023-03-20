@@ -17,7 +17,7 @@ const TrustedPartners = () => {
       />
       <Swiper
         slidesPerView={"auto"}
-        spaceBetween={30}
+        spaceBetween={40}
         loop={true}
         className="mb-[170px]"
       >
@@ -25,7 +25,7 @@ const TrustedPartners = () => {
           (item, index) => (
             <SwiperSlide
               key={index}
-              className="!w-[140px] !h-[140px] border border-[rgba(0,0,0,0.15)] rounded-[30px] !flex justify-center items-center"
+              className="!w-[140px] !h-[140px] md:!w-[230px] md:!h-[230px] border border-[rgba(0,0,0,0.15)] rounded-[30px] !flex justify-center items-center"
             >
               <div>Logo</div>
             </SwiperSlide>

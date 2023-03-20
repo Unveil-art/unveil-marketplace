@@ -11,7 +11,7 @@
     @apply font-graphik text-[11px] md:text-[13px] leading-[16px] md:leading-[25px] md:px-[30px] md:py-[10px] rounded-[10px] px-[20px] py-[7px];
   }
   .btn-primary {
-    @apply bg-unveilBlack text-unveilWhite border border-unveilBlack;
+    @apply border bg-unveilBlack text-unveilWhite border-unveilBlack;
   }
   .btn-secondary {
     @apply bg-transparent border border-unveilBlack;

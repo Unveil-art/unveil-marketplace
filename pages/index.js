@@ -5,6 +5,7 @@ import FloatingArt from "../components/section/FloatingArt";
 import GridColThree from "../components/section/GridColThree";
 import Collection from "../components/section/Collection";
 import TrustedPartners from "../components/section/TrustedPratners";
+import Socials from "../components/section/Socials";
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
         color="#F0EDE4"
         backgroundColor="#1C1110"
       />
+      <Socials />
     </>
   );
 }
