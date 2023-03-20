@@ -1,5 +1,5 @@
 import React from "react";
-import Head from "../components/Head";
+import Head from "../components/general/Head";
 
 import FloatingArt from "../components/section/FloatingArt";
 import GridColThree from "../components/section/GridColThree";

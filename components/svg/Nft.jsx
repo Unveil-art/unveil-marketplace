@@ -17,17 +17,17 @@ const Nft = () => {
         rx="2"
         fill="#F9F7F2"
         stroke="#141414"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <path
         d="M6.625 6.67419H3C1.89543 6.67419 1 5.77876 1 4.67419V2.54919"
         stroke="#141414"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <path
         d="M23.625 16.1201L27.25 16.1201C28.3546 16.1201 29.25 17.0155 29.25 18.1201L29.25 20.2451"
         stroke="#141414"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <line
         x1="23.3164"
@@ -35,7 +35,7 @@ const Nft = () => {
         x2="29.25"
         y2="7.27649"
         stroke="#141414"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <line
         x1="1"
@@ -43,7 +43,7 @@ const Nft = () => {
         x2="6.93359"
         y2="17.1826"
         stroke="#141414"
-        stroke-width="2"
+        strokeWidth="2"
       />
     </svg>
   );

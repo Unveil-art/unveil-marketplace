@@ -9,7 +9,6 @@ const FAQ = () => {
 
   const openHandler = (i) => {
     setOpen(i);
-
     if (i === open) {
       setOpen(null);
     }
@@ -19,14 +18,14 @@ const FAQ = () => {
     [1, 2, 3].map((item, i) => {
       setHeight((heights) => [
         ...heights,
-        ref.current.children[i].scrollHeight,
+        ref.current.children[i].children[1].scrollHeight,
       ]);
     });
   }, []);
 
   return (
-    <section className="">
-      <div className="flex justify-between">
+    <section className="ml-10 md:ml-[35svw] mr-[15px] md:mr-10 mt-[60px] mb-[100px]">
+      <div className="flex items-end justify-between mb-6">
         <h2 className="h3">FAQ</h2>
         <div className="">
           <p className="flex gap-1 s2">
@@ -40,9 +39,12 @@ const FAQ = () => {
           </p>
         </div>
       </div>
-      <div ref={ref} className="group">
+      <div ref={ref}>
         {[1, 2, 3].map((item, i) => (
-          <div key={i} className="border-t-2 border-unveilBlack">
+          <div
+            key={i}
+            className="border-t-2 border-unveilBlack pt-2 mb-2 md:pt-[15px] md:pb-[10px]"
+          >
             <div
               className="flex items-center justify-between"
               onClick={() => openHandler(i)}
@@ -50,22 +52,20 @@ const FAQ = () => {
               <h5 className="s2">What is Unveil</h5>
               <div className="relative w-5 h-5 cursor-pointer">
                 <div
-                  className={`h-[2px] w-5 bg-unveilBlack absolute top-1/2 rotate-90 transition ${
-                    open === i ? "" : "rotate-0 opacity-0"
+                  className={`h-px md:h-[2px] w-[14px] md:w-5 bg-unveilBlack absolute top-1/2 rotate-0 opacity-0 unveilTransition ${
+                    open === i ? "" : "!rotate-90 opacity-100"
                   }`}
                 ></div>
                 <div
-                  className={`h-[2px] w-5 bg-unveilBlack absolute top-1/2 transition ${
-                    open === i ? "" : "rotate-0 opacity-0"
-                  }`}
+                  className={`h-px md:h-[2px] w-[14px] md:w-5 bg-unveilBlack absolute top-1/2`}
                 ></div>
               </div>
             </div>
             <article
-              className=""
+              className="overflow-hidden unveilTransition max-h-0"
               style={{ maxHeight: open === i ? `${heights[i] + 20}px` : "" }}
             >
-              <p>
+              <p className="mt-2 b3">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
                 mollitia corporis minus cum eius? Qui perspiciatis et vel
                 expedita officia, voluptate impedit voluptatibus sint dolores
