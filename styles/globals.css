@@ -4,7 +4,7 @@
 
 @layer components {
   body {
-    @apply bg-unveilWhite text-unveilBlack;
+    @apply bg-unveilWhite text-unveilBlack font-graphik;
   }
   /* Buttons */
   .btn {
@@ -71,6 +71,17 @@
   }
   .b5 {
     @apply font-graphik text-[10px] leading-[25px];
+  }
+
+  /* Labels */
+  .nft-print {
+    @apply px-1 pt-[2px] pb-[1px] my-auto border border-unveilGreen rounded-[60px] text-[8px] uppercase leading-[11px];
+  }
+  .nft {
+    @apply px-1 pt-[2px] pb-[1px] my-auto border border-unveilGreen bg-unveilGreen rounded-[60px] text-[8px] uppercase leading-[11px];
+  }
+  .print {
+    @apply px-1 pt-[2px] pb-[1px] my-auto border border-unveilYellow bg-unveilYellow rounded-[60px] text-[8px] uppercase leading-[11px];
   }
 
   /* Transition */

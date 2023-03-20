@@ -14,8 +14,9 @@ const WhyCollect = () => {
         link="Learn more"
         href="/"
       />
-      <div className="grid grid-cols-3 mx-[15px] gap-10">
-        <div className="aspect-square bg-unveilBlack rounded-[10px] text-center pt-10 px-[15px] relative overflow-hidden">
+
+      <div className="flex md:grid grid-cols-3 md:mx-[15px] gap-10 overflow-auto">
+        <div className="ml-[15px] h-[315px] md:h-auto min-w-[270px] max-w-[270px] md:max-w-[unset] md:min-w-[unset] md:aspect-square bg-unveilBlack rounded-[10px] text-center pt-10 px-[15px] relative overflow-hidden">
           <h4 className="s1 text-unveilWhite">Curated artworks</h4>
           <p className="text-unveilWhite b4">
             Our curation is a testament to quality and passion
@@ -24,7 +25,7 @@ const WhyCollect = () => {
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-[65%] bg-unveilGreen"></div>
           <div className="absolute bottom-0 right-0 w-[40%] h-1/2 bg-unveilGreen"></div>
         </div>
-        <div className="aspect-square bg-unveilYellow rounded-[10px] text-center pt-10 ">
+        <div className="h-[315px] md:h-auto min-w-[270px] max-w-[270px] md:max-w-[unset] md:min-w-[unset] md:aspect-square bg-unveilYellow rounded-[10px] text-center pt-10 ">
           <h4 className="s1 text-unveilWhite px-[15px]">Curated artworks</h4>
           <p className="text-unveilWhite b4 px-[15px]">
             Our curation is a testament to quality and passion
@@ -49,7 +50,7 @@ const WhyCollect = () => {
             )}
           </Swiper>
         </div>
-        <div className="aspect-square bg-unveilGreen rounded-[10px] text-center pt-10 px-[15px]">
+        <div className="h-[315px] mr-[15px] md:h-auto min-w-[270px] max-w-[270px] md:max-w-[unset] md:min-w-[unset] md:aspect-square bg-unveilGreen rounded-[10px] text-center pt-10 px-[15px]">
           <h4 className="s1 text-unveilWhite">Curated artworks</h4>
           <p className="text-unveilWhite b4">
             Our curation is a testament to quality and passion
