@@ -6,7 +6,7 @@ import TwoBlockItems from "../reusable/TwoBlockItems";
 
 const NewlyCurated = () => {
   return (
-    <section className="pt-[180px] pb-[130px]">
+    <section className="pt-10 md:pt-[180px] pb-[130px]">
       <Title title="Newly curated" />
       <OneLiner
         text="Artists worth viewing. Selected for ou by our curators."

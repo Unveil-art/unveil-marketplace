@@ -4,6 +4,7 @@ import Currency from "../svg/Currency";
 
 const TwoBlockItems = () => {
   return (
+    // TODO: homepage kleiner ander wel onder elkaar
     <div className="grid grid-cols-1 gap-[15px] mx-[15px] md:mx-10 md:grid-cols-2">
       <div>
         <div className="aspect-square bg-unveilGreen"></div>

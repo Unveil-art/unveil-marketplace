@@ -22,7 +22,7 @@ const OneLiner = ({
             <Link href={href} className="">
               <span
                 style={{ color: color }}
-                className="md:underline underline-offset-[5px] cursor-pointer"
+                className="md:underline underline-offset-[5px] decoration-1 cursor-pointer"
               >
                 {link}
               </span>

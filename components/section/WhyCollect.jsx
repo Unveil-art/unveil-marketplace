@@ -1,13 +1,15 @@
 import React from "react";
+
 import OneLiner from "../reusable/Oneliner";
 
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper";
 import "swiper/css";
 
 const WhyCollect = () => {
   return (
     <section>
-      <h2 className="m-10 h3">Why collect art at Unveil?</h2>
+      <h2 className="m-[15px] md:m-10 h3">Why collect art at Unveil?</h2>
       <OneLiner
         text="Invest in art that enriches your life and empowers the world."
         alignLeft
@@ -30,13 +32,29 @@ const WhyCollect = () => {
           <p className="b4 px-[15px]">
             Our curation is a testament to quality and passion
           </p>
+          {/* TODO: align middle */}
+          {/* TODO: mobile 15 px spaceBetween */}
+          {/* TODO: mobile automatishc false touch */}
           <Swiper
-            slidesPerView={"auto"}
+            allowTouchMove={false}
             spaceBetween={15}
-            loop={true}
-            centeredSlides
-            className="mt-[90px] payment-swiper unveilTransition"
+            slidesOffsetBefore={15}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
+            breakpoints={{
+              768: {
+                allowTouchMove: true,
+                spaceBetween: 28,
+              },
+            }}
+            speed={500}
+            modules={[Autoplay]}
             grabCursor
+            slidesPerView={"auto"}
+            centeredSlides
+            className="mt-[50px] payment-swiper unveilTransition md:pointer-events-auto pointer-events-none"
           >
             {["1", "2", "3", "4", "5", "6", "1", "2", "3", "4", "5", "6"].map(
               (item, index) => (

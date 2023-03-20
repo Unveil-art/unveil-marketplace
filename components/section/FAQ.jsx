@@ -29,7 +29,10 @@ const FAQ = () => {
         <h2 className="h3">FAQ</h2>
         <div className="">
           <p className="flex gap-1 s2">
-            View all questions.
+            View all{" "}
+            <span className="underline decoration-none md:no-underline underline-offset-2 decoration-1">
+              questions.
+            </span>
             <Link
               href="/gallery"
               className="hidden underline cursor-pointer md:block underline-offset-4 decoration-1"
@@ -43,7 +46,7 @@ const FAQ = () => {
         {[1, 2, 3].map((item, i) => (
           <div
             key={i}
-            className="border-t-2 border-unveilBlack pt-2 mb-2 md:pt-[15px] md:pb-[10px]"
+            className="border-t md:border-t-2 border-unveilBlack pt-[6px] mb-[6px]  md:pt-[15px] md:pb-[10px]"
           >
             <div
               className="flex items-center justify-between"
@@ -65,7 +68,7 @@ const FAQ = () => {
               className="overflow-hidden unveilTransition max-h-0"
               style={{ maxHeight: open === i ? `${heights[i] + 20}px` : "" }}
             >
-              <p className="mt-2 b3">
+              <p className="pb-2 mt-4 b3">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
                 mollitia corporis minus cum eius? Qui perspiciatis et vel
                 expedita officia, voluptate impedit voluptatibus sint dolores
