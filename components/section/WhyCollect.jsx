@@ -15,7 +15,7 @@ const WhyCollect = () => {
         href="/"
       />
       <div className="grid grid-cols-3 mx-[15px] gap-10">
-        <div className="aspect-square bg-unveilBlack rounded-[10px] text-center pt-10 px-[15px] relative">
+        <div className="aspect-square bg-unveilBlack rounded-[10px] text-center pt-10 px-[15px] relative overflow-hidden">
           <h4 className="s1 text-unveilWhite">Curated artworks</h4>
           <p className="text-unveilWhite b4">
             Our curation is a testament to quality and passion
@@ -34,7 +34,7 @@ const WhyCollect = () => {
             spaceBetween={15}
             loop={true}
             centeredSlides
-            className="mt-[50px] payment-swiper unveilTransition"
+            className="mt-[90px] payment-swiper unveilTransition"
             grabCursor
           >
             {["1", "2", "3", "4", "5", "6", "1", "2", "3", "4", "5", "6"].map(
