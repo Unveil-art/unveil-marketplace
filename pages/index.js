@@ -8,6 +8,7 @@ import TrustedPartners from "../components/section/TrustedPratners";
 import Socials from "../components/section/Socials";
 import RequestAccess from "../components/section/RequestAccess";
 import FAQ from "../components/section/FAQ";
+import WhyCollect from "../components/section/WhyCollect";
 
 export default function Home() {
   return (
@@ -31,6 +32,7 @@ export default function Home() {
       />
       <Socials />
       <RequestAccess />
+      <WhyCollect />
       <FAQ />
     </>
   );
