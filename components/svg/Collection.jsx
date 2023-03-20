@@ -16,7 +16,7 @@ const Collection = () => {
         height="20"
         rx="2"
         stroke="#141414"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <rect
         x="8.55273"
@@ -26,7 +26,7 @@ const Collection = () => {
         rx="2"
         fill="#F9F7F2"
         stroke="#141414"
-        stroke-width="2"
+        strokeWidth="2"
       />
     </svg>
   );
