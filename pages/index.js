@@ -9,6 +9,7 @@ import Socials from "../components/section/Socials";
 import RequestAccess from "../components/section/RequestAccess";
 import FAQ from "../components/section/FAQ";
 import WhyCollect from "../components/section/WhyCollect";
+import NewlyCurated from "../components/section/NewlyCurated";
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
         backgroundColor="#B8AE92"
         imageMargin={true}
       />
+      <NewlyCurated />
       <TrustedPartners />
       <Collection
         oneLiner="New works, freshtalent. Discover the unseen."
