@@ -8,13 +8,16 @@
   }
   /* Buttons */
   .btn {
-    @apply font-graphik text-[11px] md:text-[13px] leading-[16px] md:leading-[25px] md:px-[30px] md:py-[10px] rounded-[10px] px-[20px] py-[7px];
+    @apply font-graphik text-[11px] md:text-[13px] leading-[16px] md:leading-[25px] md:px-[30px] md:py-[10px] rounded-[8px] md:rounded-[10px] px-[20px] py-[7px];
   }
   .btn-primary {
     @apply border bg-unveilBlack text-unveilWhite border-unveilBlack;
   }
   .btn-secondary {
     @apply bg-transparent border border-unveilBlack;
+  }
+  .btn-full {
+    @apply w-full;
   }
 
   /* Typography */
@@ -64,7 +67,7 @@
     @apply font-graphik text-[11px] md:text-[16px] leading-[16px] md:leading-[25px];
   }
   .b4 {
-    @apply font-graphik text-[13px] leading-[25px];
+    @apply font-graphik text-[9px] md:text-[13px] md:leading-[25px] leading-[18px];
   }
   .b5 {
     @apply font-graphik text-[10px] leading-[25px];

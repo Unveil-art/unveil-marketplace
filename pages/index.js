@@ -6,6 +6,7 @@ import GridColThree from "../components/section/GridColThree";
 import Collection from "../components/section/Collection";
 import TrustedPartners from "../components/section/TrustedPratners";
 import Socials from "../components/section/Socials";
+import RequestAccess from "../components/section/RequestAccess";
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
         backgroundColor="#1C1110"
       />
       <Socials />
+      <RequestAccess />
     </>
   );
 }
