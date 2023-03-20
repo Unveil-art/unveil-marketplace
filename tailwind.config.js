@@ -15,6 +15,7 @@ module.exports = {
         unveilGrey: "rgba(0, 0, 0, 0.6)",
         unveilWhite: "#f0ede4",
         unveilCreme: "#f9f7f2",
+        unveilYellow: "#FFB800",
         unveilGreen: "#b2b4ae",
         bgColor: "rgba(21, 17, 0, 0.05)",
         bgColorHover: "rgba(21, 17, 0, 0.1)",

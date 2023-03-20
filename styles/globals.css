@@ -78,6 +78,10 @@
     transition: all 0.3s ease;
     transition-timing-function: cubic-bezier(0.58, 0, 0, 1);
   }
+  /*  */
+  .payment-swiper .swiper-slide-active {
+    border: 1px solid #141414;
+  }
 }
 
 /* Font family */

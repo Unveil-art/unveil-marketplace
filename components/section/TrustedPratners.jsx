@@ -1,5 +1,4 @@
 import React from "react";
-import { Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
@@ -20,6 +19,7 @@ const TrustedPartners = () => {
         spaceBetween={40}
         loop={true}
         className="mb-[170px]"
+        grabCursor
       >
         {["1", "2", "3", "4", "5", "6", "1", "2", "3", "4", "5", "6"].map(
           (item, index) => (
