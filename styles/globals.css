@@ -28,7 +28,7 @@
   }
   h2,
   .h2 {
-    @apply font-teodor text-[44px] leading-[110%] tracking-[-0.02em];
+    @apply font-teodor font-light text-[44px] leading-[110%] tracking-[-0.02em];
   }
   h3,
   .h3 {
@@ -36,11 +36,11 @@
   }
   h4,
   .h4 {
-    @apply font-teodor text-[24px] md:text-[44px] leading-[26px] md:leading-[110%] tracking-[-0.03em] md:tracking-[-0.02em];
+    @apply font-teodor font-light text-[24px] md:text-[44px] leading-[26px] md:leading-[110%] tracking-[-0.03em] md:tracking-[-0.02em];
   }
   h5,
   .h5 {
-    @apply font-teodor font-light text-[11px] md:text-[19px] leading-[16px] md:leading-[25px];
+    @apply font-teodor font-light font-light text-[11px] md:text-[19px] leading-[16px] md:leading-[25px];
   }
 
   /* S */
@@ -48,7 +48,7 @@
     @apply font-graphik font-light text-[17px] md:text-[24px] leading-[19px] md:leading-[110.6%] tracking-[-0.03em] md:tracking-[-0.04em];
   }
   .s2 {
-    @apply font-teodor text-[16px] md:text-[24px] leading-[100%] md:leading-[26px] tracking-[-0.01em] md:tracking-[-0.03em];
+    @apply font-teodor font-light text-[16px] md:text-[24px] leading-[100%] md:leading-[26px] tracking-[-0.01em] md:tracking-[-0.03em];
   }
 
   /* Link */
@@ -58,10 +58,10 @@
 
   /* Body */
   .b1 {
-    @apply font-teodor text-[24px] md:text-[44px] leading-[26px] md:leading-[130%] tracking-[-0.03em] md:tracking-[-0.02em];
+    @apply font-teodor font-light text-[24px] md:text-[44px] leading-[26px] md:leading-[130%] tracking-[-0.03em] md:tracking-[-0.02em];
   }
   .b2 {
-    @apply font-teodor text-[18px] leading-[130%] tracking-[-0.01em];
+    @apply font-teodor font-light text-[18px] leading-[130%] tracking-[-0.01em];
   }
   .b3 {
     @apply font-graphik text-[11px] md:text-[16px] leading-[16px] md:leading-[25px];
@@ -138,10 +138,9 @@
 
 @font-face {
   font-family: "Teodor";
-  src: url("/fonts/teodor-light.woff2") format("woff2"),
-    url("/fonts/teodor-light.woff2") format("woff2");
+  src: url("/fonts/Teodor-light.woff2") format("woff2"),
+    url("/fonts/Teodor-light.woff2") format("woff2");
   font-weight: 300;
-  font-style: light;
 }
 
 @font-face {

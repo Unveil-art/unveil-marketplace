@@ -9,7 +9,7 @@ import "swiper/css";
 const WhyCollect = () => {
   return (
     <section>
-      <h2 className="m-[15px] md:m-10 h3">Why collect art at Unveil?</h2>
+      <h2 className="m-[15px] lg:m-10 h3">Why collect art at Unveil?</h2>
       <OneLiner
         text="Invest in art that enriches your life and empowers the world."
         alignLeft
@@ -17,8 +17,8 @@ const WhyCollect = () => {
         href="/"
       />
 
-      <div className="flex md:grid grid-cols-3 md:mx-[15px] gap-10 overflow-auto">
-        <div className="ml-[15px] md:ml-0 h-[315px] md:h-auto min-w-[270px] max-w-[270px] md:max-w-[unset] md:min-w-[unset] md:aspect-square bg-unveilBlack rounded-[10px] text-center pt-10 px-[15px] relative overflow-hidden">
+      <div className="flex lg:grid grid-cols-3 lg:mx-[15px] gap-[15px] lg:gap-10 overflow-auto">
+        <div className="ml-[15px] lg:ml-0 h-[315px] lg:h-auto min-w-[270px] max-w-[270px] lg:max-w-[unset] lg:min-w-[unset] lg:aspect-square bg-unveilBlack rounded-[10px] text-center pt-10 px-[15px] relative overflow-hidden">
           <h4 className="s1 text-unveilWhite">Curated artworks</h4>
           <p className="text-unveilWhite b4">
             Our curation is a testament to quality and passion
@@ -27,14 +27,11 @@ const WhyCollect = () => {
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-[65%] bg-unveilGreen"></div>
           <div className="absolute bottom-0 right-0 w-[40%] h-1/2 bg-unveilGreen"></div>
         </div>
-        <div className="h-[315px] md:h-auto min-w-[270px] max-w-[270px] md:max-w-[unset] md:min-w-[unset] md:aspect-square bg-unveilYellow rounded-[10px] text-center pt-10 ">
+        <div className="h-[315px] lg:h-auto min-w-[270px] max-w-[270px] lg:max-w-[unset] lg:min-w-[unset] lg:aspect-square bg-unveilYellow rounded-[10px] text-center pt-10 ">
           <h4 className="s1  px-[15px]">Curated artworks</h4>
           <p className="b4 px-[15px]">
             Our curation is a testament to quality and passion
           </p>
-          {/* TODO: align middle */}
-          {/* TODO: mobile 15 px spaceBetween */}
-          {/* TODO: mobile automatishc false touch */}
           <Swiper
             allowTouchMove={false}
             spaceBetween={15}
@@ -54,7 +51,7 @@ const WhyCollect = () => {
             grabCursor
             slidesPerView={"auto"}
             centeredSlides
-            className="mt-[50px] payment-swiper unveilTransition md:pointer-events-auto pointer-events-none"
+            className=" mt-[20px] lg:mt-[60px] xl:mt-[100px] pointer-events-none payment-swiper unveilTransition lg:pointer-events-auto"
           >
             {["1", "2", "3", "4", "5", "6", "1", "2", "3", "4", "5", "6"].map(
               (item, index) => (
@@ -68,7 +65,7 @@ const WhyCollect = () => {
             )}
           </Swiper>
         </div>
-        <div className="h-[315px] mr-[15px] md:mr-0 md:h-auto min-w-[270px] max-w-[270px] md:max-w-[unset] md:min-w-[unset] md:aspect-square bg-unveilGreen rounded-[10px] text-center pt-10 px-[15px]">
+        <div className="h-[315px] mr-[15px] lg:mr-0 lg:h-auto min-w-[270px] max-w-[270px] lg:max-w-[unset] lg:min-w-[unset] lg:aspect-square bg-unveilGreen rounded-[10px] text-center pt-10 px-[15px]">
           <h4 className="s1 ">Curated artworks</h4>
           <p className="b4">
             Our curation is a testament to quality and passion

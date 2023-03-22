@@ -13,7 +13,7 @@ const NewlyCurated = () => {
         link="View collections"
         href="/gallery"
       />
-      <TwoBlockItems />
+      <TwoBlockItems homePage={true} />
     </section>
   );
 };
