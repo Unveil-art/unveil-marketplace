@@ -8,7 +8,7 @@
   }
   /* Buttons */
   .btn {
-    @apply font-graphik text-[11px] md:text-[13px] leading-[16px] md:leading-[25px] md:px-[30px] md:py-[10px] rounded-[8px] md:rounded-[10px] px-[20px] py-[7px];
+    @apply font-graphik text-[11px] md:text-[13px] leading-[16px] md:leading-[25px] md:px-[30px] md:py-[10px] rounded-[8px] md:rounded-[10px] px-[20px] py-[10px];
   }
   .btn-primary {
     @apply border bg-unveilBlack text-unveilWhite border-unveilBlack;
@@ -16,8 +16,14 @@
   .btn-secondary {
     @apply bg-transparent border border-unveilBlack;
   }
+  .btn-fit {
+    @apply w-fit;
+  }
   .btn-full {
     @apply w-full;
+  }
+  .btn-wide {
+    @apply px-20;
   }
 
   /* Typography */
@@ -97,6 +103,10 @@
   /* Swiper */
   .payment-swiper .swiper-slide-active {
     border: 1px solid #141414;
+  }
+  /* Select */
+  select.select {
+    @apply w-full px-0 py-2 text-center bg-transparent border-b border-unveilDrakGray s2 focus:outline-none;
   }
 }
 
