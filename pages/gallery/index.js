@@ -4,6 +4,7 @@ import OneLiner from "../../components/reusable/Oneliner";
 import Title from "../../components/reusable/Title";
 import Filter from "../../components/section/Filter";
 import TwoBlockItems from "../../components/reusable/TwoBlockItems";
+import SortAndSearch from "../../components/section/SortAndSearch";
 
 export default function Home() {
   return (
@@ -13,6 +14,8 @@ export default function Home() {
       <Filter />
 
       <TwoBlockItems />
+
+      <SortAndSearch />
     </main>
   );
 }
