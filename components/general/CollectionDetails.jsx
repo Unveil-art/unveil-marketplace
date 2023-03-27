@@ -1,6 +1,6 @@
 import React from "react";
 
-import Currency from "./svg/Currency";
+import Currency from "../svg/Currency";
 
 const CollectionDetails = ({ imageMargin, color, backgroundColor }) => {
   return (

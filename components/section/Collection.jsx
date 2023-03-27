@@ -2,7 +2,7 @@ import React from "react";
 
 import OneLiner from "../reusable/Oneliner";
 import Title from "../reusable/Title";
-import CollectionDetails from "../CollectionDetails";
+import CollectionDetails from "../general/CollectionDetails";
 
 const Collection = ({
   title = "title",
