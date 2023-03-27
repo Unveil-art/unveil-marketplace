@@ -1,36 +1,9 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
-import Close from "../svg/Close";
+import { variantPopIn, variantBackground } from "../../utils/animations";
 
-const variantPopIn = {
-  init: {
-    x: "110%",
-    transitionEnd: {
-      display: "none",
-    },
-    transition: { duration: 1, ease: [0.58, 0, 0, 1] },
-  },
-  ani: {
-    x: 0,
-    display: "block",
-    transition: { duration: 1, ease: [0.58, 0, 0, 1] },
-  },
-};
-const variantBackground = {
-  init: {
-    opacity: 0,
-    transitionEnd: {
-      display: "none",
-    },
-    transition: { duration: 1, ease: [0.58, 0, 0, 1] },
-  },
-  ani: {
-    opacity: 1,
-    display: "block",
-    transition: { duration: 1, ease: [0.33, 0, 0, 1] },
-  },
-};
+import Close from "../svg/Close";
 
 const SortAndSearch = () => {
   const [filterOpen, setFilterOpen] = useState(false);
@@ -40,7 +13,7 @@ const SortAndSearch = () => {
   };
 
   return (
-    <section className="w-full h-screen overflow-hidden">
+    <section className="fixed z-50 w-full h-screen overflow-hidden">
       <div
         onClick={() => handleOpen()}
         className="fixed cursor-pointer -translate-x-1/2 bg-unveilBlack w-fit bottom-10 left-1/2 py-[6px] px-5 rounded-full"

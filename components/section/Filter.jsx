@@ -2,7 +2,7 @@ import React from "react";
 
 const Filter = () => {
   return (
-    <div className="ml-10 md:ml-[35svw] flex g justify-between pr-10">
+    <div className="ml-10 md:ml-[35svw] flex g justify-between pr-10 pb-[60px]">
       <div className="flex items-center gap-2 md:block">
         <p className="md:mb-3 b3 md:b4">Category</p>
         <div className="flex items-center gap-1">

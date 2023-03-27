@@ -20,6 +20,7 @@ module.exports = {
         unveilGreen: "#b2b4ae",
         bgColor: "rgba(21, 17, 0, 0.05)",
         bgColorHover: "rgba(21, 17, 0, 0.1)",
+        bgBlackOpacity: "rgba(0, 0, 0, 0.1)",
       },
       fontFamily: {
         teodor: ["Teodor", "sans-serif"],

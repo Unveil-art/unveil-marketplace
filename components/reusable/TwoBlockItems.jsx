@@ -6,7 +6,7 @@ const TwoBlockItems = ({ homePage = false }) => {
   return (
     <div
       className={`${
-        homePage ? "grid-cols-2" : "grid-cols-1"
+        homePage ? "grid-cols-2" : "grid-cols-1 mb-[60px]"
       } grid grid-cols-1 gap-[15px] mx-[15px] md:mx-10 md:grid-cols-2 relative`}
     >
       <div>
@@ -27,12 +27,14 @@ const TwoBlockItems = ({ homePage = false }) => {
         </div>
       </div>
       {homePage && (
-        <div className="absolute top-0 w-px h-full -translate-x-1/2 bg-bgColorHover left-1/2"></div>
+        <div className="absolute top-0 block w-px h-full -translate-x-1/2 md:hidden bg-bgColorHover left-1/2"></div>
       )}
-      <div className={`${homePage ? "mt-[120px]" : ""}`}>
+      <div className={`${homePage ? "md:mt-0 mt-[120px]" : ""}`}>
         <div
           className={`${
-            homePage ? "aspect-[10/11] rounded-t-full" : "aspect-square"
+            homePage
+              ? "aspect-[10/11] md:rounded-none rounded-t-full"
+              : "aspect-square"
           }  bg-unveilGreen`}
         ></div>
         <span className="nft-print">nft + print</span>
