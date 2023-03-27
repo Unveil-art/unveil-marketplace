@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
-import MoreInfoPopIn from "../../components/section/MoreInfoPopIn";
+import MoreInfoPopIn from "../pop-in/MoreInfoPopIn";
 import MoreInfo from "../../components/svg/MoreInfo";
 
 const OneLiner = ({

@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-
-import MoreInfo from "../../components/svg/MoreInfo";
 
 import { variantPopIn, variantBackground } from "../../utils/animations";
 import Close from "../svg/Close";
