@@ -17,7 +17,7 @@ const Navbar = () => {
         </div>
       </Link>
 
-      <div className="cursor-pointer">
+      <div className="scale-75 cursor-pointer md:scale-100">
         <Account />
       </div>
     </nav>
