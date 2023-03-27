@@ -5,7 +5,8 @@ import ProductCard from "./ProductCard";
 
 const ThreeBlockItems = () => {
   return (
-    <section className="grid grid-cols-2 md:grid-cols-4 gap-[15px] md:gap-[60px] px-[15px] md:px-10 mb-[15px] relative">
+    // TODO: 2e parrallax
+    <section className="grid grid-cols-2 md:grid-cols-4 gap-[15px] md:gap-[60px] px-[15px] md:px-10 mb-10 relative">
       <ProductCard />
       <div className="hidden md:block"></div>
       <ProductCard rounded={true} />

@@ -17,7 +17,7 @@ const SortAndSearch = () => {
     <section className="fixed z-50 w-full h-screen overflow-hidden">
       <div
         onClick={() => handleOpen()}
-        className="fixed cursor-pointer -translate-x-1/2 bg-unveilBlack w-fit bottom-10 left-1/2 py-[6px] px-5 rounded-full"
+        className="fixed cursor-pointer -translate-x-1/2 bg-unveilBlack w-fit bottom-[15px] left-1/2 py-[6px] px-5 rounded-full"
       >
         <p className="b4 text-unveilWhite">Search & Sort</p>
       </div>

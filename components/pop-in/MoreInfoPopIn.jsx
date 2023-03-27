@@ -12,7 +12,7 @@ const MoreInfoPopIn = ({ infoOpen, setInfoOpen }) => {
           variants={variantPopIn}
           animate={infoOpen ? "ani" : "init"}
           initial="init"
-          className="fixed  hidden overflow-y-scroll top-0 right-0 sm:top-5 sm:right-5 w-full sm:w-[380px]  bg-unveilWhite px-5 py-10 z-50 sm:rounded-[20px] h-screen sm:h-fit"
+          className="fixed hidden overflow-y-scroll right-[15px] top-[15px] md:top-5 md:right-5 w-[320px] sm:w-[380px]  bg-unveilWhite px-5 py-10 z-50 rounded-[10px] md:rounded-[20px] h-fit"
         >
           <div
             onClick={() => setInfoOpen(!infoOpen)}
@@ -23,7 +23,7 @@ const MoreInfoPopIn = ({ infoOpen, setInfoOpen }) => {
             </div>
           </div>
           <div className="">
-            <p className="text-center b4 mt-[120px]">Artworks</p>
+            <p className="text-center b4 mt-[80px]">Artworks</p>
             <h3 className="text-center s2 mb-[80px]">Established</h3>
             <p className="s2">
               Professionals who have gained recognition for their exceptional

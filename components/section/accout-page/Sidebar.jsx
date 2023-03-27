@@ -66,7 +66,7 @@ const Sidebar = ({ accountState, setAccountState }) => {
       <p
         onClick={() => handleAccountState(7)}
         className={`${
-          accountState === 6 ? "text-unveilBlack" : ""
+          accountState === 7 ? "text-unveilBlack" : ""
         } cursor-pointer hover:text-unveilBlack unveilTransition whitespace-nowrap`}
       >
         Wishlist
@@ -74,15 +74,13 @@ const Sidebar = ({ accountState, setAccountState }) => {
       <p
         onClick={() => handleAccountState(8)}
         className={`${
-          accountState === 7 ? "text-unveilBlack" : ""
+          accountState === 8 ? "text-unveilBlack" : ""
         } cursor-pointer hover:text-unveilBlack unveilTransition whitespace-nowrap`}
       >
         Followed artists
       </p>
       <p
-        className={`${
-          accountState === 8 ? "text-unveilBlack" : ""
-        } cursor-pointer hover:text-unveilBlack unveilTransition whitespace-nowrap`}
+        className={` cursor-pointer hover:text-unveilBlack unveilTransition whitespace-nowrap`}
       >
         Logout
       </p>

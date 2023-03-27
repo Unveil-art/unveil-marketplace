@@ -1,12 +1,9 @@
 import React from "react";
 import ArtworkListItem from "../../reusable/ArtworkListItem";
-import Title from "../../reusable/Title";
 
-const Artworks = ({ children }) => {
+const Artworks = () => {
   return (
     <>
-      <Title title="Account" />
-      {children}
       <button className="absolute md:block hidden top-[150px] right-10 btn btn-secondary">
         View gallery
       </button>

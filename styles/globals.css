@@ -35,6 +35,7 @@
   h2,
   .h2 {
     @apply font-teodor font-light text-[44px] leading-[110%] tracking-[-0.02em];
+    -webkit-font-smoothing: antialiased;
   }
   h3,
   .h3 {
@@ -43,31 +44,40 @@
   h4,
   .h4 {
     @apply font-teodor font-light text-[24px] md:text-[44px] leading-[26px] md:leading-[110%] tracking-[-0.03em] md:tracking-[-0.02em];
+    -webkit-font-smoothing: antialiased;
   }
   h5,
   .h5 {
     @apply font-teodor font-light font-light text-[11px] md:text-[19px] leading-[16px] md:leading-[25px];
+    -webkit-font-smoothing: antialiased;
   }
 
   /* S */
   .s1 {
-    @apply font-graphik font-light text-[17px] md:text-[24px] leading-[19px] md:leading-[110.6%] tracking-[-0.03em] md:tracking-[-0.04em];
+    @apply font-graphik font-light text-[20px] md:text-[24px] leading-[19px] md:leading-[110.6%] tracking-[-0.03em] md:tracking-[-0.04em];
   }
   .s2 {
-    @apply font-teodor font-light text-[16px] md:text-[24px] leading-[100%] md:leading-[26px] tracking-[-0.01em] md:tracking-[-0.03em];
+    @apply font-teodor font-light text-[21px] md:text-[26px] leading-[100%] md:leading-[26px] tracking-[-0.01em] md:tracking-[-0.03em];
+    -webkit-font-smoothing: antialiased;
   }
 
   /* Link */
+  .l1 {
+    @apply font-graphik text-[10px] md:text-[12px] leading-[19px] md:leading-[24px];
+  }
   .l2 {
     @apply font-teodor text-[10px] md:text-[12px] leading-[19px] md:leading-[24px] tracking-[0.05em] md:tracking-[0.1em] uppercase;
+    -webkit-font-smoothing: antialiased;
   }
 
   /* Body */
   .b1 {
     @apply font-teodor font-light text-[24px] md:text-[44px] leading-[26px] md:leading-[130%] tracking-[-0.03em] md:tracking-[-0.02em];
+    -webkit-font-smoothing: antialiased;
   }
   .b2 {
     @apply font-teodor font-light text-[18px] leading-[130%] tracking-[-0.01em];
+    -webkit-font-smoothing: antialiased;
   }
   .b3 {
     @apply font-graphik text-[11px] md:text-[16px] leading-[16px] md:leading-[25px];
@@ -78,16 +88,19 @@
   .b5 {
     @apply font-graphik text-[10px] leading-[25px];
   }
+  .b6 {
+    @apply font-graphik text-[11px] leading-[16px];
+  }
 
   /* Labels */
   .nft-print {
-    @apply px-1 pt-[2px] pb-[1px] my-auto border border-unveilGreen rounded-[60px] text-[8px] uppercase leading-[11px];
+    @apply px-[6px] pt-[4px] pb-[3px] my-auto border border-unveilGreen rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
   }
   .nft {
-    @apply px-1 pt-[2px] pb-[1px] my-auto border border-unveilGreen bg-unveilGreen rounded-[60px] text-[8px] uppercase leading-[11px];
+    @apply px-[6px] pt-[4px] pb-[3px] my-auto border border-unveilGreen bg-unveilGreen rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
   }
   .print {
-    @apply px-1 pt-[2px] pb-[1px] my-auto border border-unveilYellow bg-unveilYellow rounded-[60px] text-[8px] uppercase leading-[11px];
+    @apply px-[6px] pt-[4px] pb-[3px] my-auto border border-unveilYellow bg-unveilYellow rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
   }
 
   /* Transition */
@@ -107,6 +120,13 @@
   /* Select */
   select.select {
     @apply w-full px-0 py-2 text-center bg-transparent border-b border-unveilDrakGray s2 focus:outline-none;
+  }
+  /* input */
+  input.input {
+    @apply w-full py-4 bg-bgColor rounded-[10px] px-5 text-unveilBlack placeholder:text-unveilBlack focus:outline-none;
+  }
+  input.checkbox {
+    @apply bg-transparent;
   }
 }
 
