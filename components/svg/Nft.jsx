@@ -15,7 +15,7 @@ const Nft = () => {
         width="15.2873"
         height="20"
         rx="2"
-        fill="#F9F7F2"
+        fill="transparent"
         stroke="#141414"
         strokeWidth="2"
       />

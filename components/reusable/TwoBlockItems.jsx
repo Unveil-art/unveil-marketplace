@@ -6,7 +6,7 @@ const TwoBlockItems = ({ homePage = false }) => {
   return (
     <div
       className={`${
-        homePage ? "grid-cols-2" : "grid-cols-1"
+        homePage ? "grid-cols-2" : "grid-cols-1 mb-[60px]"
       } grid grid-cols-1 gap-[15px] mx-[15px] md:mx-10 md:grid-cols-2 relative`}
     >
       <div>
