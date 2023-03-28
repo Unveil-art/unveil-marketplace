@@ -1,6 +1,6 @@
 import React from "react";
 import Animate from "@/components/reusable/animate";
-import Currency from "./svg/Currency";
+import Currency from "@/components/svg/Currency";
 
 const CollectionDetails = ({ imageMargin, color, backgroundColor }) => {
   return (
