@@ -1,6 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { Autoplay } from "swiper";
 
 import OneLiner from "../reusable/Oneliner";
 import Title from "../reusable/Title";
@@ -14,18 +15,30 @@ const TrustedPartners = () => {
         link="View collections"
         href="/"
       />
+
       <Swiper
         slidesPerView={"auto"}
-        spaceBetween={40}
+        spaceBetween={15}
+        slidesOffsetBefore={15}
         loop={true}
-        className="mb-[170px]"
+        autoplay={{
+          disableOnInteraction: false,
+        }}
+        breakpoints={{
+          768: {
+            spaceBetween: 28,
+          },
+        }}
+        speed={500}
+        modules={[Autoplay]}
+        className="mb-[60px] md:mb-[170px]"
         grabCursor
       >
         {["1", "2", "3", "4", "5", "6", "1", "2", "3", "4", "5", "6"].map(
           (item, index) => (
             <SwiperSlide
               key={index}
-              className="!w-[140px] !h-[140px] md:!w-[230px] md:!h-[230px] border border-[rgba(0,0,0,0.15)] rounded-[30px] !flex justify-center items-center"
+              className="!w-[140px] !h-[140px] md:!w-[230px] md:!h-[230px] border border-[rgba(0,0,0,0.15)] rounded-[10px] md:rounded-[30px] !flex justify-center items-center"
             >
               <div>Logo</div>
             </SwiperSlide>

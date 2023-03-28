@@ -33,7 +33,7 @@ const Navbar = () => {
         </div>
       </Link>
 
-      <div className="cursor-pointer">
+      <div className="z-40 scale-75 cursor-pointer md:scale-100">
         <Account />
       </div>
     </nav>

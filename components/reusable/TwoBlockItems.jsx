@@ -2,15 +2,23 @@ import React from "react";
 import Animate from "@/components/reusable/animate";
 import Currency from "../svg/Currency";
 
-const TwoBlockItems = () => {
+const TwoBlockItems = ({ homePage = false }) => {
   return (
-    <div className="grid grid-cols-1 gap-[15px] mx-[15px] md:mx-10 md:grid-cols-2">
+    <div
+      className={`${
+        homePage ? "grid-cols-2" : "grid-cols-1 mb-[60px]"
+      } grid grid-cols-1 gap-[15px] mx-[15px] md:mx-10 md:grid-cols-2 relative`}
+    >
       <Animate options={{ y: 50 }}>
-        <div className="aspect-square bg-unveilGreen"></div>
-        <span className="gsap-stagger nft-print">nft + print</span>
-        <h5 className="gsap-stagger pt-1 b3">Artwork Name</h5>
-        <p className="gsap-stagger b3 opacity-60">Alexander Sporre</p>
-        <div className="gsap-stagger flex items-center gap-1">
+        <div
+          className={`${
+            homePage ? "aspect-[10/11]" : "aspect-square"
+          }  bg-unveilGreen`}
+        ></div>
+        <span className="nft-print">nft + print</span>
+        <h5 className="pt-1 b3">Artwork Name</h5>
+        <p className="b3 opacity-60">Alexander Sporre</p>
+        <div className="flex items-center gap-1">
           <p className="b3 opacity-60">€1200 (</p>
           <div className="scale-[1.3]">
             <Currency />
@@ -18,12 +26,21 @@ const TwoBlockItems = () => {
           <p className="b3 opacity-60">1.2)</p>
         </div>
       </Animate>
-      <Animate options={{ y: 50 }}>
-        <div className="aspect-square bg-unveilGreen"></div>
-        <span className="gsap-stagger nft-print">nft + print</span>
-        <h5 className="gsap-stagger pt-1 b3">Artwork Name</h5>
-        <p className="gsap-stagger b3 opacity-60">Alexander Sporre</p>
-        <div className="gsap-stagger flex items-center gap-1">
+      {homePage && (
+        <div className="absolute top-0 block w-px h-full -translate-x-1/2 md:hidden bg-bgColorHover left-1/2"></div>
+      )}
+      <Animate options={{ y: 50 }} className={`${homePage ? "md:mt-0 mt-[120px]" : ""}`}>
+        <div
+          className={`${
+            homePage
+              ? "aspect-[10/11] md:rounded-none rounded-t-full"
+              : "aspect-square"
+          }  bg-unveilGreen`}
+        ></div>
+        <span className="nft-print">nft + print</span>
+        <h5 className="pt-1 b3">Artwork Name</h5>
+        <p className="b3 opacity-60">Alexander Sporre</p>
+        <div className="flex items-center gap-1">
           <p className="b3 opacity-60">€1200 (</p>
           <div className="scale-[1.3]">
             <Currency />
