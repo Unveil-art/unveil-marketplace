@@ -1,5 +1,5 @@
 import React from "react";
-
+import Animate from "@/components/reusable/animate";
 import Currency from "./svg/Currency";
 
 const CollectionDetails = ({ imageMargin, color, backgroundColor }) => {
@@ -12,28 +12,33 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor }) => {
       >
         <div className="block w-full h-full bg-unveilGreen"></div>
       </div>
-      <div className="md:ml-0 ml-10 md:mb-0 mb-[55px] sticky top-10 pb-10 left-0 h-fit">
+      <Animate options={{
+        stagger: {
+          y: 20,
+          value: 0.07
+        }
+      }} className="md:ml-0 ml-10 md:mb-0 mb-[55px] sticky top-10 pb-10 left-0 h-fit">
         <h6
-          className="w-fit rounded-full px-2 l2 mb-[15px]"
+          className="gsap-stagger w-fit rounded-full px-2 l2 mb-[15px]"
           style={{ border: `solid 1px ${color}` }}
         >
           Live Drop
         </h6>
-        <p className="s2 mb-[15px]">03:02:22</p>
-        <h3 className="h4">Collection name</h3>
-        <small className="b5">Starting price (edition of 10)</small>
-        <div className="flex items-center  mb-[15px]">
+        <p className="gsap-stagger s2 mb-[15px]">03:02:22</p>
+        <h3 className="gsap-stagger h4">Collection name</h3>
+        <small className="gsap-stagger block b5">Starting price (edition of 10)</small>
+        <div className="gsap-stagger flex items-center  mb-[15px]">
           <p className="b3">€1200 (</p>
           <Currency color={color} />
           <p className="b3">1.2)</p>
         </div>
         <button
-          className="btn btn-primary"
+          className="gsap-stagger btn btn-primary"
           style={{ backgroundColor: color, color: backgroundColor }}
         >
           View collection
         </button>
-      </div>
+      </Animate>
     </div>
   );
 };

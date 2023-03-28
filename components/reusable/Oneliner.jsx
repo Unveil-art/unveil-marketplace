@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Animate from "@/components/reusable/animate";
 
 const OneLiner = ({
   text,
@@ -9,7 +10,7 @@ const OneLiner = ({
   alignLeft = false,
 }) => {
   return (
-    <div className="">
+    <Animate>
       <div className={`${alignLeft ? "" : ""}`}>
         <p
           className={`${
@@ -19,7 +20,7 @@ const OneLiner = ({
         >
           {text}{" "}
           {link && (
-            <Link href={href} className="">
+            <Link href={href} className="" data-cursor="😍😍😍" data-cursor-color="#F9F7F2">
               <span
                 style={{ color: color }}
                 className="md:underline underline-offset-[5px] cursor-pointer"
@@ -30,7 +31,7 @@ const OneLiner = ({
           )}
         </p>
       </div>
-    </div>
+    </Animate>
   );
 };
 
