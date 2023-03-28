@@ -1,7 +1,6 @@
 import { gsap } from "gsap";
-import { useRef, useEffect, useLayoutEffect, useCallback } from "react";
+import { useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { useLenis } from "@studio-freight/react-lenis";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { useFontLoaded } from "@/hooks/useFontLoaded";
 
@@ -10,10 +9,7 @@ const FloatingArt = () => {
   const once = useRef(false)
   const size = useWindowSize()
   const loaded = useFontLoaded('Graphik')
-  const lenis = useLenis()
   const query = gsap.utils.selector(el)
-
-  console.log('Rendering', { size, loaded, lenis })
 
   const copy = [
     'Discover,',
@@ -21,17 +17,7 @@ const FloatingArt = () => {
     'and learn'
   ]
 
-  useLayoutEffect(() => {
-    console.log('useLayoutEffect')
-    // TODO: make sure the page starts at scrollTop(0, 0)
-    window.scrollTo(0, 0)
-    gsap.set(el.current, {
-      autoAlpha: 0
-    })
-  }, [])
-
   const animateIn = useCallback(() => {
-    console.log('animateIn')
     const align = query('.gsap-align')
     const words = query('.gsap-word')
     const title = query('.gsap-title')
@@ -42,8 +28,7 @@ const FloatingArt = () => {
     const images = thumbnails.map((el) => el.getBoundingClientRect())
     const padding = parseInt(getComputedStyle(el.current).getPropertyValue('padding-left'))
     const tl = gsap.timeline({
-      paused: true,
-      onComplete: () => lenis.start()
+      paused: true
     }).timeScale(1.25).set(el.current, {
       autoAlpha: 1
     }, 0).set(align, {
@@ -87,35 +72,45 @@ const FloatingArt = () => {
       duration: 0.75,
       stagger: 0.07,
       ease: 'expo.out'
-    }, '-=0.25').fromTo(thumbnails, {
-      autoAlpha: 1,
-      y: (index) => {
-        // TODO: either block scroll or account for scrollY
-        const { top, height } = images[index]
-        const sign = Math.sign((top + (height * 0.5)) - (size.height * 0.5))
-        const margin = sign === -1 ? top : (size.height - (top + (height * 0.5)))
-        const value = (height + margin) * sign
-        console.log({ index, value })
-        return value
-      }
-    }, {
-      y: 0,
-      autoAlpha: 1,
-      duration: 1.25,
-      stagger: 0.1,
-      ease: 'power3.out'
-    }, '-=1.1').restart()
+    }, '-=0.25')
+    thumbnails.forEach((el, index) => {
+      const { top, height } = images[index]
+      const sign = Math.sign((top + (height * 0.5)) - (size.height * 0.5))
+      const margin = sign === -1 ? top : (size.height - (top + (height * 0.5)))
+      const value = (height + margin) * sign
+      console.log({ index, value })
+      tl.fromTo(el, {
+        autoAlpha: 1,
+        y: value
+      }, {
+        y: 0,
+        autoAlpha: 1,
+        duration: 1.25,
+        stagger: 0.1,
+        ease: 'power3.out'
+      }, '-=1.1')
+    })
+    tl.restart()
   }, [size])
 
   useEffect(() => {
-    console.log('useEffect', lenis)
-    // TODO: initialize lenis 
-    if (lenis) lenis.stop()
+    window.scrollTo(0, 0)
+    gsap.set(el.current, {
+      autoAlpha: 0
+    })
     if (!once.value && loaded && size.width && size.height) {
       once.value = true
       animateIn()
     }
   }, [loaded, size])
+
+  // (https://greensock.com/react)
+  // useLayoutEffect(() => {
+  //   const ctx = gsap.context(() => {
+  //     // gsap.to(".box", {...})
+  //   }, el)
+  //   return () => ctx.revert()
+  // }, [])
 
   return (
     <>
