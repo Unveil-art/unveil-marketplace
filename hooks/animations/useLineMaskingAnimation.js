@@ -1,8 +1,10 @@
 import { gsap } from "gsap";
 import { useEffect } from "react";
+import { useIntersection } from "@/hooks/useIntersection";
 
-export function useLineMaskingAnimation(el, isIntersecting) {
+export function useLineMaskingAnimation(el) {
   const query = gsap.utils.selector(el)
+  const { isIntersecting } = useIntersection(el)
 
   const animateIn = () => {
     gsap.timeline({

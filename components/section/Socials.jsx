@@ -1,12 +1,10 @@
 import { useRef } from "react";
-import { useIntersection } from "@/hooks/useIntersection";
 import { useLineMaskingAnimation } from "@/hooks/animations/useLineMaskingAnimation";
 
 const Socials = () => {
   const el = useRef()
-  const { isIntersecting } = useIntersection(el)
   
-  useLineMaskingAnimation(el, isIntersecting)
+  useLineMaskingAnimation(el)
 
   return (
     <section ref={el} className="p-[15px] md:p-10 md:pb-10 pb-[60px]">
