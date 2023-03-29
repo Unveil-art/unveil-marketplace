@@ -26,7 +26,9 @@ export function useAsideAnimation(el, open) {
         autoAlpha: open ? 1 : 0,
         duration: 0.4,
         ease: 'none'
-      }, open ? 0 : 0.25).restart()
+      }, open ? 0 : 0.25).set(el.current, {
+        autoAlpha: open ? 1 : 0
+      }).restart()
     }
   }, [hasRendered, open])
 }
