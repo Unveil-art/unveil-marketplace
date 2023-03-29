@@ -6,7 +6,10 @@ export function useIntersection(el, {
   thresholds = [0.0, 1.0],
   once = false,
 } = {}) {
-  const [inView, setInView] = useState(false)
+  const [inView, setInView] = useState({
+    isIntersecting: false,
+    boundingClientRect: null
+  })
 
   useEffect(() => {
     if (!el) return

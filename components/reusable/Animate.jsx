@@ -1,6 +1,7 @@
 import { gsap } from "gsap";
-import { useRef, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { useIntersection } from "@/hooks/useIntersection";
+// import { useWindowSize } from "@/hooks/useWindowSize";
 
 const Animate = ({
   options = {},
@@ -8,7 +9,9 @@ const Animate = ({
   children
 }) => {
   const el = useRef()
+  // const size = useWindowSize()
   const query = gsap.utils.selector(el)
+  const [isAnimated, setIsAnimated] = useState(false)
   const { isIntersecting, boundingClientRect } = useIntersection(el)
 
   const defaults = {...options, ...{
@@ -22,6 +25,7 @@ const Animate = ({
   }}
 
   const animateIn = () => {
+    // const isInViewRendered = isIntersecting && boundingClientRect.top >= 0 && boundingClientRect.bottom <= size.height
     const direction = boundingClientRect.top <= 0 ? -1 : 1
     const stagger = query('.gsap-stagger')
     const delay = defaults.delay === 'random' ? Math.random() * 1.0 : 0
@@ -66,12 +70,14 @@ const Animate = ({
   }, [])
 
   useEffect(() => {
-    if (isIntersecting) {
+    if (isIntersecting && !isAnimated) {
       animateIn()
-    } else {
+      setIsAnimated(true)
+    } else if (!isIntersecting && isAnimated) {
       animateOut()
+      setIsAnimated(false)
     }
-  }, [isIntersecting])
+  }, [isIntersecting, isAnimated])
 
   return (
     <div ref={el} className={className}>

@@ -4,7 +4,7 @@ import Currency from "../svg/Currency";
 
 const ProductCard = ({ rounded = false }) => {
   return (
-    <Animate options={{ y: 100, delay: 'random' }} className="[&:nth-child(3)]:mt-[120px]">
+    <Animate options={{ y: 175, delay: 'random' }} className="[&:nth-child(3)]:mt-[120px]">
       <div
         className={`${
           rounded ? "rounded-t-full" : ""
