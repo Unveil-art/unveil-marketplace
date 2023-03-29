@@ -1,13 +1,46 @@
-import React from "react";
+import { gsap } from "gsap";
+import { useRef, useEffect } from "react";
+import { useIntersection } from "@/hooks/useIntersection";
 
 const RequestAccess = () => {
+  const el = useRef()
+  const query = gsap.utils.selector(el)
+  const { isIntersecting } = useIntersection(el)
+
+  const animateIn = () => {
+    gsap.timeline({
+      paused: true
+    }).timeScale(1.75).fromTo(query('.gsap-line'), {
+      yPercent: (index) => {
+        const sign = index === 0 ? 1 : -1
+        return 100 * sign
+      }
+    }, {
+      yPercent: 0,
+      duration: 2.5,
+      stagger: 0.1,
+      ease: 'power3.out'
+    }, 0.25).restart()
+  }
+
+  useEffect(() => {
+    if (isIntersecting) {
+      animateIn()
+    }
+  }, [isIntersecting])
+
   return (
-    <section className="grid w-full h-screen grid-cols-1 md:grid-cols-2">
+    <section ref={el} className="grid w-full h-screen grid-cols-1 md:grid-cols-2">
       <div className="absolute w-full h-full bg-unveilGreen -z-10"></div>
       <div className="hidden md:block"></div>
       <div className="md:pl-0 pl-[40px] pr-[15px] md:pr-10">
         <h2 className="h3 pt-[60px] md:pt-[140px] max-w-[400px]">
-          Start selling to new audiences.
+          <div className="relative overflow-hidden pb-1">
+            <span className="gsap-line block">Start selling to</span>
+          </div>
+          <div className="relative overflow-hidden pb-1">
+            <span className="gsap-line block">new audiences.</span>
+          </div>
         </h2>
         <p className="mt-3 mb-3 md:mt-10 md:mb-10 b3 w-[90%] ">
           Request access at Unveil by providing a link to your work and
