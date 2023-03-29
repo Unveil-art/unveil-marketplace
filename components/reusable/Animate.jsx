@@ -1,5 +1,5 @@
 import { gsap } from "gsap";
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useIntersection } from "@/hooks/useIntersection";
 // import { useWindowSize } from "@/hooks/useWindowSize";
 
@@ -11,26 +11,30 @@ const Animate = ({
   const el = useRef()
   // const size = useWindowSize()
   const query = gsap.utils.selector(el)
+
+  const [isAnimating, setIsAnimating] = useState(false)
   const [isAnimated, setIsAnimated] = useState(false)
+
   const { isIntersecting, boundingClientRect } = useIntersection(el)
 
-  const defaults = {...options, ...{
+  const defaults = Object.assign({
     y: 50,
     alpha: false,
-    delay: 'none',
+    delay: 0,
     stagger: {
       y: 0,
       value: 0.07
     }
-  }}
+  }, options)
 
   const animateIn = () => {
     // const isInViewRendered = isIntersecting && boundingClientRect.top >= 0 && boundingClientRect.bottom <= size.height
     const direction = boundingClientRect.top <= 0 ? -1 : 1
     const stagger = query('.gsap-stagger')
-    const delay = defaults.delay === 'random' ? Math.random() * 1.0 : 0
+    const delay = defaults.delay === 'random' ? Math.random() * 1.0 : defaults.delay
     const tl = gsap.timeline({
-      paused: true
+      paused: true,
+      onComplete: () => setIsAnimated(true)
     }).set(el.current, {
       autoAlpha: 1
     }, delay).fromTo(el.current, {
@@ -63,21 +67,23 @@ const Animate = ({
     tl.restart()
   }
 
-  const animateOut = useCallback(() => {
+  const animateOut = () => {
     gsap.set(el.current, {
       autoAlpha: 0
     })
-  }, [])
+    setIsAnimated(false)
+  }
 
   useEffect(() => {
+    if (isAnimating) return
     if (isIntersecting && !isAnimated) {
+      setIsAnimating(true)
       animateIn()
-      setIsAnimated(true)
     } else if (!isIntersecting && isAnimated) {
+      setIsAnimating(false)
       animateOut()
-      setIsAnimated(false)
     }
-  }, [isIntersecting, isAnimated])
+  }, [isIntersecting, isAnimating, isAnimated])
 
   return (
     <div ref={el} className={className}>

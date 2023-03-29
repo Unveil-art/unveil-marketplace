@@ -1,5 +1,5 @@
 import React from "react";
-import Animate from "@/components/reusable/animate";
+import Animate from "@/components/reusable/Animate";
 import Currency from "../svg/Currency";
 
 const TwoBlockItems = ({ homePage = false }) => {
@@ -9,7 +9,7 @@ const TwoBlockItems = ({ homePage = false }) => {
         homePage ? "grid-cols-2" : "grid-cols-1 mb-[60px]"
       } grid grid-cols-1 gap-[15px] mx-[15px] md:mx-10 md:grid-cols-2 relative`}
     >
-      <Animate options={{ y: 50 }}>
+      <Animate options={{ alpha: !homePage, y: 100 }}>
         <div
           className={`${
             homePage ? "aspect-[10/11]" : "aspect-square"
@@ -29,7 +29,7 @@ const TwoBlockItems = ({ homePage = false }) => {
       {homePage && (
         <div className="absolute top-0 block w-px h-full -translate-x-1/2 md:hidden bg-bgColorHover left-1/2"></div>
       )}
-      <Animate options={{ y: 50 }} className={`${homePage ? "md:mt-0 mt-[120px]" : ""}`}>
+      <Animate options={{ alpha: !homePage, y: 50 }} className={`${homePage ? "md:mt-0 mt-[120px]" : ""}`}>
         <div
           className={`${
             homePage
