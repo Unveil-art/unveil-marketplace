@@ -1,8 +1,9 @@
 import { gsap } from "gsap";
 import { useRef, useEffect, useCallback } from "react";
-import Link from "next/link";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { useFontLoaded } from "@/hooks/useFontLoaded";
+import Link from "next/link";
+import Image from "next/image";
 
 const FloatingArt = () => {
   const el = useRef()
@@ -118,22 +119,50 @@ const FloatingArt = () => {
       <section ref={el} className="h-[100svh] flex justify-center flex-col p-[15px] sm:p-10 relative overflow-hidden">
         {/* <div className="fixed width-[1px] h-screen left-[50%] border border-rose-600"></div> */}
         <div data-cursor="View Artist" data-cursor-color="#8A8E7B" className="gsap-thumbnail absolute block top-[5%] left-[20%] z-10">
-          <div className="bg-unveilGreen w-[70px] h-[89px] sm:w-[140px] sm:h-[180px]"></div>
+          <div className="bg-unveilGreen w-[70px] h-[89px] sm:w-[140px] sm:h-[180px]">
+            <Image
+              src="/images/Rectangle564.jpg"
+              alt
+              width={281}
+              height={362}
+            />
+          </div>
           <small className="hidden sm:block l2">Batiaan Woudt</small>
         </div>
 
         <div data-cursor="View Artist" data-cursor-color="#5B91AC" className="gsap-thumbnail absolute block bottom-[20%] sm:bottom-[5%] right-[10%] left-auto sm:left-[40%] sm:right-auto z-10">
-          <div className="bg-unveilGreen w-[70px] h-[89px] sm:w-[140px] sm:h-[180px]"></div>
+          <div className="bg-unveilGreen w-[70px] h-[89px] sm:w-[140px] sm:h-[180px]">
+            <Image
+              src="/images/Rectangle563.jpg"
+              alt
+              width={281}
+              height={362}
+            />
+          </div>
           <small className="hidden sm:block l2">Batiaan Woudt</small>
         </div>
 
         <div data-cursor="View Artist" data-cursor-color="#C1C1C1" className="gsap-thumbnail absolute block top-[10%] sm:top-0 right-[4%] sm:right-auto sm:left-1/2 z-10">
-          <div className="bg-unveilGreen w-[136px] h-[184px] sm:w-[410px] sm:h-[500px]"></div>
+          <div className="bg-unveilGreen w-[136px] h-[184px] sm:w-[410px] sm:h-[500px]">
+            <Image
+              src="/images/Rectangle626.jpg"
+              alt
+              width={821}
+              height={1001}
+            />
+          </div>
           <small className="hidden sm:block l2">Batiaan Woudt</small>
         </div>
 
         <div data-cursor="View Artist" data-cursor-color="#B6B0A4" className="gsap-thumbnail absolute block bottom-[0] sm:bottom-[30%] left-0 sm:left-auto sm:right-0 sm:translate-y-1/2 translate-y-0 z-10">
-          <div className="bg-unveilGreen w-[164px] h-[229px] sm:w-[320px] sm:h-[422px]"></div>
+          <div className="bg-unveilGreen w-[164px] h-[229px] sm:w-[320px] sm:h-[422px]">
+            <Image
+              src="/images/Rectangle573.jpg"
+              alt
+              width={640}
+              height={844}
+            />
+          </div>
           <small className="sm:block hidden l2">Batiaan Woudt</small>
         </div>
 
