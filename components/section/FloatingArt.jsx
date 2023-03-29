@@ -98,8 +98,9 @@ const FloatingArt = () => {
     gsap.set(el.current, {
       autoAlpha: 0
     })
-    if (!once.value && loaded && size.width && size.height) {
-      once.value = true
+    console.log(loaded, size, once)
+    if (!once.current && loaded && size.width && size.height) {
+      once.current = true
       animateIn()
     }
   }, [loaded, size])
