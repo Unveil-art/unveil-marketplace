@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
-import MoreInfoPopIn from "../../components/section/MoreInfoPopIn";
+import MoreInfoPopIn from "../pop-in/MoreInfoPopIn";
 import MoreInfo from "../../components/svg/MoreInfo";
 
 const OneLiner = ({
@@ -11,6 +11,7 @@ const OneLiner = ({
   color = "#141414",
   alignLeft = false,
   info = false,
+  gallery = false,
 }) => {
   const [infoOpen, setInfoOpen] = useState(false);
 
@@ -24,10 +25,12 @@ const OneLiner = ({
         <div
           className={`${
             alignLeft ? "ml-[15px] md:ml-10" : "ml-10 md:ml-[35svw]"
-          } s2  pt-[100px] pb-[40px] md:pt-[180px] md:pb-[70px]`}
+          } ${
+            gallery ? "pb-5 md:pb-10" : "pb-[40px] md:pb-[70px]"
+          } s2 pt-[80px]  md:pt-[180px] `}
           style={{ color: color }}
         >
-          <p>
+          <p className="pr-[15px]">
             {text}{" "}
             {link && (
               <Link href={href} className="">

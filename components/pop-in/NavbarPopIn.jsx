@@ -1,23 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-
-import MoreInfo from "../../components/svg/MoreInfo";
 
 import { variantPopIn, variantBackground } from "../../utils/animations";
 import Close from "../svg/Close";
 
-const MoreInfoPopIn = ({ infoOpen, setInfoOpen }) => {
+const NavbarPopIn = ({ navOpen, setNavOpen }) => {
   return (
     <>
       <section className="fixed z-50 w-full h-screen overflow-hidden">
-        <motion.div
-          variants={variantPopIn}
-          animate={infoOpen ? "ani" : "init"}
-          initial="init"
-          className="fixed  hidden overflow-y-scroll top-0 right-0 sm:top-5 sm:right-5 w-full sm:w-[380px]  bg-unveilWhite px-5 py-10 z-50 sm:rounded-[20px] h-screen sm:h-fit"
-        >
+        <div className="fixed  hidden overflow-y-scroll top-0 right-0 sm:top-5 sm:right-5 w-full sm:w-[380px]  bg-unveilWhite px-5 py-10 z-50 sm:rounded-[20px] h-screen sm:h-fit">
           <div
-            onClick={() => setInfoOpen(!infoOpen)}
+            onClick={() => setNavOpen(!navOpen)}
             className="absolute top-[15px] right-[15px] w-8 h-8 rounded-full bg-unveilBlack cursor-pointer"
           >
             <div className="-translate-x-[1px]">
@@ -34,17 +27,14 @@ const MoreInfoPopIn = ({ infoOpen, setInfoOpen }) => {
               perspective through their photography.
             </p>
           </div>
-        </motion.div>
-        <motion.div
-          onClick={() => setInfoOpen(!infoOpen)}
-          variants={variantBackground}
-          animate={infoOpen ? "ani" : "init"}
-          initial="init"
+        </div>
+        <div
+          onClick={() => setNavOpen(!navOpen)}
           className="fixed top-0 left-0 hidden w-full h-screen bg-unveilGrey unveilTransition"
-        ></motion.div>
+        ></div>
       </section>
     </>
   );
 };
 
-export default MoreInfoPopIn;
+export default NavbarPopIn;
