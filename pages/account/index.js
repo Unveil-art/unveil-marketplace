@@ -7,6 +7,7 @@ import Title from "../../components/reusable/Title";
 import ContactDetails from "../../components/section/accout-page/ContactDetails";
 import Referrals from "../../components/section/accout-page/Referrals";
 import OwnedNFTs from "../../components/section/accout-page/OwnedNFTs";
+import Recognitions from "../../components/section/accout-page/Recognitions";
 
 const AccountPage = () => {
   const [accountState, setAccountState] = useState(0);
@@ -25,7 +26,8 @@ const AccountPage = () => {
         {accountState === 2 && <Title title="Owned NFTs" />}
         {accountState === 3 && <Title title="Name of artist" />}
         {accountState === 5 && <Title title="Referrals" />}
-        <div className="block md:hidden ml-[40px] md:ml-[35svw] border-unveilBlack border-t-2 mr-[15px]">
+        {accountState === 6 && <Title title="Recognitions" />}
+        <div className="block md:hidden mt-[80px] ml-[40px] md:ml-[35svw] border-unveilBlack border-t-2 mr-[15px]">
           <select className="select" onChange={(e) => handleAccountState(e)}>
             <option>Artwork</option>
             <option>Transactions</option>
@@ -44,6 +46,7 @@ const AccountPage = () => {
         {accountState === 2 && <OwnedNFTs />}
         {accountState === 3 && <ContactDetails />}
         {accountState === 5 && <Referrals />}
+        {accountState === 6 && <Recognitions />}
       </section>
     </main>
   );
