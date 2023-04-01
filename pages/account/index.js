@@ -4,7 +4,7 @@ import Sidebar from "../../components/section/accout-page/Sidebar";
 import Artworks from "../../components/section/accout-page/Artworks";
 import Transactions from "../../components/section/accout-page/Transactions";
 import Title from "../../components/reusable/Title";
-import ConatactDetails from "../../components/section/accout-page/ConatactDetails";
+import ContactDetails from "../../components/section/accout-page/ContactDetails";
 
 const AccountPage = () => {
   const [accountState, setAccountState] = useState(0);
@@ -37,7 +37,7 @@ const AccountPage = () => {
         </div>
         {accountState === 0 && <Artworks />}
         {accountState === 1 && <Transactions />}
-        {accountState === 3 && <ConatactDetails />}
+        {accountState === 3 && <ContactDetails />}
       </section>
     </main>
   );

@@ -13,8 +13,8 @@ const Transactions = () => {
             <th className="font-normal b3 text-[17px] text-left py-5">From</th>
             <th className="font-normal b3 text-[17px] text-right py-5">To</th>
           </tr>
-          {[1, 1, 1, 1].map((item) => (
-            <tr className="border-t border-bgBlackOpacity">
+          {[1, 1, 1, 1].map((item, i) => (
+            <tr className="border-t border-bgBlackOpacity " key={i}>
               <td className="py-5 md:w-28 l2">10/10/2022</td>
               <td className="py-5 md:w-64">Transfer</td>
               <td className="py-5">Alexander Sporre</td>
@@ -32,8 +32,8 @@ const Transactions = () => {
             <th className="font-normal b3 text-[17px] text-left py-5">From</th>
             <th className="font-normal b3 text-[17px] text-right py-5">To</th>
           </tr>
-          {[1, 1, 1, 1].map((item) => (
-            <tr className="border-t border-bgBlackOpacity">
+          {[1, 1, 1, 1].map((item, i) => (
+            <tr className="border-t border-bgBlackOpacity" key={i}>
               <td className="py-5 md:w-28 l2">10/10/2022</td>
               <td className="py-5 md:w-64">Transfer</td>
               <td className="py-5">Alexander Sporre</td>

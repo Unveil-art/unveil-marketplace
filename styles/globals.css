@@ -121,9 +121,16 @@
   select.select {
     @apply w-full px-0 py-2 text-center bg-transparent border-b border-unveilDrakGray s2 focus:outline-none;
   }
+  select.select-input {
+    @apply w-full py-4 bg-bgColor rounded-[10px] px-5 text-unveilBlack placeholder:text-unveilBlack focus:outline-none;
+  }
+
   /* input */
   input.input {
     @apply w-full py-4 bg-bgColor rounded-[10px] px-5 text-unveilBlack placeholder:text-unveilBlack focus:outline-none;
+  }
+  textarea.textarea {
+    @apply w-full py-4 min-h-[10rem] bg-bgColor rounded-[10px] px-5 text-unveilBlack placeholder:text-unveilBlack focus:outline-none;
   }
   input.checkbox {
     @apply bg-transparent;
