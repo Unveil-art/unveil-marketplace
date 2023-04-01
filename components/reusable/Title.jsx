@@ -5,7 +5,7 @@ const Title = ({ title = "Title", color = "#141414" }) => {
     <div className="ml-[40px] md:ml-[35svw] md:pr-[40px]">
       <div
         style={{ backgroundColor: color }}
-        className={`h-[3px] md:h-[5px] mb-3 md:mb-5 mr-[15px]`}
+        className={`h-[3px] md:h-[5px] mb-3 md:mb-5 mr-[15px] md:mr-0`}
       ></div>
       <h2 className="h1">{title}</h2>
     </div>
