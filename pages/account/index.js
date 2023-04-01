@@ -8,6 +8,7 @@ import ContactDetails from "../../components/section/accout-page/ContactDetails"
 import Referrals from "../../components/section/accout-page/Referrals";
 import OwnedNFTs from "../../components/section/accout-page/OwnedNFTs";
 import Recognitions from "../../components/section/accout-page/Recognitions";
+import Wishlist from "../../components/section/accout-page/Wishlist";
 
 const AccountPage = () => {
   const [accountState, setAccountState] = useState(0);
@@ -27,6 +28,7 @@ const AccountPage = () => {
         {accountState === 3 && <Title title="Name of artist" />}
         {accountState === 5 && <Title title="Referrals" />}
         {accountState === 6 && <Title title="Recognitions" />}
+        {accountState === 7 && <Title title="Wishlist" />}
         <div className="block md:hidden mt-[80px] ml-[40px] md:ml-[35svw] border-unveilBlack border-t-2 mr-[15px]">
           <select className="select" onChange={(e) => handleAccountState(e)}>
             <option>Artwork</option>
@@ -47,6 +49,7 @@ const AccountPage = () => {
         {accountState === 3 && <ContactDetails />}
         {accountState === 5 && <Referrals />}
         {accountState === 6 && <Recognitions />}
+        {accountState === 7 && <Wishlist />}
       </section>
     </main>
   );
