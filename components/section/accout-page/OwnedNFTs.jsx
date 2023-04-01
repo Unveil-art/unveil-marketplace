@@ -18,7 +18,7 @@ const OwnedNFTs = () => {
           </h3>
           <hr className="mb-[15px] h-[2px] bg-unveilGreen" />
           {[1, 1].map((item, i) => (
-            <NFTsListItem i={i} />
+            <NFTsListItem key={i} />
           ))}
         </div>
       </div>

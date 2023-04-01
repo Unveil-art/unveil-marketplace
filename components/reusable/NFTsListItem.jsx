@@ -1,11 +1,8 @@
 import React from "react";
 
-const NFTsListItem = ({ i }) => {
+const NFTsListItem = () => {
   return (
-    <div
-      key={i}
-      className="flex items-center justify-between border-b last:border-none border-bgBlackOpacity"
-    >
+    <div className="flex items-center justify-between border-b last:border-none border-bgBlackOpacity">
       <div className="flex items-center gap-4 md:gap-10">
         <div className="h-[136px] w-[106px] md:h-[140px] md:w-[120px] bg-bgColor my-[10px]"></div>
         <div className="flex justify-between gap-2 md:block">
