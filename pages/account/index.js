@@ -5,6 +5,7 @@ import Artworks from "../../components/section/accout-page/Artworks";
 import Transactions from "../../components/section/accout-page/Transactions";
 import Title from "../../components/reusable/Title";
 import ContactDetails from "../../components/section/accout-page/ContactDetails";
+import Referrals from "../../components/section/accout-page/Referrals";
 
 const AccountPage = () => {
   const [accountState, setAccountState] = useState(0);
@@ -21,6 +22,7 @@ const AccountPage = () => {
         {accountState === 0 && <Title title="Account" />}
         {accountState === 1 && <Title title="Transaction overview" />}
         {accountState === 3 && <Title title="Name of artist" />}
+        {accountState === 5 && <Title title="Referrals" />}
         <div className="block md:hidden ml-[40px] md:ml-[35svw] border-unveilBlack border-t-2 mr-[15px]">
           <select className="select" onChange={(e) => handleAccountState(e)}>
             <option>Artwork</option>
@@ -38,6 +40,7 @@ const AccountPage = () => {
         {accountState === 0 && <Artworks />}
         {accountState === 1 && <Transactions />}
         {accountState === 3 && <ContactDetails />}
+        {accountState === 5 && <Referrals />}
       </section>
     </main>
   );
