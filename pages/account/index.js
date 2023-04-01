@@ -6,6 +6,7 @@ import Transactions from "../../components/section/accout-page/Transactions";
 import Title from "../../components/reusable/Title";
 import ContactDetails from "../../components/section/accout-page/ContactDetails";
 import Referrals from "../../components/section/accout-page/Referrals";
+import OwnedNFTs from "../../components/section/accout-page/OwnedNFTs";
 
 const AccountPage = () => {
   const [accountState, setAccountState] = useState(0);
@@ -21,6 +22,7 @@ const AccountPage = () => {
       <section className="mt-[120px] w-full">
         {accountState === 0 && <Title title="Account" />}
         {accountState === 1 && <Title title="Transaction overview" />}
+        {accountState === 2 && <Title title="Owned NFTs" />}
         {accountState === 3 && <Title title="Name of artist" />}
         {accountState === 5 && <Title title="Referrals" />}
         <div className="block md:hidden ml-[40px] md:ml-[35svw] border-unveilBlack border-t-2 mr-[15px]">
@@ -39,6 +41,7 @@ const AccountPage = () => {
         </div>
         {accountState === 0 && <Artworks />}
         {accountState === 1 && <Transactions />}
+        {accountState === 2 && <OwnedNFTs />}
         {accountState === 3 && <ContactDetails />}
         {accountState === 5 && <Referrals />}
       </section>
