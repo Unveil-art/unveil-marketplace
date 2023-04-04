@@ -20,7 +20,7 @@ const AccountPage = () => {
   };
 
   return (
-    <main className="relative flex ">
+    <main className="relative flex pb-5 md:pb-[80px]">
       <Sidebar accountState={accountState} setAccountState={setAccountState} />
       <section className="mt-[120px] w-full">
         {accountState === 0 && <Title title="Account" />}
@@ -31,13 +31,16 @@ const AccountPage = () => {
         {accountState === 6 && <Title title="Recognitions" />}
         {accountState === 7 && <Title title="Wishlist" />}
         {accountState === 8 && <Title title="Following" />}
-        <div className="block md:hidden mt-[80px] ml-[40px] md:ml-[35svw] border-unveilBlack border-t-2 mr-[15px]">
-          <select className="select" onChange={(e) => handleAccountState(e)}>
+        <div className="block md:hidden  mt-[80px] ml-[40px] md:ml-[35svw] border-unveilBlack border-t-2 mr-[15px]">
+          <select
+            className="uppercase select"
+            onChange={(e) => handleAccountState(e)}
+          >
             <option>Artwork</option>
             <option>Transactions</option>
             <option>Owned NFTs</option>
             <option>Contact details</option>
-            <option>Membership</option>
+            <option></option>
             <option>Referrals</option>
             <option>Recognitions</option>
             <option>Wishlist</option>

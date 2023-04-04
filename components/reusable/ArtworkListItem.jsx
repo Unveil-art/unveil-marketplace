@@ -10,7 +10,9 @@ const ArtworkListItem = ({ i }) => {
         <div className="h-[136px] w-[106px] md:h-[140px] md:w-[120px] bg-bgColor my-[10px]"></div>
         <div>
           <h4 className="mb-2 md:mb-0 s1">Blue Ocean</h4>
-          <button className="block btn btn-secondary md:hidden">View</button>
+          <button className="block btn btn-secondary btn-lg md:hidden">
+            View
+          </button>
         </div>
       </div>
       <button className="hidden btn btn-secondary md:block">View</button>

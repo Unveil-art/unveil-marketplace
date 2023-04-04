@@ -3,6 +3,7 @@ import NFTsListItem from "../../reusable/NFTsListItem";
 
 const OwnedNFTs = () => {
   return (
+    // TODO: buttons eroner in mobile
     <div className="ml-[40px] md:ml-[35svw] mb-10 pr-[15px] md:pr-10">
       <div className="flex items-center justify-between px-5 py-4 bg-bgColor rounded-[10px] mt-[100px]">
         <p>

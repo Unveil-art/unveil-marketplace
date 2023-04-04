@@ -4,6 +4,8 @@ import Oneliner from "../../reusable/Oneliner";
 const Referrals = () => {
   return (
     <>
+      {/* TODO: invite label an other color based on status  */}
+
       <Oneliner
         gallery={true}
         text="Unveil's Curation Board has selected a collection of top art photography projects for their excellence and stunning visuals."
@@ -17,19 +19,21 @@ const Referrals = () => {
             </span>
           </div>
           <hr className="mb-[15px] h-[2px] bg-unveilGreen" />
-          <select className="select-input mb-[15px]">
+          <select className="select-input mb-2 md:mb-[15px]">
             <option>Black</option>
             <option>White</option>
           </select>
-          <div className="mb-[15px] grid grid-cols-3 gap-[15px]">
+          <div className="mb-2 md:mb-[15px] grid grid-cols-5 md:grid-cols-3 gap-2 md:gap-[15px]">
             <input
               placeholder="email"
-              className="col-span-2 input"
+              className="col-span-3 md:col-span-2 input"
               type="text"
             />
-            <button className="btn btn-secondary">Invite sent</button>
+            <button className="col-span-2 btn btn-secondary btn-lg md:col-auto">
+              Invite sent
+            </button>
           </div>
-          <button className="py-4 btn btn-secondary btn-full">
+          <button className="btn-lg btn btn-secondary btn-full">
             Delete referral
           </button>
         </form>
@@ -41,22 +45,26 @@ const Referrals = () => {
             </span>
           </div>
           <hr className="mb-[15px] h-[2px] bg-unveilGreen" />
-          <select className="select-input mb-[15px]">
+          <select className="select-input mb-2 md:mb-[15px]">
             <option>Black</option>
             <option>White</option>
           </select>
-          <div className="mb-[15px] grid grid-cols-3 gap-[15px]">
+          <div className="mb-2 md:mb-[15px] grid grid-cols-5 md:grid-cols-3 gap-2 md:gap-[15px]">
             <input
               placeholder="email"
-              className="col-span-2 input"
+              className="col-span-3 md:col-span-2 input"
               type="text"
             />
-            <button className="btn btn-secondary">Invite sent</button>
+            <button className="col-span-2 btn btn-secondary btn-lg md:col-auto">
+              Invite sent
+            </button>
           </div>
-          <button className="py-4 btn btn-secondary btn-full">
+          <button className="btn-lg btn btn-secondary btn-full">
             Delete referral
           </button>
         </form>
+        <hr className="my-10 h-[2px] bg-unveilGreen" />
+        <button className="btn-lg btn btn-secondary btn-full">Add more</button>
       </div>
     </>
   );

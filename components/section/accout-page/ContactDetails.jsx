@@ -4,10 +4,10 @@ const ContactDetails = () => {
   return (
     <>
       <form className="ml-[40px] md:ml-[35svw] pr-[15px] md:pr-10 max-w-[640px]">
-        <div className="pt-[100px] pb-20 flex gap-5 items-center">
-          <div className="w-[308px] h-[308px] bg-unveilGreen rounded-full"></div>
+        <div className="pt-[60px] md:pt-[100px] pb-10 md:pb-20 flex gap-5 items-center">
+          <div className="w-[308px] md:h-[308px] aspect-square  bg-bgColor rounded-full"></div>
           <div>
-            <p className="max-w-[200px] mb-2">
+            <p className=":max-w-[200px] mb-2">
               Profile picture (minimally 1500x1500)
             </p>
             <label for="file-upload" class="underline cursor-pointer">
@@ -22,10 +22,12 @@ const ContactDetails = () => {
             />
           </div>
         </div>
+        <hr className="mb-[15px] h-[2px] bg-unveilGreen" />
+
         <div>
           <h3 className="b3 text-[17px] mb-5">Contact information</h3>
           <div>
-            <div className="grid grid-cols-2 gap-x-[15px] mb-[15px]">
+            <div className="grid grid-cols-2 md:gap-[15px] gap-2 ">
               <input placeholder="First name" className="input" type="text" />
               <input placeholder="Last name" className="input" type="text" />
             </div>
@@ -37,7 +39,7 @@ const ContactDetails = () => {
                 id="news"
                 className="checkbox"
               />
-              <label htmlFor="news" className="b4">
+              <label htmlFor="news" className="b3 md:b4">
                 Keep me up to date on news and exclusive offers
               </label>
             </div>
@@ -70,12 +72,12 @@ const ContactDetails = () => {
           <h3 className="b3 text-[17px] mb-5">Links</h3>
           <input
             placeholder="Instagram"
-            className="input  mb-[15px]"
+            className="input mb-2 md:mb-[15px]"
             type="text"
           />
           <input
             placeholder="Twitter"
-            className="input  mb-[15px]"
+            className="input mb-2 md:mb-[15px]"
             type="text"
           />
           <input placeholder="Website" className="input" type="text" />
@@ -89,7 +91,10 @@ const ContactDetails = () => {
             <option>White</option>
           </select>
         </div>
-        <button className="mt-10 mb-10 btn btn-primary btn-wide" type="submit">
+        <button
+          className="mt-10 mb-10 btn btn-primary btn-lg btn-full md:btn-wide"
+          type="submit"
+        >
           Save settings
         </button>
       </form>

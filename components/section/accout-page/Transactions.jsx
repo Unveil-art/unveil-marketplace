@@ -17,8 +17,12 @@ const Transactions = () => {
             <tr className="border-t border-bgBlackOpacity " key={i}>
               <td className="py-5 md:w-28 l2">10/10/2022</td>
               <td className="py-5 md:w-64">Transfer</td>
-              <td className="py-5">Alexander Sporre</td>
-              <td className="py-5 text-right">Julian Mollema</td>
+              <td className="py-5 truncate max-w-[80px] whitespace-nowrap">
+                Alexander Sporre
+              </td>
+              <td className="py-5 text-right max-w-[80px] truncate whitespace-nowrap">
+                Julian Mollema
+              </td>
             </tr>
           ))}
         </table>
@@ -36,8 +40,12 @@ const Transactions = () => {
             <tr className="border-t border-bgBlackOpacity" key={i}>
               <td className="py-5 md:w-28 l2">10/10/2022</td>
               <td className="py-5 md:w-64">Transfer</td>
-              <td className="py-5">Alexander Sporre</td>
-              <td className="py-5 text-right">Julian Mollema</td>
+              <td className="py-5 truncate max-w-[80px] whitespace-nowrap">
+                Alexander Sporre
+              </td>
+              <td className="py-5 text-right max-w-[80px] truncate whitespace-nowrap">
+                Julian Mollema
+              </td>
             </tr>
           ))}
         </table>
