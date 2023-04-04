@@ -10,6 +10,7 @@ import RequestAccess from "../components/section/RequestAccess";
 import FAQ from "../components/section/FAQ";
 import WhyCollect from "../components/section/WhyCollect";
 import NewlyCurated from "../components/section/NewlyCurated";
+import Editorial from "../components/section/Editorial";
 
 export default function Home() {
   return (
@@ -35,6 +36,7 @@ export default function Home() {
       <Socials />
       <RequestAccess />
       <WhyCollect />
+      <Editorial />
       <FAQ />
     </>
   );
