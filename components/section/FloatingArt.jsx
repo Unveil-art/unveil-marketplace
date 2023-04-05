@@ -13,9 +13,7 @@ const FloatingArt = () => {
   const query = gsap.utils.selector(el)
 
   const copy = [
-    'Discover,',
-    'collect',
-    'and learn'
+    'Collect photography.'
   ]
 
   const animateIn = useCallback(() => {
@@ -172,7 +170,7 @@ const FloatingArt = () => {
               {copy.map((word, index) => <span className="gsap-word" key={index}>{ word }</span>)}
             </span>
             <span className="gsap-line flex gap-4">
-              <span>all</span> <span>about</span> <span>photography.</span>
+              <span>Empower artists.</span>
             </span>
           </h1>
           <div className="flex gap-[10px] mt-10">
