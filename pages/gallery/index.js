@@ -12,11 +12,12 @@ export default function Gallery() {
   return (
     <>
       <PageHead />
-      <main className="mt-[130px]">
+      <main className="mt-24 md:mt-[130px]">
         <Title title="Gallery" />
         <OneLiner
           text="Art photographers recognized for unique vision, skill, and exhibitions."
           info={true}
+          gallery={true}
         />
 
         <Filter />

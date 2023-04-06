@@ -12,7 +12,7 @@ const TwoBlockItems = ({ homePage = false }) => {
       <Animate options={{ alpha: !homePage, y: 100 }}>
         <div
           className={`${
-            homePage ? "aspect-[10/11]" : "aspect-square"
+            homePage ? "aspect-[3/4]" : "aspect-square"
           }  bg-unveilGreen`}
         ></div>
         <span className="nft-print">nft + print</span>
@@ -33,7 +33,7 @@ const TwoBlockItems = ({ homePage = false }) => {
         <div
           className={`${
             homePage
-              ? "aspect-[10/11] md:rounded-none rounded-t-full"
+              ? "aspect-[3/4] md:rounded-none rounded-t-full"
               : "aspect-square"
           }  bg-unveilGreen`}
         ></div>

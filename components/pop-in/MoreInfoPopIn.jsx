@@ -20,7 +20,7 @@ const MoreInfoPopIn = ({ infoOpen, setInfoOpen }) => {
             </div>
           </div>
           <div className="">
-            <p className="text-center b4 mt-[120px]">Artworks</p>
+            <p className="text-center b4 mt-[80px]">Artworks</p>
             <h3 className="text-center s2 mb-[80px]">Established</h3>
             <p className="s2">
               Professionals who have gained recognition for their exceptional

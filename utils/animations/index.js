@@ -12,6 +12,7 @@ export const variantPopIn = {
     transition: { duration: 1, ease: [0.58, 0, 0, 1] },
   },
 };
+
 export const variantBackground = {
   init: {
     opacity: 0,
@@ -24,5 +25,20 @@ export const variantBackground = {
     opacity: 1,
     display: "block",
     transition: { duration: 1, ease: [0.33, 0, 0, 1] },
+  },
+};
+
+export const variantCloseBtn = {
+  init: {
+    x: 400,
+    transitionEnd: {
+      display: "none",
+    },
+    transition: { duration: 1, ease: [0.58, 0, 0, 1] },
+  },
+  ani: {
+    x: 0,
+    display: "block",
+    transition: { duration: 1, ease: [0.58, 0, 0, 1] },
   },
 };

@@ -7,6 +7,7 @@ import About from "../../components/reusable/About";
 const GalleryBlockItems = () => {
   return (
     <>
+      {/* Random van deze 3 blokken maar nooit dubbelen */}
       <ThreeBlockItems />
       <TwoBlockItems />
       <ThreeBlockItems />
