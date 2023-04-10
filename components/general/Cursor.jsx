@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 const Cursor = () => {
   const router = useRouter()
   const el = useRef()
+  const cursor = useRef()
 
   const [text, setText] = useState('')
   const [color, setColor] = useState('')
@@ -85,9 +86,21 @@ const Cursor = () => {
     }
   }, [])
 
+  useEffect(() => {
+    if (isPointer) {
+      gsap.fromTo(cursor.current, {
+        rotateX: -45
+      }, {
+        rotateX: 0,
+        duration: 1.25,
+        ease: 'expo.out'
+      })
+    }
+  }, [isPointer])
+
   return (
-    <div ref={el} className="fixed top-0 left-0 pointer-events-none z-10" style={{ opacity: hasMoved && isPointer ? 1 : 0 }}>
-      <span className="inline-flex justify-items-center items-center l2 h-[33px] rounded-[5px] border border-solid border-black px-[10px] py-[7px] mt-4 ml-4" style={{ backgroundColor: color }}>
+    <div ref={el} className="fixed top-0 left-0 pointer-events-none z-10" style={{ opacity: hasMoved && isPointer ? 1 : 0, perspective: '100px' }}>
+      <span ref={cursor} className="inline-flex justify-items-center items-center l2 h-[33px] rounded-[5px] border border-solid border-black px-[10px] py-[7px] mt-4 ml-4" style={{ backgroundColor: color }}>
         { text }
       </span>
     </div>
