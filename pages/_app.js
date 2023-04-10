@@ -28,6 +28,7 @@ function MyApp({ Component, pageProps }) {
         <Lenis root options={{
           lerp: 0.2,
           wheelMultiplier: 0.5,
+          smoothWheel: true,
           smoothTouch: false
         }}>
           <Component {...pageProps} />
