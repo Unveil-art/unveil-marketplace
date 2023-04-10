@@ -1,7 +1,9 @@
 import { gsap } from 'gsap'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/router'
 
 const Cursor = () => {
+  const router = useRouter()
   const el = useRef()
 
   const [text, setText] = useState('')
@@ -54,18 +56,32 @@ const Cursor = () => {
       setColor('')
     }
 
-    elements = [...document.querySelectorAll("[data-cursor")]
+    const attachElements = () => {
+      elements = [...document.querySelectorAll("[data-cursor")]
 
-    elements.forEach((element) => {
-      element.addEventListener('mouseenter', onMouseEnter, false)
-      element.addEventListener('mouseleave', onMouseLeave, false)
-    })
+      elements.forEach((element) => {
+        element.addEventListener('mouseenter', onMouseEnter, false)
+        element.addEventListener('mouseleave', onMouseLeave, false)
+      })
+    }
 
-    return () => {
+    const removeElements = () => {
       elements.forEach((element) => {
         element.removeEventListener('mouseenter', onMouseEnter, false)
         element.removeEventListener('mouseleave', onMouseLeave, false)
       })
+    }
+    
+    router.events.on('routeChangeStart', removeElements)
+    router.events.on('routeChangeComplete', attachElements)
+
+    attachElements()
+
+    return () => {
+      router.events.off('routeChangeStart', removeElements)
+      router.events.off('routeChangeComplete', attachElements)
+      
+      removeElements()
     }
   }, [])
 

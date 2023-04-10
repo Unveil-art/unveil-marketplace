@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { createContext, useState, useEffect, useRef, useContext } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 
 const HistoryContext = createContext()
 
