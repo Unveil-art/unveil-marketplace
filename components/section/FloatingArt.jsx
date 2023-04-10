@@ -177,7 +177,7 @@ const FloatingArt = () => {
         </div>
 
         <div data-cursor="View Artist" data-cursor-color="#B6B0A4" className="gsap-thumbnail absolute block bottom-[0] sm:bottom-[30%] left-0 sm:left-auto sm:right-0 sm:translate-y-1/2 translate-y-0 z-10 invisible">
-          <div className="gsap-parallax" data-speed="0.1">
+          <div className="gsap-parallax" data-speed="0.0">
             <div className="bg-unveilGreen w-[164px] h-[229px] sm:w-[320px] sm:h-[422px]">
               <Image
                 src="/images/Rectangle573.jpg"

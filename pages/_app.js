@@ -27,7 +27,8 @@ function MyApp({ Component, pageProps }) {
       <HistoryProvider>
         <Lenis root options={{
           lerp: 0.2,
-          wheelMultiplier: 0.5
+          wheelMultiplier: 0.5,
+          smoothTouch: false
         }}>
           <Component {...pageProps} />
         </Lenis>
