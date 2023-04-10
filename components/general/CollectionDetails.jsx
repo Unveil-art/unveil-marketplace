@@ -53,7 +53,7 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor }) => {
         </h6>
         <p className="gsap-transform s2 mb-[6px] md:mb-[15px]">03:02:22</p>
         <h3 className="gsap-transform h4">Collection name</h3>
-        <div class="gsap-transform">
+        <div className="gsap-transform">
           <small className="b5">Starting price (edition of 10)</small>
           <div className="flex items-center  mb-[15px]">
             <p className="b3">€1200 (</p>

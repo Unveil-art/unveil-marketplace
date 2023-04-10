@@ -10,7 +10,7 @@ const ConatactDetails = () => {
             <p className="max-w-[200px] mb-2">
               Profile picture (minimally 1500x1500)
             </p>
-            <label for="file-upload" class="underline cursor-pointer">
+            <label for="file-upload" className="underline cursor-pointer">
               Change image
             </label>
             <input

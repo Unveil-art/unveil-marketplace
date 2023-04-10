@@ -3,6 +3,7 @@ import "../styles/globals.css";
 import { useEffect } from "react";
 import Router from "next/router";
 import { Lenis, useLenis } from "@studio-freight/react-lenis";
+import { HistoryProvider } from '@/contexts/History'
 import Layout from "../components/general/Layout";
 
 function MyApp({ Component, pageProps }) {
@@ -23,12 +24,14 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Layout>
-      <Lenis root options={{
-        lerp: 0.2,
-        wheelMultiplier: 0.5
-      }}>
-        <Component {...pageProps} />
-      </Lenis>
+      <HistoryProvider>
+        <Lenis root options={{
+          lerp: 0.2,
+          wheelMultiplier: 0.5
+        }}>
+          <Component {...pageProps} />
+        </Lenis>
+      </HistoryProvider>
     </Layout>
   );
 }

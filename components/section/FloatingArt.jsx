@@ -1,9 +1,15 @@
 import { gsap } from "gsap";
-import { useRef, useEffect, useCallback } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { useFontLoaded } from "@/hooks/useFontLoaded";
+import { useHistory } from '@/contexts/History';
+import { useLenis } from "@studio-freight/react-lenis";
 import Link from "next/link";
 import Image from "next/image";
+
+const copy = [
+  'Collect photography.'
+]
 
 const FloatingArt = () => {
   const el = useRef()
@@ -12,9 +18,7 @@ const FloatingArt = () => {
   const loaded = useFontLoaded('Graphik')
   const query = gsap.utils.selector(el)
 
-  const copy = [
-    'Collect photography.'
-  ]
+  const { previous } = useHistory()
 
   const animateIn = useCallback(() => {
     const align = query('.gsap-align')
@@ -77,7 +81,7 @@ const FloatingArt = () => {
       const sign = Math.sign((top + (height * 0.5)) - (size.height * 0.5))
       const margin = sign === -1 ? top : (size.height - (top + (height * 0.5)))
       const value = (height + margin) * sign
-      console.log({ index, value })
+      // console.log({ index, value })
       tl.fromTo(el, {
         autoAlpha: 1,
         y: value
@@ -90,19 +94,32 @@ const FloatingArt = () => {
       }, '-=1.1')
     })
     tl.restart()
-  }, [size])
+  })
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-    gsap.set(el.current, {
-      autoAlpha: 0
-    })
-    console.log(loaded, size, once)
-    if (!once.current && loaded && size.width && size.height) {
-      once.current = true
-      animateIn()
+    if (!previous) {
+      window.scrollTo(0, 0)
+      gsap.set(el.current, {
+        autoAlpha: 0
+      })
+      if (!once.current && loaded && size.width && size.height) {
+        once.current = true
+        animateIn()
+      }
     }
-  }, [loaded, size])
+  }, [loaded, size, previous])
+
+  useLenis(({ scroll }) => {
+    // const top = rect.top - scroll
+    const parallax = query('.gsap-parallax')
+    parallax.forEach((el, index) => {
+      const speed = el.getAttribute('data-speed')
+      const direction = index % 2 === 0 ? 1 : -1
+      gsap.set(el, {
+        y: (scroll * speed) * direction
+      })
+    })
+  }, [])
 
   // (https://greensock.com/react)
   // useLayoutEffect(() => {
@@ -115,53 +132,60 @@ const FloatingArt = () => {
   return (
     <>
       <section ref={el} className="h-[100svh] flex justify-center flex-col p-[15px] sm:p-10 relative overflow-hidden">
-        {/* <div className="fixed width-[1px] h-screen left-[50%] border border-rose-600"></div> */}
         <div data-cursor="View Artist" data-cursor-color="#8A8E7B" className="gsap-thumbnail absolute block top-[5%] left-[20%] z-10">
-          <div className="bg-unveilGreen w-[70px] h-[89px] sm:w-[140px] sm:h-[180px]">
-            <Image
-              src="/images/Rectangle564.jpg"
-              alt
-              width={281}
-              height={362}
-            />
+          <div className="gsap-parallax" data-speed="0.1">
+            <div className="bg-unveilGreen w-[70px] h-[89px] sm:w-[140px] sm:h-[180px]">
+              <Image
+                src="/images/Rectangle564.jpg"
+                alt="Batiaan Woudt"
+                width={281}
+                height={362}
+              />
+            </div>
+            <small className="hidden sm:block l2">Batiaan Woudt</small>
           </div>
-          <small className="hidden sm:block l2">Batiaan Woudt</small>
         </div>
 
         <div data-cursor="View Artist" data-cursor-color="#5B91AC" className="gsap-thumbnail absolute block bottom-[20%] sm:bottom-[5%] right-[10%] left-auto sm:left-[40%] sm:right-auto z-10">
-          <div className="bg-unveilGreen w-[70px] h-[89px] sm:w-[140px] sm:h-[180px]">
-            <Image
-              src="/images/Rectangle563.jpg"
-              alt
-              width={281}
-              height={362}
-            />
+          <div className="gsap-parallax" data-speed="0.1">
+            <div className="bg-unveilGreen w-[70px] h-[89px] sm:w-[140px] sm:h-[180px]">
+              <Image
+                src="/images/Rectangle563.jpg"
+                alt="Batiaan Woudt"
+                width={281}
+                height={362}
+              />
+            </div>
+            <small className="hidden sm:block l2">Batiaan Woudt</small>
           </div>
-          <small className="hidden sm:block l2">Batiaan Woudt</small>
         </div>
 
         <div data-cursor="View Artist" data-cursor-color="#C1C1C1" className="gsap-thumbnail absolute block top-[10%] sm:top-0 right-[4%] sm:right-auto sm:left-1/2 z-10">
-          <div className="bg-unveilGreen w-[136px] h-[184px] sm:w-[410px] sm:h-[500px]">
-            <Image
-              src="/images/Rectangle626.jpg"
-              alt
-              width={821}
-              height={1001}
-            />
+          <div className="gsap-parallax" data-speed="0.1">
+            <div className="bg-unveilGreen w-[136px] h-[184px] sm:w-[410px] sm:h-[500px]">
+              <Image
+                src="/images/Rectangle626.jpg"
+                alt="Batiaan Woudt"
+                width={821}
+                height={1001}
+              />
+            </div>
+            <small className="hidden sm:block l2">Batiaan Woudt</small>
           </div>
-          <small className="hidden sm:block l2">Batiaan Woudt</small>
         </div>
 
         <div data-cursor="View Artist" data-cursor-color="#B6B0A4" className="gsap-thumbnail absolute block bottom-[0] sm:bottom-[30%] left-0 sm:left-auto sm:right-0 sm:translate-y-1/2 translate-y-0 z-10">
-          <div className="bg-unveilGreen w-[164px] h-[229px] sm:w-[320px] sm:h-[422px]">
-            <Image
-              src="/images/Rectangle573.jpg"
-              alt
-              width={640}
-              height={844}
-            />
+          <div className="gsap-parallax" data-speed="0.1">
+            <div className="bg-unveilGreen w-[164px] h-[229px] sm:w-[320px] sm:h-[422px]">
+              <Image
+                src="/images/Rectangle573.jpg"
+                alt="Batiaan Woudt"
+                width={640}
+                height={844}
+              />
+            </div>
+            <small className="sm:block hidden l2">Batiaan Woudt</small>
           </div>
-          <small className="sm:block hidden l2">Batiaan Woudt</small>
         </div>
 
         <div className="gsap-align relative max-w-[700px] z-20">
@@ -174,7 +198,7 @@ const FloatingArt = () => {
             </span>
           </h1>
           <div className="flex gap-[10px] mt-10">
-            <Link href="" className="gsap-stagger">
+            <Link href="/gallery" className="gsap-stagger">
               <button className="btn btn-primary">Start collecting</button>
             </Link>
             <Link href="" className="gsap-stagger">
