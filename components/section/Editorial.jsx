@@ -19,7 +19,7 @@ const Editorial = () => {
               What determines the value of an Art piece
             </p>
             <p className="b3 opacity-60 mt-1 md:max-w-[230px] md:mx-auto">
-              Groeneveld amassed dozens of interests he couldn't narrow
+              Groeneveld amassed dozens of interests he couldn&apos;t narrow
             </p>
           </div>
         </div>
@@ -29,7 +29,7 @@ const Editorial = () => {
           <div className="mx-auto mt-2">
             <p className=" b3">What determines the value of an Art piece</p>
             <p className="mt-1 b3 opacity-60">
-              Groeneveld amassed dozens of interests he couldn't narrow
+              Groeneveld amassed dozens of interests he couldn&apos;t narrow
             </p>
           </div>
         </div>
@@ -41,7 +41,7 @@ const Editorial = () => {
             <div className="mx-auto mt-2">
               <p className=" b3">What determines the value of an Art piece</p>
               <p className="mt-1 b3 opacity-60">
-                Groeneveld amassed dozens of interests he couldn't narrow
+                Groeneveld amassed dozens of interests he couldn&apos;t narrow
               </p>
             </div>
           </div>
@@ -50,7 +50,7 @@ const Editorial = () => {
             <div className="mx-auto mt-2">
               <p className=" b3">What determines the value of an Art piece</p>
               <p className="mt-1 b3 opacity-60">
-                Groeneveld amassed dozens of interests he couldn't narrow
+                Groeneveld amassed dozens of interests he couldn&apos;t narrow
               </p>
             </div>
           </div>
@@ -60,7 +60,7 @@ const Editorial = () => {
           <div className="mx-auto mt-2">
             <p className=" b3">What determines the value of an Art piece</p>
             <p className="mt-1 b3 opacity-60">
-              Groeneveld amassed dozens of interests he couldn't narrow
+              Groeneveld amassed dozens of interests he couldn&apos;t narrow
             </p>
           </div>
         </div>
