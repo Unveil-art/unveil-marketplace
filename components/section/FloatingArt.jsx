@@ -173,8 +173,8 @@ const FloatingArt = ({ data }) => {
         className="h-[100svh] flex justify-center flex-col p-[15px] sm:p-10 relative overflow-hidden"
       >
         <div
-          data-cursor="View Artist"
-          data-cursor-color="#8A8E7B"
+          data-cursor="Coming soon"
+          data-cursor-color={data.topleft_color}
           className="gsap-thumbnail absolute block top-[5%] left-[20%] z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="0.1">
@@ -191,8 +191,8 @@ const FloatingArt = ({ data }) => {
         </div>
 
         <div
-          data-cursor="View Artist"
-          data-cursor-color="#5B91AC"
+          data-cursor="Coming soon"
+          data-cursor-color={data.bottomleft_color}
           className="gsap-thumbnail absolute block bottom-[20%] sm:bottom-[5%] right-[10%] left-auto sm:left-[40%] sm:right-auto z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="0.1">
@@ -209,8 +209,8 @@ const FloatingArt = ({ data }) => {
         </div>
 
         <div
-          data-cursor="View Artist"
-          data-cursor-color="#C1C1C1"
+          data-cursor="Coming soon"
+          data-cursor-color={data.topright_color}
           className="gsap-thumbnail absolute block top-[10%] sm:top-0 right-[4%] sm:right-auto sm:left-1/2 z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="0.1">
@@ -229,8 +229,8 @@ const FloatingArt = ({ data }) => {
         </div>
 
         <div
-          data-cursor="View Artist"
-          data-cursor-color="#B6B0A4"
+          data-cursor="Coming soon"
+          data-cursor-color={data.centerright_color}
           className="gsap-thumbnail absolute block bottom-[0] sm:bottom-[30%] left-0 sm:left-auto sm:right-0 sm:translate-y-1/2 translate-y-0 z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="0.0">
@@ -248,6 +248,7 @@ const FloatingArt = ({ data }) => {
           </div>
         </div>
 
+        {/* Baptiste you can get the heading from cms with data.heading */}
         <div className="gsap-align relative max-w-[700px] z-20">
           <h1 className="gsap-title h3">
             <span className="flex gap-4">
@@ -262,12 +263,26 @@ const FloatingArt = ({ data }) => {
             </span>
           </h1>
           <div className="flex gap-[10px] mt-10">
-            <Link href="/gallery" className="gsap-stagger">
-              <button className="btn btn-primary">Start collecting</button>
-            </Link>
-            <Link href="" className="gsap-stagger">
-              <button className="btn btn-secondary">Request access</button>
-            </Link>
+            {/* Going to be a link */}
+            <div className="gsap-stagger">
+              <button
+                data-cursor="Coming soon"
+                data-cursor-color="#5B91AC"
+                className="cursor-not-allowed btn btn-primary"
+              >
+                Start collecting
+              </button>
+            </div>
+            {/* Going to be a link */}
+            <div className="gsap-stagger">
+              <button
+                data-cursor="Coming soon"
+                data-cursor-color="#5B91AC"
+                className="cursor-not-allowed btn btn-secondary"
+              >
+                Request access
+              </button>
+            </div>
           </div>
         </div>
       </section>

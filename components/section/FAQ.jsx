@@ -33,12 +33,9 @@ const FAQ = ({ data }) => {
             <span className="underline decoration-none md:no-underline underline-offset-2 decoration-1">
               questions.
             </span>
-            <Link
-              href="/gallery"
-              className="hidden underline cursor-pointer md:block underline-offset-4 decoration-1"
-            >
+            <span className="hidden underline cursor-pointer cursor-not-allowed md:block underline-offset-4 decoration-1">
               <span className="">Learn more</span>
-            </Link>
+            </span>
           </p>
         </div>
       </div>

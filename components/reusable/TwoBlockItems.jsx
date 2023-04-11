@@ -1,4 +1,6 @@
 import React from "react";
+import Image from "next/image";
+
 import Animate from "./Animate";
 import Currency from "../svg/Currency";
 
@@ -13,8 +15,17 @@ const TwoBlockItems = ({ homePage = false, data }) => {
         <div
           className={`${
             homePage ? "aspect-[3/4]" : "aspect-square"
-          }  bg-unveilGreen`}
-        ></div>
+          }  bg-bgColor`}
+        >
+          <div className="relative w-full h-full">
+            <Image
+              src={data[0].banner.data.attributes.url}
+              alt={data[0].banner.data.attributes.alt}
+              layout="fill"
+              objectFit="cover"
+            />
+          </div>
+        </div>
         <span className="nft-print">{data[0].type}</span>
         <h5 className="pt-1 b3">{data[0].name}</h5>
         <p className="b3 opacity-60">{data[0].user_name}</p>
@@ -38,8 +49,17 @@ const TwoBlockItems = ({ homePage = false, data }) => {
             homePage
               ? "aspect-[3/4] md:rounded-none rounded-t-full"
               : "aspect-square"
-          }  bg-unveilGreen`}
-        ></div>
+          }  bg-bgColor`}
+        >
+          <div className="relative w-full h-full">
+            <Image
+              src={data[1].banner.data.attributes.url}
+              alt={data[1].banner.data.attributes.alt}
+              layout="fill"
+              objectFit="cover"
+            />
+          </div>
+        </div>
         <span className="nft-print">{data[1].type}</span>
         <h5 className="pt-1 b3">{data[1].name}</h5>
         <p className="b3 opacity-60">{data[1].user_name}</p>

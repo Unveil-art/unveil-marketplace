@@ -24,7 +24,11 @@ const RequestAccess = ({ data }) => {
           {data.banner_description}
         </p>
         <Link href={data.link}>
-          <button className="block mb-3 btn btn-primary md:w-fit btn-full">
+          <button
+            data-cursor="Coming soon"
+            data-cursor-color="#B2B4AE"
+            className="block mb-3 cursor-not-allowed btn btn-primary md:w-fit btn-full"
+          >
             Request access
           </button>
         </Link>
