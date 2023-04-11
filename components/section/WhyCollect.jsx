@@ -106,11 +106,13 @@ const WhyCollect = ({ data }) => {
               />
             </div>
           </div>
-          <div className="absolute w-24 -translate-x-1/2 -translate-y-1/2 shadow top-1/2 left-1/2 -z-10">
+          <div className="absolute w-24 aspect-[3/4] -translate-x-1/2 -translate-y-1/2 shadow top-1/2 left-1/2 -z-10">
             <div className="relative w-full h-full">
-              <img
+              <Image
                 src={data.blocks[2].main_image.data.attributes.url}
                 alt={data.blocks[2].main_image.data.attributes.url}
+                layout="fill"
+                objectFit="cover"
               />
             </div>
           </div>

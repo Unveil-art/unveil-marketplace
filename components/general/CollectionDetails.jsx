@@ -11,10 +11,12 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
           imageMargin ? "md:mb-10 md:ml-10" : ""
         } w-full md:w-[65svw] pr-10 md:pr-0`}
       >
-        <div className="relative block w-full h-full">
-          <img
+        <div className="relative block w-full aspect-square">
+          <Image
             src={data.image.data.attributes.url}
             alt={data.image.data.attributes.alt}
+            layout="fill"
+            objectFit="contain"
           />
         </div>
       </div>
