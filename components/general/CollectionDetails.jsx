@@ -1,9 +1,11 @@
-import React from "react";
-import Image from "next/image";
+import React, { useState, useEffect } from "react";
 
 import Currency from "../svg/Currency";
+import CountdownTimer from "../reusable/CountdownTimer";
 
 const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
+  const releaseDate = new Date(data.date);
+
   return (
     <div className="md:flex-row flex-col flex gap-[30px] relative">
       <div
@@ -12,11 +14,9 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
         } w-full md:w-[65svw] pr-10 md:pr-0`}
       >
         <div className="relative block w-full aspect-square">
-          <Image
+          <img
             src={data.image.data.attributes.url}
             alt={data.image.data.attributes.alt}
-            layout="fill"
-            objectFit="contain"
           />
         </div>
       </div>
@@ -27,13 +27,15 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
         >
           {data.status}
         </h6>
-        <p className="s2 mb-[6px] md:mb-[15px]">03:02:22</p>
+        <div className="s2 mb-[6px] md:mb-[15px]">
+          <CountdownTimer targetDate={releaseDate} />
+        </div>
         <h3 className="h4">{data.name}</h3>
         <small className="b5">{data.price_heading}</small>
         <div className="flex items-center  mb-[15px]">
-          <p className="b3">{data.price} (</p>
+          <p className="b3">{data.europrice} (</p>
           <Currency color={color} />
-          <p className="b3">1.2)</p>
+          <p className="b3">{data.price})</p>
         </div>
         <button
           className="btn btn-primary"

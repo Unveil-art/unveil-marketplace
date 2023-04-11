@@ -15,7 +15,7 @@ const FloatingArt = ({ data }) => {
               objectFit="contain"
             />
           </div>
-          <small className="hidden sm:block l2">Batiaan Woudt</small>
+          <small className="hidden sm:block l2">{data.topleft_name}</small>
         </div>
 
         <div className="absolute -z-10 block bottom-[20%] sm:bottom-[5%] right-[10%] left-auto sm:left-[40%]">
@@ -27,7 +27,7 @@ const FloatingArt = ({ data }) => {
               objectFit="contain"
             />
           </div>
-          <small className="hidden sm:block l2">Batiaan Woudt</small>
+          <small className="hidden sm:block l2">{data.bottomleft_name}</small>
         </div>
 
         <div className="absolute -z-10 block top-[10%] sm:top-0 right-[4%] sm:right-auto sm:left-1/2">
@@ -39,7 +39,7 @@ const FloatingArt = ({ data }) => {
               objectFit="contain"
             />
           </div>
-          <small className="hidden sm:block l2">Batiaan Woudt</small>
+          <small className="hidden sm:block l2">{data.centerright_name}</small>
         </div>
 
         <div className="absolute -z-10 block bottom-[0] sm:bottom-[30%] left-0 sm:left-auto sm:right-0 sm:translate-y-1/2 translate-y-0">
@@ -51,7 +51,7 @@ const FloatingArt = ({ data }) => {
               objectFit="contain"
             />
           </div>
-          <small className="hidden sm:block l2">Batiaan Woudt</small>
+          <small className="hidden sm:block l2">{data.centerright_name}</small>
         </div>
 
         <h1 className="h3 max-w-[600px]">{data.heading}</h1>

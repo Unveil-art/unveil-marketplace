@@ -11,7 +11,7 @@ const Collection = ({
   oneLinerHref,
   color = "#141414",
   backgroundColor = "#fff",
-  imageMargin,
+  imageMargin = true,
   data,
 }) => {
   return (

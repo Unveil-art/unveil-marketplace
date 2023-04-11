@@ -35,8 +35,8 @@ const WhyCollect = ({ data }) => {
           <div className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 w-1/2 h-[65%] ">
             <div className="relative w-full h-full">
               <Image
-                src={data.blocks[0].main_image.data.attributes.url}
-                alt={data.blocks[0].main_image.data.attributes.url}
+                src={data.blocks[0].main_image.data[0].attributes.url}
+                alt={data.blocks[0].main_image.data[0].attributes.url}
                 layout="fill"
                 objectFit="cover"
               />
@@ -73,6 +73,7 @@ const WhyCollect = ({ data }) => {
               },
             }}
             speed={500}
+            loop
             modules={[Autoplay]}
             grabCursor
             slidesPerView={"auto"}
@@ -85,7 +86,7 @@ const WhyCollect = ({ data }) => {
                   key={index}
                   className="!w-[140px] !h-[140px] unveilTransition border border-[rgba(0,0,0,0.15)] rounded-[10px] !flex justify-center items-center"
                 >
-                  <div>Payment</div>
+                  <div>Payment {item}</div>
                 </SwiperSlide>
               )
             )}
@@ -109,8 +110,8 @@ const WhyCollect = ({ data }) => {
           <div className="absolute w-24 aspect-[3/4] -translate-x-1/2 -translate-y-1/2 shadow top-1/2 left-1/2 -z-10">
             <div className="relative w-full h-full">
               <Image
-                src={data.blocks[2].main_image.data.attributes.url}
-                alt={data.blocks[2].main_image.data.attributes.url}
+                src={data.blocks[0].main_image.data[0].attributes.url}
+                alt={data.blocks[0].main_image.data[0].attributes.url}
                 layout="fill"
                 objectFit="cover"
               />

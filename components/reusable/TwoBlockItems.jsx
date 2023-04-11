@@ -39,13 +39,13 @@ const TwoBlockItems = ({ homePage = false, data }) => {
         ></div>
         <span className="nft-print">{data[1].type}</span>
         <h5 className="pt-1 b3">{data[1].name}</h5>
-        <p className="b3 opacity-60">{data[0].user_name}</p>
+        <p className="b3 opacity-60">{data[1].user_name}</p>
         <div className="flex items-center gap-1">
-          <p className="b3 opacity-60">{data[0].price} (</p>
+          <p className="b3 opacity-60">{data[1].europrice} (</p>
           <div className="scale-[1.3]">
             <Currency />
           </div>
-          <p className="b3 opacity-60">1.2)</p>
+          <p className="b3 opacity-60">{data[1].price})</p>
         </div>
       </div>
     </div>

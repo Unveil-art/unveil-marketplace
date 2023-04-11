@@ -11,7 +11,9 @@ const Socials = ({ title, data }) => {
             className="md:mt-[10px] border-b md:last:border-none border-b-unveilGreen md:border-b-transparent md:border-b-none  md:border-r border-r-unveilDrakGray md:mr-5 md:block flex items-center justify-between"
           >
             <p className="md:pt-6 md:mb-6 py-[17px] b3">{item.heading}</p>
-            <h3 className="md:b1 h3 text-[24px]">{item.body}</h3>
+            <a target="_blank" rel="noreferrer" href={item.link}>
+              <h3 className="md:b1 h3 text-[24px]">{item.body}</h3>
+            </a>
           </div>
         ))}
       </div>

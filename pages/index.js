@@ -26,17 +26,19 @@ export default function Home({ data, faq }) {
       <Collection
         data={homeData.page2}
         title={homeData.page2.heading}
-        backgroundColor="#B8AE92"
-        imageMargin={true}
+        backgroundColor={homeData.page2.backgroundcolor}
+        color={homeData.page2.fontcolor}
+        imageMargin={homeData.page2.margin}
       />
       <NewlyCurated data={homeData.page3} />
       <TrustedPartners data={homeData.page4} />
       <Collection
-        data={homeData.page2}
+        data={homeData.page5}
         oneLiner="New works, freshtalent. Discover the unseen."
         title={homeData.page5.heading}
-        color="#F0EDE4"
-        backgroundColor="#1C1110"
+        backgroundColor={homeData.page5.backgroundcolor}
+        color={homeData.page5.fontcolor}
+        imageMargin={homeData.page5.margin}
       />
       <Socials title={homeData.page6.heading} data={homeData.page6.block} />
       <RequestAccess data={homeData.page6} />
