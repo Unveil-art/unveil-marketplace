@@ -45,7 +45,7 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
   }, [isIntersecting]);
 
   return (
-    <div ref={el} className="md:flex-row flex-col flex gap-[30px] relative">
+    <div ref={el} className="md:flex-row flex-col flex gap-[30px] md:gap-[0px] relative">
       <div
         className={`${
           imageMargin ? "md:mb-10 md:ml-10" : ""
@@ -65,7 +65,7 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
             value: 0.07,
           },
         }}
-        className="md:ml-0 ml-10 md:mb-0 mb-[55px] sticky top-10 pb-10 left-0 h-fit"
+        className="ml-10 md:ml-0 md:pl-[30px] md:mb-0 mb-[55px] sticky top-10 pb-10 left-0 h-fit overflow-hidden"
       >
         <h6
           className="gsap-transform w-fit rounded-full px-2 l2 mb-[10px] md:mb-[15px]"
