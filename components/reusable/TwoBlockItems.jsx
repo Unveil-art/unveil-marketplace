@@ -2,7 +2,7 @@ import React from "react";
 import Animate from "@/components/reusable/Animate";
 import Currency from "../svg/Currency";
 
-const TwoBlockItems = ({ homePage = false }) => {
+const TwoBlockItems = ({ homePage = false, data }) => {
   return (
     <div
       className={`${
@@ -15,11 +15,11 @@ const TwoBlockItems = ({ homePage = false }) => {
             homePage ? "aspect-[3/4]" : "aspect-square"
           }  bg-unveilGreen`}
         ></div>
-        <span className="nft-print">nft + print</span>
-        <h5 className="pt-1 b3">Artwork Name</h5>
-        <p className="b3 opacity-60">Alexander Sporre</p>
+        <span className="nft-print">{data[0].type}</span>
+        <h5 className="pt-1 b3">{data[0].name}</h5>
+        <p className="b3 opacity-60">{data[0].user_name}</p>
         <div className="flex items-center gap-1">
-          <p className="b3 opacity-60">€1200 (</p>
+          <p className="b3 opacity-60">{data[0].price} (</p>
           <div className="scale-[1.3]">
             <Currency />
           </div>
@@ -37,15 +37,15 @@ const TwoBlockItems = ({ homePage = false }) => {
               : "aspect-square"
           }  bg-unveilGreen`}
         ></div>
-        <span className="nft-print">nft + print</span>
-        <h5 className="pt-1 b3">Artwork Name</h5>
-        <p className="b3 opacity-60">Alexander Sporre</p>
+        <span className="nft-print">{data[1].type}</span>
+        <h5 className="pt-1 b3">{data[1].name}</h5>
+        <p className="b3 opacity-60">{data[1].user_name}</p>
         <div className="flex items-center gap-1">
-          <p className="b3 opacity-60">€1200 (</p>
+          <p className="b3 opacity-60">{data[1].europrice} (</p>
           <div className="scale-[1.3]">
             <Currency />
           </div>
-          <p className="b3 opacity-60">1.2)</p>
+          <p className="b3 opacity-60">{data[1].price})</p>
         </div>
       </Animate>
     </div>

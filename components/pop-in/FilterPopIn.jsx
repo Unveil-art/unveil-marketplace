@@ -28,8 +28,6 @@ const FilterPopIn = ({ filterOpen, setFilterOpen }) => {
         initial="init"
         className="fixed hidden overflow-y-scroll right-[15px] top-[15px] md:top-5 md:right-5 w-[320px] sm:w-[380px] bg-unveilWhite px-5 py-10 z-50 rounded-[10px] md:rounded-[20px] h-[calc(100vh-30px)]"
       >
-        {/* TODO: scrroll on desktop */}
-
         <div className="space-y-6">
           <div>
             <label className="b6 block pb-[10px]">Category</label>

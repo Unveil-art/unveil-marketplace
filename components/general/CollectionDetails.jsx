@@ -1,10 +1,17 @@
+
 import { gsap } from "gsap";
 import { useRef, useEffect } from "react";
+
 import { useIntersection } from "@/hooks/useIntersection";
+
 import Animate from "@/components/reusable/Animate";
 import Currency from "@/components/svg/Currency";
+import CountdownTimer from "../reusable/CountdownTimer";
+
 
 const CollectionDetails = ({ imageMargin, color, backgroundColor }) => {
+  const releaseDate = new Date(data.date);
+
   const el = useRef()
   const query = gsap.utils.selector(el)
   const { isIntersecting } = useIntersection(el)
@@ -35,9 +42,14 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor }) => {
       <div
         className={`${
           imageMargin ? "md:mb-10 md:ml-10" : ""
-        } relative w-full md:w-[65svw] aspect-square pr-10 md:pr-0 z-10`}
+        } w-full md:w-[65svw] pr-10 md:pr-0`}
       >
-        <div className="block w-full h-full bg-unveilGreen"></div>
+        <div className="relative block w-full aspect-square">
+          <img
+            src={data.image.data.attributes.url}
+            alt={data.image.data.attributes.alt}
+          />
+        </div>
       </div>
       <Animate options={{
         stagger: {
@@ -49,17 +61,19 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor }) => {
           className="gsap-transform w-fit rounded-full px-2 l2 mb-[10px] md:mb-[15px]"
           style={{ border: `solid 1px ${color}` }}
         >
-          Live Drop
+          {data.status}
         </h6>
-        <p className="gsap-transform s2 mb-[6px] md:mb-[15px]">03:02:22</p>
-        <h3 className="gsap-transform h4">Collection name</h3>
-        <div className="gsap-transform">
-          <small className="b5">Starting price (edition of 10)</small>
-          <div className="flex items-center  mb-[15px]">
-            <p className="b3">€1200 (</p>
-            <Currency color={color} />
-            <p className="b3">1.2)</p>
-          </div>
+
+        <div className=" gsap-transform s2 mb-[6px] md:mb-[15px]">
+          <CountdownTimer targetDate={releaseDate} />
+        </div>
+        <h3 className="gsap-transform h4">{data.name}</h3>
+        <small className="gsap-transform b5">{data.price_heading}</small>
+        <div className="gsap-transform flex items-center  mb-[15px]">
+          <p className="b3">{data.europrice} (</p>
+          <Currency color={color} />
+          <p className="b3">{data.price})</p>
+
         </div>
         <button
           className="gsap-transform btn btn-primary"

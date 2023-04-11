@@ -39,14 +39,14 @@ const Sidebar = ({ accountState, setAccountState }) => {
       >
         Contact details
       </p>
-      <p
+      {/* <p
         onClick={() => handleAccountState(4)}
         className={`${
           accountState === 4 ? "text-unveilBlack" : ""
         } cursor-pointer hover:text-unveilBlack unveilTransition whitespace-nowrap`}
       >
         Membership
-      </p>
+      </p> */}
       <p
         onClick={() => handleAccountState(5)}
         className={`${

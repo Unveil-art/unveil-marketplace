@@ -9,7 +9,7 @@ const GalleryBlockItems = () => {
     <>
       {/* Random van deze 3 blokken maar nooit dubbelen */}
       <ThreeBlockItems />
-      <TwoBlockItems />
+      {/* <TwoBlockItems /> */}
       <ThreeBlockItems />
       <About
         bg="#54382F"

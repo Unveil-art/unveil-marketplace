@@ -8,10 +8,10 @@ const Artworks = () => {
         View gallery
       </button>
       <div className="ml-[40px] md:ml-[35svw] mb-6 pr-[15px]">
-        <button className="mt-4 mb-20 md:my-20 btn btn-secondary md:btn-fit md:btn-wide btn-full ">
+        <button className="mt-4 mb-20 md:my-20 btn btn-secondary btn-lg md:btn-fit md:btn-wide btn-full ">
           Add new artwork
         </button>
-        <div className="flex gap-2 pb-4 overflow-auto flex-nowrap whitespace-nowrap">
+        <div className="flex gap-2 overflow-auto md:pb-4 flex-nowrap whitespace-nowrap">
           <span className="px-2 border rounded-full border-unveilDrakGray l2">
             Unlisted 1
           </span>
@@ -23,7 +23,7 @@ const Artworks = () => {
           </span>
         </div>
       </div>
-      <div className="ml-[40px] md:ml-[35svw] pr-[15px] md:pr-10">
+      <div className="ml-[40px] md:ml-[35svw] pr-[15px] md:pr-10 mb-10">
         {[1, 2, 3, 4, 5].map((item, i) => (
           <ArtworkListItem key={i} />
         ))}

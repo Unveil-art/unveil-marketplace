@@ -4,7 +4,8 @@ const nextConfig = {
   swcMinify: true,
   images: {
     formats: ['image/avif', 'image/webp'],
+    domains: ["cumbersome-furtive-fowl.media.strapiapp.com"],
   }
 }
 
-module.exports = nextConfig
+module.exports = nextConfig;

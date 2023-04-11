@@ -4,7 +4,12 @@ import Sidebar from "../../components/section/accout-page/Sidebar";
 import Artworks from "../../components/section/accout-page/Artworks";
 import Transactions from "../../components/section/accout-page/Transactions";
 import Title from "../../components/reusable/Title";
-import ConatactDetails from "../../components/section/accout-page/ConatactDetails";
+import ContactDetails from "../../components/section/accout-page/ContactDetails";
+import Referrals from "../../components/section/accout-page/Referrals";
+import OwnedNFTs from "../../components/section/accout-page/OwnedNFTs";
+import Recognitions from "../../components/section/accout-page/Recognitions";
+import Wishlist from "../../components/section/accout-page/Wishlist";
+import Following from "../../components/section/accout-page/Following";
 
 const AccountPage = () => {
   const [accountState, setAccountState] = useState(0);
@@ -15,19 +20,27 @@ const AccountPage = () => {
   };
 
   return (
-    <main className="relative flex ">
+    <main className="relative flex pb-5 md:pb-[80px]">
       <Sidebar accountState={accountState} setAccountState={setAccountState} />
       <section className="mt-[120px] w-full">
         {accountState === 0 && <Title title="Account" />}
         {accountState === 1 && <Title title="Transaction overview" />}
+        {accountState === 2 && <Title title="Owned NFTs" />}
         {accountState === 3 && <Title title="Name of artist" />}
-        <div className="block md:hidden ml-[40px] md:ml-[35svw] border-unveilBlack border-t-2 mr-[15px]">
-          <select className="select" onChange={(e) => handleAccountState(e)}>
+        {accountState === 5 && <Title title="Referrals" />}
+        {accountState === 6 && <Title title="Recognitions" />}
+        {accountState === 7 && <Title title="Wishlist" />}
+        {accountState === 8 && <Title title="Following" />}
+        <div className="block md:hidden  mt-[80px] ml-[40px] md:ml-[35svw] border-unveilBlack border-t-2 mr-[15px]">
+          <select
+            className="uppercase select"
+            onChange={(e) => handleAccountState(e)}
+          >
             <option>Artwork</option>
             <option>Transactions</option>
             <option>Owned NFTs</option>
             <option>Contact details</option>
-            <option>Membership</option>
+            <option></option>
             <option>Referrals</option>
             <option>Recognitions</option>
             <option>Wishlist</option>
@@ -37,7 +50,12 @@ const AccountPage = () => {
         </div>
         {accountState === 0 && <Artworks />}
         {accountState === 1 && <Transactions />}
-        {accountState === 3 && <ConatactDetails />}
+        {accountState === 2 && <OwnedNFTs />}
+        {accountState === 3 && <ContactDetails />}
+        {accountState === 5 && <Referrals />}
+        {accountState === 6 && <Recognitions />}
+        {accountState === 7 && <Wishlist />}
+        {accountState === 8 && <Following />}
       </section>
     </main>
   );
