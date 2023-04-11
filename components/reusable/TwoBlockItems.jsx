@@ -1,5 +1,5 @@
 import React from "react";
-import Animate from "@/components/reusable/Animate";
+import Animate from "./Animate";
 import Currency from "../svg/Currency";
 
 const TwoBlockItems = ({ homePage = false, data }) => {
@@ -29,7 +29,10 @@ const TwoBlockItems = ({ homePage = false, data }) => {
       {homePage && (
         <div className="absolute top-0 block w-px h-full -translate-x-1/2 md:hidden bg-bgColorHover left-1/2"></div>
       )}
-      <Animate options={{ alpha: !homePage, y: 50 }} className={`${homePage ? "md:mt-0 mt-[120px]" : ""}`}>
+      <Animate
+        options={{ alpha: !homePage, y: 50 }}
+        className={`${homePage ? "md:mt-0 mt-[120px]" : ""}`}
+      >
         <div
           className={`${
             homePage

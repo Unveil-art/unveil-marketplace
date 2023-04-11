@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import Animate from "@/components/reusable/Animate";
+import Animate from "./Animate";
 
 import MoreInfoPopIn from "../pop-in/MoreInfoPopIn";
 import MoreInfo from "../../components/svg/MoreInfo";
