@@ -26,18 +26,14 @@ const FloatingArt = ({ data }) => {
     const stagger = query(".gsap-stagger");
     const thumbnails = query(".gsap-thumbnail");
     const images = thumbnails.map((el) => el.getBoundingClientRect());
-    const padding = parseInt(
-      getComputedStyle(el.current).getPropertyValue("padding-left")
-    );
+    const padding = parseInt(getComputedStyle(el.current).getPropertyValue("padding-left"));
     const tl = gsap.timeline({ paused: true });
     tl.timeScale(1.25);
-    tl.set(
-      el.current,
-      {
-        autoAlpha: 1,
-      },
-      0
-    );
+    tl.to(el.current, {
+      autoAlpha: 1,
+      duration: 0.4,
+      ease: 'none'
+    }, 0);
     if (!previous) {
       const cache = words.map((el) => el.getBoundingClientRect());
       tl.set(
@@ -115,35 +111,29 @@ const FloatingArt = ({ data }) => {
       const sign = Math.sign(top + height * 0.5 - size.height * 0.5);
       const margin = sign === -1 ? top : size.height - (top + height * 0.5);
       const value = (height + margin) * sign;
-      tl.fromTo(
-        el,
-        {
-          autoAlpha: 1,
-          y: value,
-        },
-        {
-          y: 0,
-          autoAlpha: 1,
-          duration: 1.25,
-          stagger: 0.1,
-          ease: "power3.out",
-        },
-        "-=1.1"
-      );
+      tl.fromTo(el, {
+        autoAlpha: 1,
+        y: value,
+      }, {
+        y: 0,
+        autoAlpha: 1,
+        duration: 1.25,
+        stagger: 0.1,
+        ease: "power3.out",
+      }, "-=1.1");
     });
     tl.restart();
   });
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (!previous) {
-      gsap.set(el.current, {
-        autoAlpha: 0,
-      });
-    }
     if (!once.current && loaded && size.width && size.height) {
       once.current = true;
-      animateIn();
+      requestIdleCallback(() => {
+        requestAnimationFrame(() => {
+          animateIn();
+        })
+      })
     }
   }, [loaded, size]);
 
@@ -170,7 +160,7 @@ const FloatingArt = ({ data }) => {
     <>
       <section
         ref={el}
-        className="h-[100svh] flex justify-center flex-col p-[15px] sm:p-10 relative overflow-hidden"
+        className="h-[100svh] flex justify-center flex-col p-[15px] sm:p-10 relative overflow-hidden opacity-0"
       >
         <div
           data-cursor="Coming soon"
