@@ -16,8 +16,7 @@ import { getFAQ, getHomePage } from "../lib/strapi";
 
 export default function Home({ data, faq }) {
   const homeData = data.data[0].attributes;
-  console.log(faq);
-
+  const faqData = faq.data[0].attributes.faq;
   return (
     <>
       <Head />
@@ -44,12 +43,12 @@ export default function Home({ data, faq }) {
       <RequestAccess data={homeData.page6} />
       <WhyCollect data={homeData.page7} />
       <Editorial data={homeData.page8} />
-      <FAQ data={faq.data[0].attributes.faq.block} />
+      <FAQ data={faqData.block} />
     </>
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const data = await getHomePage();
   const faq = await getFAQ();
 

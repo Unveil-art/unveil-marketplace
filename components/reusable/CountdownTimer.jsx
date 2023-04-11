@@ -1,43 +1,41 @@
 import React, { useState, useEffect } from "react";
 
 const CountdownTimer = ({ targetDate }) => {
-  const [timeRemaining, setTimeRemaining] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  const [timeRemaining, setTimeRemaining] = useState(null);
 
   useEffect(() => {
+    setTimeRemaining(targetDate - new Date());
     const interval = setInterval(() => {
-      const now = new Date();
-      const distance = targetDate - now;
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      setTimeRemaining({ days, hours, minutes, seconds });
+      setTimeRemaining(targetDate - new Date());
     }, 1000);
 
-    return () => {
-      clearInterval(interval);
-    };
+    return () => clearInterval(interval);
   }, [targetDate]);
 
-  const formatTime = (value) => {
-    return String(value).padStart(2, "0");
+  const formatTime = (time) => {
+    if (time === null) {
+      return "";
+    }
+
+    const days = Math.floor(time / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((time % (1000 * 60)) / 1000);
+
+    const daysString = days > 0 ? `${days.toString().padStart(2, "0")}:` : "";
+    const hoursString =
+      hours > 0 ? `${hours.toString().padStart(2, "0")}:` : "";
+    const minutesString =
+      minutes > 0 ? `${minutes.toString().padStart(2, "0")}:` : "";
+
+    return `${daysString}${hoursString}${minutesString}${seconds
+      .toString()
+      .padStart(2, "0")}`;
   };
 
   return (
     <div>
-      <span>{formatTime(timeRemaining.days)}:</span>
-      <span>{formatTime(timeRemaining.hours)}:</span>
-      <span>{formatTime(timeRemaining.minutes)}:</span>
-      <span>{formatTime(timeRemaining.seconds)}</span>
+      <div>{formatTime(timeRemaining)}</div>
     </div>
   );
 };

@@ -35,14 +35,11 @@ const TrustedPartners = ({ data }) => {
             key={index}
             className="!w-[140px] !h-[140px] md:!w-[230px] md:!h-[230px] border border-[rgba(0,0,0,0.15)] rounded-[10px] md:rounded-[30px] !flex justify-center items-center"
           >
-            <div className="relative w-full h-1/2">
-              <Image
-                src={item.attributes.url}
-                alt={item.attributes.alt}
-                layout="fill"
-                objectFit="contain"
-              />
-            </div>
+            <img
+              className="object-contain w-1/2 h-1/2"
+              src={item.attributes.url}
+              alt={item.attributes.alt}
+            />
           </SwiperSlide>
         ))}
         {data.block.banner.data.map((item, index) => (
@@ -50,14 +47,11 @@ const TrustedPartners = ({ data }) => {
             key={index}
             className="!w-[140px] !h-[140px] md:!w-[230px] md:!h-[230px] border border-[rgba(0,0,0,0.15)] rounded-[10px] md:rounded-[30px] !flex justify-center items-center"
           >
-            <div className="relative w-full h-1/2">
-              <Image
-                src={item.attributes.url}
-                alt={item.attributes.alt}
-                layout="fill"
-                objectFit="contain"
-              />
-            </div>
+            <img
+              className="object-contain w-1/2 h-1/2"
+              src={item.attributes.url}
+              alt={item.attributes.alt}
+            />
           </SwiperSlide>
         ))}
       </Swiper>

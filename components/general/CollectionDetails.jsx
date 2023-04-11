@@ -1,18 +1,18 @@
 import React, { useRef, useEffect } from "react";
 
-import CountdownTimer from "../reusable/CountdownTimer";
 import Animate from "../reusable/Animate";
 import Currency from "../svg/Currency";
+import CountdownTimer from "../reusable/CountdownTimer";
 
 import { useIntersection } from "../../hooks/useIntersection";
 import { gsap } from "gsap";
 
 const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
-  const releaseDate = new Date(data.date);
-
   const el = useRef();
   const query = gsap.utils.selector(el);
   const { isIntersecting } = useIntersection(el);
+
+  const releaseDate = new Date(data.date);
 
   const animateIn = () => {
     gsap
@@ -51,7 +51,7 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
           imageMargin ? "md:mb-10 md:ml-10" : ""
         } w-full md:w-[65svw] pr-10 md:pr-0`}
       >
-        <div className="relative block w-full aspect-square">
+        <div className="relative z-10 block w-full aspect-square">
           <img
             src={data.image.data.attributes.url}
             alt={data.image.data.attributes.alt}
@@ -85,10 +85,10 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
           <p className="b3">{data.price})</p>
         </div>
         <button
-          className="gsap-transform btn btn-primary"
+          className="cursor-not-allowed gsap-transform btn btn-primary"
           style={{ backgroundColor: color, color: backgroundColor }}
         >
-          View collection
+          Coming soon
         </button>
       </Animate>
     </div>
