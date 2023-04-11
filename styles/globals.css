@@ -179,6 +179,13 @@
   input.checkbox {
     @apply bg-transparent;
   }
+
+  /* Shadow */
+  .shadow {
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    box-shadow: 0.966391px 0.966391px 0.966391px rgba(0, 0, 0, 0.17);
+    @apply p-3 border-[#3F3030] border-4;
+  }
 }
 
 /* Font family */

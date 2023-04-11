@@ -30,27 +30,18 @@ const OneLiner = ({
           } s2 pt-[80px]  md:pt-[180px] `}
           style={{ color: color }}
         >
-          <p className="pr-[15px]">
-            {text}{" "}
-            {link && (
-              <Link href={href} className="">
-                <span
-                  style={{ color: color }}
-                  className="md:underline underline-offset-[5px] decoration-1 cursor-pointer"
-                >
-                  {link}
-                </span>
-              </Link>
-            )}
-            {info && (
-              <span
-                onClick={() => handleOpen()}
-                className="inline cursor-help w-fit"
-              >
-                <MoreInfo />
-              </span>
-            )}
-          </p>
+          <div
+            dangerouslySetInnerHTML={{ __html: text }}
+            className="pr-[15px]"
+          ></div>
+          {info && (
+            <span
+              onClick={() => handleOpen()}
+              className="inline cursor-help w-fit"
+            >
+              <MoreInfo />
+            </span>
+          )}
           {info && (
             <MoreInfoPopIn infoOpen={infoOpen} setInfoOpen={setInfoOpen} />
           )}

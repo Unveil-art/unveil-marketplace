@@ -12,32 +12,49 @@ import WhyCollect from "../components/section/WhyCollect";
 import NewlyCurated from "../components/section/NewlyCurated";
 import Editorial from "../components/section/Editorial";
 
-export default function Home() {
+import { getFAQ, getHomePage } from "../lib/strapi";
+
+export default function Home({ data, faq }) {
+  const homeData = data.data[0].attributes;
+  console.log(faq);
+
   return (
     <>
       <Head />
-      <FloatingArt />
-      <GridColThree />
+      <FloatingArt data={homeData.page1} />
+      <GridColThree data={homeData.page1.blocks} />
       <Collection
-        title="Rineke Dijkstra"
+        data={homeData.page2}
+        title={homeData.page2.heading}
         backgroundColor="#B8AE92"
         imageMargin={true}
       />
-      <NewlyCurated />
-      <TrustedPartners />
+      <NewlyCurated data={homeData.page3} />
+      <TrustedPartners data={homeData.page4} />
       <Collection
+        data={homeData.page2}
         oneLiner="New works, freshtalent. Discover the unseen."
-        oneLinerLink="View All"
-        oneLinerHref="/"
-        title="Latest collections"
+        title={homeData.page5.heading}
         color="#F0EDE4"
         backgroundColor="#1C1110"
       />
-      <Socials />
-      <RequestAccess />
-      <WhyCollect />
-      <Editorial />
-      <FAQ />
+      <Socials title={homeData.page6.heading} data={homeData.page6.block} />
+      <RequestAccess data={homeData.page6} />
+      <WhyCollect data={homeData.page7} />
+      <Editorial data={homeData.page8} />
+      <FAQ data={faq.data[0].attributes.faq.block} />
     </>
   );
+}
+
+export async function getStaticProps() {
+  const data = await getHomePage();
+  const faq = await getFAQ();
+
+  return {
+    props: {
+      data,
+      faq,
+    },
+  };
 }
