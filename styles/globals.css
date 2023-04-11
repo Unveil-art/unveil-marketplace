@@ -1,0 +1,245 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  body {
+    @apply bg-unveilWhite text-unveilBlack font-graphik;
+  }
+  /* Buttons */
+  .btn {
+    @apply font-graphik text-[11px] md:text-[13px] leading-[16px] md:leading-[25px] md:px-[30px] md:py-[10px] rounded-[8px] md:rounded-[10px] px-[20px] py-[10px];
+  }
+  .btn-primary {
+    @apply border bg-unveilBlack text-unveilWhite border-unveilBlack;
+  }
+  .btn-secondary {
+    @apply bg-transparent border border-unveilBlack;
+  }
+  .btn-lg {
+    @apply text-[13px] md:text-[16px] leading-[19px] md:leading-[25px] pt-[14px] pb-[15px];
+  }
+  .btn-fit {
+    @apply w-fit;
+  }
+  .btn-full {
+    @apply w-full;
+  }
+  .btn-wide {
+    @apply px-20;
+  }
+
+  /* Typography */
+  /* Header */
+  h1,
+  .h1 {
+    @apply font-graphik text-[45px] md:text-[110px] leading-[90%] tracking-[-0.06em];
+  }
+  h2,
+  .h2 {
+    @apply font-teodor font-light text-[44px] leading-[110%] tracking-[-0.02em];
+    -webkit-font-smoothing: antialiased;
+  }
+  h3,
+  .h3 {
+    @apply font-graphik text-[30px] md:text-[60px] leading-[110%] md:leading-[100.6%] tracking-[-0.06em];
+  }
+  h4,
+  .h4 {
+    @apply font-teodor font-light text-[24px] md:text-[44px] leading-[26px] md:leading-[110%] tracking-[-0.03em] md:tracking-[-0.02em];
+    -webkit-font-smoothing: antialiased;
+  }
+  h5,
+  .h5 {
+    @apply font-teodor font-light font-light text-[11px] md:text-[19px] leading-[16px] md:leading-[25px];
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* S */
+  .s1 {
+    @apply font-graphik font-light text-[20px] md:text-[24px] leading-[19px] md:leading-[110.6%] tracking-[-0.03em] md:tracking-[-0.04em];
+  }
+  .s2 {
+    @apply font-teodor font-light text-[21px] md:text-[26px] leading-[100%] md:leading-[26px] tracking-[-0.01em] md:tracking-[-0.03em];
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Small */
+  .small {
+    @apply leading-[9px] text-[8px] uppercase tracking-[0.05em];
+  }
+
+  /* Link */
+  .l1 {
+    @apply font-graphik text-[10px] md:text-[12px] leading-[19px] md:leading-[24px];
+  }
+  .l2 {
+    @apply font-teodor text-[10px] md:text-[12px] leading-[19px] md:leading-[24px] tracking-[0.05em] md:tracking-[0.1em] uppercase;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Body */
+  .b1 {
+    @apply font-teodor font-light text-[24px] md:text-[44px] leading-[26px] md:leading-[130%] tracking-[-0.03em] md:tracking-[-0.02em];
+    -webkit-font-smoothing: antialiased;
+  }
+  .b2 {
+    @apply font-teodor font-light text-[18px] leading-[130%] tracking-[-0.01em];
+    -webkit-font-smoothing: antialiased;
+  }
+  .b3 {
+    @apply font-graphik text-[11px] md:text-[16px] tracking-[0] leading-[16px] md:leading-[25px];
+  }
+  .b4 {
+    @apply font-graphik text-[9px] md:text-[13px] md:leading-[25px] leading-[18px];
+  }
+  .b5 {
+    @apply font-graphik text-[10px] leading-[25px];
+  }
+  .b6 {
+    @apply font-graphik text-[11px] leading-[16px];
+  }
+
+  /* Labels */
+  .nft-print {
+    @apply px-[6px] pt-[4px] pb-[3px] my-auto border border-unveilGreen rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
+  }
+  .nft {
+    @apply px-[6px] pt-[4px] pb-[3px] my-auto border border-unveilGreen bg-unveilGreen rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
+  }
+  .print {
+    @apply px-[6px] pt-[4px] pb-[3px] my-auto border border-unveilYellow bg-unveilYellow rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
+  }
+
+  /* Transition */
+  .unveilTransition {
+    transition: all 0.3s ease;
+    transition-timing-function: cubic-bezier(0.58, 0, 0, 1);
+  }
+  /* Blur */
+  .bg-blur {
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+  }
+  /* Swiper */
+  .payment-swiper .swiper-slide-active {
+    border: 1px solid #141414;
+  }
+  /* Select */
+  select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='6' viewBox='0 0 12 6' fill='none' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath d='M11.9844 0.218018H0.984375L6.48438 5.21802L11.9844 0.218018Z' fill='black' /%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position-x: 95%;
+    background-position-y: 50%;
+  }
+  select.select {
+    @apply w-full px-0 pt-3 pb-[13px] text-center bg-transparent border-b border-unveilDrakGray l2 text-[12px] focus:outline-none;
+  }
+  select.select-input {
+    @apply w-full py-3 md:py-4 text-[13px] md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:text-unveilBlack focus:outline-none;
+  }
+
+  /* Checkbox */
+  input[type="checkbox"].checkbox {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    margin: 0;
+    width: 12px;
+    height: 12px;
+    border: 1px solid #141414;
+    border-radius: 2px;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+  }
+  input[type="checkbox"]::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    transform: scale(0);
+    background-color: #141414;
+    transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  }
+  input[type="checkbox"]:checked::before {
+    transform: scale(1);
+  }
+
+  /* input */
+  input.input {
+    @apply w-full py-3 md:py-4 text-[13px] md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:text-unveilBlack focus:outline-none;
+  }
+  textarea.textarea {
+    @apply w-full py-3 md:py-4 min-h-[10rem] text-[13px] md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:text-unveilBlack focus:outline-none;
+  }
+  input.checkbox {
+    @apply bg-transparent;
+  }
+
+  /* Shadow */
+  .shadow {
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    box-shadow: 0.966391px 0.966391px 0.966391px rgba(0, 0, 0, 0.17);
+    @apply p-3 border-[#3F3030] border-4;
+  }
+}
+
+/* Font family */
+@font-face {
+  font-family: "Reckless";
+  src: url("/fonts/Reckless-Light.woff") format("woff"),
+    url("/fonts/Reckless-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Reckless";
+  src: url("/fonts/Reckless-Regular.woff") format("woff"),
+    url("/fonts/Reckless-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Graphik";
+  src: url("/fonts/Graphik-Regular.woff") format("woff"),
+    url("/fonts/Graphik-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Graphik";
+  src: url("/fonts/Graphik-Medium.woff") format("woff"),
+    url("/fonts/Graphik-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Tobias";
+  src: url("/fonts/tobias-light.woff2") format("woff2"),
+    url("/fonts/tobias-light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: light;
+}
+
+@font-face {
+  font-family: "Teodor";
+  src: url("/fonts/Teodor-light.woff2") format("woff2"),
+    url("/fonts/Teodor-light.woff2") format("woff2");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Teodor";
+  src: url("/fonts/Teodor-Regular.woff2") format("woff2"),
+    url("/fonts/Teodor-Regular.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
