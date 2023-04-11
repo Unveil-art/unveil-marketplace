@@ -170,7 +170,7 @@ const FloatingArt = ({ data }) => {
     <>
       <section
         ref={el}
-        className="h-[100svh] flex justify-center flex-col p-[15px] sm:p-10 relative overflow-hidden"
+        className="h-[100svh] flex justify-center flex-col p-[15px] sm:p-10 relative overflow-hidden invisible"
       >
         <div
           data-cursor="Coming soon"
