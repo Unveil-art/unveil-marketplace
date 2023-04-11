@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
+import Animate from "@/components/reusable/Animate";
 
 import MoreInfoPopIn from "../pop-in/MoreInfoPopIn";
 import MoreInfo from "../../components/svg/MoreInfo";
@@ -21,7 +22,7 @@ const OneLiner = ({
 
   return (
     <div className="">
-      <div className={`flex ${alignLeft ? "" : ""}`}>
+      <Animate className={`flex ${alignLeft ? "" : ""}`}>
         <div
           className={`${
             alignLeft ? "ml-[15px] md:ml-10" : "ml-10 md:ml-[35svw]"
@@ -46,7 +47,7 @@ const OneLiner = ({
             <MoreInfoPopIn infoOpen={infoOpen} setInfoOpen={setInfoOpen} />
           )}
         </div>
-      </div>
+      </Animate>
     </div>
   );
 };

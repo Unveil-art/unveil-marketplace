@@ -14,7 +14,7 @@ const Transactions = () => {
             <th className="font-normal b3 text-[17px] text-right py-5">To</th>
           </tr>
           {[1, 1, 1, 1].map((item, i) => (
-            <tr className="border-t border-bgBlackOpacity " key={i}>
+            <tr key={i} className="border-t border-bgBlackOpacity">
               <td className="py-5 md:w-28 l2">10/10/2022</td>
               <td className="py-5 md:w-64">Transfer</td>
               <td className="py-5 truncate max-w-[80px] whitespace-nowrap">
@@ -37,7 +37,7 @@ const Transactions = () => {
             <th className="font-normal b3 text-[17px] text-right py-5">To</th>
           </tr>
           {[1, 1, 1, 1].map((item, i) => (
-            <tr className="border-t border-bgBlackOpacity" key={i}>
+            <tr key={i} className="border-t border-bgBlackOpacity">
               <td className="py-5 md:w-28 l2">10/10/2022</td>
               <td className="py-5 md:w-64">Transfer</td>
               <td className="py-5 truncate max-w-[80px] whitespace-nowrap">

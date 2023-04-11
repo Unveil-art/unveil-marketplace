@@ -1,12 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
-};
-
-module.exports = {
   images: {
+    formats: ['image/avif', 'image/webp'],
     domains: ["cumbersome-furtive-fowl.media.strapiapp.com"],
-  },
-  nextConfig,
-};
+  }
+}
+
+module.exports = nextConfig;

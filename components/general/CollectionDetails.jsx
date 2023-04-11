@@ -1,13 +1,44 @@
-import React, { useState, useEffect } from "react";
 
-import Currency from "../svg/Currency";
+import { gsap } from "gsap";
+import { useRef, useEffect } from "react";
+
+import { useIntersection } from "@/hooks/useIntersection";
+
+import Animate from "@/components/reusable/Animate";
+import Currency from "@/components/svg/Currency";
 import CountdownTimer from "../reusable/CountdownTimer";
 
-const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
+
+const CollectionDetails = ({ imageMargin, color, backgroundColor }) => {
   const releaseDate = new Date(data.date);
 
+  const el = useRef()
+  const query = gsap.utils.selector(el)
+  const { isIntersecting } = useIntersection(el)
+
+  const animateIn = () => {
+    gsap.timeline({
+      paused: true
+    }).timeScale(1.75).fromTo(query('.gsap-transform'), {
+      xPercent: -100,
+      x: -40
+    }, {
+      xPercent: 0,
+      x: 0,
+      duration: 2.5,
+      stagger: 0.1,
+      ease: 'power3.out'
+    }, 0.25).restart()
+  }
+
+  useEffect(() => {
+    if (isIntersecting) {
+      animateIn()
+    }
+  }, [isIntersecting])
+
   return (
-    <div className="md:flex-row flex-col flex gap-[30px] relative">
+    <div ref={el} className="md:flex-row flex-col flex gap-[30px] relative">
       <div
         className={`${
           imageMargin ? "md:mb-10 md:ml-10" : ""
@@ -20,30 +51,37 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
           />
         </div>
       </div>
-      <div className="md:ml-0 ml-10 md:mb-0 mb-[55px] sticky top-10 pb-10 left-0 h-fit">
+      <Animate options={{
+        stagger: {
+          y: 20,
+          value: 0.07
+        }
+      }} className="md:ml-0 ml-10 md:mb-0 mb-[55px] sticky top-10 pb-10 left-0 h-fit">
         <h6
-          className="w-fit rounded-full px-2 l2 mb-[10px] md:mb-[15px]"
+          className="gsap-transform w-fit rounded-full px-2 l2 mb-[10px] md:mb-[15px]"
           style={{ border: `solid 1px ${color}` }}
         >
           {data.status}
         </h6>
-        <div className="s2 mb-[6px] md:mb-[15px]">
+
+        <div className=" gsap-transform s2 mb-[6px] md:mb-[15px]">
           <CountdownTimer targetDate={releaseDate} />
         </div>
-        <h3 className="h4">{data.name}</h3>
-        <small className="b5">{data.price_heading}</small>
-        <div className="flex items-center  mb-[15px]">
+        <h3 className="gsap-transform h4">{data.name}</h3>
+        <small className="gsap-transform b5">{data.price_heading}</small>
+        <div className="gsap-transform flex items-center  mb-[15px]">
           <p className="b3">{data.europrice} (</p>
           <Currency color={color} />
           <p className="b3">{data.price})</p>
+
         </div>
         <button
-          className="btn btn-primary"
+          className="gsap-transform btn btn-primary"
           style={{ backgroundColor: color, color: backgroundColor }}
         >
           View collection
         </button>
-      </div>
+      </Animate>
     </div>
   );
 };
