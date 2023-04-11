@@ -1,5 +1,3 @@
-import React from "react";
-
 const RequestAccess = () => {
   return (
     <section className="grid w-full h-screen grid-cols-1 md:grid-cols-2">

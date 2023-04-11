@@ -25,7 +25,7 @@ const Artworks = () => {
       </div>
       <div className="ml-[40px] md:ml-[35svw] pr-[15px] md:pr-10">
         {[1, 2, 3, 4, 5].map((item, i) => (
-          <ArtworkListItem />
+          <ArtworkListItem key={i} />
         ))}
       </div>
     </>

@@ -1,10 +1,14 @@
 import React from "react";
-
+import Animate from "@/components/reusable/Animate";
 import Currency from "../svg/Currency";
 
 const ProductCard = ({ rounded = false }) => {
   return (
-    <div className="[&:nth-child(3)]:mt-[120px]">
+    <Animate options={{
+      y: 175,
+      alpha: true,
+      delay: 'random'
+    }} className="[&:nth-child(3)]:mt-[120px]">
       <div
         className={`${
           rounded ? "rounded-t-full" : ""
@@ -20,7 +24,7 @@ const ProductCard = ({ rounded = false }) => {
         </div>
         <p className="b3 opacity-60">1.2)</p>
       </div>
-    </div>
+    </Animate>
   );
 };
 
