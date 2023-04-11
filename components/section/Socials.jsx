@@ -1,13 +1,13 @@
 import { useRef } from "react";
-import { useLineMaskingAnimation } from "@/hooks/animations/useLineMaskingAnimation";
+import { useLineMaskingAnimation } from "../..//hooks/animations/useLineMaskingAnimation";
 
 const Socials = ({ title, data }) => {
-  const el = useRef()
-  
-  useLineMaskingAnimation(el)
-  
+  const el = useRef();
+
+  useLineMaskingAnimation(el);
+
   return (
-    <section className="p-[15px] md:p-10 md:pb-10 pb-[60px]">
+    <section ref={el} className="p-[15px] md:p-10 md:pb-10 pb-[60px]">
       <h2 className="b1">{title}</h2>
       <div className="grid grid-cols-1 md:grid-cols-4 group mt-[130px] md:mt-[180px] border-t-[3px] md:border-t-4 border-t-unveilBlack">
         {data.map((item) => (
