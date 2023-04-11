@@ -67,6 +67,7 @@ const Cursor = () => {
     }
 
     const removeElements = () => {
+      onMouseLeave()
       elements.forEach((element) => {
         element.removeEventListener('mouseenter', onMouseEnter, false)
         element.removeEventListener('mouseleave', onMouseLeave, false)
