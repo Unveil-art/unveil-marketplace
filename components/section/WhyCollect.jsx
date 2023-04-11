@@ -9,6 +9,7 @@ import "swiper/css";
 import MoreInfo from "../svg/MoreInfo";
 
 const WhyCollect = ({ data }) => {
+  console.log(data.blocks[1].main_image);
   return (
     <section>
       <h2 className="m-[15px] lg:m-10 h3">{data.heading}</h2>
@@ -73,23 +74,33 @@ const WhyCollect = ({ data }) => {
               },
             }}
             speed={500}
-            loop
+            loop={true}
             modules={[Autoplay]}
             grabCursor
             slidesPerView={"auto"}
             centeredSlides
             className=" mt-[20px] lg:mt-[60px] xl:mt-[100px] pointer-events-none payment-swiper unveilTransition lg:pointer-events-auto"
           >
-            {["1", "2", "3", "4", "5", "6", "1", "2", "3", "4", "5", "6"].map(
-              (item, index) => (
-                <SwiperSlide
-                  key={index}
-                  className="!w-[140px] !h-[140px] unveilTransition border border-[rgba(0,0,0,0.15)] rounded-[10px] !flex justify-center items-center"
-                >
-                  <div>Payment {item}</div>
-                </SwiperSlide>
-              )
-            )}
+            {data.blocks[1].main_image.data.map((item, index) => (
+              <SwiperSlide
+                key={index}
+                className="!w-[140px] !h-[140px] unveilTransition border border-[rgba(0,0,0,0.15)] rounded-[10px] !flex justify-center items-center"
+              >
+                <div>
+                  <img src={item.attributes.url} alt={item.attributes.alt} />
+                </div>
+              </SwiperSlide>
+            ))}
+            {data.blocks[1].main_image.data.map((item, index) => (
+              <SwiperSlide
+                key={index}
+                className="!w-[140px] !h-[140px] unveilTransition border border-[rgba(0,0,0,0.15)] rounded-[10px] !flex justify-center items-center"
+              >
+                <div>
+                  <img src={item.attributes.url} alt={item.attributes.alt} />
+                </div>
+              </SwiperSlide>
+            ))}
           </Swiper>
         </div>
         <div className="h-[315px] relative mr-[15px] lg:mr-0 lg:h-auto min-w-[270px] max-w-[270px] lg:max-w-[unset] lg:min-w-[unset] lg:aspect-square  rounded-[10px] text-center pt-10 px-[15px]">
