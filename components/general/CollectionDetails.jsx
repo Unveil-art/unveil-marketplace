@@ -78,7 +78,7 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
           <CountdownTimer targetDate={releaseDate} />
         </div>
         <h3 className="gsap-transform h4">{data.name}</h3>
-        <small className="gsap-transform b5">{data.price_heading}</small>
+        <small className="gsap-transform block b5">{data.price_heading}</small>
         <div className="gsap-transform flex items-center  mb-[15px]">
           <p className="b3">{data.europrice} (</p>
           <Currency color={color} />

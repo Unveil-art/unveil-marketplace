@@ -29,7 +29,6 @@ function MyApp({ Component, pageProps }) {
           root
           options={{
             lerp: 0.2,
-            wheelMultiplier: 0.5,
             smoothWheel: true,
             smoothTouch: false,
           }}
