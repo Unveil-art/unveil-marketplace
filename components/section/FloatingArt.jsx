@@ -126,14 +126,22 @@ const FloatingArt = ({ data }) => {
   });
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!once.current) {
+      window.scrollTo(0, 0);
+    }
     if (!once.current && loaded && size.width && size.height) {
       once.current = true;
-      requestIdleCallback(() => {
-        requestAnimationFrame(() => {
-          animateIn();
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => {
+          requestAnimationFrame(() => {
+            animateIn()
+          })
         })
-      })
+      } else {
+        requestAnimationFrame(() => {
+          animateIn()
+        })
+      }
     }
   }, [loaded, size]);
 
