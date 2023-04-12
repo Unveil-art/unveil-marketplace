@@ -30,12 +30,10 @@ const Animate = ({ options = {}, className, children }) => {
     // const isInViewRendered = isIntersecting && boundingClientRect.top >= 0 && boundingClientRect.bottom <= size.height
     const direction = boundingClientRect.top <= 0 ? -1 : 1;
     const stagger = query(".gsap-stagger");
-    const delay =
-      defaults.delay === "random" ? Math.random() * 1.0 : defaults.delay;
+    const delay = defaults.delay === "random" ? Math.random() * 1.0 : defaults.delay;
     const tl = gsap
       .timeline({
-        paused: true,
-        onComplete: () => setIsAnimated(true),
+        paused: true
       })
       .set(
         el.current,
@@ -88,6 +86,7 @@ const Animate = ({ options = {}, className, children }) => {
       );
     }
     tl.restart();
+    setIsAnimated(true)
   };
 
   const animateOut = () => {

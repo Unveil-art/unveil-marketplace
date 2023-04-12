@@ -67,6 +67,7 @@ const Cursor = () => {
     }
 
     const removeElements = () => {
+      onMouseLeave()
       elements.forEach((element) => {
         element.removeEventListener('mouseenter', onMouseEnter, false)
         element.removeEventListener('mouseleave', onMouseLeave, false)
@@ -99,7 +100,7 @@ const Cursor = () => {
   }, [isPointer])
 
   return (
-    <div ref={el} className="fixed top-0 left-0 pointer-events-none z-10" style={{ opacity: hasMoved && isPointer ? 1 : 0, perspective: '100px' }}>
+    <div ref={el} className="fixed top-0 left-0 pointer-events-none z-[100]" style={{ opacity: hasMoved && isPointer ? 1 : 0, perspective: '100px' }}>
       <span ref={cursor} className="inline-flex justify-items-center items-center l2 h-[33px] rounded-[5px] border border-solid border-black px-[10px] py-[7px] mt-4 ml-4" style={{ backgroundColor: color }}>
         { text }
       </span>
