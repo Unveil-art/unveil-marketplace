@@ -1,5 +1,6 @@
 import { gsap } from 'gsap'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useRouter } from 'next/router'
 
 const Cursor = () => {
@@ -12,6 +13,8 @@ const Cursor = () => {
 
   const [isPointer, setIsPointer] = useState(false)
   const [hasMoved, setHasMoved] = useState(false)
+
+  const isPointerMedia = useMediaQuery('(pointer: fine)')
 
   const onMouseMove = useCallback(({ clientX, clientY }) => {
     gsap.to(el.current, {
@@ -40,52 +43,54 @@ const Cursor = () => {
   }, [])
 
   useEffect(() => {
-    let elements = []
+    if (isPointerMedia) {
+      let elements = []
 
-    const onMouseEnter = (event) => {
-      const { currentTarget } = event
-      const text = currentTarget.getAttribute('data-cursor')
-      const color = currentTarget.getAttribute('data-cursor-color') || '#C1C1C1'
-      setText(text)
-      setColor(color)
-      setIsPointer(true)
-    }
-    
-    const onMouseLeave = (event) => {
-      setIsPointer(false)
-      setText('')
-      setColor('')
-    }
-
-    const attachElements = () => {
-      elements = [...document.querySelectorAll("[data-cursor")]
-
-      elements.forEach((element) => {
-        element.addEventListener('mouseenter', onMouseEnter, false)
-        element.addEventListener('mouseleave', onMouseLeave, false)
-      })
-    }
-
-    const removeElements = () => {
-      onMouseLeave()
-      elements.forEach((element) => {
-        element.removeEventListener('mouseenter', onMouseEnter, false)
-        element.removeEventListener('mouseleave', onMouseLeave, false)
-      })
-    }
-    
-    router.events.on('routeChangeStart', removeElements)
-    router.events.on('routeChangeComplete', attachElements)
-
-    attachElements()
-
-    return () => {
-      router.events.off('routeChangeStart', removeElements)
-      router.events.off('routeChangeComplete', attachElements)
+      const onMouseEnter = (event) => {
+        const { currentTarget } = event
+        const text = currentTarget.getAttribute('data-cursor')
+        const color = currentTarget.getAttribute('data-cursor-color') || '#C1C1C1'
+        setText(text)
+        setColor(color)
+        setIsPointer(true)
+      }
       
-      removeElements()
+      const onMouseLeave = (event) => {
+        setIsPointer(false)
+        setText('')
+        setColor('')
+      }
+
+      const attachElements = () => {
+        elements = [...document.querySelectorAll("[data-cursor")]
+
+        elements.forEach((element) => {
+          element.addEventListener('mouseenter', onMouseEnter, false)
+          element.addEventListener('mouseleave', onMouseLeave, false)
+        })
+      }
+
+      const removeElements = () => {
+        onMouseLeave()
+        elements.forEach((element) => {
+          element.removeEventListener('mouseenter', onMouseEnter, false)
+          element.removeEventListener('mouseleave', onMouseLeave, false)
+        })
+      }
+      
+      router.events.on('routeChangeStart', removeElements)
+      router.events.on('routeChangeComplete', attachElements)
+
+      attachElements()
+
+      return () => {
+        router.events.off('routeChangeStart', removeElements)
+        router.events.off('routeChangeComplete', attachElements)
+        
+        removeElements()
+      }
     }
-  }, [])
+  }, [isPointerMedia])
 
   useEffect(() => {
     if (isPointer) {
