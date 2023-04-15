@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect, useCallback } from "react";
 
 import Animate from "../reusable/Animate";
 import Currency from "../svg/Currency";
@@ -14,29 +14,25 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
 
   const releaseDate = new Date(data.date);
 
-  const animateIn = () => {
-    gsap
-      .timeline({
-        paused: true,
-      })
-      .timeScale(1.75)
-      .fromTo(
-        query(".gsap-transform"),
-        {
-          xPercent: -100,
-          x: -40,
-        },
-        {
-          xPercent: 0,
-          x: 0,
-          duration: 2.5,
-          stagger: 0.1,
-          ease: "power3.out",
-        },
-        0.25
-      )
-      .restart();
-  };
+  const animateIn = useCallback(() => {
+    const transforms = query(".gsap-transform")
+    gsap.killTweensOf(transforms)
+    // prettier-ignore
+    gsap.timeline({
+      paused: true,
+    }).timeScale(1.75).fromTo(transforms, {
+      autoAlpha: 0,
+      xPercent: -100,
+      x: -40,
+    }, {
+      autoAlpha: 1,
+      xPercent: 0,
+      x: 0,
+      duration: 2.5,
+      stagger: 0.1,
+      ease: "power3.out",
+    }, 0).restart()
+  });
 
   useEffect(() => {
     if (isIntersecting) {
@@ -55,6 +51,7 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
           <img
             src={data.image.data.attributes.url}
             alt={data.image.data.attributes.alt}
+            className="w-full"
           />
         </div>
       </div>
@@ -84,12 +81,14 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
           <Currency color={color} />
           <p className="b3">{data.price})</p>
         </div>
-        <button
-          className="cursor-not-allowed gsap-transform btn btn-primary"
-          style={{ backgroundColor: color, color: backgroundColor }}
-        >
-          Coming soon
-        </button>
+        <div className="gsap-transform block">
+          <button
+            className="cursor-not-allowed btn btn-primary"
+            style={{ backgroundColor: color, color: backgroundColor }}
+          >
+            Coming soon
+          </button>
+        </div>
       </Animate>
     </div>
   );
