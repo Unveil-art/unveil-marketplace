@@ -11,18 +11,19 @@ const TwoBlockItems = ({ homePage = false, data }) => {
         homePage ? "grid-cols-2" : "grid-cols-1 mb-[60px]"
       } grid grid-cols-1 gap-[15px] mx-[15px] md:mx-10 md:grid-cols-2 relative`}
     >
-      <Animate options={{ alpha: !homePage, y: 100 }}>
+      <Animate options={{ alpha: !homePage, y: 100, image: true }}>
         <div
           className={`${
             homePage ? "aspect-[3/4]" : "aspect-square"
           }  bg-bgColor`}
         >
-          <div className="relative w-full h-full">
+          <div className="relative w-full h-full overflow-hidden">
             <Image
               src={data[0].banner.data.attributes.url}
               alt={data[0].banner.data.attributes.alt}
               layout="fill"
               objectFit="cover"
+              className="gsap-image"
             />
           </div>
         </div>
@@ -41,7 +42,7 @@ const TwoBlockItems = ({ homePage = false, data }) => {
         <div className="absolute top-0 block w-px h-full -translate-x-1/2 md:hidden bg-bgColorHover left-1/2"></div>
       )}
       <Animate
-        options={{ alpha: !homePage, y: 50 }}
+        options={{ alpha: !homePage, y: 50, image: true }}
         className={`${homePage ? "md:mt-0 mt-[120px]" : ""}`}
       >
         <div
@@ -51,12 +52,13 @@ const TwoBlockItems = ({ homePage = false, data }) => {
               : "aspect-square"
           }  bg-bgColor`}
         >
-          <div className="relative w-full h-full">
+          <div className="relative w-full h-full overflow-hidden">
             <Image
               src={data[1].banner.data.attributes.url}
               alt={data[1].banner.data.attributes.alt}
               layout="fill"
               objectFit="cover"
+              className="gsap-image"
             />
           </div>
         </div>

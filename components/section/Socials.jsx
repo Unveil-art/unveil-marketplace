@@ -9,7 +9,8 @@ const Socials = ({ title, data }) => {
   return (
     <section ref={el} className="p-[15px] md:p-10 md:pb-10 pb-[60px]">
       <h2 className="b1">{title}</h2>
-      <div className="grid grid-cols-1 md:grid-cols-4 group mt-[130px] md:mt-[180px] border-t-[3px] md:border-t-4 border-t-unveilBlack">
+      <div className="gsap-line border-t-[3px] md:border-t-4 border-t-unveilBlack mt-[130px] md:mt-[180px]"></div>
+      <div className="grid grid-cols-1 md:grid-cols-4 group overflow-hidden">
         {data.map((item) => (
           <div
             key={item.id}

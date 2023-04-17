@@ -1,22 +1,20 @@
 import { gsap } from "gsap";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { useIntersection } from "../../hooks/useIntersection";
-// import { useWindowSize } from "@/hooks/useWindowSize";
 
 const Animate = ({ options = {}, className, children }) => {
   const el = useRef();
-  // const size = useWindowSize()
   const query = gsap.utils.selector(el);
 
-  const [isAnimating, setIsAnimating] = useState(false);
   const [isAnimated, setIsAnimated] = useState(false);
-
+  const [isAnimating, setIsAnimating] = useState(false);
   const { isIntersecting, boundingClientRect } = useIntersection(el);
 
   const defaults = Object.assign(
     {
       y: 50,
       alpha: false,
+      image: false,
       delay: 0,
       stagger: {
         y: 0,
@@ -26,75 +24,73 @@ const Animate = ({ options = {}, className, children }) => {
     options
   );
 
-  const animateIn = () => {
-    // const isInViewRendered = isIntersecting && boundingClientRect.top >= 0 && boundingClientRect.bottom <= size.height
+  const animateIn = useCallback(() => {
     const direction = boundingClientRect.top <= 0 ? -1 : 1;
     const stagger = query(".gsap-stagger");
+    const image = query(".gsap-image");
     const delay = defaults.delay === "random" ? Math.random() * 1.0 : defaults.delay;
-    const tl = gsap
-      .timeline({
-        paused: true
-      })
-      .set(
-        el.current,
-        {
-          autoAlpha: 1,
-        },
-        delay
-      )
-      .fromTo(
-        el.current,
-        {
-          autoAlpha: defaults.alpha ? 0 : 1,
-        },
-        {
-          autoAlpha: 1,
-          duration: 0.75,
-          ease: "none",
-        },
-        delay
-      )
-      .fromTo(
-        el.current,
-        {
-          y: defaults.y ? defaults.y * direction : 0,
-        },
-        {
-          y: 0,
-          duration: 0.75,
-          ease: "expo.out",
-          clearProps: "transform",
-        },
-        delay
-      );
+    // prettier-ignore
+    const tl = gsap.timeline({
+      paused: true,
+      onComplete: () => setIsAnimating(false)
+    }).set(el.current, {
+      autoAlpha: 1,
+    }, delay).fromTo(el.current, {
+      autoAlpha: defaults.alpha ? 0 : 1,
+    }, {
+      autoAlpha: 1,
+      duration: 0.75,
+      ease: "none",
+    }, delay).fromTo(el.current, {
+      y: defaults.y ? defaults.y * direction : 0,
+    }, {
+      y: 0,
+      duration: 0.75,
+      ease: "expo.out",
+      clearProps: "transform",
+    }, delay);
     if (stagger && stagger.length > 0) {
-      tl.fromTo(
-        stagger,
-        {
-          y: defaults?.stagger?.y || 0,
-          autoAlpha: 0,
-        },
-        {
-          y: 0,
-          autoAlpha: 1,
-          duration: 0.4,
-          stagger: defaults?.stagger?.value,
-          ease: "expo.out",
-          clearProps: "transform",
-        },
-        delay
-      );
+      // prettier-ignore
+      tl.fromTo(stagger, {
+        y: defaults?.stagger?.y || 0,
+        autoAlpha: 0,
+      }, {
+        y: 0,
+        autoAlpha: 1,
+        duration: 0.4,
+        stagger: defaults?.stagger?.value,
+        ease: "expo.out",
+        clearProps: "transform",
+      }, delay);
+    }
+    if (defaults.image && image) {
+      // prettier-ignore
+      tl.fromTo(image, {
+        autoAlpha: 0,
+        scale: 1.2
+      }, {
+        autoAlpha: 1,
+        scale: 1,
+        duration: 2.0,
+        ease: 'expo.out'
+      }, delay)
     }
     tl.restart();
-    setIsAnimated(true)
-  };
+    setIsAnimated(true);
+  });
 
-  const animateOut = () => {
+  const animateOut = useCallback(() => {
+    const stagger = query(".gsap-stagger");
+    setIsAnimated(false);
     gsap.set(el.current, {
       autoAlpha: 0,
     });
-    setIsAnimated(false);
-  };
+    if (stagger) {
+      gsap.set(stagger, {
+        autoAlpha: 0,
+      })
+    }
+  });
 
   useEffect(() => {
     if (isAnimating) return;
@@ -105,7 +101,7 @@ const Animate = ({ options = {}, className, children }) => {
       setIsAnimating(false);
       animateOut();
     }
-  }, [isIntersecting, isAnimating, isAnimated]);
+  }, [isIntersecting, isAnimated, isAnimating]);
 
   return (
     <div ref={el} className={className}>

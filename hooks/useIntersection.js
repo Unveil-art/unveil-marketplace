@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 export function useIntersection(el, {
   root = null,
-  rootMargin = '0px',
+  rootMargin = '100px',
   thresholds = [0.0, 1.0],
   once = false,
 } = {}) {
