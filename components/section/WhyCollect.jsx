@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
+import Animate from "../reusable/Animate";
 import OneLiner from "../reusable/Oneliner";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -16,7 +17,7 @@ const WhyCollect = ({ data }) => {
       <OneLiner text={data.description} alignLeft />
 
       <div className="flex lg:grid grid-cols-3 lg:mx-[15px] gap-[15px] lg:gap-10 overflow-auto">
-        <div className="ml-[15px] lg:ml-0 h-[315px] lg:h-auto min-w-[270px] max-w-[270px] lg:max-w-[unset] lg:min-w-[unset] lg:aspect-square bg-unveilBlack rounded-[10px] text-center pt-10 px-[15px] relative overflow-hidden">
+        <Animate options={{ alpha: true }} className="ml-[15px] lg:ml-0 h-[315px] lg:h-auto min-w-[270px] max-w-[270px] lg:max-w-[unset] lg:min-w-[unset] lg:aspect-square bg-unveilBlack rounded-[10px] text-center pt-10 px-[15px] relative overflow-hidden">
           <h4 className="s1 text-unveilWhite">
             {data.blocks[0].banner_heading}
           </h4>
@@ -53,8 +54,8 @@ const WhyCollect = ({ data }) => {
               />
             </div>
           </div>
-        </div>
-        <div className="h-[315px] lg:h-auto min-w-[270px] max-w-[270px] lg:max-w-[unset] lg:min-w-[unset] lg:aspect-square bg-unveilYellow rounded-[10px] text-center pt-10 ">
+        </Animate>
+        <Animate options={{ alpha: true }} className="h-[315px] lg:h-auto min-w-[270px] max-w-[270px] lg:max-w-[unset] lg:min-w-[unset] lg:aspect-square bg-unveilYellow rounded-[10px] text-center pt-10 ">
           <h4 className="s1  px-[15px]"> {data.blocks[1].banner_heading}</h4>
           <p className="b4 px-[15px]">
             {data.blocks[1].banner_description} <MoreInfo />
@@ -102,8 +103,8 @@ const WhyCollect = ({ data }) => {
               </SwiperSlide>
             ))}
           </Swiper>
-        </div>
-        <div className="h-[315px] relative mr-[15px] lg:mr-0 lg:h-auto min-w-[270px] max-w-[270px] lg:max-w-[unset] lg:min-w-[unset] lg:aspect-square  rounded-[10px] text-center pt-10 px-[15px]">
+        </Animate>
+        <Animate options={{ alpha: true }} className="h-[315px] relative mr-[15px] lg:mr-0 lg:h-auto min-w-[270px] max-w-[270px] lg:max-w-[unset] lg:min-w-[unset] lg:aspect-square  rounded-[10px] text-center pt-10 px-[15px]">
           <h4 className="s1">{data.blocks[2].banner_heading}</h4>
           <p className="b4">
             {data.blocks[2].banner_description} <MoreInfo />
@@ -128,7 +129,7 @@ const WhyCollect = ({ data }) => {
               />
             </div>
           </div>
-        </div>
+        </Animate>
       </div>
     </section>
   );
