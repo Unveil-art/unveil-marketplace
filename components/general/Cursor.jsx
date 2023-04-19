@@ -1,10 +1,12 @@
 import { gsap } from 'gsap'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useWindowSize } from '@/hooks/useWindowSize'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useRouter } from 'next/router'
 
 const Cursor = () => {
   const router = useRouter()
+  const size = useWindowSize()
   const el = useRef()
   const cursor = useRef()
 
@@ -17,8 +19,9 @@ const Cursor = () => {
   const isPointerMedia = useMediaQuery('(pointer: fine)')
 
   const onMouseMove = useCallback(({ clientX, clientY }) => {
+    const x = Math.min(Math.max(25, clientX), size.width - 200)
     gsap.to(el.current, {
-      x: clientX,
+      x: x,
       y: clientY,
       duration: hasMoved ? 0.4 : 0,
       ease: 'expo.out',
