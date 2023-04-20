@@ -25,7 +25,10 @@ const FAQ = ({ data }) => {
 
   return (
     <section className="ml-10 md:ml-[35svw] mr-[15px] md:mr-10 mt-[120px] mb-[120px]">
-      <Animate options={{ alpha: true }} className="block flex items-end justify-between mb-6">
+      <Animate
+        options={{ alpha: true }}
+        className="flex items-end justify-between block mb-6"
+      >
         <h2 className="h3">FAQ</h2>
         <div className="">
           <p className="flex gap-1 b3">
@@ -33,7 +36,7 @@ const FAQ = ({ data }) => {
             <span className="underline decoration-none md:no-underline underline-offset-2 decoration-1">
               questions.
             </span>
-            <span className="hidden underline cursor-pointer cursor-not-allowed md:block underline-offset-4 decoration-1">
+            <span className="hidden underline cursor-not-allowed md:block underline-offset-4 decoration-1">
               <span className="">Learn more</span>
             </span>
           </p>
