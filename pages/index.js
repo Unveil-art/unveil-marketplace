@@ -4,7 +4,7 @@ import Head from "../components/general/Head";
 import FloatingArt from "../components/section/FloatingArt";
 import GridColThree from "../components/section/GridColThree";
 import Collection from "../components/section/Collection";
-import TrustedPartners from "../components/section/TrustedPratners";
+import TrustedPartners from "../components/section/TrustedPartners";
 import Socials from "../components/section/Socials";
 import RequestAccess from "../components/section/RequestAccess";
 import FAQ from "../components/section/FAQ";

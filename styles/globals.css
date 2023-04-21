@@ -116,15 +116,23 @@
     transition: all 0.3s ease;
     transition-timing-function: cubic-bezier(0.58, 0, 0, 1);
   }
+  @media (max-width: 768px) {
+    .translate0 {
+      transform: translateX(0) !important;
+    }
+  }
+
   /* Blur */
   .bg-blur {
     backdrop-filter: blur(14px) !important;
     -webkit-backdrop-filter: blur(14px) !important;
   }
+
   /* Swiper */
   .payment-swiper .swiper-slide-active {
     border: 1px solid #141414;
   }
+
   /* Select */
   select {
     -moz-appearance: none;

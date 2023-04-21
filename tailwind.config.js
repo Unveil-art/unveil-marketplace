@@ -22,6 +22,7 @@ module.exports = {
         bgColorHover: "rgba(21, 17, 0, 0.1)",
         bgBlackOpacity: "rgba(0, 0, 0, 0.1)",
         bgBlackOpacity2: "rgba(0, 0, 0, 0.2)",
+        unveilTransparent: "#EEECE6",
       },
       fontFamily: {
         teodor: ["Teodor", "sans-serif"],
