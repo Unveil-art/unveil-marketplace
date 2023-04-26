@@ -5,6 +5,7 @@ import Animate from "./Animate";
 import Currency from "../svg/Currency";
 
 const TwoBlockItems = ({ homePage = false, data }) => {
+  console.log(data);
   return (
     <div
       className={`${
@@ -25,6 +26,14 @@ const TwoBlockItems = ({ homePage = false, data }) => {
               objectFit="cover"
               className="gsap-image"
             />
+            {data[0].bubblewrap && (
+              <Image
+                src="/images/bubble-wrap.png"
+                alt="Bubble wrap - coming soon"
+                layout="fill"
+                objectFit="cover"
+              />
+            )}
           </div>
         </div>
         <span className="nft-print">{data[0].type}</span>
@@ -60,6 +69,14 @@ const TwoBlockItems = ({ homePage = false, data }) => {
               objectFit="cover"
               className="gsap-image"
             />
+            {data[1].bubblewrap && (
+              <Image
+                src="/images/bubble-wrap.png"
+                alt="Bubble wrap - coming soon"
+                layout="fill"
+                objectFit="cover"
+              />
+            )}
           </div>
         </div>
         <span className="nft-print">{data[1].type}</span>

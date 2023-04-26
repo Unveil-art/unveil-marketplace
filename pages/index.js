@@ -22,6 +22,8 @@ export default function Home({ data, faq }) {
       <Head />
       <FloatingArt data={homeData.page1} />
       <GridColThree data={homeData.page1.blocks} />
+      <RequestAccess data={homeData.page6} />
+      <Socials title={homeData.page6.heading} data={homeData.page6.block} />
       <Collection
         data={homeData.page2}
         title={homeData.page2.heading}
@@ -39,8 +41,7 @@ export default function Home({ data, faq }) {
         color={homeData.page5.fontcolor}
         imageMargin={homeData.page5.margin}
       />
-      <Socials title={homeData.page6.heading} data={homeData.page6.block} />
-      <RequestAccess data={homeData.page6} />
+
       <WhyCollect data={homeData.page7} />
       <Editorial data={homeData.page8} />
       <FAQ data={faqData.block} />

@@ -26,14 +26,20 @@ const FloatingArt = ({ data }) => {
     const stagger = query(".gsap-stagger");
     const thumbnails = query(".gsap-thumbnail");
     const images = thumbnails.map((el) => el.getBoundingClientRect());
-    const padding = parseInt(getComputedStyle(el.current).getPropertyValue("padding-left"));
+    const padding = parseInt(
+      getComputedStyle(el.current).getPropertyValue("padding-left")
+    );
     const tl = gsap.timeline({ paused: true });
     tl.timeScale(1.25);
-    tl.to(el.current, {
-      autoAlpha: 1,
-      duration: 0.4,
-      ease: 'none'
-    }, 0);
+    tl.to(
+      el.current,
+      {
+        autoAlpha: 1,
+        duration: 0.4,
+        ease: "none",
+      },
+      0
+    );
     if (!previous) {
       const cache = words.map((el) => el.getBoundingClientRect());
       tl.set(
@@ -111,16 +117,21 @@ const FloatingArt = ({ data }) => {
       const sign = Math.sign(top + height * 0.5 - size.height * 0.5);
       const margin = sign === -1 ? top : size.height - (top + height * 0.5);
       const value = (height + margin) * sign;
-      tl.fromTo(el, {
-        autoAlpha: 1,
-        y: value,
-      }, {
-        y: 0,
-        autoAlpha: 1,
-        duration: 1.25,
-        stagger: 0.1,
-        ease: "power3.out",
-      }, "-=1.1");
+      tl.fromTo(
+        el,
+        {
+          autoAlpha: 1,
+          y: value,
+        },
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: 1.25,
+          stagger: 0.1,
+          ease: "power3.out",
+        },
+        "-=1.1"
+      );
     });
     tl.restart();
   });
@@ -131,16 +142,16 @@ const FloatingArt = ({ data }) => {
     }
     if (!once.current && loaded && size.width && size.height) {
       once.current = true;
-      if ('requestIdleCallback' in window) {
+      if ("requestIdleCallback" in window) {
         requestIdleCallback(() => {
           requestAnimationFrame(() => {
-            animateIn()
-          })
-        })
+            animateIn();
+          });
+        });
       } else {
         requestAnimationFrame(() => {
-          animateIn()
-        })
+          animateIn();
+        });
       }
     }
   }, [loaded, size]);
@@ -175,16 +186,27 @@ const FloatingArt = ({ data }) => {
           data-cursor-color={data.topleft_color}
           className="gsap-thumbnail absolute block top-[5%] left-[20%] z-10 invisible"
         >
-          <div className="gsap-parallax" data-speed="0.1">
-            <div className="w-[70px] h-[89px] sm:w-[140px] sm:h-[180px] relative">
+          <div className="gsap-parallax " data-speed="0.1">
+            <div className="w-[85px] bubble-wrap overflow-hidden h-[108px] sm:w-[140px] sm:h-[180px] relative">
               <Image
                 src={data.topleft.data.attributes.url}
                 alt={data.topleft.data.attributes.alt}
                 layout="fill"
                 objectFit="contain"
               />
+              {data.topleft_bubblewrap && (
+                <Image
+                  src="/images/bubble-wrap.png"
+                  alt="Bubble wrap - coming soon"
+                  layout="fill"
+                  objectFit="cover"
+                />
+              )}
             </div>
-            <small className="hidden sm:block l2">{data.topleft_name}</small>
+
+            <small className="block l2 text-[8px] md:text-[12px]">
+              {data.topleft_name}
+            </small>
           </div>
         </div>
 
@@ -194,15 +216,25 @@ const FloatingArt = ({ data }) => {
           className="gsap-thumbnail absolute block bottom-[20%] sm:bottom-[5%] right-[10%] left-auto sm:left-[40%] sm:right-auto z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="0.1">
-            <div className="relative w-[70px] h-[89px] sm:w-[140px] sm:h-[180px]">
+            <div className="relative w-[81px] h-[96px] sm:w-[140px] sm:h-[180px]">
               <Image
                 src={data.bottomleft.data.attributes.url}
                 alt={data.bottomleft.data.attributes.alt}
                 layout="fill"
                 objectFit="contain"
               />
+              {data.bottomleft_bubblewrap && (
+                <Image
+                  src="/images/bubble-wrap.png"
+                  alt="Bubble wrap - coming soon"
+                  layout="fill"
+                  objectFit="cover"
+                />
+              )}
             </div>
-            <small className="hidden sm:block l2">{data.bottomleft_name}</small>
+            <small className="block l2 text-[8px] md:text-[12px]">
+              {data.bottomleft_name}
+            </small>
           </div>
         </div>
 
@@ -219,8 +251,16 @@ const FloatingArt = ({ data }) => {
                 layout="fill"
                 objectFit="contain"
               />
+              {data.topright_bubblewrap && (
+                <Image
+                  src="/images/bubble-wrap.png"
+                  alt="Bubble wrap - coming soon"
+                  layout="fill"
+                  objectFit="cover"
+                />
+              )}
             </div>
-            <small className="hidden sm:block l2">
+            <small className="block l2 text-[8px] md:text-[12px]">
               {data.centerright_name}
             </small>
           </div>
@@ -232,15 +272,23 @@ const FloatingArt = ({ data }) => {
           className="gsap-thumbnail absolute block bottom-[0] sm:bottom-[30%] left-0 sm:left-auto sm:right-0 sm:translate-y-1/2 translate-y-0 z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="0.0">
-            <div className="relative w-[174px] h-[249px] sm:w-[320px] sm:h-[422px]">
+            <div className="relative w-[164px] h-[229px] sm:w-[320px] sm:h-[422px]">
               <Image
                 src={data.centerright.data.attributes.url}
                 alt={data.centerright.data.attributes.alt}
                 layout="fill"
                 objectFit="contain"
               />
+              {data.centerright_bubblewrap && (
+                <Image
+                  src="/images/bubble-wrap.png"
+                  alt="Bubble wrap - coming soon"
+                  layout="fill"
+                  objectFit="cover"
+                />
+              )}
             </div>
-            <small className="hidden sm:block l2">
+            <small className="block l2 text-[8px] md:text-[12px]">
               {data.centerright_name}
             </small>
           </div>
@@ -260,7 +308,7 @@ const FloatingArt = ({ data }) => {
               <span>Empower artists.</span>
             </span>
           </h1>
-          <div className="flex gap-[10px] mt-10">
+          <div className="flex gap-[10px] mt-5">
             {/* Going to be a link */}
             <div className="gsap-stagger">
               <button

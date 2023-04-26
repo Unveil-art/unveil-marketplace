@@ -23,20 +23,20 @@ const Articles = ({ data }) => {
           />
         </div>
         <div className="md:text-center md:max-w-[400px] md:mx-auto mt-2 md:mt-10">
-          <p className="b3 md:h2 md:opacity-80">{data.block[0].heading}</p>
-          <p className="b3 opacity-60 mt-1 md:max-w-[230px] md:mx-auto">
+          <p className="b3 md:h2">{data.block[0].heading}</p>
+          <p className="b3 opacity-60 mt-1 md:max-w-[280px] mt-5 md:mx-auto">
             {data.block[0].description}
           </p>
         </div>
       </Animate>
-      <div className="absolute top-0 hidden w-px h-full -translate-x-1/2 md:block bg-unveilDrakGray left-1/2"></div>
+      <div className="absolute top-0 hidden w-px h-full -translate-x-[150%] md:block bg-unveilDrakGray left-1/2"></div>
       <Animate
         options={{
           y: 175,
           alpha: true,
           delay: "random",
         }}
-        className="mt-[100px]"
+        className="mt-[100px] h-fit sticky top-[32px]"
       >
         <div className="aspect-[3/4] md:rounded-none rounded-t-full relative">
           <Image

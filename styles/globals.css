@@ -82,16 +82,23 @@
   .b1 {
     @apply font-teodor font-light text-[24px] md:text-[44px] leading-[26px] md:leading-[130%] tracking-[-0.03em] md:tracking-[-0.02em];
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   .b2 {
     @apply font-teodor font-light text-[18px] leading-[130%] tracking-[-0.01em];
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   .b3 {
     @apply font-graphik text-[11px] md:text-[16px] tracking-[0] leading-[16px] md:leading-[25px];
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
   .b4 {
     @apply font-graphik text-[9px] md:text-[13px] md:leading-[25px] leading-[18px];
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   .b5 {
     @apply font-graphik text-[10px] leading-[25px];
