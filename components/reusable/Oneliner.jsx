@@ -44,7 +44,16 @@ const OneLiner = ({
             </span>
           )}
           {info && (
-            <MoreInfoPopIn infoOpen={infoOpen} setInfoOpen={setInfoOpen} />
+            <MoreInfoPopIn
+              open={infoOpen}
+              setOpen={setInfoOpen}
+              title="Established"
+              subtitle="Artworks"
+              text="Professionals who have gained recognition for their exceptional
+            artistic vision and photographic skills, and have typically built
+            a career around their ability to capture and communicate a unique
+            perspective through their photography."
+            />
           )}
         </div>
       </Animate>

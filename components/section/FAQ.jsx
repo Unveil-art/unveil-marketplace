@@ -54,7 +54,7 @@ const FAQ = ({ data }) => {
                 onClick={() => openHandler(i)}
               >
                 <h5 className="s2">{item.questions}</h5>
-                <div className="relative w-5 h-5 cursor-pointer">
+                <div className="relative min-w-[16px] max-w-[20px] h-5 cursor-pointer">
                   <div
                     className={`h-px md:h-[2px] w-[14px] md:w-5 bg-unveilBlack absolute top-1/2 rotate-0 opacity-0 unveilTransition ${
                       open === i ? "" : "!rotate-90 opacity-100"
