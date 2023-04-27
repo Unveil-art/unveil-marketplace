@@ -1,10 +1,9 @@
 import { gsap } from "gsap";
 import { useRef, useEffect, useState, useCallback } from "react";
-import { useWindowSize } from "../..//hooks/useWindowSize";
-import { useFontLoaded } from "../..//hooks/useFontLoaded";
+import { useWindowSize } from "../../hooks/useWindowSize";
+import { useFontLoaded } from "../../hooks/useFontLoaded";
 import { useHistory } from "../../contexts/History";
 import { useLenis } from "@studio-freight/react-lenis";
-import Link from "next/link";
 import Image from "next/image";
 
 const copy = ["Collect photography."];
