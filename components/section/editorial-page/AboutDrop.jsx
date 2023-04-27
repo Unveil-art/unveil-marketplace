@@ -3,7 +3,7 @@ import React from "react";
 const AboutDrop = () => {
   return (
     <section className="px-[15px] md:px-10 my-10 md:my-20 ">
-      <h2 className="b1">"Title"</h2>
+      <h2 className="b1">Title</h2>
       <div className=" border-t-[3px] border-t-unveilBlack mt-5 md:mt-[60px]"></div>
       <div className="relative grid grid-cols-2 overflow-hidden md:gap-x-0 gap-x-5 md:grid-cols-4">
         {[1, 2, 3, 3].map((item, i) => (
