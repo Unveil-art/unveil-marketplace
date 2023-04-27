@@ -3,6 +3,7 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
 import "swiper/css";
+import Play from "../../svg/Play";
 
 const ArtistHighlights = () => {
   return (
@@ -29,8 +30,13 @@ const ArtistHighlights = () => {
         {[1, 1, 1, 1, 1, 1, 1].map((item, index) => (
           <SwiperSlide
             key={index}
-            className="!w-[164px] !h-[240px] md:!w-[340px] md:!h-[480px] bg-bgColor !flex justify-center items-center"
-          ></SwiperSlide>
+            className="!w-[164px] !h-[240px] md:!w-[340px] md:!h-[480px] relative bg-unveilGreen !flex justify-center items-center"
+          >
+            <Play />
+            <h4 className="absolute text-unveilWhite bottom-5 left-5 s2">
+              Paul Cupido
+            </h4>
+          </SwiperSlide>
         ))}
       </Swiper>
     </section>

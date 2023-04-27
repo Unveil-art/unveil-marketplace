@@ -7,7 +7,7 @@ const Newsletter = () => {
         Never miss a special edition
       </h2>
       <div className="flex flex-col justify-between">
-        <form className="flex flex-col gap-[8xpx] md:gap-5 md:flex-row">
+        <form className="flex flex-col gap-[8px] md:gap-5 md:flex-row">
           <input
             className="input"
             type="text"

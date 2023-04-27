@@ -12,10 +12,9 @@ import ArtistHighlights from "@/components/section/editorial-page/ArtistHighligh
 
 export default function EditorialPage({ data }) {
   const homeData = data.data[0].attributes;
-  console.log(homeData);
 
   return (
-    <div className="mt-[120px]">
+    <main className="mt-[120px]">
       <Title title="Editorial" />
       <OneLiner text="Top art photography projects for their excellence and stunning visuals." />
       <section className="px-[15px] md:px-10">
@@ -31,7 +30,7 @@ export default function EditorialPage({ data }) {
         <Articles data={homeData.page8} />
       </section>
       <ArtistAnnouncement />
-    </div>
+    </main>
   );
 }
 

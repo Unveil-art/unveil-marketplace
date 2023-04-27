@@ -10,7 +10,7 @@ const Editorial = ({ data }) => {
       <Title title={data.heading} />
       <div className=" px-[15px] md:px-10">
         <Oneliner text={data.description} />
-        <Articles data={data} />
+        <Articles data={data} homePage={true} />
       </div>
     </section>
   );

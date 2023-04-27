@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import Animate from "../reusable/Animate";
 
-const Articles = ({ data }) => {
+const Articles = ({ data, homePage = false }) => {
   return (
     <div className="relative grid grid-cols-2 gap-[15px] md:gap-10 md:grid-cols-4">
       <Animate
@@ -12,9 +12,13 @@ const Articles = ({ data }) => {
           alpha: true,
           delay: "random",
         }}
-        className="md:col-span-2"
+        className={`md:col-span-2 ${!homePage ? "col-span-2" : ""}`}
       >
-        <div className="w-full aspect-[10/11] relative">
+        <div
+          className={`w-full aspect-[3/4] md:aspect-[10/11] relative ${
+            !homePage ? "!aspect-[10/11]" : ""
+          }`}
+        >
           <Image
             src={data.block[0].image.data.attributes.url}
             alt={data.block[0].image.data.attributes.alt}
@@ -36,7 +40,7 @@ const Articles = ({ data }) => {
           alpha: true,
           delay: "random",
         }}
-        className="mt-[100px] h-fit sticky top-[32px]"
+        className="mt-[100px] h-fit md:sticky top-[32px]"
       >
         <div className="aspect-[3/4] md:rounded-none rounded-t-full relative">
           <Image
@@ -94,8 +98,38 @@ const Articles = ({ data }) => {
             <p className="mt-1 b3 opacity-60">{data.block[3].description}</p>
           </div>
         </Animate>
+        {!homePage && (
+          <Animate
+            options={{
+              y: 175,
+              alpha: true,
+              delay: "random",
+            }}
+            className="md:block hidden mt-[100px]"
+          >
+            <div className="aspect-[3/4] relative">
+              <Image
+                src={data.block[3].image.data.attributes.url}
+                alt={data.block[3].image.data.attributes.alt}
+                layout="fill"
+                objectFit="cover"
+              />
+            </div>
+            <div className="mx-auto mt-2">
+              <p className=" b3">{data.block[3].heading}</p>
+              <p className="mt-1 b3 opacity-60">{data.block[3].description}</p>
+            </div>
+          </Animate>
+        )}
       </div>
-      <div className="md:hidden block mt-[100px]">
+      <Animate
+        options={{
+          y: 175,
+          alpha: true,
+          delay: "random",
+        }}
+        className="md:hidden block mt-[100px]"
+      >
         <div className="aspect-[3/4] relative">
           <Image
             src={data.block[3].image.data.attributes.url}
@@ -108,7 +142,30 @@ const Articles = ({ data }) => {
           <p className=" b3">{data.block[3].heading}</p>
           <p className="mt-1 b3 opacity-60">{data.block[3].description}</p>
         </div>
-      </div>
+      </Animate>
+      {!homePage && (
+        <Animate
+          options={{
+            y: 175,
+            alpha: true,
+            delay: "random",
+          }}
+          className="block md:hidden"
+        >
+          <div className="aspect-[3/4] relative">
+            <Image
+              src={data.block[3].image.data.attributes.url}
+              alt={data.block[3].image.data.attributes.alt}
+              layout="fill"
+              objectFit="cover"
+            />
+          </div>
+          <div className="mx-auto mt-2">
+            <p className=" b3">{data.block[3].heading}</p>
+            <p className="mt-1 b3 opacity-60">{data.block[3].description}</p>
+          </div>
+        </Animate>
+      )}
     </div>
   );
 };

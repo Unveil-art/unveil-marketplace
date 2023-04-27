@@ -39,6 +39,7 @@
   .h2 {
     @apply font-teodor font-light text-[44px] leading-[110%] tracking-[-0.02em];
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   h3,
   .h3 {
@@ -48,11 +49,13 @@
   .h4 {
     @apply font-teodor font-light text-[24px] md:text-[44px] leading-[26px] md:leading-[110%] tracking-[-0.03em] md:tracking-[-0.02em];
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   h5,
   .h5 {
     @apply font-teodor font-light font-light text-[11px] md:text-[19px] leading-[16px] md:leading-[25px];
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* S */
@@ -62,6 +65,7 @@
   .s2 {
     @apply font-teodor font-light text-[21px] md:text-[26px] leading-[100%] md:leading-[26px] tracking-[-0.01em] md:tracking-[-0.03em];
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Small */
@@ -76,6 +80,7 @@
   .l2 {
     @apply font-teodor text-[10px] md:text-[12px] leading-[19px] md:leading-[24px] tracking-[0.05em] md:tracking-[0.1em] uppercase;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Body */
@@ -186,7 +191,7 @@
 
   /* input */
   input.input {
-    @apply w-full py-3 md:py-4 text-[13px] md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:text-unveilBlack focus:outline-none;
+    @apply w-full py-3 md:py-4 text-[13px] unveilTransition outline-none focus:bg-bgColorHover md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:text-unveilBlack focus:outline-none;
   }
   textarea.textarea {
     @apply w-full py-3 md:py-4 min-h-[10rem] text-[13px] md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:text-unveilBlack focus:outline-none;

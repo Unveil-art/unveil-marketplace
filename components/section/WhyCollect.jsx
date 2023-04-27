@@ -10,7 +10,6 @@ import "swiper/css";
 import MoreInfo from "../svg/MoreInfo";
 
 const WhyCollect = ({ data }) => {
-  console.log(data.blocks[1].main_image);
   return (
     <section>
       <h2 className="m-[15px] lg:m-10 h3">{data.heading}</h2>

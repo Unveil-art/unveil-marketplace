@@ -12,11 +12,14 @@ import WhyCollect from "../components/section/WhyCollect";
 import NewlyCurated from "../components/section/NewlyCurated";
 import Editorial from "../components/section/Editorial";
 
-import { getFAQ, getHomePage } from "../lib/strapi";
+import { getFAQ, getHomePage, getEditorials } from "../lib/strapi";
 
-export default function Home({ data, faq }) {
+export default function Home({ data, faq, editorials }) {
   const homeData = data.data[0].attributes;
   const faqData = faq.data[0].attributes.faq;
+  const editorialData = editorials;
+  console.log(editorialData);
+
   return (
     <>
       <Head />
@@ -52,11 +55,13 @@ export default function Home({ data, faq }) {
 export async function getServerSideProps() {
   const data = await getHomePage();
   const faq = await getFAQ();
+  const editorials = await getEditorials();
 
   return {
     props: {
       data,
       faq,
+      editorials,
     },
   };
 }

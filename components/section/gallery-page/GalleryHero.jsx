@@ -7,8 +7,8 @@ const GalleryHero = () => {
 
   return (
     <>
-      <section className="grid grid-cols-1 md:grid-cols-5">
-        <div className="relative flex items-center justify-center md:col-span-3 bg-bgColor py-[120px]">
+      <section className="relative grid grid-cols-1 md:grid-cols-5">
+        <div className="h-screen sticky top-0 flex items-center justify-center md:col-span-3 bg-bgColor py-[120px]">
           <div className="w-[200px] aspect-[3/4] shadow"></div>
         </div>
         <div className="md:col-span-2 ">
