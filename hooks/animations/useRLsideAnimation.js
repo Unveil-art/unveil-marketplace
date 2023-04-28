@@ -1,13 +1,13 @@
 import { gsap } from "gsap";
 import { useEffect, useState } from "react";
 
-export function useAsideAnimation(el, open) {
+export function useRLsideAnimation(el, open) {
   const query = gsap.utils.selector(el);
   const [hasRendered, setHasRendered] = useState(false);
 
   useEffect(() => {
     gsap.set(el.current, { autoAlpha: 0 });
-    gsap.set(query(".gsap-el"), { xPercent: 110 });
+    gsap.set(query(".gsap-el"), { xPercent: -110 });
     gsap.set(query(".gsap-layer"), { autoAlpha: 0 });
     setHasRendered(true);
   }, []);
@@ -28,7 +28,7 @@ export function useAsideAnimation(el, open) {
         .to(
           query(".gsap-el"),
           {
-            xPercent: open ? 0 : 110,
+            xPercent: open ? 0 : -110,
             duration: 1,
             ease: "expo.out",
           },

@@ -17,8 +17,7 @@ import { getFAQ, getHomePage, getEditorials } from "../lib/strapi";
 export default function Home({ data, faq, editorials }) {
   const homeData = data.data[0].attributes;
   const faqData = faq.data[0].attributes.faq;
-  const editorialData = editorials;
-  console.log(editorialData);
+  const editorialData = editorials.data;
 
   return (
     <>
@@ -46,7 +45,7 @@ export default function Home({ data, faq, editorials }) {
       />
 
       <WhyCollect data={homeData.page7} />
-      <Editorial data={homeData.page8} />
+      <Editorial data={homeData.page8} editorial={editorialData} />
       <FAQ data={faqData.block} />
     </>
   );

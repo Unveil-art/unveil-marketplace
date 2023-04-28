@@ -189,6 +189,34 @@
     transform: scale(1);
   }
 
+  input[type="radio"].radio-block {
+    display: none;
+  }
+  input[type="radio"].radio-block ~ label {
+    @apply block w-full text-center border cursor-pointer py-7 border-bgColorHover unveilTransition;
+  }
+  input[type="radio"].radio-block.left ~ label {
+    @apply rounded-l-[10px];
+  }
+  input[type="radio"].radio-block.right ~ label {
+    @apply rounded-r-[10px];
+  }
+  input[type="radio"].radio-block.top-left ~ label {
+    @apply rounded-tl-[10px];
+  }
+  input[type="radio"].radio-block.top-right ~ label {
+    @apply rounded-tr-[10px];
+  }
+  input[type="radio"].radio-block.bottom-left ~ label {
+    @apply rounded-bl-[10px];
+  }
+  input[type="radio"].radio-block.bottom-right ~ label {
+    @apply rounded-br-[10px];
+  }
+  input[type="radio"].radio-block:checked ~ label {
+    @apply border-unveilBlack;
+  }
+
   /* input */
   input.input {
     @apply w-full py-3 md:py-4 text-[13px] unveilTransition outline-none focus:bg-bgColorHover md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:text-unveilBlack focus:outline-none;

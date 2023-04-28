@@ -7,7 +7,10 @@ const RequestAccess = ({ data }) => {
   return (
     <section className="grid w-full h-screen grid-cols-1 md:grid-cols-2">
       <div className="absolute w-full h-full -z-10">
-        <Animate options={{ y: 0, image: true }} className="relative w-full h-full overflow-hidden">
+        <Animate
+          options={{ y: 0, image: true }}
+          className="relative w-full h-full overflow-hidden"
+        >
           <Image
             src={data.image.data.attributes.url}
             alt={data.image.data.attributes.alt}
@@ -22,7 +25,7 @@ const RequestAccess = ({ data }) => {
         <h2 className="h3 pt-[60px] md:pt-[140px] max-w-[400px]">
           {data.banner_heading}
         </h2>
-        <p className="mt-3 mb-3 md:mt-10 md:mb-10 b3 w-[90%] ">
+        <p className="mt-3 mb-3 md:mt-10 md:mb-10 b3 w-[90%]">
           {data.banner_description}
         </p>
         <Link href={data.link}>

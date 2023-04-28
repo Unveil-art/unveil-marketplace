@@ -31,15 +31,19 @@ const OneLiner = ({
           } s2 pt-[80px]  md:pt-[180px] `}
           style={{ color: color }}
         >
-          <div
-            dangerouslySetInnerHTML={{ __html: text }}
-            className="pr-[15px]"
-          ></div>
+          {!info && (
+            <div
+              dangerouslySetInnerHTML={{ __html: text }}
+              className="pr-[15px]"
+            ></div>
+          )}
+          {info && <span>{text}</span>}
           {info && (
             <span
               onClick={() => handleOpen()}
-              className="inline cursor-help w-fit"
+              className="inline ml-2 cursor-pointer w-fit"
             >
+              {}
               <MoreInfo />
             </span>
           )}
