@@ -6,7 +6,7 @@ import { useHistory } from "../../contexts/History";
 import { useLenis } from "@studio-freight/react-lenis";
 import Image from "next/image";
 
-const copy = ["Collect photography."];
+const copy = ["Collect", "photography."];
 
 const FloatingArt = ({ data }) => {
   const el = useRef();
@@ -199,6 +199,7 @@ const FloatingArt = ({ data }) => {
                   alt="Bubble wrap - coming soon"
                   layout="fill"
                   objectFit="cover"
+                  className="gsap-bubblewrap"
                 />
               )}
             </div>
@@ -228,6 +229,7 @@ const FloatingArt = ({ data }) => {
                   alt="Bubble wrap - coming soon"
                   layout="fill"
                   objectFit="cover"
+                  className="gsap-bubblewrap"
                 />
               )}
             </div>
@@ -256,6 +258,7 @@ const FloatingArt = ({ data }) => {
                   alt="Bubble wrap - coming soon"
                   layout="fill"
                   objectFit="cover"
+                  className="gsap-bubblewrap"
                 />
               )}
             </div>
@@ -284,6 +287,7 @@ const FloatingArt = ({ data }) => {
                   alt="Bubble wrap - coming soon"
                   layout="fill"
                   objectFit="cover"
+                  className="gsap-bubblewrap"
                 />
               )}
             </div>

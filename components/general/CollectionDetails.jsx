@@ -66,6 +66,7 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
               alt="Bubble wrap - coming soon"
               layout="fill"
               objectFit="cover"
+              className="gsap-bubblewrap"
             />
           )}
         </Animate>
@@ -77,7 +78,7 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
             value: 0.07,
           },
         }}
-        className="ml-10 md:ml-0 md:pl-[30px] md:mb-0 mb-[55px] sticky top-10 pb-10 left-0 h-fit overflow-hidden"
+        className="pl-10 md:pl-[30px] md:mb-0 mb-[55px] sticky top-10 pb-10 left-0 h-fit overflow-hidden"
       >
         <div className="block gsap-transform">
           <h6

@@ -2,25 +2,31 @@ import { gsap } from "gsap";
 import { useRef } from "react";
 import { useRect } from "@/hooks/useRect";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useIntersection } from "@/hooks/useIntersection";
 import { useLenis } from "@studio-freight/react-lenis";
 import Image from "next/image";
 import Animate from "./Animate";
 import Currency from "../svg/Currency";
 
 const TwoBlockItems = ({ homePage = false, data }) => {
-  const rectRef = useRef()
-  const [setRef, rect] = useRect()
-  const isDesktop = useMediaQuery('(min-width: 768px)')
+  const el = useRef();
+  const rectRef = useRef();
+  const [setRef, rect] = useRect();
+  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const { isIntersecting } = useIntersection(el);
 
   useLenis(({ scroll }) => {
-    const top = rect.top - scroll
-    gsap.set(rectRef.current, {
-      y: isDesktop ? 0 : top * 0.1
-    })
-  }, [rect, isDesktop], 1)
+    if (isIntersecting) {
+      const top = rect.top - scroll;
+      gsap.set(rectRef.current, {
+        y: isDesktop ? 0 : top * 0.1
+      });
+    }
+  }, [rect, isDesktop, isIntersecting], 1);
 
   return (
     <div
+      ref={el}
       className={`${
         homePage ? "grid-cols-2" : "grid-cols-1 mb-[60px]"
       } grid grid-cols-1 gap-[15px] mx-[15px] md:mx-10 md:grid-cols-2 relative`}
@@ -45,6 +51,7 @@ const TwoBlockItems = ({ homePage = false, data }) => {
                 alt="Bubble wrap - coming soon"
                 layout="fill"
                 objectFit="cover"
+                className="gsap-bubblewrap"
               />
             )}
           </div>
@@ -94,6 +101,7 @@ const TwoBlockItems = ({ homePage = false, data }) => {
                   alt="Bubble wrap - coming soon"
                   layout="fill"
                   objectFit="cover"
+                  className="gsap-bubblewrap"
                 />
               )}
             </div>
