@@ -55,7 +55,7 @@ const Articles = ({ data, homePage = false }) => {
         >
           <Link href={`/editorial/${data[0].attributes.slug}`}>
             <div
-              className="gsap-parallax md:sticky md:top-[90px]"
+              className={`gsap-parallax ${!homePage ? "md:sticky md:top-[90px]" : ""}`}
               data-speed="0.1 md:0.0"
             >
               <div
