@@ -10,7 +10,7 @@ const FloatingArt = ({ data }) => {
   const el = useRef();
   const once = useRef(false);
   const size = useWindowSize();
-  const loaded = useFontLoaded("Graphik");
+  const loaded = useFontLoaded(["Graphik", "Teodor"]);
   const heading = data.heading.split(/\r?\n|\r|\n/g);
   const query = gsap.utils.selector(el);
 
@@ -164,14 +164,6 @@ const FloatingArt = ({ data }) => {
       });
     });
   }, []);
-
-  // (https://greensock.com/react)
-  // useLayoutEffect(() => {
-  //   const ctx = gsap.context(() => {
-  //     // gsap.to(".box", {...})
-  //   }, el)
-  //   return () => ctx.revert()
-  // }, [])
 
   return (
     <>

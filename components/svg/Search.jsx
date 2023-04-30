@@ -14,7 +14,7 @@ const Search = () => {
         cy="8.97588"
         r="7.44267"
         stroke="#141414"
-        stroke-width="3"
+        strokeWidth="3"
       />
       <line
         x1="14.5294"
@@ -22,7 +22,7 @@ const Search = () => {
         x2="20.8022"
         y2="20.6301"
         stroke="#141414"
-        stroke-width="3"
+        strokeWidth="3"
       />
     </svg>
   );
