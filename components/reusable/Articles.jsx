@@ -45,13 +45,10 @@ const Articles = ({ data, homePage = false }) => {
             alpha: true,
             delay: "random",
           }}
-          className={`md:col-span-2 md:mt-[50px] ${!homePage ? "col-span-2" : ""}`}
+          className={`relative md:col-span-2 md:mt-[50px] ${!homePage ? "col-span-2" : ""}`}
         >
           <Link href={`/editorial/${data[0].attributes.slug}`}>
-            <div
-              className="gsap-parallax"
-              data-speed="0.1"
-            >
+            <div className="sticky top-[90px]">
               <div
                 className={`w-full aspect-[3/4] md:aspect-[10/11] relative ${
                   !homePage ? "!aspect-[10/11]" : ""
@@ -80,7 +77,7 @@ const Articles = ({ data, homePage = false }) => {
       {data[1] && (
         <div
           className="gsap-parallax"
-          data-speed="-0.1"
+          data-speed="-0.2"
         >
           <Link href={`/editorial/${data[1].attributes.slug}`}>
             <Animate
@@ -191,21 +188,26 @@ const Articles = ({ data, homePage = false }) => {
               }}
               className="md:block hidden mt-[100px]"
             >
-              <div className="aspect-[3/4] relative">
-                {data[4].attributes.Image && (
-                  <Image
-                    src={data[4].attributes.Image.data.attributes.url}
-                    alt={data[4].attributes.Image.data.attributes.alt}
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                )}
-              </div>
-              <div className="mx-auto mt-2">
-                <p className="b3">{data[4].attributes.Title}</p>
-                <p className="mt-1 b3 opacity-60">
-                  {data[4].attributes.Description}
-                </p>
+              <div
+                className="gsap-parallax"
+                data-speed="0.1"
+              >
+                <div className="aspect-[3/4] relative">
+                  {data[4].attributes.Image && (
+                    <Image
+                      src={data[4].attributes.Image.data.attributes.url}
+                      alt={data[4].attributes.Image.data.attributes.alt}
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                  )}
+                </div>
+                <div className="mx-auto mt-2">
+                  <p className="b3">{data[4].attributes.Title}</p>
+                  <p className="mt-1 b3 opacity-60">
+                    {data[4].attributes.Description}
+                  </p>
+                </div>
               </div>
             </Animate>
           </Link>
@@ -255,21 +257,26 @@ const Articles = ({ data, homePage = false }) => {
             }}
             className="block md:hidden"
           >
-            <div className="aspect-[3/4] relative">
-              {data[4].attributes.Image && (
-                <Image
-                  src={data[4].attributes.Image.data.attributes.url}
-                  alt={data[4].attributes.Image.data.attributes.alt}
-                  layout="fill"
-                  objectFit="cover"
-                />
-              )}
-            </div>
-            <div className="mx-auto mt-2">
-              <p className="b3">{data[4].attributes.Title}</p>
-              <p className="mt-1 b3 opacity-60">
-                {data[4].attributes.Description}
-              </p>
+            <div
+              className="gsap-parallax"
+              data-speed="0.1"
+            >
+              <div className="aspect-[3/4] relative">
+                {data[4].attributes.Image && (
+                  <Image
+                    src={data[4].attributes.Image.data.attributes.url}
+                    alt={data[4].attributes.Image.data.attributes.alt}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                )}
+              </div>
+              <div className="mx-auto mt-2">
+                <p className="b3">{data[4].attributes.Title}</p>
+                <p className="mt-1 b3 opacity-60">
+                  {data[4].attributes.Description}
+                </p>
+              </div>
             </div>
           </Animate>
         </Link>
