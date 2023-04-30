@@ -22,7 +22,13 @@ const Articles = ({ data, homePage = false }) => {
       const parallax = query(".gsap-parallax");
       const top = rect.top - (scroll + size.height * 0.5);
       parallax.forEach(el => {
-        const speed = el.getAttribute('data-speed');
+        const attr = el.getAttribute('data-speed')
+        const entries = attr.split(' ');
+        let speed = entries[0]
+        if (entries.length > 1) {
+          const current = entries.find(entry => entry.startsWith(isDesktop ? 'md:' : ''))
+          speed = Number(current.substring(current.indexOf(':') + 1))
+        }
         gsap.set(el, {
           y: top * speed
         });
@@ -45,10 +51,13 @@ const Articles = ({ data, homePage = false }) => {
             alpha: true,
             delay: "random",
           }}
-          className={`relative md:col-span-2 md:mt-[50px] ${!homePage ? "col-span-2" : ""}`}
+          className={`relative md:col-span-2 mt-[50px] ${!homePage ? "col-span-2" : ""}`}
         >
           <Link href={`/editorial/${data[0].attributes.slug}`}>
-            <div className="sticky top-[90px]">
+            <div
+              className="gsap-parallax md:sticky md:top-[90px]"
+              data-speed="0.1 md:0.0"
+            >
               <div
                 className={`w-full aspect-[3/4] md:aspect-[10/11] relative ${
                   !homePage ? "!aspect-[10/11]" : ""
@@ -77,7 +86,7 @@ const Articles = ({ data, homePage = false }) => {
       {data[1] && (
         <div
           className="gsap-parallax"
-          data-speed="-0.2"
+          data-speed="-0.1 md:-0.2"
         >
           <Link href={`/editorial/${data[1].attributes.slug}`}>
             <Animate
@@ -221,7 +230,7 @@ const Articles = ({ data, homePage = false }) => {
               alpha: true,
               delay: "random",
             }}
-            className="md:hidden block mt-[50px]"
+            className="md:hidden block mt-[50px] mb-[150px]"
           >
             <div
               className="gsap-parallax"
