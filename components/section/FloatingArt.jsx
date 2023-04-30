@@ -214,7 +214,7 @@ const FloatingArt = ({ data }) => {
           data-cursor-color={data.bottomleft_color}
           className="gsap-thumbnail absolute block bottom-[20%] sm:bottom-[5%] right-[10%] left-auto sm:left-[40%] sm:right-auto z-10 invisible"
         >
-          <div className="gsap-parallax" data-speed="0.1">
+          <div className="gsap-parallax" data-speed="-0.075">
             <div className="relative w-[81px] h-[96px] sm:w-[140px] sm:h-[180px]">
               <Image
                 src={data.bottomleft.data.attributes.url}
