@@ -86,7 +86,7 @@ const Articles = ({ data, homePage = false }) => {
       {data[1] && (
         <div
           className="gsap-parallax"
-          data-speed="-0.1 md:-0.2"
+          data-speed="-0.1 md:-0.15"
         >
           <Link href={`/editorial/${data[1].attributes.slug}`}>
             <Animate
@@ -95,7 +95,7 @@ const Articles = ({ data, homePage = false }) => {
                 alpha: true,
                 delay: "random",
               }}
-              className="mt-[100px] md:mt-[300px] h-fit"
+              className="mt-[100px] md:mt-[200px] h-fit"
             >
               <div className="aspect-[3/4] md:rounded-none rounded-t-full relative">
                 {data[1].attributes.Image && (

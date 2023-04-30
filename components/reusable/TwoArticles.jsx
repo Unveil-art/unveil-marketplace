@@ -14,7 +14,7 @@ const TwoArticles = () => {
       <div className="grid grid-cols-2 gap-[15px] md:gap-10 pt-5">
         <Animate options={{ image: true, alpha: true }} className="grid-cols-2 gap-5 md:grid">
           <div className="bg-bgColor aspect-[3/4] w-full"></div>
-          <div className="flex flex-col justify-end ">
+          <div className="flex flex-col justify-end">
             <p className="mt-2 l2">Educate</p>
             <p className="mt-1 b3 opacity-60">
               Trying to define yourself is like trying to bite your own teeth
@@ -23,7 +23,7 @@ const TwoArticles = () => {
         </Animate>
         <Animate options={{ image: true, alpha: true }} className="grid-cols-2 gap-5 md:grid">
           <div className="bg-bgColor rounded-t-full aspect-[3/4] w-full"></div>
-          <div className="flex flex-col justify-end ">
+          <div className="flex flex-col justify-end">
             <p className="mt-2 l2">Educate</p>
             <p className="mt-1 b3 opacity-60">
               Trying to define yourself is like trying to bite your own teeth
