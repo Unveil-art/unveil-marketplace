@@ -1,10 +1,8 @@
-import React from "react";
-
 const ItemStatistics = () => {
   return (
-    <div className="grid grid-cols-1 mx-0 mt-10 md:grid-cols-5 md:mx-10 md:mt-[100px]">
+    <div className="relative grid grid-cols-1 mx-0 mt-10 md:grid-cols-5 md:mx-10 md:mt-[100px]">
       <div className="relative md:col-span-2 bg-bgColor py-[120px] hidden md:block w-full">
-        <div className="w-[200px] md:absolute md:top-[120px] md:left-[50%] md:-translate-x-1/2 aspect-[3/4] shadow2 bg-unveilGreen"></div>
+        <div className="w-[200px] md:sticky md:top-[120px] md:left-[22%] md:-translate-x-1/2 aspect-[3/4] shadow2 bg-unveilGreen"></div>
       </div>
       <div className="md:col-span-3">
         <div className="md:mb-[100px] px-[15px] md:pl-10 md:pr-5">

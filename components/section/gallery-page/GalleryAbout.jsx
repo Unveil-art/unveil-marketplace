@@ -1,7 +1,8 @@
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 import { useRef, useLayoutEffect } from "react";
-import { useFontLoaded } from "@/hooks/useFontLoaded";
+import { useRect } from "@/hooks/useRect";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { useLenis } from "@studio-freight/react-lenis";
 
 import AboutIntro from "@/components/section/gallery-page/AboutIntro";
 import AboutItem from "@/components/section/gallery-page/AboutItem";
@@ -9,37 +10,50 @@ import ItemStatistics from "@/components/section/gallery-page/ItemStatistics";
 
 const GalleryAbout = () => {
   const el = useRef();
-  const fontsLoaded = useFontLoaded(["Graphik", "Teodor"]);
+  const tl = useRef();
+  const size = useWindowSize();
+  const [setRef, rect] = useRect();
   const query = gsap.utils.selector(el);
 
   useLayoutEffect(() => {
-    if (fontsLoaded) {
-      const ctx = gsap.matchMedia();
-      ctx.add('(min-width: 768px)', () => {
-        gsap.registerPlugin(ScrollTrigger);
-        gsap.to(query('.gsap-scroll'), {
-          xPercent: -100,
-          ease: 'power2.inOut',
-          scrollTrigger: {
-            trigger: el.current,
-            pin: el.current,
-            scrub: 1,
-            markers: false,
-            start: 'top top',
-            invalidateOnRefresh: true
-          }
-        })
-      }, el)
-      return () => ctx.revert()
+    const ctx = gsap.matchMedia();
+    ctx.add('(min-width: 768px)', () => {
+      tl.current = gsap.timeline({
+        paused: true
+      }).to(query('.gsap-scroll'), {
+        xPercent: -100,
+        ease: 'power2.inOut'
+      })
+      return () => {
+        tl.current = null
+      }
+    }, el)
+  }, []);
+
+  useLenis(({ scroll }) => {
+    if (tl.current) {
+      const top = rect.top - scroll
+      const progress = gsap.utils.clamp(0, 1, top / (rect.top - rect.height + size.width))
+      tl.current.progress(progress)
     }
-  }, [fontsLoaded]);
+  }, [rect], 1);
 
   return (
     <>
       <AboutIntro />
-      <section ref={el} className="relative w-full py-10 md:py-[90px]">
-        <AboutItem />
-        <ItemStatistics />
+      <section ref={el} className="relative w-full">
+        <div
+          className="block w-full md:h-[500vh]"
+          ref={(node) => {
+            setRef(node)
+            el.current = node
+          }}
+        >
+          <div className="block w-full md:sticky md:top-0">
+            <AboutItem />
+            <ItemStatistics />
+          </div>
+        </div>
       </section>
     </>
   );
