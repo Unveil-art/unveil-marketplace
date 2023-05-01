@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useLineMaskingAnimation } from "../..//hooks/animations/useLineMaskingAnimation";
+import { useLineMaskingAnimation } from "@/hooks/animations/useLineMaskingAnimation";
 
 const Socials = ({ title, data }) => {
   const el = useRef();
