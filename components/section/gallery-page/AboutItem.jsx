@@ -1,11 +1,4 @@
-import React, { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-
 const AboutItem = () => {
-  const el = useRef();
-
-  useEffect(() => {}, []);
-
   return (
     <div className="block w-full py-10 md:py-[90px] overflow-hidden">
       <div className="gsap-scroll flex flex-col md:flex-row flex-nowrap gap-10 px-[15px] md:px-10">
@@ -15,14 +8,7 @@ const AboutItem = () => {
               In this picture: Lorem ipsum dolor sit amet, consectetur
               adipiscing elit. In mollis dui sit amet nisi aliquet.
             </p>
-            <div className="flex gap-[15px] items-center">
-              <div className="w-10 h-10 mt-5 rounded-full md:mt-10 bg-bgColor"></div>
-              <img
-                src="/images/audio.gif"
-                alt="Audio"
-                className="translate-y-[150%] h-4 bg-bgColorHover"
-              />
-            </div>
+            <div className="w-10 h-10 mt-5 overflow-hidden rounded-full md:mt-10 bg-bgColor"></div>
             <p className="mt-1 l2">Play soundbite</p>
           </div>
           <div className="w-full aspect-[4/3] bg-bgColor order-1 md:order-2"></div>
