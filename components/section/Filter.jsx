@@ -9,7 +9,7 @@ const Filter = () => {
   return (
     <Animate
       options={{ alpha: true, delay: 0.5 }}
-      className="ml-10 md:ml-[35svw] flex g justify-between pr-10 pb-10 md:pb-[60px]"
+      className="ml-10 md:ml-[35svw] flex gap-10 flex-wrap pr-10 pb-10 md:pb-[60px]"
     >
       <div className="flex items-center gap-2 md:block">
         <p className="md:mb-2 b3 md:b6">Category</p>

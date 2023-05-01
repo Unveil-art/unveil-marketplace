@@ -101,7 +101,7 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
         </div>
         <div className="block gsap-transform">
           <button
-            className="cursor-not-allowed btn btn-primary"
+            className="cursor-not-allowed btn btn-primary hover:!bg-[#292928]"
             style={{ backgroundColor: color, color: backgroundColor }}
           >
             Coming soon

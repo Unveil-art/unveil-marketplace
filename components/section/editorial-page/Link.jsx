@@ -18,13 +18,13 @@ const Link = ({ data }) => {
         <div>
           <h2 className="s1">{data.Title}</h2>
           {data.Link && (
-            <div className="flex items-center gap-5 mt-[15px] md:hidden">
+            <div className="flex  items-center gap-5 mt-[15px] md:hidden">
               <Arrow />
               <a
                 target="_blank"
                 rel="noreferrer"
                 href={data.Link_url}
-                className="l2"
+                className="l2 underline-on-hover"
               >
                 {data.Link}
               </a>
@@ -39,7 +39,7 @@ const Link = ({ data }) => {
             target="_blank"
             rel="noreferrer"
             href={data.Link_url}
-            className="l2"
+            className="l2 underline-on-hover"
           >
             {data.Link}
           </a>
