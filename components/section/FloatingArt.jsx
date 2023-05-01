@@ -6,13 +6,12 @@ import { useHistory } from "../../contexts/History";
 import { useLenis } from "@studio-freight/react-lenis";
 import Image from "next/image";
 
-const copy = ["Collect photography."];
-
 const FloatingArt = ({ data }) => {
   const el = useRef();
   const once = useRef(false);
   const size = useWindowSize();
-  const loaded = useFontLoaded("Graphik");
+  const loaded = useFontLoaded(["Graphik", "Teodor"]);
+  const heading = data.heading.split(/\r?\n|\r|\n/g);
   const query = gsap.utils.selector(el);
 
   const { previous } = useHistory();
@@ -166,14 +165,6 @@ const FloatingArt = ({ data }) => {
     });
   }, []);
 
-  // (https://greensock.com/react)
-  // useLayoutEffect(() => {
-  //   const ctx = gsap.context(() => {
-  //     // gsap.to(".box", {...})
-  //   }, el)
-  //   return () => ctx.revert()
-  // }, [])
-
   return (
     <>
       <section
@@ -199,6 +190,7 @@ const FloatingArt = ({ data }) => {
                   alt="Bubble wrap - coming soon"
                   layout="fill"
                   objectFit="cover"
+                  className="gsap-bubblewrap"
                 />
               )}
             </div>
@@ -214,7 +206,7 @@ const FloatingArt = ({ data }) => {
           data-cursor-color={data.bottomleft_color}
           className="gsap-thumbnail absolute block bottom-[20%] sm:bottom-[5%] right-[10%] left-auto sm:left-[40%] sm:right-auto z-10 invisible"
         >
-          <div className="gsap-parallax" data-speed="0.1">
+          <div className="gsap-parallax" data-speed="-0.075">
             <div className="relative w-[81px] h-[96px] sm:w-[140px] sm:h-[180px]">
               <Image
                 src={data.bottomleft.data.attributes.url}
@@ -228,6 +220,7 @@ const FloatingArt = ({ data }) => {
                   alt="Bubble wrap - coming soon"
                   layout="fill"
                   objectFit="cover"
+                  className="gsap-bubblewrap"
                 />
               )}
             </div>
@@ -256,6 +249,7 @@ const FloatingArt = ({ data }) => {
                   alt="Bubble wrap - coming soon"
                   layout="fill"
                   objectFit="cover"
+                  className="gsap-bubblewrap"
                 />
               )}
             </div>
@@ -284,6 +278,7 @@ const FloatingArt = ({ data }) => {
                   alt="Bubble wrap - coming soon"
                   layout="fill"
                   objectFit="cover"
+                  className="gsap-bubblewrap"
                 />
               )}
             </div>
@@ -293,22 +288,20 @@ const FloatingArt = ({ data }) => {
           </div>
         </div>
 
-        {/* Baptiste you can get the heading from cms with data.heading */}
         <div className="gsap-align relative max-w-[700px] z-20">
           <h1 className="gsap-title h3">
-            <span className="flex gap-4">
-              {copy.map((word, index) => (
+            <span className="flex gap-2 md:gap-4">
+              {heading[0].split(' ').map((word, index) => (
                 <span className="gsap-word" key={index}>
                   {word}
                 </span>
               ))}
             </span>
-            <span className="flex gap-4 gsap-line">
-              <span>Empower artists.</span>
+            <span className="flex gap-2 md:gap-4 gsap-line">
+              <span>{ heading[1] }</span>
             </span>
           </h1>
           <div className="flex gap-[10px] mt-5">
-            {/* Going to be a link */}
             <div className="gsap-stagger">
               <button
                 data-cursor="Coming soon"
