@@ -47,7 +47,7 @@ const SortAndSearch = () => {
               <div className="grid grid-cols-2 pb-[15px] w-full">
                 <div>
                   <input
-                    className="radio-block left"
+                    className="border-collapse radio-block left"
                     type="radio"
                     name="category"
                     id="artworks"
@@ -56,7 +56,7 @@ const SortAndSearch = () => {
                 </div>
                 <div>
                   <input
-                    className="radio-block right"
+                    className=" radio-block right"
                     type="radio"
                     name="category"
                     id="collections"

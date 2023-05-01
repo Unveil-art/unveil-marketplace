@@ -30,7 +30,7 @@ const AboutCurator = () => {
               0x23874s873wn
             </p>
           </div>
-          <button className="btn btn-secondary btn-full border-unveilWhite">
+          <button className="btn btn-secondary hover:bg-[#292928] btn-full border-unveilWhite">
             Follow artist
           </button>
         </div>
