@@ -17,9 +17,9 @@ const Collections = ({ color = "#F9F7F2", bgColor = "#141414" }) => {
         <div className="max-w-[60%]   ml-auto">
           <p className="mb-5 l2">Curated by Sephora Elders</p>
           <p className="b3">
-            In the realm of photography, I dance on the threshold between fact
-            and fiction – where emotions and life's fragments merge into
-            something both tangible.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Necessitatibus corporis mollitia nobis labore tempora laudantium
+            libero eveniet fugit corrupti quibusdam?
           </p>
         </div>
       </div>
