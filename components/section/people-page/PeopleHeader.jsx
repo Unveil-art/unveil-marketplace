@@ -4,10 +4,10 @@ const PeopleHeader = () => {
   return (
     <section className="ml-[40px] md:ml-[35svw] pr-[15px] md:pr-[40px]">
       <p className="s2 my-[60px] md:block hidden ">
-        In the realm of photography, I dance on the threshold between fact and
-        fiction – where emotions and life's fragments merge into something both
-        tangible and otherworldly. For me, photography is a byproduct of my
-        quest to explore the metaphysical nature of reality.{" "}
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quia
+        beatae. Consequuntur pariatur incidunt minima aperiam cupiditate libero
+        rerum autem voluptatum earum officiis, sunt non in repudiandae aliquid
+        alias nisi.
       </p>
       <div className="justify-between md:flex">
         <div>
