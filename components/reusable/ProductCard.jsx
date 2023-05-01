@@ -4,15 +4,18 @@ import Currency from "../svg/Currency";
 
 const ProductCard = ({ rounded = false }) => {
   return (
-    <Animate options={{
-      y: 175,
-      alpha: true,
-      delay: 'random'
-    }} className="[&:nth-child(3)]:mt-[120px]">
+    <Animate
+      options={{
+        y: 175,
+        alpha: true,
+        delay: "random",
+      }}
+      className="[&:nth-child(3)]:mt-[120px]"
+    >
       <div
         className={`${
           rounded ? "rounded-t-full" : ""
-        } bg-unveilGreen aspect-[3/4] mb-1`}
+        } bg-bgColor aspect-[3/4] mb-1`}
       ></div>
       <span className=" nft-print">nft + print</span>
       <h5 className="b3">Artwork Name</h5>

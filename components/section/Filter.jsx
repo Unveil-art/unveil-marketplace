@@ -17,7 +17,9 @@ const Filter = () => {
           <span
             onClick={() => setCategory(0)}
             className={`${
-              category === 0 ? "border-unveilBlack" : "border-bgColorHover"
+              category === 0
+                ? "border-unveilBlack"
+                : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
             } px-2 border rounded-full cursor-pointer unveilTransition md:px-4 l2`}
           >
             Artworks
@@ -25,7 +27,9 @@ const Filter = () => {
           <span
             onClick={() => setCategory(1)}
             className={`${
-              category === 1 ? "border-unveilBlack" : "border-bgColorHover"
+              category === 1
+                ? "border-unveilBlack"
+                : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
             } px-2 border rounded-full cursor-pointer unveilTransition md:px-4 l2 `}
           >
             Collections
@@ -38,7 +42,9 @@ const Filter = () => {
           <span
             onClick={() => setArtist(0)}
             className={`${
-              artist === 0 ? "border-unveilBlack" : "border-bgColorHover"
+              artist === 0
+                ? "border-unveilBlack"
+                : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
             } px-4 border rounded-full unveilTransition cursor-pointer l2 `}
           >
             Established
@@ -46,7 +52,9 @@ const Filter = () => {
           <span
             onClick={() => setArtist(1)}
             className={`${
-              artist === 1 ? "border-unveilBlack" : "border-bgColorHover"
+              artist === 1
+                ? "border-unveilBlack"
+                : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
             } px-4 border rounded-full unveilTransition cursor-pointer l2 `}
           >
             Talent
@@ -59,7 +67,9 @@ const Filter = () => {
           <span
             onClick={() => setMedium(0)}
             className={`${
-              medium === 0 ? "border-unveilBlack" : "border-bgColorHover"
+              medium === 0
+                ? "border-unveilBlack"
+                : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
             } px-4 py-[0px] border rounded-l-[5px] unveilTransition cursor-pointer l2`}
           >
             Digital
@@ -67,7 +77,9 @@ const Filter = () => {
           <span
             onClick={() => setMedium(1)}
             className={`${
-              medium === 1 ? "border-unveilBlack" : "border-bgColorHover"
+              medium === 1
+                ? "border-unveilBlack"
+                : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
             } px-4 py-[0px] border rounded-r-[5px] unveilTransition cursor-pointer l2`}
           >
             Print
