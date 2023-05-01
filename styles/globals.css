@@ -122,6 +122,15 @@
   .print {
     @apply px-[6px] pt-[4px] pb-[3px] my-auto border border-unveilYellow bg-unveilYellow rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
   }
+  .artist {
+    @apply px-[6px] pt-[4px] pb-[3px] my-auto border border-unveilBlack bg-unveilBlack text-unveilWhite l2 rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
+  }
+  .collector {
+    @apply px-[6px] pt-[4px] pb-[3px] my-auto border border-unveilGreen bg-unveilGreen  l2 rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
+  }
+  .curator {
+    @apply px-[6px] pt-[4px] pb-[3px] my-auto border border-unveilYellow bg-unveilYellow l2 rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
+  }
 
   /* Transition */
   .unveilTransition {

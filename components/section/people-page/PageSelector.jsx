@@ -1,14 +1,13 @@
 import React from "react";
 
-const Browse = ({ filter, setFilter }) => {
+const PageSelector = ({ page, setPage }) => {
   return (
-    <section className=" flex gap-2 ml-[40px] md:ml-[35svw] md:pr-[40px] overflow-hidden">
-      <p>Browse</p>{" "}
+    <section className="pl-10 mt-10 pr-[15px] md:px-10">
       <div className="flex items-center gap-1">
         <span
-          onClick={() => setFilter(0)}
+          onClick={() => setPage(0)}
           className={`${
-            filter === 0
+            page === 0
               ? "border-unveilBlack"
               : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
           } px-2 border rounded-full cursor-pointer unveilTransition md:px-4 l2`}
@@ -16,9 +15,9 @@ const Browse = ({ filter, setFilter }) => {
           Artworks
         </span>
         <span
-          onClick={() => setFilter(1)}
+          onClick={() => setPage(1)}
           className={`${
-            filter === 1
+            page === 1
               ? "border-unveilBlack"
               : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
           } px-2 border rounded-full cursor-pointer unveilTransition md:px-4 l2 `}
@@ -26,18 +25,18 @@ const Browse = ({ filter, setFilter }) => {
           Collections
         </span>
         <span
-          onClick={() => setFilter(2)}
+          onClick={() => setPage(2)}
           className={`${
-            filter === 2
+            page === 2
               ? "border-unveilBlack"
               : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
           } px-2 border rounded-full cursor-pointer unveilTransition md:px-4 l2 `}
         >
-          Collections
+          About
         </span>
       </div>
     </section>
   );
 };
 
-export default Browse;
+export default PageSelector;

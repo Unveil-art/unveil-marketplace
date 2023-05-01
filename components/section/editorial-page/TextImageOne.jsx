@@ -18,7 +18,6 @@ const TextImageOne = ({ data, title }) => {
             objectFit="cover"
             className="gsap-image"
           />
-          AD
         </Animate>
       </div>
       <Animate options={{ alpha: true }} className="md:col-span-2">
