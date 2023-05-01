@@ -15,7 +15,7 @@ const FAQ = ({ data }) => {
   };
 
   useEffect(() => {
-    [1, 2, 3].map((item, i) => {
+    data.map((item, i) => {
       setHeight((heights) => [
         ...heights,
         ref.current.children[i].children[1].scrollHeight,
@@ -27,7 +27,7 @@ const FAQ = ({ data }) => {
     <section className="ml-10 md:ml-[35svw] mr-[15px] md:mr-10 mt-[120px] mb-[120px]">
       <Animate
         options={{ alpha: true }}
-        className="flex items-end justify-between block mb-6"
+        className="flex items-end justify-between mb-6"
       >
         <h2 className="h3">FAQ</h2>
         <div className="">

@@ -20,7 +20,7 @@ const NavbarPopIn = ({ navOpen, setNavOpen }) => {
         className="fixed z-50 invisible w-full h-screen overflow-hidden"
       >
         <div className="gsap-el fixed overflow-y-scroll top-0 left-0 w-full sm:w-[540px]  bg-[#ECE8DE] px-5 py-10 z-50 rounded-br-[20px] h-screen sm:h-fit">
-          <Link href="/search">
+          <Link href="/search" onClick={() => setNavOpen(!navOpen)}>
             <div className="absolute cursor-pointer top-10 left-5">
               <Search />
             </div>
@@ -33,7 +33,7 @@ const NavbarPopIn = ({ navOpen, setNavOpen }) => {
               <Close />
             </div>
           </div>
-          <Link href="/">
+          <Link href="/" onClick={() => setNavOpen(!navOpen)}>
             <div className="w-[106px] mx-auto md:w-[144px] cursor-pointer">
               <Logo />
             </div>
