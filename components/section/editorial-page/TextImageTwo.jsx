@@ -18,7 +18,7 @@ const TextImageTwo = ({ data }) => {
           options={{ y: 0, image: true }}
           className="w-full sticky overflow-hidden top-0 h-fit bg-bgColor aspect-[10/11]"
         >
-          {data.Image.data.attributes.url && (
+          {data.Image && (
             <Image
               src={data.Image.data.attributes.url}
               alt={data.Image.data.attributes.alt}
