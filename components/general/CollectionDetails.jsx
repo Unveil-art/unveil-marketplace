@@ -1,5 +1,6 @@
 import { useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 
 import Animate from "../reusable/Animate";
 import Currency from "../svg/Currency";
@@ -7,6 +8,8 @@ import CountdownTimer from "../reusable/CountdownTimer";
 
 import { useIntersection } from "../../hooks/useIntersection";
 import { gsap } from "gsap";
+
+const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
 const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
   const el = useRef();
@@ -51,25 +54,45 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
           imageMargin ? "md:mb-10 md:ml-10" : ""
         } w-full md:w-[65svw] pr-10 md:pr-0`}
       >
-        <Animate
-          options={{ y: 0, image: true }}
-          className="relative z-10 block w-full overflow-hidden aspect-square"
-        >
-          <img
-            src={data.image.data.attributes.url}
-            alt={data.image.data.attributes.alt}
-            className="w-full gsap-image"
-          />
-          {data.bubblewrap && (
-            <Image
-              src="/images/bubble-wrap.png"
-              alt="Bubble wrap - coming soon"
-              layout="fill"
-              objectFit="cover"
-              className="gsap-bubblewrap"
+        {data.image.data.attributes.mime.includes("video") && (
+          <Animate
+            options={{ y: 0, image: true }}
+            className="relative z-10 block w-full overflow-hidden"
+          >
+            <ReactPlayer
+              url={data.image.data.attributes.url}
+              width="100%"
+              height="100%"
+              playing
+              loop
+              muted
+              className="object-cover"
+              style={{ objectFit: "cover" }}
             />
-          )}
-        </Animate>
+          </Animate>
+        )}
+        {data.image.data.attributes.mime.includes("image") && (
+          <Animate
+            options={{ y: 0, image: true }}
+            className="relative z-10 block w-full overflow-hidden aspect-square"
+          >
+            <img
+              src={data.image.data.attributes.url}
+              alt={data.image.data.attributes.alt}
+              className="w-full gsap-image"
+            />
+
+            {data.bubblewrap && (
+              <Image
+                src="/images/bubble-wrap.png"
+                alt="Bubble wrap - coming soon"
+                layout="fill"
+                objectFit="cover"
+                className="gsap-bubblewrap"
+              />
+            )}
+          </Animate>
+        )}
       </div>
       <Animate
         options={{

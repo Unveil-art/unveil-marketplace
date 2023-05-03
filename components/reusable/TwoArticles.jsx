@@ -10,8 +10,6 @@ const TwoArticles = ({ data }) => {
 
   useLineMaskingAnimation(el);
 
-  console.log(data);
-
   return (
     <section
       ref={el}
@@ -29,6 +27,8 @@ const TwoArticles = ({ data }) => {
           >
             <Link href={`/editorial/${item.attributes.slug}`}>
               <div
+                data-cursor={item.attributes.cursor_text}
+                data-cursor-color={item.attributes.cursor_color}
                 className={`${
                   i === 1 ? "rounded-t-full" : ""
                 } bg-bgColor relative overflow-hidden aspect-[3/4] w-full`}

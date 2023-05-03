@@ -30,11 +30,11 @@ const RequestAccess = ({ data }) => {
         </p>
         <Link href={data.link}>
           <button
-            data-cursor="Coming soon"
-            data-cursor-color="#B2B4AE"
+            data-cursor={data.cursor_text}
+            data-cursor-color={data.cursor_color}
             className="block mb-3 cursor-not-allowed btn btn-primary md:w-fit btn-full"
           >
-            Request access
+            {data.button_text}
           </button>
         </Link>
         <small className=" b4">{data.link_bottom_text}</small>

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 import Browse from "@/components/section/people-page/Browse";
 import Title from "@/components/reusable/Title";
@@ -8,6 +9,12 @@ import PeopleList from "@/components/section/people-page/PeopleList";
 
 const People = () => {
   const [filter, setFilter] = useState(0);
+
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/404");
+  }, []);
+
   return (
     <main className="pt-[120px] min-h-screen overflow-y-hidden">
       <Title title="People" />

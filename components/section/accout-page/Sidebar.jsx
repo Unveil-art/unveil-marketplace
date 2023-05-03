@@ -1,10 +1,14 @@
 import React from "react";
+import useMagic from "@/hooks/useMagic";
 
 const Sidebar = ({ accountState, setAccountState }) => {
+  const { magic_connect, logout } = useMagic();
+
   const handleAccountState = (i) => {
     window.scrollTo(0, 0);
     setAccountState(i);
   };
+
   return (
     <div className="sticky md:flex hidden top-0 flex-col justify-end h-[calc(100vh-40px)] space-y-1 text-unveilDrakGray left-10 s2 w-0 mb-10">
       <p
@@ -80,6 +84,12 @@ const Sidebar = ({ accountState, setAccountState }) => {
         Followed artists
       </p>
       <p
+        onClick={() => {
+          if (magic_connect) {
+            magic_connect.wallet.disconnect();
+          }
+          logout();
+        }}
         className={` cursor-pointer hover:text-unveilBlack unveilTransition whitespace-nowrap`}
       >
         Logout

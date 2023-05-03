@@ -182,7 +182,7 @@ const FloatingArt = ({ data }) => {
                 src={data.topleft.data.attributes.url}
                 alt={data.topleft.data.attributes.alt}
                 layout="fill"
-                objectFit="contain"
+                objectFit="cover"
               />
               {data.topleft_bubblewrap && (
                 <Image
@@ -212,7 +212,7 @@ const FloatingArt = ({ data }) => {
                 src={data.bottomleft.data.attributes.url}
                 alt={data.bottomleft.data.attributes.alt}
                 layout="fill"
-                objectFit="contain"
+                objectFit="cover"
               />
               {data.bottomleft_bubblewrap && (
                 <Image
@@ -241,7 +241,7 @@ const FloatingArt = ({ data }) => {
                 src={data.topright.data.attributes.url}
                 alt={data.topright.data.attributes.alt}
                 layout="fill"
-                objectFit="contain"
+                objectFit="cover"
               />
               {data.topright_bubblewrap && (
                 <Image
@@ -254,7 +254,7 @@ const FloatingArt = ({ data }) => {
               )}
             </div>
             <small className="block l2 text-[8px] md:text-[12px]">
-              {data.centerright_name}
+              {data.topright_name}
             </small>
           </div>
         </div>
@@ -270,7 +270,7 @@ const FloatingArt = ({ data }) => {
                 src={data.centerright.data.attributes.url}
                 alt={data.centerright.data.attributes.alt}
                 layout="fill"
-                objectFit="contain"
+                objectFit="cover"
               />
               {data.centerright_bubblewrap && (
                 <Image
@@ -291,34 +291,34 @@ const FloatingArt = ({ data }) => {
         <div className="gsap-align relative max-w-[700px] z-20">
           <h1 className="gsap-title h3">
             <span className="flex gap-2 md:gap-4">
-              {heading[0].split(' ').map((word, index) => (
+              {heading[0].split(" ").map((word, index) => (
                 <span className="gsap-word" key={index}>
                   {word}
                 </span>
               ))}
             </span>
             <span className="flex gap-2 md:gap-4 gsap-line">
-              <span>{ heading[1] }</span>
+              <span>{heading[1]}</span>
             </span>
           </h1>
           <div className="flex gap-[10px] mt-5">
             <div className="gsap-stagger">
               <button
-                data-cursor="Coming soon"
-                data-cursor-color="#5B91AC"
-                className="cursor-not-allowed btn btn-primary"
+                data-cursor={data.button_1_cursor_text}
+                data-cursor-color={data.button_1_cursor_color}
+                className="cursor-not-allowed md:hover:bg-opacity-100 bg-opacity-90 btn btn-primary"
               >
-                Start collecting
+                {data.button_1_text}
               </button>
             </div>
             {/* Going to be a link */}
             <div className="gsap-stagger">
               <button
-                data-cursor="Coming soon"
-                data-cursor-color="#5B91AC"
-                className="cursor-not-allowed btn btn-secondary"
+                data-cursor={data.button_2_cursor_text}
+                data-cursor-color={data.button_2_cursor_color}
+                className="cursor-not-allowed btn btn-secondary md:bg-transparent bg-bgColor"
               >
-                Request access
+                {data.button_2_text}
               </button>
             </div>
           </div>

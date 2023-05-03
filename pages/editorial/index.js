@@ -14,7 +14,7 @@ export default function EditorialPage({ data }) {
   const editorialData = data.data;
   const editorial1to5 = editorialData.slice(0, 5);
   const editorial5to9 = editorialData.slice(5, 9);
-  console.log(editorial5to9);
+  console.log(data);
 
   return (
     <main className="mt-[120px]">
@@ -31,12 +31,14 @@ export default function EditorialPage({ data }) {
       <UpcomingDrop />
       <ArtistHighlights />
       <ArtistAnnouncement />
-      {editorial5to9.length > 2 && (
-        <section className="px-[15px] md:px-10">
-          <Articles data={editorial5to9} homePage />
-        </section>
+      {editorial5to9.length > 3 && (
+        <>
+          <section className="px-[15px] md:px-10">
+            <Articles data={editorial5to9} homePage />
+          </section>
+          <ArtistAnnouncement />
+        </>
       )}
-      <ArtistAnnouncement />
     </main>
   );
 }
