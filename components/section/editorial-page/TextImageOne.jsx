@@ -2,6 +2,9 @@ import React from "react";
 import Image from "next/image";
 import Title from "@/components/reusable/Title";
 import Animate from "@/components/reusable/Animate";
+import dynamic from "next/dynamic";
+
+const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
 const TextImageOne = ({ data, title }) => {
   console.log(data);
