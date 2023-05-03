@@ -33,12 +33,14 @@ const TwoArticles = ({ data }) => {
                   i === 1 ? "rounded-t-full" : ""
                 } bg-bgColor relative overflow-hidden aspect-[3/4] w-full`}
               >
-                <Image
-                  src={item.attributes.Image.data.attributes.url}
-                  alt={item.attributes.Image.data.attributes.alt}
-                  layout="fill"
-                  objectFit="cover"
-                />
+                {item.attributes.Image && (
+                  <Image
+                    src={item.attributes.Image.data.attributes.url}
+                    alt={item.attributes.Image.data.attributes.alt}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                )}
               </div>
             </Link>
             <div className="flex flex-col justify-end">
