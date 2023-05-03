@@ -6,13 +6,17 @@ import Link from "next/link";
 import Logo from "../svg/Logo";
 import Account from "../svg/Account";
 import NavbarPopIn from "../pop-in/NavbarPopIn";
+import LoginPopIn from "../pop-in/LoginPopIn";
+import LoggedInPopIn from "../pop-in/LoggedInPopIn";
 
-const Navbar = () => {
+const Navbar = ({ magic_connect, value }) => {
   const el = useRef();
+  const [loggedIn, setLoggedIn] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
 
-  const handleOpen = () => {
-    setNavOpen(!navOpen);
+  const handleOpen = (setState, state) => {
+    setState(!state);
   };
 
   useEffect(() => {
@@ -35,27 +39,44 @@ const Navbar = () => {
     <>
       <nav
         ref={el}
-        className="fixed top-0 left-0 z-40 flex items-center justify-between w-full px-[15px] pt-[15px] md:pt-[32px] md:px-10"
+        className="fixed top-0 left-0 z-40 flex items-center justify-center w-full px-[15px] pt-[15px] md:pt-[32px] md:px-10"
       >
-        <div
-          onClick={() => handleOpen()}
+        {/* <div
+          onClick={() => handleOpen(setNavOpen, navOpen)}
           className="relative  w-[20px] md:w-[31px] h-[12px] group cursor-pointer"
         >
           <div className="w-full h-[3px] bg-unveilBlack absolute top-0 unveilTransition group-hover:w-[85%]"></div>
           <div className="w-full h-[3px] bg-unveilBlack absolute bottom-0 unveilTransition group-hover:w-[115%]"></div>
-        </div>
+        </div> */}
 
         <Link href="/">
           <div className="w-[106px] md:w-[144px] cursor-pointer">
             <Logo />
           </div>
         </Link>
+        {/* {value && (
+          <div
+            onClick={() => handleOpen(setLoggedIn, loggedIn)}
+            className="z-40 scale-75 cursor-pointer md:scale-100"
+          >
+            <Account />
+          </div>
+        )}
 
-        <div className="z-40 scale-75 cursor-pointer md:scale-100">
-          <Account />
-        </div>
+        {!value && (
+          <div
+            onClick={() => handleOpen(setLoginOpen, loginOpen)}
+            className="z-40 scale-75 cursor-pointer md:scale-100"
+          >
+            <Account />
+          </div>
+        )} */}
       </nav>
-      <NavbarPopIn navOpen={navOpen} setNavOpen={setNavOpen} />
+      {/* <NavbarPopIn navOpen={navOpen} setNavOpen={setNavOpen} />
+      {!value && (
+        <LoginPopIn loginOpen={loginOpen} setLoginOpen={setLoginOpen} />
+      )}
+      {value && <LoggedInPopIn loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} */}
     </>
   );
 };

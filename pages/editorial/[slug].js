@@ -15,15 +15,20 @@ import {
   getTwoEditorials,
 } from "lib/strapi";
 import Close from "@/components/reusable/Close";
+import OneLiner from "@/components/reusable/Oneliner";
 
 const Details = ({ data, recent }) => {
+  console.log(data);
   return (
     <main className="md:mt-[120px] relative">
       <div className="hidden md:block">
-        <Title title={data.data[0].attributes.title} />
+        <Title title={data.data[0].attributes.Title} />
       </div>
       {data.data[0].attributes.Content.map((item, i) => (
         <div key={i}>
+          {item.__component === "content-blocks.one-liner" && (
+            <OneLiner text={item.description} nmb />
+          )}
           {item.__component === "content-blocks.image-text-1" && (
             <TextImageOne data={item} title={data.data[0].attributes.title} />
           )}

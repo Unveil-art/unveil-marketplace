@@ -1,5 +1,4 @@
 import React from "react";
-import Head from "../components/general/Head";
 
 import FloatingArt from "../components/section/FloatingArt";
 import GridColThree from "../components/section/GridColThree";
@@ -18,10 +17,10 @@ export default function Home({ data, faq, editorials }) {
   const homeData = data.data[0].attributes;
   const faqData = faq.data[0].attributes.faq;
   const editorialData = editorials.data;
+  console.log(homeData);
 
   return (
     <>
-      <Head />
       <FloatingArt data={homeData.page1} />
       <GridColThree data={homeData.page1.blocks} />
       <RequestAccess data={homeData.page6} />

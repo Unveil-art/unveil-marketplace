@@ -12,7 +12,7 @@ const FilterPopIn = ({ filterOpen, setFilterOpen }) => {
   return (
     <>
       <motion.div
-        onClick={() => setFilterOpen(!filterOpen)}
+        onClick={() => setFilterOpen(false)}
         variants={variantCloseBtn}
         animate={filterOpen ? "ani" : "init"}
         initial="init"
@@ -87,7 +87,7 @@ const FilterPopIn = ({ filterOpen, setFilterOpen }) => {
         </div>
       </motion.div>
       <motion.div
-        onClick={() => setFilterOpen(!filterOpen)}
+        onClick={() => setFilterOpen(false)}
         variants={variantBackground}
         animate={filterOpen ? "ani" : "init"}
         initial="init"

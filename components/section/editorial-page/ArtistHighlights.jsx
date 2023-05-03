@@ -16,16 +16,25 @@ const ArtistHighlights = () => {
         </p>
       </div>
       <Swiper
-        slidesPerView={"auto"}
+        allowTouchMove={false}
         spaceBetween={15}
         slidesOffsetBefore={15}
         autoplay={{
+          delay: 2000,
           disableOnInteraction: false,
         }}
+        breakpoints={{
+          768: {
+            allowTouchMove: true,
+            spaceBetween: 20,
+          },
+        }}
         speed={500}
+        loop={true}
         modules={[Autoplay]}
         grabCursor
-        loop
+        slidesPerView={"auto"}
+        className="swiper3"
       >
         {[1, 1, 1, 1, 1, 1, 1].map((item, index) => (
           <SwiperSlide

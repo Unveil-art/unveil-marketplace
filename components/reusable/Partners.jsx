@@ -12,7 +12,7 @@ const Partners = ({ data }) => {
       spaceBetween={15}
       slidesOffsetBefore={15}
       autoplay={{
-        delay: 3000,
+        delay: 2000,
         disableOnInteraction: false,
       }}
       breakpoints={{
@@ -22,9 +22,11 @@ const Partners = ({ data }) => {
         },
       }}
       speed={500}
+      loop={true}
       modules={[Autoplay]}
+      grabCursor
       slidesPerView={"auto"}
-      className="pointer-events-none unveilTransition lg:pointer-events-auto"
+      className="swiper2 "
     >
       {data.block.banner.data.map((item, index) => (
         <SwiperSlide

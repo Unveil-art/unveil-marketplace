@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import Animate from "./Animate";
+import ReactMarkdown from "react-markdown";
 
+import Animate from "./Animate";
 import MoreInfoPopIn from "../pop-in/MoreInfoPopIn";
 import MoreInfo from "../../components/svg/MoreInfo";
 
@@ -13,6 +14,7 @@ const OneLiner = ({
   alignLeft = false,
   info = false,
   gallery = false,
+  nmb = false,
 }) => {
   const [infoOpen, setInfoOpen] = useState(false);
 
@@ -26,18 +28,19 @@ const OneLiner = ({
         <div
           className={`${
             alignLeft ? "ml-[15px] md:ml-10" : "ml-10 md:ml-[35svw]"
-          } ${
-            gallery ? "pb-5 md:pb-10" : "pb-[40px] md:pb-[70px]"
+          } ${gallery ? "pb-5 md:pb-10" : "pb-[40px] md:pb-[70px]"} ${
+            nmb ? "!pb-0 " : ""
           } s2 pt-[80px]  md:pt-[180px] `}
           style={{ color: color }}
         >
           {!info && (
-            <div
-              dangerouslySetInnerHTML={{ __html: text }}
-              className="pr-[15px]"
-            ></div>
+            <ReactMarkdown className="markdown pr-[15px]">{text}</ReactMarkdown>
           )}
-          {info && <span>{text}</span>}
+          {info && (
+            <ReactMarkdown className="inline-block markdown">
+              {text}
+            </ReactMarkdown>
+          )}
           {info && (
             <span
               onClick={() => handleOpen()}
