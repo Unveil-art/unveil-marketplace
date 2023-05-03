@@ -15,13 +15,15 @@ const TextImageOne = ({ data, title }) => {
           options={{ y: 0, image: true }}
           className="w-full sticky top-0 overflow-hidden h-fit bg-bgColor aspect-[10/11]"
         >
-          <Image
-            src={data.Image.data.attributes.url}
-            alt={data.Image.data.attributes.alt}
-            layout="fill"
-            objectFit="cover"
-            className="gsap-image"
-          />
+          {data.Image && (
+            <Image
+              src={data.Image.data.attributes.url}
+              alt={data.Image.data.attributes.alt}
+              layout="fill"
+              objectFit="cover"
+              className="gsap-image"
+            />
+          )}
         </Animate>
       </div>
       <Animate
