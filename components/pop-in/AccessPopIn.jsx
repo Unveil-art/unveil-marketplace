@@ -14,7 +14,7 @@ const AccessPopIn = ({ accessOpen, setAccessOpen }) => {
     >
       <div className="gsap-el fixed overflow-y-scroll top-[15px] right-[15px] sm:top-5 sm:right-5 w-[280px] sm:w-[380px]  bg-[#ECE8DE] px-5 py-10 z-50 rounded-[20px] h-screen sm:h-fit">
         <div
-          onClick={() => setAccessOpen(!accessOpen)}
+          onClick={() => setAccessOpen(false)}
           className="absolute top-[15px] right-[15px] w-8 h-8 rounded-full bg-unveilBlack cursor-pointer"
         >
           <div className="-translate-x-[1px]">
@@ -61,7 +61,7 @@ const AccessPopIn = ({ accessOpen, setAccessOpen }) => {
         </form>
       </div>
       <div
-        onClick={() => setAccessOpen(!accessOpen)}
+        onClick={() => setAccessOpen(false)}
         className="fixed top-0 left-0 invisible w-full h-screen gsap-layer"
       ></div>
     </section>

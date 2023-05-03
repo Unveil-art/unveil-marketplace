@@ -13,7 +13,7 @@ module.exports = {
       colors: {
         unveilBlack: "#141414",
         unveilGrey: "rgba(0, 0, 0, 0.6)",
-        unveilWhite: "#f0ede4",
+        unveilWhite: "#F7F4ED",
         unveilCreme: "#f9f7f2",
         unveilYellow: "#FFB800",
         unveilDrakGray: "#B2b4ae",

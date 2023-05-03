@@ -4,7 +4,7 @@
 
 @layer components {
   body {
-    @apply bg-unveilWhite text-unveilBlack font-graphik;
+    @apply bg-[#F9F7F2] text-unveilBlack font-graphik;
   }
   /* Buttons */
   .btn {
@@ -275,6 +275,24 @@
   }
 
   .underline-on-hover:hover::after {
+    width: 100%;
+  }
+  .markdown a {
+    position: relative;
+    display: inline-block;
+  }
+  .markdown a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: #141414;
+    transition: width 0.3s ease-in-out;
+    transition-timing-function: cubic-bezier(0.58, 0, 0, 1);
+  }
+  .markdown a:hover::after {
     width: 100%;
   }
 }

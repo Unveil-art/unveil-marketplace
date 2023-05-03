@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 import Sidebar from "../../components/section/accout-page/Sidebar";
 import Artworks from "../../components/section/accout-page/Artworks";
@@ -11,26 +12,42 @@ import Recognitions from "../../components/section/accout-page/Recognitions";
 import Wishlist from "../../components/section/accout-page/Wishlist";
 import Following from "../../components/section/accout-page/Following";
 
+import useLocalStorage from "@/hooks/useLocalStorage";
+import useMagic from "@/hooks/useMagic";
+
 const AccountPage = () => {
   const [accountState, setAccountState] = useState(0);
+  const { magic_connect, logout } = useMagic();
 
-  const handleAccountState = (e, i) => {
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/404");
+  }, []);
+
+  const handleAccountState = (e) => {
     window.scrollTo(0, 0);
     setAccountState(e.target.selectedIndex);
+    if (e.target.value === "Logout") {
+      if (magic_connect) {
+        magic_connect.wallet.disconnect();
+      }
+      logout();
+    }
   };
 
   return (
-    <main className="relative flex pb-5 md:pb-[80px]">
+    <div className="relative flex pb-5 md:pb-[80px]">
       <Sidebar accountState={accountState} setAccountState={setAccountState} />
       <section className="mt-[120px] w-full">
         {accountState === 0 && <Title title="Account" />}
         {accountState === 1 && <Title title="Transaction overview" />}
         {accountState === 2 && <Title title="Owned NFTs" />}
         {accountState === 3 && <Title title="Name of artist" />}
-        {accountState === 5 && <Title title="Referrals" />}
-        {accountState === 6 && <Title title="Recognitions" />}
-        {accountState === 7 && <Title title="Wishlist" />}
-        {accountState === 8 && <Title title="Following" />}
+        {accountState === 4 && <Title title="Referrals" />}
+        {accountState === 5 && <Title title="Recognitions" />}
+        {accountState === 6 && <Title title="Wishlist" />}
+        {accountState === 7 && <Title title="Following" />}
+        {accountState === 8 && <Title title="Logout" />}
         <div className="block md:hidden  mt-[80px] ml-[40px] md:ml-[35svw] border-unveilBlack border-t-2 mr-[15px]">
           <select
             className="uppercase select"
@@ -40,7 +57,6 @@ const AccountPage = () => {
             <option>Transactions</option>
             <option>Owned NFTs</option>
             <option>Contact details</option>
-            <option></option>
             <option>Referrals</option>
             <option>Recognitions</option>
             <option>Wishlist</option>
@@ -52,12 +68,12 @@ const AccountPage = () => {
         {accountState === 1 && <Transactions />}
         {accountState === 2 && <OwnedNFTs />}
         {accountState === 3 && <ContactDetails />}
-        {accountState === 5 && <Referrals />}
-        {accountState === 6 && <Recognitions />}
-        {accountState === 7 && <Wishlist />}
-        {accountState === 8 && <Following />}
+        {accountState === 4 && <Referrals />}
+        {accountState === 5 && <Recognitions />}
+        {accountState === 6 && <Wishlist />}
+        {accountState === 7 && <Following />}
       </section>
-    </main>
+    </div>
   );
 };
 

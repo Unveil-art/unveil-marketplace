@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 import Title from "@/components/reusable/Title";
 import PeopleHeader from "@/components/section/people-page/PeopleHeader";
@@ -12,6 +13,11 @@ import { getFAQ } from "lib/strapi";
 const PeopleDetails = ({ faq }) => {
   const faqData = faq.data[0].attributes.faq;
   const [page, setPage] = useState(0);
+
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/404");
+  }, []);
 
   return (
     <main className="mt-[120px]">

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 import { useRLsideAnimation } from "../../hooks/animations/useRLsideAnimation";
@@ -6,10 +6,12 @@ import Logo from "../svg/Logo";
 import Close from "../svg/Close";
 import Search from "../svg/Search";
 import AccessPopIn from "./AccessPopIn";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const NavbarPopIn = ({ navOpen, setNavOpen }) => {
   const [accessOpen, setAccessOpen] = useState(false);
   const el = useRef();
+  const { value } = useLocalStorage("token");
 
   useRLsideAnimation(el, navOpen);
 
@@ -19,7 +21,10 @@ const NavbarPopIn = ({ navOpen, setNavOpen }) => {
         ref={el}
         className="fixed z-50 invisible w-full h-screen overflow-hidden"
       >
-        <div className="gsap-el fixed overflow-y-scroll top-0 left-0 w-full sm:w-[540px]  bg-[#ECE8DE] px-5 py-10 z-50 rounded-br-[20px] h-screen sm:h-fit">
+        <div
+          data-lenis-prevent
+          className="gsap-el fixed overflow-y-scroll top-0 left-0 w-full sm:w-[540px]  bg-[#ECE8DE] px-5 py-10 z-50 rounded-br-[20px] h-screen sm:h-fit"
+        >
           <Link href="/search" onClick={() => setNavOpen(!navOpen)}>
             <div className="absolute cursor-pointer top-10 left-5">
               <Search />
@@ -43,7 +48,7 @@ const NavbarPopIn = ({ navOpen, setNavOpen }) => {
               <Link href="/gallery">
                 <p
                   onClick={() => setNavOpen(!navOpen)}
-                  className="text-center border-r cursor-pointer border-r-bgColorHover py-[25px] my-[15px]"
+                  className="text-center b3 border-r cursor-pointer border-r-bgColorHover py-[25px] my-[15px]"
                 >
                   Gallery
                 </p>
@@ -51,7 +56,7 @@ const NavbarPopIn = ({ navOpen, setNavOpen }) => {
               <Link href="/gallery">
                 <p
                   onClick={() => setNavOpen(!navOpen)}
-                  className="text-center py-[25px] cursor-pointer my-[15px]"
+                  className="text-center b3 py-[25px] cursor-pointer my-[15px]"
                 >
                   Collections
                 </p>
@@ -61,7 +66,7 @@ const NavbarPopIn = ({ navOpen, setNavOpen }) => {
               <Link href="/">
                 <p
                   onClick={() => setNavOpen(!navOpen)}
-                  className="text-center border-r cursor-pointer border-r-bgColorHover py-[25px] my-[15px]"
+                  className="text-center b3 border-r cursor-pointer border-r-bgColorHover py-[25px] my-[15px]"
                 >
                   Artists
                 </p>
@@ -69,7 +74,7 @@ const NavbarPopIn = ({ navOpen, setNavOpen }) => {
               <Link href="/">
                 <p
                   onClick={() => setNavOpen(!navOpen)}
-                  className="text-center py-[25px] cursor-pointer my-[15px]"
+                  className="text-center b3 py-[25px] cursor-pointer my-[15px]"
                 >
                   Curators
                 </p>
@@ -79,7 +84,7 @@ const NavbarPopIn = ({ navOpen, setNavOpen }) => {
               <Link href="/editorial">
                 <p
                   onClick={() => setNavOpen(!navOpen)}
-                  className="text-center border-r cursor-pointer border-r-bgColorHover py-[25px] my-[15px]"
+                  className="text-center b3 border-r cursor-pointer border-r-bgColorHover py-[25px] my-[15px]"
                 >
                   Journal
                 </p>
@@ -87,25 +92,37 @@ const NavbarPopIn = ({ navOpen, setNavOpen }) => {
               <Link href="/">
                 <p
                   onClick={() => setNavOpen(!navOpen)}
-                  className="text-center py-[25px] cursor-pointer my-[15px]"
+                  className="text-center b3 py-[25px] cursor-pointer my-[15px]"
                 >
                   Learn
                 </p>
               </Link>
             </div>
             <div className="grid grid-cols-2 ">
-              <Link href="/account">
-                <p
-                  onClick={() => setNavOpen(!navOpen)}
-                  className="text-center border-r cursor-pointer border-r-bgColorHover py-[25px] my-[15px]"
-                >
-                  Account
-                </p>
-              </Link>
+              {value && (
+                <Link href="/account">
+                  <p
+                    onClick={() => setNavOpen(!navOpen)}
+                    className="text-center b3 border-r cursor-pointer border-r-bgColorHover py-[25px] my-[15px]"
+                  >
+                    Account
+                  </p>
+                </Link>
+              )}
+              {!value && (
+                <Link href="/login">
+                  <p
+                    onClick={() => setNavOpen(!navOpen)}
+                    className="text-center b3 border-r cursor-pointer border-r-bgColorHover py-[25px] my-[15px]"
+                  >
+                    Account
+                  </p>
+                </Link>
+              )}
               <Link href="/">
                 <p
                   onClick={() => setNavOpen(!navOpen)}
-                  className="text-center py-[25px] cursor-pointer my-[15px]"
+                  className="text-center b3 py-[25px] cursor-pointer my-[15px]"
                 >
                   About
                 </p>
@@ -123,7 +140,7 @@ const NavbarPopIn = ({ navOpen, setNavOpen }) => {
           </p>
         </div>
         <div
-          onClick={() => setNavOpen(!navOpen)}
+          onClick={() => setNavOpen(false)}
           className="fixed top-0 left-0 invisible w-full h-screen gsap-layer bg-unveilGrey"
         ></div>
       </section>

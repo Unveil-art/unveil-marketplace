@@ -13,7 +13,7 @@ const TextImageTwo = ({ data }) => {
           {data.Text}
         </p>
       </Animate>
-      <div className="order-1 w-full md:col-span-3 md:order-2">
+      <div className="relative order-1 w-full md:col-span-3 md:order-2">
         <Animate
           options={{ y: 0, image: true }}
           className="w-full sticky overflow-hidden top-0 h-fit bg-bgColor aspect-[10/11]"
@@ -26,11 +26,11 @@ const TextImageTwo = ({ data }) => {
             className="gsap-image"
           />
         </Animate>
-        <div className="md:bg-[#D9D9D9] md:text-center text-left px-[15px] py-2 b3 md:l2"></div>
+
         {data.Caption && (
           <Animate
             options={{ alpha: true }}
-            className="mt-[15px] hidden md:block"
+            className="pt-[10px] hidden md:block h-100px"
           >
             <p className="b4">{data.Caption}</p>
           </Animate>

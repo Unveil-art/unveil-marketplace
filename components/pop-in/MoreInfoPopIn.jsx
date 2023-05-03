@@ -13,7 +13,10 @@ const MoreInfoPopIn = ({ open, setOpen, text, title, subtitle }) => {
         ref={el}
         className="fixed z-50 invisible w-full h-screen overflow-hidden"
       >
-        <div className="gsap-el fixed overflow-y-scroll top-[15px] right-[15px] sm:top-5 sm:right-5 w-[280px] sm:w-[380px]  bg-unveilWhite px-5 py-10 z-50 rounded-[20px] h-fit">
+        <div
+          data-lenis-prevent
+          className="gsap-el fixed max-h-[calc(100vh-40px)] overflow-y-scroll top-[15px] right-[15px] sm:top-5 sm:right-5 w-[280px] sm:w-[380px]  bg-unveilWhite px-5 py-10 z-50 rounded-[20px] h-fit"
+        >
           <div
             onClick={() => setOpen(!open)}
             className="absolute top-[15px] right-[15px] w-8 h-8 rounded-full bg-unveilBlack cursor-pointer"
@@ -29,7 +32,7 @@ const MoreInfoPopIn = ({ open, setOpen, text, title, subtitle }) => {
           </div>
         </div>
         <div
-          onClick={() => setOpen(!open)}
+          onClick={() => setOpen(false)}
           className="fixed top-0 left-0 invisible w-full h-screen gsap-layer bg-unveilGrey"
         ></div>
       </section>

@@ -17,7 +17,7 @@ const Collection = ({
   return (
     <section
       style={{ backgroundColor: backgroundColor, color: color }}
-      data-cursor="View Collection"
+      data-cursor={data.hover_text}
       data-cursor-color={backgroundColor}
     >
       <Title title={title} color={color} />

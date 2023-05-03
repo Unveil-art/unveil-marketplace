@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import OneLiner from "../../components/reusable/Oneliner";
 import Title from "../../components/reusable/Title";
@@ -7,8 +7,14 @@ import SortAndSearch from "../../components/section/SortAndSearch";
 import PageHead from "../../components/general/Head";
 import SearchBlockItems from "../../components/section/SearchBlockItems";
 import GalleryBlockItems from "../../components/section/GalleryBlockItems";
+import { getCollections, getArtworks } from "lib/strapi";
+import { useRouter } from "next/router";
 
-export default function Gallery() {
+export default function Gallery({ collections, artworks }) {
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/404");
+  }, []);
   return (
     <>
       <PageHead />
@@ -31,4 +37,16 @@ export default function Gallery() {
       </main>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const collections = await getCollections();
+  const artworks = await getArtworks();
+
+  return {
+    props: {
+      collections,
+      artworks,
+    },
+  };
 }
