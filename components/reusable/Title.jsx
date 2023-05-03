@@ -1,7 +1,7 @@
 import { forwardRef, useRef } from "react";
 import { useLineMaskingAnimation } from "../../hooks/animations/useLineMaskingAnimation";
 
-const Title = ({ title = "Title", color = "#141414" }, ref) => {
+const Title = ({ title = "Title", color = "#141414", account }, ref) => {
   const el = useRef();
 
   useLineMaskingAnimation(el);
@@ -13,9 +13,16 @@ const Title = ({ title = "Title", color = "#141414" }, ref) => {
     >
       <div
         style={{ backgroundColor: color }}
-        className={`gsap-line h-[3px] md:h-[5px] mb-3 md:mb-5 mr-[15px]`}
+        className={`gsap-line h-[3px] md:h-[5px] mb-3 md:mb-5 md:mr-0 mr-[15px]`}
       ></div>
-      <h2 className="pb-2 gsap-transform h1">{title}</h2>
+      <div className="flex items-end gap-2 fle-wrap">
+        <h2 className="pb-2 gsap-transform h1">{title}</h2>
+        {account === "artist" && <span className="artist">Artist</span>}
+        {account === "collector" && (
+          <span className="mt-[70px] collector">Collector</span>
+        )}
+        {account === "curator" && <span className="curator">Curator</span>}
+      </div>
     </div>
   );
 };

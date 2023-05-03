@@ -28,7 +28,8 @@ const Animate = ({ options = {}, className, children }) => {
     const direction = boundingClientRect.top <= 0 ? -1 : 1;
     const stagger = query(".gsap-stagger");
     const image = query(".gsap-image");
-    const delay = defaults.delay === "random" ? Math.random() * 1.0 : defaults.delay;
+    const bubblewrap = query(".gsap-bubblewrap");
+    const delay = defaults.delay === "random" ? Math.random() * 0.25 : defaults.delay;
     // prettier-ignore
     const tl = gsap.timeline({
       paused: true,
@@ -63,7 +64,7 @@ const Animate = ({ options = {}, className, children }) => {
         clearProps: "transform",
       }, delay);
     }
-    if (defaults.image && image) {
+    if (defaults.image && image && image.length > 0) {
       // prettier-ignore
       tl.fromTo(image, {
         autoAlpha: 0,
@@ -74,6 +75,18 @@ const Animate = ({ options = {}, className, children }) => {
         duration: 2.0,
         ease: 'expo.out'
       }, delay)
+      if (bubblewrap && bubblewrap.length > 0) {
+        // prettier-ignore
+        tl.fromTo(bubblewrap, {
+          autoAlpha: 0,
+          scale: 1.1
+        }, {
+          autoAlpha: 1,
+          scale: 1,
+          duration: 3.0,
+          ease: 'expo.out'
+        }, delay + 0.25)
+      }
     }
     tl.restart();
     setIsAnimated(true);
@@ -85,7 +98,7 @@ const Animate = ({ options = {}, className, children }) => {
     gsap.set(el.current, {
       autoAlpha: 0,
     });
-    if (stagger) {
+    if (stagger && stagger.length > 0) {
       gsap.set(stagger, {
         autoAlpha: 0,
       })

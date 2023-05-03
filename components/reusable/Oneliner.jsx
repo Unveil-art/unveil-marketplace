@@ -31,20 +31,33 @@ const OneLiner = ({
           } s2 pt-[80px]  md:pt-[180px] `}
           style={{ color: color }}
         >
-          <div
-            dangerouslySetInnerHTML={{ __html: text }}
-            className="pr-[15px]"
-          ></div>
+          {!info && (
+            <div
+              dangerouslySetInnerHTML={{ __html: text }}
+              className="pr-[15px]"
+            ></div>
+          )}
+          {info && <span>{text}</span>}
           {info && (
             <span
               onClick={() => handleOpen()}
-              className="inline cursor-help w-fit"
+              className="inline ml-2 cursor-pointer w-fit"
             >
+              {}
               <MoreInfo />
             </span>
           )}
           {info && (
-            <MoreInfoPopIn infoOpen={infoOpen} setInfoOpen={setInfoOpen} />
+            <MoreInfoPopIn
+              open={infoOpen}
+              setOpen={setInfoOpen}
+              title="Established"
+              subtitle="Artworks"
+              text="Professionals who have gained recognition for their exceptional
+            artistic vision and photographic skills, and have typically built
+            a career around their ability to capture and communicate a unique
+            perspective through their photography."
+            />
           )}
         </div>
       </Animate>

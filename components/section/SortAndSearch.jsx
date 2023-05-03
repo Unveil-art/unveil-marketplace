@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useAsideAnimation } from "@/hooks/animations/useAsideAnimation";
 import Close from "../svg/Close";
 
@@ -12,6 +12,14 @@ const SortAndSearch = () => {
     setFilterOpen(!filterOpen);
   };
 
+  useEffect(() => {
+    if (filterOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [filterOpen]);
+
   return (
     <section className="fixed z-50 w-full h-screen overflow-hidden">
       <div
@@ -21,7 +29,10 @@ const SortAndSearch = () => {
         <p className="b4 text-unveilWhite">Search & Sort</p>
       </div>
       <div ref={el} className="fixed z-50 w-full h-screen overflow-hidden">
-        <div className="gsap-el fixed overflow-y-scroll top-0 right-0 sm:top-5 sm:right-5 w-full sm:w-[380px]  bg-unveilWhite px-5 py-10 z-50 sm:rounded-[20px] h-screen sm:h-fit">
+        <div
+          data-lenis-prevent
+          className="gsap-el fixed overflow-y-scroll h-screen md:h-[calc(100vh-40px)] top-0 right-0 sm:top-5 sm:right-5 w-full sm:w-[380px] bg-unveilWhite px-5 py-10 z-50 sm:rounded-[20px]"
+        >
           <div
             onClick={() => handleOpen()}
             className="absolute top-[15px] right-[15px] w-8 h-8 rounded-full bg-unveilBlack cursor-pointer"
@@ -30,67 +41,171 @@ const SortAndSearch = () => {
               <Close />
             </div>
           </div>
-          <div className="space-y-6">
+          <form className="space-y-5">
             <div>
               <label className="b4 block pb-[10px]">Category</label>
-              <div className="grid grid-cols-2">
-                <div className="w-full py-7 border cursor-pointer rounded-l-[10px] border-unveilBlack">
-                  <p className="mx-auto w-fit b3">Artworks</p>
+              <div className="grid grid-cols-2 pb-[15px] w-full">
+                <div>
+                  <input
+                    className="border-collapse radio-block left"
+                    type="radio"
+                    name="category"
+                    id="artworks"
+                  />
+                  <label htmlFor="artworks">Artworks</label>
                 </div>
-                <div className="w-full py-7 border cursor-pointer rounded-r-[10px] border-l-0 border-unveilBlack">
-                  <p className="mx-auto w-fit b3">Collections</p>
+                <div>
+                  <input
+                    className=" radio-block right"
+                    type="radio"
+                    name="category"
+                    id="collections"
+                  />
+                  <label htmlFor="collections">Collections</label>
                 </div>
               </div>
             </div>
             <div>
               <label className="b4 block pb-[10px]">Medium</label>
-              <div className="grid grid-cols-2">
-                <div className="w-full py-7 border cursor-pointer rounded-tl-[10px] border-unveilBlack">
-                  <p className="mx-auto w-fit b3">All</p>
+              <div className="grid grid-cols-2 pb-[15px] w-full">
+                <div>
+                  <input
+                    className="radio-block top-left"
+                    type="radio"
+                    name="medium"
+                    id="all"
+                  />
+                  <label htmlFor="all">All</label>
                 </div>
-                <div className="w-full py-7 border cursor-pointer rounded-tr-[10px] border-l-0 border-unveilBlack">
-                  <p className="mx-auto w-fit b3">Collections</p>
+                <div>
+                  <input
+                    className="radio-block top-right"
+                    type="radio"
+                    name="medium"
+                    id="digital"
+                  />
+                  <label htmlFor="digital">Digital</label>
                 </div>
-                <div className="w-full py-7 border cursor-pointer rounded-bl-[10px] border-t-0 border-unveilBlack">
-                  <p className="mx-auto w-fit b3">Collections</p>
+                <div>
+                  <input
+                    className="radio-block bottom-left"
+                    type="radio"
+                    name="medium"
+                    id="print"
+                  />
+                  <label htmlFor="print">Print</label>
                 </div>
-                <div className="w-full py-7 border cursor-pointer rounded-br-[10px] border-l-0 border-t-0 border-unveilBlack">
-                  <p className="mx-auto w-fit b3">Collections</p>
+                <div>
+                  <input
+                    className="radio-block bottom-right"
+                    type="radio"
+                    name="medium"
+                    id="books"
+                  />
+                  <label htmlFor="books">Books</label>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label className="b4 block pb-[10px]">Art type</label>
+              <div className="grid grid-cols-2 pb-[15px] w-full">
+                <div>
+                  <input
+                    className="radio-block top-left"
+                    type="radio"
+                    name="art"
+                    id="allArt"
+                  />
+                  <label htmlFor="allArt">All</label>
+                </div>
+                <div>
+                  <input
+                    className="radio-block top-right"
+                    type="radio"
+                    name="art"
+                    id="portrait"
+                  />
+                  <label htmlFor="portrait">Portrait</label>
+                </div>
+                <div>
+                  <input
+                    className="radio-block bottom-left"
+                    type="radio"
+                    name="art"
+                    id="landscape"
+                  />
+                  <label htmlFor="landscape">Landscape</label>
+                </div>
+                <div>
+                  <input
+                    className="radio-block bottom-right"
+                    type="radio"
+                    name="art"
+                    id="still_life"
+                  />
+                  <label htmlFor="still_life">Still life</label>
                 </div>
               </div>
             </div>
             <div>
               <label className="b4 block pb-[10px]">Sort (ascending)</label>
-              <div className="grid grid-cols-2">
-                <div className="w-full py-7 border cursor-pointer rounded-tl-[10px] border-unveilBlack">
-                  <p className="mx-auto w-fit b3">Alphabetical</p>
+              <div className="grid grid-cols-2 pb-[15px] w-full">
+                <div>
+                  <input
+                    className="radio-block top-left"
+                    type="radio"
+                    name="sort"
+                    id="alphabetical"
+                  />
+                  <label htmlFor="alphabetical">Alphabetical</label>
                 </div>
-                <div className="w-full py-7 border cursor-pointer rounded-tr-[10px] border-l-0 border-unveilBlack">
-                  <p className="mx-auto w-fit b3">Followers</p>
+                <div>
+                  <input
+                    className="radio-block top-right"
+                    type="radio"
+                    name="sort"
+                    id="followers"
+                  />
+                  <label htmlFor="followers">Followers</label>
                 </div>
-                <div className="w-full py-7 border cursor-pointer rounded-bl-[10px] border-t-0 border-unveilBlack">
-                  <p className="mx-auto w-fit b3">Trading volume</p>
+                <div>
+                  <input
+                    className="radio-block bottom-left"
+                    type="radio"
+                    name="sort"
+                    id="trending"
+                  />
+                  <label htmlFor="trending">Trending</label>
                 </div>
-                <div className="w-full py-7 border cursor-pointer rounded-br-[10px] border-l-0 border-t-0 border-unveilBlack">
-                  <p className="mx-auto w-fit b3">Newest</p>
+                <div>
+                  <input
+                    className="radio-block bottom-right"
+                    type="radio"
+                    name="sort"
+                    id="newest"
+                  />
+                  <label htmlFor="newest">Newest</label>
                 </div>
               </div>
             </div>
+
             <div>
               <label className="b4 block pb-[10px]">Sort (ascending)</label>
               <button className="mb-[6px] btn btn-secondary btn-full">
                 Search
               </button>
-              <button className="btn btn-primary btn-full">Apply filters</button>
+              <button className="btn btn-primary btn-full">
+                Apply filters
+              </button>
               <button className="block mx-auto mt-5 underline decoration-1 underline-offset-2 l1">
                 Reset filters
               </button>
             </div>
-          </div>
+          </form>
         </div>
         <div
           onClick={() => handleOpen()}
-          className="gsap-layer invisible fixed top-0 left-0 w-full h-screen bg-unveilGrey"
+          className="fixed top-0 left-0 invisible w-full h-screen gsap-layer bg-unveilGrey"
         ></div>
       </div>
     </section>

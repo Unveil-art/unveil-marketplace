@@ -1,4 +1,5 @@
 import { useRef, useEffect, useCallback } from "react";
+import Image from "next/image";
 
 import Animate from "../reusable/Animate";
 import Currency from "../svg/Currency";
@@ -15,8 +16,8 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
   const releaseDate = new Date(data.date);
 
   const animateIn = useCallback(() => {
-    const transforms = query(".gsap-transform")
-    gsap.killTweensOf(transforms)
+    const transforms = query(".gsap-transform");
+    gsap.killTweensOf(transforms);
     // prettier-ignore
     gsap.timeline({
       paused: true,
@@ -41,18 +42,33 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
   }, [isIntersecting]);
 
   return (
-    <div ref={el} className="md:flex-row flex-col flex gap-[30px] md:gap-[0px] relative">
+    <div
+      ref={el}
+      className="md:flex-row flex-col flex gap-[30px] md:gap-[0px] relative"
+    >
       <div
         className={`${
           imageMargin ? "md:mb-10 md:ml-10" : ""
         } w-full md:w-[65svw] pr-10 md:pr-0`}
       >
-        <Animate options={{ y: 0, image: true }} className="relative z-10 block w-full aspect-square overflow-hidden">
+        <Animate
+          options={{ y: 0, image: true }}
+          className="relative z-10 block w-full overflow-hidden aspect-square"
+        >
           <img
             src={data.image.data.attributes.url}
             alt={data.image.data.attributes.alt}
-            className="gsap-image w-full"
+            className="w-full gsap-image"
           />
+          {data.bubblewrap && (
+            <Image
+              src="/images/bubble-wrap.png"
+              alt="Bubble wrap - coming soon"
+              layout="fill"
+              objectFit="cover"
+              className="gsap-bubblewrap"
+            />
+          )}
         </Animate>
       </div>
       <Animate
@@ -62,29 +78,31 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
             value: 0.07,
           },
         }}
-        className="ml-10 md:ml-0 md:pl-[30px] md:mb-0 mb-[55px] sticky top-10 pb-10 left-0 h-fit overflow-hidden"
+        className="pl-10 md:pl-[30px] md:mb-0 mb-[55px] sticky top-10 pb-10 left-0 h-fit overflow-hidden"
       >
-        <div className="gsap-transform block">
+        <div className="block gsap-transform">
           <h6
             className="w-fit rounded-full px-2 l2 mb-[10px] md:mb-[15px]"
             style={{ border: `solid 1px ${color}` }}
           >
             {data.status}
           </h6>
-          <div className="s2 mb-[6px] md:mb-[15px]">
+          <div className="s2 md:mb-[2px]">
             <CountdownTimer targetDate={releaseDate} />
           </div>
-          <h3 className="h4">{data.name}</h3>
-          <small className="block b5">{data.price_heading}</small>
+          <h3 className="h4 mb-[5px]">{data.name}</h3>
+          <small className="block mt-2 leading-[1.5] b5">
+            {data.price_heading}
+          </small>
           <div className="flex items-center  mb-[15px]">
-            <p className="b3">{data.europrice} (</p>
+            <p className="md:b3 b4">{data.europrice} (</p>
             <Currency color={color} />
-            <p className="b3">{data.price})</p>
+            <p className="md:b3 b4">{data.price})</p>
           </div>
         </div>
-        <div className="gsap-transform block">
+        <div className="block gsap-transform">
           <button
-            className="cursor-not-allowed btn btn-primary"
+            className="cursor-not-allowed btn btn-primary hover:!bg-[#292928]"
             style={{ backgroundColor: color, color: backgroundColor }}
           >
             Coming soon
