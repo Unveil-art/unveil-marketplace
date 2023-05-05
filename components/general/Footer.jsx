@@ -6,9 +6,12 @@ import { getFooter } from "lib/strapi";
 const Footer = () => {
   const [footers, setFooters] = useState(null);
 
-  // useEffect(() => {
-  //   getFooter().then((result) => setFooters(result));
-  // }, []);
+  useEffect(() => {
+    getFooter().then((result) => setFooters(result));
+  }, []);
+  useEffect(() => {
+    console.log(footers);
+  }, [footers]);
 
   return (
     <footer className="grid-cols-2 p-[15px] md:p-10 md:grid bg-black text-unveilWhite">
@@ -36,11 +39,12 @@ const Footer = () => {
             <p className="b3 font-[500]">Currency</p>
             <p className="b3">Polygon/USD</p>
           </div>
-          {/* {footers.data && (
+          {footers && (
             <div className="space-y-1">
               <p className="b3 font-[500]">
-                {footers.data[0].attributes.footer.category}
+                {footers.data[0].attributes.footer.category || ""}
               </p>
+
               {footers.data[0].attributes.footer.data.map((item, i) => (
                 <a key={i} target="_blank" rel="noreferrer" href={item.link}>
                   <p className="b3">{item.heading}</p>
@@ -50,7 +54,7 @@ const Footer = () => {
           )}
         </div>
         <div className="space-y-6">
-          {footers.data && (
+          {footers && (
             <div className="space-y-1">
               <p className="b3 font-[500]">
                 {footers.data[1].attributes.footer.category}
@@ -62,7 +66,7 @@ const Footer = () => {
               ))}
             </div>
           )}
-          {footers.data && (
+          {footers && (
             <div className="space-y-1">
               <p className="b3 font-[500]">
                 {footers.data[2].attributes.footer.category}
@@ -73,7 +77,7 @@ const Footer = () => {
                 </a>
               ))}
             </div>
-          )} */}
+          )}
         </div>
       </div>
       <div className="flex justify-center col-span-2 mt-[60px] md:mt-[160px]">
