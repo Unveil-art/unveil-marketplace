@@ -42,36 +42,44 @@ const WhyCollect = ({ data }) => {
 
             <div className="absolute -bottom-px left-0 w-[40%] h-1/2 ">
               <div className="relative w-full h-full">
-                <Image
-                  src={data.blocks[0].background_image.data.attributes.url}
-                  alt={data.blocks[0].background_image.data.attributes.alt}
-                  layout="fill"
-                  objectFit="cover"
-                />
+                {data.blocks[0].background_image && (
+                  <Image
+                    src={data.blocks[0].background_image.data.attributes.url}
+                    alt={data.blocks[0].background_image.data.attributes.alt}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                )}
               </div>
             </div>
             <div className="absolute -bottom-px left-1/2 z-10 -translate-x-1/2 w-1/2 h-[65%]">
               <div className="relative w-full h-full">
-                <Image
-                  src={data.blocks[0].main_image.data[0].attributes.url}
-                  alt={data.blocks[0].main_image.data[0].attributes.alt}
-                  layout="fill"
-                  objectFit="cover"
-                />
+                {data.blocks[0].main_image && (
+                  <Image
+                    src={data.blocks[0].main_image.data[0].attributes.url}
+                    alt={data.blocks[0].main_image.data[0].attributes.alt}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                )}
               </div>
             </div>
             <div className="absolute -bottom-px right-0 w-[40%] h-1/2 ">
               <div className="relative w-full h-full">
-                <Image
-                  src={
-                    data.blocks[0].background_image_optional.data.attributes.url
-                  }
-                  alt={
-                    data.blocks[0].background_image_optional.data.attributes.alt
-                  }
-                  layout="fill"
-                  objectFit="cover"
-                />
+                {data.blocks[0].background_image_optional && (
+                  <Image
+                    src={
+                      data.blocks[0].background_image_optional.data.attributes
+                        .url
+                    }
+                    alt={
+                      data.blocks[0].background_image_optional.data.attributes
+                        .alt
+                    }
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                )}
               </div>
             </div>
           </Animate>
@@ -158,22 +166,26 @@ const WhyCollect = ({ data }) => {
             </p>
             <div className="absolute top-0 left-0 w-full h-full -z-10">
               <div className="relative w-full h-full">
-                <Image
-                  src={data.blocks[2].background_image.data.attributes.url}
-                  alt={data.blocks[2].background_image.data.attributes.url}
-                  layout="fill"
-                  objectFit="cover"
-                />
+                {data.blocks[2].background_image && (
+                  <Image
+                    src={data.blocks[2].background_image.data.attributes.url}
+                    alt={data.blocks[2].background_image.data.attributes.url}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                )}
               </div>
             </div>
             <div className="absolute w-24 aspect-[3/4] -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 -z-10">
               <div className="relative w-full h-full">
-                <Image
-                  src={data.blocks[0].main_image.data[0].attributes.url}
-                  alt={data.blocks[0].main_image.data[0].attributes.url}
-                  layout="fill"
-                  objectFit="cover"
-                />
+                {data.blocks[2].main_image && (
+                  <Image
+                    src={data.blocks[2].main_image.data[0].attributes.url}
+                    alt={data.blocks[2].main_image.data[0].attributes.url}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                )}
               </div>
             </div>
           </Animate>

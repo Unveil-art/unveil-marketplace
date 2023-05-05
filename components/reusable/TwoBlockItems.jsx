@@ -42,13 +42,16 @@ const TwoBlockItems = ({ homePage = false, data }) => {
           }  bg-bgColor`}
         >
           <div className="relative w-full h-full overflow-hidden">
-            <Image
-              src={data[0].banner.data.attributes.url}
-              alt={data[0].banner.data.attributes.alt}
-              layout="fill"
-              objectFit="cover"
-              className="gsap-image"
-            />
+            {data[0].banner && (
+              <Image
+                src={data[0].banner.data.attributes.url}
+                alt={data[0].banner.data.attributes.alt}
+                layout="fill"
+                objectFit="cover"
+                className="gsap-image"
+              />
+            )}
+
             {data[0].bubblewrap && (
               <Image
                 src="/images/bubble-wrap.png"
@@ -90,13 +93,15 @@ const TwoBlockItems = ({ homePage = false, data }) => {
             }  bg-bgColor`}
           >
             <div className="relative w-full h-full overflow-hidden">
-              <Image
-                src={data[1].banner.data.attributes.url}
-                alt={data[1].banner.data.attributes.alt}
-                layout="fill"
-                objectFit="cover"
-                className="gsap-image"
-              />
+              {data[1].banner && (
+                <Image
+                  src={data[1].banner.data.attributes.url}
+                  alt={data[1].banner.data.attributes.alt}
+                  layout="fill"
+                  objectFit="cover"
+                  className="gsap-image"
+                />
+              )}
               {data[1].bubblewrap && (
                 <Image
                   src="/images/bubble-wrap.png"

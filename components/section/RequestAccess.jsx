@@ -9,19 +9,21 @@ const RequestAccess = ({ data, request }) => {
 
   return (
     <section className="grid w-full h-screen grid-cols-1 md:grid-cols-2">
-      <div className="absolute w-full h-full -z-10">
-        <Animate
-          options={{ y: 0, image: true }}
-          className="relative w-full h-full overflow-hidden"
-        >
-          <Image
-            src={data.image.data.attributes.url}
-            alt={data.image.data.attributes.alt}
-            layout="fill"
-            objectFit="cover"
-            className="gsap-image"
-          />
-        </Animate>
+      <div className="absolute w-full h-full -z-10 bg-bgColor">
+        {data.image && (
+          <Animate
+            options={{ y: 0, image: true }}
+            className="relative w-full h-full overflow-hidden"
+          >
+            <Image
+              src={data.image.data.attributes.url}
+              alt={data.image.data.attributes.alt}
+              layout="fill"
+              objectFit="cover"
+              className="gsap-image"
+            />
+          </Animate>
+        )}
       </div>
       <div className="hidden md:block"></div>
       <div className="md:pl-0 pl-[40px] pr-[15px] md:pr-10">
