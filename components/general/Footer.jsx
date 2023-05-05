@@ -41,9 +41,7 @@ const Footer = () => {
           </div>
           {footers && (
             <div className="space-y-1">
-              <p className="b3 font-[500]">
-                {footers?.data[0].attributes.footer.category}
-              </p>
+              <p className="b3 font-[500]">Join Unveil</p>
 
               {footers.data[0].attributes.footer.data.map((item, i) => (
                 <a key={i} target="_blank" rel="noreferrer" href={item.link}>
@@ -56,9 +54,7 @@ const Footer = () => {
         <div className="space-y-6">
           {footers && (
             <div className="space-y-1">
-              <p className="b3 font-[500]">
-                {footers.data[1].attributes.footer.category}
-              </p>
+              <p className="b3 font-[500]">Support</p>
               {footers.data[1].attributes.footer.data.map((item, i) => (
                 <a key={i} target="_blank" rel="noreferrer" href={item.link}>
                   <p className="b3">{item.heading}</p>
@@ -68,9 +64,7 @@ const Footer = () => {
           )}
           {footers && (
             <div className="space-y-1">
-              <p className="b3 font-[500]">
-                {footers.data[2].attributes.footer.category}
-              </p>
+              <p className="b3 font-[500]">Follow us</p>
               {footers.data[2].attributes.footer.data.map((item, i) => (
                 <a key={i} target="_blank" rel="noreferrer" href={item.link}>
                   <p className="b3">{item.heading}</p>
