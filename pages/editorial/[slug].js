@@ -18,7 +18,6 @@ import Close from "@/components/reusable/Close";
 import OneLiner from "@/components/reusable/Oneliner";
 
 const Details = ({ data, recent }) => {
-  console.log(data);
   return (
     <main className="md:mt-[120px] relative">
       <div className="hidden md:block">
@@ -70,6 +69,10 @@ export default Details;
 export async function getStaticPaths() {
   const data = await getEditorials();
 
+  if (!data) {
+    return { paths: [], fallback: false };
+  }
+
   const paths = data.data.map((post) => {
     return {
       params: {
@@ -91,6 +94,7 @@ export async function getStaticProps({ params }) {
     props: {
       data,
       recent,
+      edit,
     },
     revalidate: 60,
   };
