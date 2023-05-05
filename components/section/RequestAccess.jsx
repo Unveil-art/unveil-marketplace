@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Animate from "../reusable/Animate";
+import AccessPopIn2 from "../pop-in/AccessPopIn2";
 
-const RequestAccess = ({ data }) => {
+const RequestAccess = ({ data, request }) => {
+  const [open, setOpen] = useState(false);
+
   return (
     <section className="grid w-full h-screen grid-cols-1 md:grid-cols-2">
       <div className="absolute w-full h-full -z-10">
@@ -28,17 +31,22 @@ const RequestAccess = ({ data }) => {
         <p className="mt-3 mb-3 md:mt-10 md:mb-10 b3 w-[90%]">
           {data.banner_description}
         </p>
-        <Link href={data.link}>
-          <button
-            data-cursor={data.cursor_text}
-            data-cursor-color={data.cursor_color}
-            className="block mb-3 cursor-not-allowed btn btn-primary md:w-fit btn-full"
-          >
-            {data.button_text}
-          </button>
-        </Link>
+        <button
+          onClick={() => setOpen(true)}
+          data-cursor={data.cursor_text}
+          data-cursor-color={data.cursor_color}
+          className="block mb-3 btn btn-primary md:w-fit btn-full"
+        >
+          {data.button_text}
+        </button>
         <small className=" b4">{data.link_bottom_text}</small>
       </div>
+      <AccessPopIn2
+        accessOpen={open}
+        setAccessOpen={setOpen}
+        i={2}
+        data={request}
+      />
     </section>
   );
 };

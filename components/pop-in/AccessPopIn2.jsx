@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
 import Close from "../svg/Close";
 
-const AccessPopIn = ({ accessOpen, setAccessOpen }) => {
+const AccessPopIn2 = ({ accessOpen, setAccessOpen, data, i }) => {
   const el = useRef();
 
   useAsideAnimation(el, accessOpen);
@@ -21,18 +21,25 @@ const AccessPopIn = ({ accessOpen, setAccessOpen }) => {
             <Close />
           </div>
         </div>
-        <h3 className="mb-[15px] text-center b4">Join Unveil</h3>
+        <h3 className="mb-[15px] text-center b4">
+          {data ? data.form_heading : "Join Unveil"}
+        </h3>
         <h3 className="mb-[60px] text-center s2 max-w-[270px] mx-auto">
-          Show us your work and get access to Unveil
+          {data ? data.heading : "Show us your work and get access to Unveil"}
         </h3>
         <p className="b3 leading-[16px] text-[11px] max-w-[250px]">
-          Provide a link to your work and submitting a series of works upon
-          selection by our curator.
+          {data
+            ? data.description
+            : "Provide a link to your work and submitting a series of works upon selection by our curator."}
         </p>
         <form className="mt-5 ">
           <input type="text" placeholder="Name" className="input" />
           <input type="email" placeholder="Email" className="my-1 input" />
-          <input type="text" placeholder="Website" className="input" />
+          <input
+            type="text"
+            placeholder="Website (or social)"
+            className="input"
+          />
           <p className="py-5">i&apos;m a:</p>
           <div className="grid grid-cols-2 pb-[15px]">
             <div>
@@ -40,32 +47,34 @@ const AccessPopIn = ({ accessOpen, setAccessOpen }) => {
                 className="radio-block left"
                 type="radio"
                 name="type"
-                id="nav-artist"
+                id={`artist${i}`}
               />
-              <label htmlFor="nav-artist">Artist</label>
+              <label htmlFor={`artist${i}`}>Artist</label>
             </div>
             <div>
               <input
                 className="radio-block right"
                 type="radio"
                 name="type"
-                id="nav-gallery"
+                id={`gallery${i}`}
               />
-              <label htmlFor="nav-gallery">Gallery</label>
+              <label htmlFor={`gallery${i}`}>Gallery</label>
             </div>
           </div>
 
           <button className="btn btn-full btn-primary btn-big" type="submit">
-            Apply nowcess
+            Apply now
           </button>
         </form>
       </div>
       <div
         onClick={() => setAccessOpen(false)}
-        className="fixed top-0 left-0 invisible w-full h-screen gsap-layer"
+        className={`${
+          data ? "bg-unveilGrey " : ""
+        } fixed top-0 left-0 invisible w-full h-screen gsap-layer`}
       ></div>
     </section>
   );
 };
 
-export default AccessPopIn;
+export default AccessPopIn2;

@@ -119,7 +119,6 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
           </small>
           <div className="flex items-center  mb-[15px]">
             <p className="md:b3 b4">{data.europrice} (</p>
-            <Currency color={color} />
             <p className="md:b3 b4">{data.price})</p>
           </div>
         </div>

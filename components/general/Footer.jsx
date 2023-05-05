@@ -7,7 +7,9 @@ const Footer = () => {
   const [footers, setFooters] = useState(null);
 
   useEffect(() => {
-    getFooter().then((result) => setFooters(result));
+    getFooter()
+      .then((result) => setFooters(result))
+      .then(console.log(footers));
   }, []);
 
   return (

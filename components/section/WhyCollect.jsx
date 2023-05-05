@@ -50,7 +50,7 @@ const WhyCollect = ({ data }) => {
                 />
               </div>
             </div>
-            <div className="absolute -bottom-px left-1/2 z-10 -translate-x-1/2 w-1/2 h-[65%] ">
+            <div className="absolute -bottom-px left-1/2 z-10 -translate-x-1/2 w-1/2 h-[65%]">
               <div className="relative w-full h-full">
                 <Image
                   src={data.blocks[0].main_image.data[0].attributes.url}
@@ -117,7 +117,7 @@ const WhyCollect = ({ data }) => {
                     key={index}
                     className="!w-[140px] !h-[140px] unveilTransition border border-[rgba(0,0,0,0.15)] rounded-[10px] !flex justify-center items-center"
                   >
-                    <div className="p-5 pointer-events-none">
+                    <div className="p-5 w-[80%] pointer-events-none">
                       <img
                         className="pointer-events-none"
                         src={item.attributes.url}
@@ -131,7 +131,7 @@ const WhyCollect = ({ data }) => {
                     key={index}
                     className="!w-[140px] !h-[140px] unveilTransition border border-[rgba(0,0,0,0.15)] rounded-[10px] !flex justify-center items-center"
                   >
-                    <div className="p-5">
+                    <div className="p-5 w-[80%] pointer-events-none">
                       <img
                         src={item.attributes.url}
                         alt={item.attributes.alt}
