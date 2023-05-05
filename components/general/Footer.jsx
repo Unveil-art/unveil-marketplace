@@ -38,7 +38,7 @@ const Footer = () => {
             <p className="b3 font-[500]">Currency</p>
             <p className="b3">Polygon/USD</p>
           </div>
-          {footers && (
+          {/* {footers.data && (
             <div className="space-y-1">
               <p className="b3 font-[500]">
                 {footers.data[0].attributes.footer.category}
@@ -52,7 +52,7 @@ const Footer = () => {
           )}
         </div>
         <div className="space-y-6">
-          {footers && (
+          {footers.data && (
             <div className="space-y-1">
               <p className="b3 font-[500]">
                 {footers.data[1].attributes.footer.category}
@@ -64,7 +64,7 @@ const Footer = () => {
               ))}
             </div>
           )}
-          {footers && (
+          {footers.data && (
             <div className="space-y-1">
               <p className="b3 font-[500]">
                 {footers.data[2].attributes.footer.category}
@@ -75,7 +75,7 @@ const Footer = () => {
                 </a>
               ))}
             </div>
-          )}
+          )} */}
         </div>
       </div>
       <div className="flex justify-center col-span-2 mt-[60px] md:mt-[160px]">
