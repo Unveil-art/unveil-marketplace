@@ -22,7 +22,7 @@ export default function Home({ data, faq, editorials }) {
   return (
     <>
       <FloatingArt data={homeData.page1} />
-      <GridColThree data={homeData.page1.blocks} />
+      {/* <GridColThree data={homeData.page1.blocks} />
       <RequestAccess
         data={homeData.page6}
         request={homeData.page1.request_access}
@@ -48,7 +48,7 @@ export default function Home({ data, faq, editorials }) {
 
       <WhyCollect data={homeData.page7} />
       <Editorial data={homeData.page8} editorial={editorialData} />
-      <FAQ data={faqData.block} />
+      <FAQ data={faqData.block} /> */}
     </>
   );
 }
