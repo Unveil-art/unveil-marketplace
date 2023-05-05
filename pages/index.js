@@ -23,7 +23,10 @@ export default function Home({ data, faq, editorials }) {
     <>
       <FloatingArt data={homeData.page1} />
       <GridColThree data={homeData.page1.blocks} />
-      <RequestAccess data={homeData.page6} />
+      <RequestAccess
+        data={homeData.page6}
+        request={homeData.page1.request_access}
+      />
       <Socials title={homeData.page6.heading} data={homeData.page6.block} />
       <Collection
         data={homeData.page2}

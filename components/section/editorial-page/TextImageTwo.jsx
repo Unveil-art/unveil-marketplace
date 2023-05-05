@@ -13,7 +13,7 @@ const TextImageTwo = ({ data }) => {
           {data.Text}
         </p>
       </Animate>
-      <div className="relative order-1 w-full md:col-span-3 md:order-2">
+      <div className="relative order-1 w-full overflow-hidden md:col-span-3 md:order-2">
         <Animate
           options={{ y: 0, image: true }}
           className="w-full sticky overflow-hidden top-0 h-fit bg-bgColor aspect-[10/11]"

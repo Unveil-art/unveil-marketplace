@@ -5,8 +5,10 @@ import { useFontLoaded } from "../../hooks/useFontLoaded";
 import { useHistory } from "../../contexts/History";
 import { useLenis } from "@studio-freight/react-lenis";
 import Image from "next/image";
+import AccessPopIn2 from "../pop-in/AccessPopIn2";
 
 const FloatingArt = ({ data }) => {
+  const [open, setOpen] = useState(false);
   const el = useRef();
   const once = useRef(false);
   const size = useWindowSize();
@@ -178,12 +180,15 @@ const FloatingArt = ({ data }) => {
         >
           <div className="gsap-parallax " data-speed="0.1">
             <div className="w-[85px] bubble-wrap overflow-hidden h-[108px] sm:w-[140px] sm:h-[180px] relative">
-              <Image
-                src={data.topleft.data.attributes.url}
-                alt={data.topleft.data.attributes.alt}
-                layout="fill"
-                objectFit="cover"
-              />
+              {data.topleft && (
+                <Image
+                  src={data.topleft.data.attributes.url}
+                  alt={data.topleft.data.attributes.alt}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              )}
+
               {data.topleft_bubblewrap && (
                 <Image
                   src="/images/bubble-wrap.png"
@@ -208,12 +213,14 @@ const FloatingArt = ({ data }) => {
         >
           <div className="gsap-parallax" data-speed="-0.075">
             <div className="relative w-[81px] h-[96px] sm:w-[140px] sm:h-[180px]">
-              <Image
-                src={data.bottomleft.data.attributes.url}
-                alt={data.bottomleft.data.attributes.alt}
-                layout="fill"
-                objectFit="cover"
-              />
+              {data.bottomleft && (
+                <Image
+                  src={data.bottomleft.data.attributes.url}
+                  alt={data.bottomleft.data.attributes.alt}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              )}
               {data.bottomleft_bubblewrap && (
                 <Image
                   src="/images/bubble-wrap.png"
@@ -237,12 +244,14 @@ const FloatingArt = ({ data }) => {
         >
           <div className="gsap-parallax" data-speed="0.1">
             <div className="relative w-[136px] h-[184px] sm:w-[410px] sm:h-[500px]">
-              <Image
-                src={data.topright.data.attributes.url}
-                alt={data.topright.data.attributes.alt}
-                layout="fill"
-                objectFit="cover"
-              />
+              {data.topright && (
+                <Image
+                  src={data.topright.data.attributes.url}
+                  alt={data.topright.data.attributes.alt}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              )}
               {data.topright_bubblewrap && (
                 <Image
                   src="/images/bubble-wrap.png"
@@ -266,12 +275,14 @@ const FloatingArt = ({ data }) => {
         >
           <div className="gsap-parallax" data-speed="0.0">
             <div className="relative w-[164px] h-[229px] sm:w-[320px] sm:h-[422px]">
-              <Image
-                src={data.centerright.data.attributes.url}
-                alt={data.centerright.data.attributes.alt}
-                layout="fill"
-                objectFit="cover"
-              />
+              {data.centerright && (
+                <Image
+                  src={data.centerright.data.attributes.url}
+                  alt={data.centerright.data.attributes.alt}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              )}
               {data.centerright_bubblewrap && (
                 <Image
                   src="/images/bubble-wrap.png"
@@ -314,9 +325,10 @@ const FloatingArt = ({ data }) => {
             {/* Going to be a link */}
             <div className="gsap-stagger">
               <button
+                onClick={() => setOpen(true)}
                 data-cursor={data.button_2_cursor_text}
                 data-cursor-color={data.button_2_cursor_color}
-                className="cursor-not-allowed btn btn-secondary md:bg-transparent bg-bgColor"
+                className="btn btn-secondary"
               >
                 {data.button_2_text}
               </button>
@@ -324,6 +336,12 @@ const FloatingArt = ({ data }) => {
           </div>
         </div>
       </section>
+      <AccessPopIn2
+        accessOpen={open}
+        setAccessOpen={setOpen}
+        i={1}
+        data={data.request_access}
+      />
     </>
   );
 };
