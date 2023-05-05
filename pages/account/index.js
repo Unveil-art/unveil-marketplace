@@ -19,11 +19,6 @@ const AccountPage = () => {
   const [accountState, setAccountState] = useState(0);
   const { magic_connect, logout } = useMagic();
 
-  const router = useRouter();
-  useEffect(() => {
-    router.push("/404");
-  }, []);
-
   const handleAccountState = (e) => {
     window.scrollTo(0, 0);
     setAccountState(e.target.selectedIndex);

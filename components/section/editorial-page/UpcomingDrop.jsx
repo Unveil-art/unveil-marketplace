@@ -1,14 +1,29 @@
 import React from "react";
+import Image from "next/image";
 
-const UpcomingDrop = () => {
+const UpcomingDrop = ({ data }) => {
   return (
-    <section className="grid md:h-screen gird-cols-1 md:grid-cols-2">
-      <div className="w-full h-full bg-bgColor md:aspect-auto aspect-square"></div>
-      <div className="flex flex-col justify-between p-10 pt-20 md:pt-10 pb-20 md:pb-[60px] bg-[#E2CBAB]">
-        <p className="text-center md:text-left l2">Upcoming drop</p>
+    <section
+      data-cursor={data.cursor_text}
+      data-cursor-color={data.cursor_color}
+      style={{
+        backgroundColor: data.background_color,
+        color: data.text_color,
+      }}
+      className="grid md:h-screen gird-cols-1 md:grid-cols-2"
+    >
+      <div className="relative w-full h-full md:aspect-auto aspect-square">
+        <Image
+          src={data.media.data.attributes.url}
+          alt={data.media.data.attributes.alt}
+          layout="fill"
+          objectFit="cover"
+        />
+      </div>
+      <div className="flex flex-col justify-between p-10 pt-20 md:pt-10 pb-20 md:pb-[60px]">
+        <p className="text-center md:text-left l2">{data.title}</p>
         <h3 className="md:text-left text-center h4 md:h3 mt-[15px]">
-          Paul Cupido
-          <br /> Lorem ipsum dolor
+          {data.description}
         </h3>
       </div>
     </section>
