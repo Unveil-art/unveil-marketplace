@@ -73,7 +73,7 @@ export async function getStaticPaths() {
     return { paths: [], fallback: false };
   }
 
-  const paths = data.data.map((post) => {
+  const paths = data?.data?.map((post) => {
     return {
       params: {
         slug: `${post.attributes.slug}`,
@@ -94,7 +94,6 @@ export async function getStaticProps({ params }) {
     props: {
       data,
       recent,
-      edit,
     },
     revalidate: 60,
   };
