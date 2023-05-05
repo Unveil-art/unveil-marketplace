@@ -6,11 +6,9 @@ import { getFooter } from "lib/strapi";
 const Footer = () => {
   const [footers, setFooters] = useState(null);
 
-  useEffect(() => {
-    getFooter()
-      .then((result) => setFooters(result))
-      .then(console.log(footers));
-  }, []);
+  // useEffect(() => {
+  //   getFooter().then((result) => setFooters(result));
+  // }, []);
 
   return (
     <footer className="grid-cols-2 p-[15px] md:p-10 md:grid bg-black text-unveilWhite">
