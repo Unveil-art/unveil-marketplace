@@ -9,7 +9,6 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
   const { value: value2 } = useLocalStorage("token");
   const [wallet, setWallet] = useState();
 
-  console.log(value2);
   useEffect(() => {
     if (value) {
       const user = JSON.parse(value);

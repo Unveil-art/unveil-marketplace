@@ -9,9 +9,6 @@ const Footer = () => {
   useEffect(() => {
     getFooter().then((result) => setFooters(result));
   }, []);
-  useEffect(() => {
-    console.log(footers);
-  }, [footers]);
 
   return (
     <footer className="grid-cols-2 p-[15px] md:p-10 md:grid bg-black text-unveilWhite">
