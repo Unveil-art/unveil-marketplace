@@ -44,7 +44,6 @@ const Footer = () => {
               <p className="b3 font-[500]">
                 {footers?.data[0].attributes.footer.category}
               </p>
-
               {footers.data[0].attributes.footer.data.map((item, i) => (
                 <a key={i} target="_blank" rel="noreferrer" href={item.link}>
                   <p className="b3">{item.heading}</p>
