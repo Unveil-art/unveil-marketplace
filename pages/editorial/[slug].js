@@ -26,7 +26,9 @@ const Details = ({ data, recent }) => {
       {data.data[0].attributes.Content.map((item, i) => (
         <div key={i}>
           {item.__component === "content-blocks.one-liner" && (
-            <OneLiner text={item.description} nmb />
+            <div className="hidden md:block">
+              <OneLiner text={item.description} nmb />
+            </div>
           )}
           {item.__component === "content-blocks.image-text-1" && (
             <TextImageOne data={item} title={data.data[0].attributes.title} />

@@ -118,8 +118,9 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
             {data.price_heading}
           </small>
           <div className="flex items-center  mb-[15px]">
-            <p className="md:b3 b4">{data.europrice} (</p>
-            <p className="md:b3 b4">{data.price})</p>
+            <p className="md:b3 b4">
+              {data.europrice} {data.price}
+            </p>
           </div>
         </div>
         <div className="block gsap-transform">

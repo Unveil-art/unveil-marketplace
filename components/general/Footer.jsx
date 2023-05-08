@@ -9,9 +9,6 @@ const Footer = () => {
   useEffect(() => {
     getFooter().then((result) => setFooters(result));
   }, []);
-  useEffect(() => {
-    console.log(footers);
-  }, [footers]);
 
   return (
     <footer className="grid-cols-2 p-[15px] md:p-10 md:grid bg-black text-unveilWhite">
@@ -44,7 +41,6 @@ const Footer = () => {
               <p className="b3 font-[500]">
                 {footers?.data[0].attributes.footer.category}
               </p>
-
               {footers.data[0].attributes.footer.data.map((item, i) => (
                 <a key={i} target="_blank" rel="noreferrer" href={item.link}>
                   <p className="b3">{item.heading}</p>
