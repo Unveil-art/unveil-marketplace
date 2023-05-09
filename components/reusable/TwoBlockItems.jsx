@@ -68,7 +68,7 @@ const TwoBlockItems = ({ homePage = false, data }) => {
         <p className="b3 opacity-60">{data[0].user_name}</p>
         <div className="flex items-center gap-1">
           <p className="b3 opacity-60">
-            {data[1].europrice} ({data[1].price})
+            {data[1].europrice} {data[1].price}
           </p>
         </div>
       </Animate>
@@ -118,7 +118,7 @@ const TwoBlockItems = ({ homePage = false, data }) => {
           <p className="b3 opacity-60">{data[1].user_name}</p>
           <div className="flex items-center gap-">
             <p className="b3 opacity-60">
-              {data[1].europrice} ({data[1].price})
+              {data[1].europrice} {data[1].price}
             </p>
           </div>
         </div>

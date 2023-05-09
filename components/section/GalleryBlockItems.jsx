@@ -38,7 +38,6 @@ const GalleryBlockItems = () => {
     const inputArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
     const variant = 1;
     const result = splitArrayByPattern(inputArray, variant);
-    console.log(result);
   }, []);
   return (
     <>

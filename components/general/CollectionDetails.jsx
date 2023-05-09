@@ -118,17 +118,21 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
             {data.price_heading}
           </small>
           <div className="flex items-center  mb-[15px]">
-            <p className="md:b3 b4">{data.europrice} (</p>
-            <p className="md:b3 b4">{data.price})</p>
+            <p className="md:b3 b4">
+              {data.europrice} {data.price}
+            </p>
           </div>
         </div>
         <div className="block gsap-transform">
-          <button
-            className="cursor-not-allowed btn btn-primary hover:!bg-[#292928]"
+          <a
+            className={`${
+              data.is_button_blocked ? "cursor-not-allowed" : ""
+        } btn btn-primary hover:!bg-[#292928] pt-3.5 pb-3.5`}
             style={{ backgroundColor: color, color: backgroundColor }}
+            href={data.is_button_blocked ? 'javascript:;' : data.link}
           >
-            Coming soon
-          </button>
+            {data.button_name}
+          </a>
         </div>
       </Animate>
     </div>
