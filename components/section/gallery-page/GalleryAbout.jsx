@@ -13,9 +13,9 @@ const GalleryAbout = () => {
   const tl = useRef();
   const size = useWindowSize();
   const [setRef, rect] = useRect();
-  const query = gsap.utils.selector(el);
 
   useLayoutEffect(() => {
+    const query = gsap.utils.selector(el);
     const ctx = gsap.matchMedia();
     ctx.add('(min-width: 768px)', () => {
       tl.current = gsap.timeline({
@@ -44,10 +44,7 @@ const GalleryAbout = () => {
       <section ref={el} className="relative w-full">
         <div
           className="block w-full md:h-[500vh]"
-          ref={(node) => {
-            setRef(node)
-            el.current = node
-          }}
+          ref={(node) => setRef(node)}
         >
           <div className="block w-full md:sticky md:top-0">
             <AboutItem />
