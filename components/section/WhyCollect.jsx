@@ -1,5 +1,5 @@
 import { gsap } from "gsap";
-import { useState, useRef, useLayoutEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRect } from "@/hooks/useRect";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { useLenis } from "@studio-freight/react-lenis";
@@ -24,38 +24,41 @@ const WhyCollect = ({ data }) => {
   const el = useRef();
   const tl = useRef();
   const size = useWindowSize();
+  const sizeWidth = useRef(0);
   const [setRef, rect] = useRect();
 
-  useLayoutEffect(() => {
-    const query = gsap.utils.selector(el);
-    const ctx = gsap.matchMedia();
-    ctx.add('(max-width: 767px)', () => {
-      tl.current = gsap.timeline({
-        paused: true
-      }).to(query('.gsap-scroll'), {
-        xPercent: -100,
-        x: size.width,
-        ease: 'power2.inOut'
-      })
-      return () => {
-        tl.current = null
-      }
-    }, el)
+  useEffect(() => {
+    // avoid re-running when iOS bar hides/shows
+    // this would trigger the effect on scroll
+    if (size.width && (sizeWidth.current !== size.width)) {
+      const query = gsap.utils.selector(el);
+      const ctx = gsap.matchMedia();
+      sizeWidth.current = size.width;
+      ctx.add('(max-width: 767px)', () => {
+        tl.current = gsap.timeline({
+          paused: true
+        }).to(query('.gsap-scroll'), {
+          xPercent: -100,
+          x: sizeWidth.current,
+          ease: 'power2.inOut'
+        })
+      }, el);
+    }
   }, [size]);
 
   useLenis(({ scroll }) => {
     if (tl.current) {
       const top = rect.top - scroll
-      const progress = gsap.utils.clamp(0, 1, (top / (rect.top - size.height * 4.0)) * -1)
+      const progress = gsap.utils.clamp(0, 1, (top / (rect.top - size.height * 5.0)) * -1)
       tl.current.progress(progress)
     }
-  }, [rect], 1);
+  }, [rect, tl.current], 1);
 
   return (
     <>
       <section
         ref={el}
-        className="block w-full h-[500vh] md:h-auto"
+        className="block w-full h-[300vh] md:h-auto"
       >
         <div
           className="block w-full sticky top-0 pt-11 md:pt-0 md:relative"
