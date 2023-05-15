@@ -7,7 +7,7 @@ const ArtistAnnouncement = ({ data }) => {
   return (
     <section className="pt-10 md:pt-[100px] my-5 md:my-10 pb-5 md:pb-[200px] mx-[15px] md:mx-10 border-t border-b border-unveilDrakGray">
       <div
-        data-cursor={data.cursor_text}
+        data-cursor={data.cursor_text ? data.cursor_text : data.title}
         data-cursor-color={data.cursor_color}
         style={{ transform: `translateX(${random}vw)` }}
         className="w-full translate0 md:w-[400px] lg:w-[450px] xl:w-[45%] bg-unveilGreen "

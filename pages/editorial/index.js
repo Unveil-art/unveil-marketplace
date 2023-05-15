@@ -13,6 +13,7 @@ import ArtistHighlights from "@/components/section/editorial-page/ArtistHighligh
 export default function EditorialPage({ data, editorial }) {
   const editorialData = data.data;
   const editorialPageData = editorial.data[0].attributes;
+  console.log(editorial);
   const editorial1to5 = editorialData.slice(0, 5);
   const editorial5to9 = editorialData.slice(5, 9);
 
@@ -25,12 +26,20 @@ export default function EditorialPage({ data, editorial }) {
           <Articles data={editorial1to5} />
         </section>
       )}
-      <FeaturedIn data={editorialPageData.page1} />
-      <ArtistAnnouncement data={editorialPageData.page2} />
-      <Newsletter data={editorialPageData.page3} />
-      <UpcomingDrop data={editorialPageData.page4} />
-      <ArtistHighlights data={editorialPageData.page5} />
-      <ArtistAnnouncement data={editorialPageData.page6} />
+      {editorialPageData.page1 && <FeaturedIn data={editorialPageData.page1} />}
+      {editorialPageData.page2 && (
+        <ArtistAnnouncement data={editorialPageData.page2} />
+      )}
+      {editorialPageData.page3 && <Newsletter data={editorialPageData.page3} />}
+      {editorialPageData.page4 && (
+        <UpcomingDrop data={editorialPageData.page4} />
+      )}
+      {editorialPageData.page5 && (
+        <ArtistHighlights data={editorialPageData.page5} />
+      )}
+      {editorialPageData.page6 && (
+        <ArtistAnnouncement data={editorialPageData.page6} />
+      )}
       {editorial5to9.length > 3 && (
         <>
           <section className="px-[15px] md:px-10">
