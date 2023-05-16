@@ -43,6 +43,10 @@ const AccessPopIn2 = ({ accessOpen, setAccessOpen, data, i }) => {
     const { data } = await axios({
       method: "POST",
       url: `https://unveil-org.myfreshworks.com/crm/sales/api/contacts`,
+      headers: {
+        "content-type": "application/json",
+        authorization: `Token token=x8o6DaVRqjb0YWPiPEdufw`,
+      },
       data: body
     });
     
