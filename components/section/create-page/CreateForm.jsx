@@ -1,14 +1,45 @@
 import Delete from "@/components/svg/Delete";
-import React from "react";
+import React, { useState } from "react";
 
 const CreateForm = () => {
+  const [royalties, setRoyalties] = useState([
+    { from: "First 12 months", percentage: "15%" },
+  ]);
+
+  const defaultRoyalties = { from: "After 12 months", percentage: "15%" };
+
+  const handleSelectChange = (index, name, value) => {
+    setRoyalties((prevRoyalties) => {
+      const updatedRoyalties = [...prevRoyalties];
+      updatedRoyalties[index] = { ...updatedRoyalties[index], [name]: value };
+      return updatedRoyalties;
+    });
+  };
+
+  const handleDeleteRoyalty = (index) => {
+    setRoyalties((prevRoyalties) => {
+      const updatedRoyalties = [...prevRoyalties];
+      updatedRoyalties.splice(index, 1);
+      return updatedRoyalties;
+    });
+  };
+
   return (
     <div className="w-full lg:w-[700px] space-y-[15px] lg:space-y-5">
       {/* Basic info */}
       <div className="bg-[#F9F7F2] p-5 lg:pb-[30px] rounded-[10px] space-y-[10px]">
         <p className="mb-[15px] lg:mb-[35px] b3">Basic information</p>
         <input type="text" className="input" placeholder="Artwork name" />
-        <input type="text" className="input" placeholder="Year of creation" />
+        <select className="select-input">
+          {Array.from(
+            { length: new Date().getFullYear() - 1990 + 1 },
+            (_, index) => (
+              <option key={index} value={new Date().getFullYear() - index}>
+                {new Date().getFullYear() - index}
+              </option>
+            )
+          )}
+        </select>
       </div>
 
       {/* Editions */}
@@ -177,7 +208,7 @@ const CreateForm = () => {
 
       {/* Royalties */}
       <div className="bg-[#F9F7F2] rounded-[10px]">
-        <div className="grid grid-cols-2 mb-[15px] px-5 pt-5">
+        <div className="grid grid-cols-2 border-b border-[#DBDED6] pb-[15px] px-5 pt-5">
           <p className=" b3">Royalties</p>
           <p className="hidden lg:block b4 leading-[19px] mb-[20px] opacity-80">
             To speculative buyers from flipping your artwork we have a scaling
@@ -186,40 +217,81 @@ const CreateForm = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 px-5 py-[15px] border-y border-[#DBDED6]">
-          <select
-            id="royalty-date-1-select"
-            name="royalty-date-1-select"
-            className="truncate select-input"
+        {royalties.map((item, i) => (
+          <div
+            key={i}
+            className="grid relative grid-cols-2 pr-10 gap-2 px-5 py-[15px] border-b border-[#DBDED6]"
           >
-            <option>First 12 months</option>
-          </select>
-          <select
-            id="royalty-percent-1-select"
-            name="royalty-percent-1-select"
-            className="truncate select-input"
-          >
-            <option>15%</option>
-          </select>
-        </div>
-        <div className="grid grid-cols-2 gap-2 px-5 py-[15px] border-b border-[#DBDED6]">
-          <select
-            id="royalty-date-1-select"
-            name="royalty-date-1-select"
-            className="truncate select-input"
-          >
-            <option>After 12 months</option>
-          </select>
-          <select
-            id="royalty-percent-1-select"
-            name="royalty-percent-1-select"
-            className="truncate select-input"
-          >
-            <option>15%</option>
-          </select>
-        </div>
+            <select
+              value={item.from}
+              onChange={(e) => handleSelectChange(i, "from", e.target.value)}
+              name="from"
+              className="truncate select-input"
+            >
+              <option value="First month">First month</option>
+              <option value="First 2 months">First 2 months</option>
+              <option value="First 3 months">First 3 months</option>
+              <option value="First 4 months">First 4 months</option>
+              <option value="First 5 months">First 5 months</option>
+              <option value="First 6 months">First 6 months</option>
+              <option value="First 7 months">First 7 months</option>
+              <option value="First 8 months">First 8 months</option>
+              <option value="First 9 months">First 9 months</option>
+              <option value="First 10 months">First 10 months</option>
+              <option value="First 11 months">First 11 months</option>
+              <option value="First 12 months">First 12 months</option>
+              <option value="After 1 month">After 1 month</option>
+              <option value="After 2 months">After 2 months</option>
+              <option value="After 3 months">After 3 months</option>
+              <option value="After 4 months">After 4 months</option>
+              <option value="After 5 months">After 5 months</option>
+              <option value="After 6 months">After 6 months</option>
+              <option value="After 7 months">After 7 months</option>
+              <option value="After 8 months">After 8 months</option>
+              <option value="After 9 months">After 9 months</option>
+              <option value="After 10 months">After 10 months</option>
+              <option value="After 11 months">After 11 months</option>
+              <option value="After 12 months">After 12 months</option>
+            </select>
+            <select
+              value={item.percentage}
+              onChange={(e) =>
+                handleSelectChange(i, "percentage", e.target.value)
+              }
+              name="percentage"
+              className="truncate select-input"
+            >
+              <option value="1%">1%</option>
+              <option value="2%">2%</option>
+              <option value="3%">3%</option>
+              <option value="4%">4%</option>
+              <option value="5%">5%</option>
+              <option value="6%">6%</option>
+              <option value="7%">7%</option>
+              <option value="8%">8%</option>
+              <option value="9%">9%</option>
+              <option value="10%">10%</option>
+              <option value="11%">11%</option>
+              <option value="12%">12%</option>
+              <option value="13%">13%</option>
+              <option value="14%">14%</option>
+              <option value="15%">15%</option>
+            </select>
+            <div
+              onClick={() => handleDeleteRoyalty(i)}
+              className="absolute cursor-pointer -translate-y-1/2 right-[15px] top-1/2"
+            >
+              <Delete big />
+            </div>
+          </div>
+        ))}
 
-        <button className="px-32 mx-5 mt-[15px] mb-5 lg:mb-[30px] btn btn-secondary w-[calc(100%-40px)] ">
+        <button
+          onClick={() =>
+            setRoyalties((prevItems) => [...prevItems, defaultRoyalties])
+          }
+          className="px-32 mx-5 mt-[15px] mb-5 lg:mb-[30px] btn btn-secondary w-[calc(100%-40px)] "
+        >
           Add date range
         </button>
       </div>
