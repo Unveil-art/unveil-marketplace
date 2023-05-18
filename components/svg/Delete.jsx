@@ -1,10 +1,9 @@
 import React from "react";
 
-const Delete = () => {
+const Delete = ({ big }) => {
   return (
     <svg
-      width="10"
-      height="12"
+      className={`${big ? "w-4 h-4" : "w-[10px] h-[12px]"} `}
       viewBox="0 0 10 12"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

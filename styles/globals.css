@@ -16,6 +16,9 @@
   .btn-secondary {
     @apply bg-transparent border border-unveilBlack hover:bg-bgColor unveilTransition;
   }
+  .btn-opacity {
+    @apply bg-transparent border border-[#DBDED6] hover:bg-bgColor unveilTransition;
+  }
   .btn-lg {
     @apply text-[13px] md:text-[16px] leading-[19px] md:leading-[25px] pt-[14px] pb-[15px];
   }
