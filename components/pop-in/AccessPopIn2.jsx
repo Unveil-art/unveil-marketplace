@@ -1,10 +1,14 @@
 import { useRef } from "react";
 import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
 import Close from "../svg/Close";
-import axios from "axios";
+import React from "react";
+const axios = require("axios");
 
 const AccessPopIn2 = ({ accessOpen, setAccessOpen, data, i }) => {
   const el = useRef();
+
+  const [isSuccess, setSuccessMessage] = React.useState('hide');
+  const [isError, setErrorMessage] = React.useState('hide');
 
   const sendCrmRequest = async (e) =>{
     e.preventDefault();
@@ -12,6 +16,7 @@ const AccessPopIn2 = ({ accessOpen, setAccessOpen, data, i }) => {
     const email = document.querySelector('input[name="email"]').value;
     const website = document.querySelector('input[name="website"]').value;
     const type = document.querySelector('input[name="type-selected"]').value;
+    
     const {data}= await axios({
       method: "POST",
       url: `https://cumbersome-furtive-fowl.strapiapp.com/api/crm`,
@@ -24,17 +29,21 @@ const AccessPopIn2 = ({ accessOpen, setAccessOpen, data, i }) => {
       withCredentials: true,
     });
     if(data.status == 200){
-      alert("Your request has been sent successfully");
+      setSuccessMessage('show');
+      e.target.reset()
     } else {
-      console.log(data.message)
-      alert("You will be notified soon");
+      setErrorMessage('show');
     }
-    setAccessOpen(false);
+    setTimeout(() => {
+      setAccessOpen(false);
+      setSuccessMessage('hide');
+      setErrorMessage('hide');
+    }, 4000);
     
   }
 
-  function changeType(params) {
-    document.querySelector('input[name="type-selected"]').value = params;
+  function changeType(type) {
+    document.querySelector('input[name="type-selected"]').value = type;
   }
 
   useAsideAnimation(el, accessOpen);
@@ -60,7 +69,8 @@ const AccessPopIn2 = ({ accessOpen, setAccessOpen, data, i }) => {
         <h3 className="mb-[60px] text-center s2 max-w-[270px] mx-auto">
           {data ? data.heading : "Show us your work and get access to Unveil"}
         </h3>
-        {/* <h4 className="mb-[20px] text-center s2 max-w-[270px] mx-auto">Your request has been sent successfully</h4> */}
+        <h5 className={`text-teal-500 mb-[20px] text-center s2 max-w-[270px] mx-auto ${isSuccess}`}>Your request has been sent successfully</h5>
+        <h5 className={`text-rose-500 mb-[20px] text-center s2 max-w-[270px] mx-auto ${isError}`}>Your request has been made!</h5>
         <p className="b3 leading-[16px] text-[11px] max-w-[250px]">
           {data
             ? data.description
