@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import React, { useState, useContext, useEffect } from "react";
 
 import Sidebar from "../../components/section/accout-page/Sidebar";
 import Artworks from "../../components/section/accout-page/Artworks";
@@ -12,20 +11,33 @@ import Recognitions from "../../components/section/accout-page/Recognitions";
 import Wishlist from "../../components/section/accout-page/Wishlist";
 import Following from "../../components/section/accout-page/Following";
 
+import { Web3Context } from "@/contexts/Web3AuthContext";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import useMagic from "@/hooks/useMagic";
+import { getUserMe } from "lib/backend";
 
 const AccountPage = () => {
   const [accountState, setAccountState] = useState(0);
-  const { magic_connect, logout } = useMagic();
+  const { logout } = useContext(Web3Context);
+  const { value } = useLocalStorage("token");
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    console.log(value);
+
+    const fetchUser = async () => {
+      const userData = await getUserMe(value);
+      setUser(userData);
+    };
+    if (value) {
+      fetchUser();
+      console.log("USERRRR", user);
+    }
+  }, [value]);
 
   const handleAccountState = (e) => {
     window.scrollTo(0, 0);
     setAccountState(e.target.selectedIndex);
     if (e.target.value === "Logout") {
-      if (magic_connect) {
-        magic_connect.wallet.disconnect();
-      }
       logout();
     }
   };
@@ -37,12 +49,18 @@ const AccountPage = () => {
         {accountState === 0 && <Title title="Account" />}
         {accountState === 1 && <Title title="Transaction overview" />}
         {accountState === 2 && <Title title="Owned NFTs" />}
-        {accountState === 3 && <Title title="Name of artist" />}
+        {accountState === 3 && (
+          <Title
+            truncate
+            title={`${user.firstName ? user.firstName : ""} ${
+              user.lastName ? user.lastName : ""
+            }${!user.firstName && !user.lastName ? user.email : ""} `}
+          />
+        )}
         {accountState === 4 && <Title title="Referrals" />}
         {accountState === 5 && <Title title="Recognitions" />}
         {accountState === 6 && <Title title="Wishlist" />}
         {accountState === 7 && <Title title="Following" />}
-        {accountState === 8 && <Title title="Logout" />}
         <div className="block md:hidden  mt-[80px] ml-[40px] md:ml-[35svw] border-unveilBlack border-t-2 mr-[15px]">
           <select
             className="uppercase select"
@@ -62,7 +80,7 @@ const AccountPage = () => {
         {accountState === 0 && <Artworks />}
         {accountState === 1 && <Transactions />}
         {accountState === 2 && <OwnedNFTs />}
-        {accountState === 3 && <ContactDetails />}
+        {accountState === 3 && <ContactDetails user={user} />}
         {accountState === 4 && <Referrals />}
         {accountState === 5 && <Recognitions />}
         {accountState === 6 && <Wishlist />}

@@ -1,12 +1,8 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef } from "react";
 import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
-import useMagic from "@/hooks/useMagic";
-import Web3 from "web3";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 
 const LoginPopIn = ({ loginOpen, setLoginOpen }) => {
-  const [loading, setLoading] = useState(false);
-
   const { account, web3Auth, provider, balance, login, logout, getBalance } =
     useContext(Web3Context);
 
@@ -31,12 +27,9 @@ const LoginPopIn = ({ loginOpen, setLoginOpen }) => {
             </h3>
             <button
               className="btn btn-primary btn-full btn-lg"
-              onClick={() => {
-                login();
-              }}
+              onClick={() => login()}
             >
-              {!loading && <p>Login/create account</p>}{" "}
-              {loading && <p>Loading</p>}
+              <p>Login/create account</p>
             </button>
             <div className="rounded-[10px] hover:border-unveilBlack col-span-2 md:col-span-1 flex overflow-hidden mt-[10px] bg-bgColor text-left w-full md:w-w-fuill cursor-pointer">
               <div className="h-[57px] md:h-[68px] bg-unveilGreen aspect-square relative overflow-hidden"></div>

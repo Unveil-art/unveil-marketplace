@@ -91,13 +91,15 @@ const Create = () => {
         value,
         values.detailShotImage2[0]
       );
+      const audio = await uploadAudio(value, values.soundbite[0]);
       console.log(mergedValues);
       await postArtworks(
         value,
         mergedValues,
         mainImage,
         detailShotImage1,
-        detailShotImage2
+        detailShotImage2,
+        audio
       );
 
       return;

@@ -5,7 +5,8 @@ import { WalletConnectV1Adapter } from "@web3auth/wallet-connect-v1-adapter";
 import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import Web3 from "web3";
 import RPC from "lib/RPC";
-import { getNonce, doLogin } from "lib/backend";
+import { useAuth } from "@/hooks/useAuth";
+import { getNonce } from "lib/backend";
 
 export const Web3Context = createContext({
   account: "",
@@ -25,6 +26,8 @@ export const rpcUrl = "https://rpc-mumbai.maticvigil.com";
 export const chainId = "0x13881"; //"0x1";
 
 const Web3AuthProvider = ({ children }) => {
+  const { doLogin, doLogout } = useAuth();
+
   const [web3Auth, setWeb3Auth] = useState(null);
   const [provider, setProvider] = useState(null);
   const [account, setAccount] = useState("");
@@ -99,25 +102,19 @@ const Web3AuthProvider = ({ children }) => {
         const rpc = new RPC(web3AuthProvider);
         const accounts = await rpc.getAccounts();
         const info = await web3Auth.getUserInfo();
-        console.log(accounts);
-        console.log(info);
+
         if (info.email) {
           const nonceData = await getNonce({
             email: info.email,
             walletAddress: accounts,
           });
-          // await web3.eth.personal
-          //   .sign(nonceData.nonce, accounts[0], "")
-          //   .then((signedMessage) => {
-          //     console.log(signedMessage);
-          //     doLogin({ requestId: nonceData.id, signature: signedMessage });
-          //   })
-          //   .catch((err) => {
-          //     console.log(err);
-          //     magic_connect.wallet.disconnect();
-          //     alert("Login Signature Failed");
-          //     setError("Login Signature Failed");
-          //   });
+          console.log(nonceData);
+
+          const signedMessage = await rpc.signMessage(nonceData.nonce);
+          console.log(signedMessage);
+
+          await doLogin({ requestId: nonceData.id, signature: signedMessage });
+          setAccount(accounts);
         } else {
         }
         setAccount(accounts);
@@ -131,6 +128,7 @@ const Web3AuthProvider = ({ children }) => {
     if (web3Auth) {
       try {
         await web3Auth.logout();
+        await doLogout();
         setProvider(null);
         setAccount("");
         setBalance("");
