@@ -14,10 +14,6 @@ const Search = () => {
   };
 
   useEffect(() => {
-    router.push("/404");
-  }, []);
-
-  useEffect(() => {
     console.log("Debounce");
   }, [debounce]);
 

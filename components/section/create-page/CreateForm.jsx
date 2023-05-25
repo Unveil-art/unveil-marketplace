@@ -470,8 +470,9 @@ const CreateForm = ({
                 {frameOpen && (
                   <>
                     <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
-                      {frameOptions.map((item) => (
+                      {frameOptions.map((item, i) => (
                         <span
+                          key={i}
                           onClick={() => {
                             setFrame((prevFrame) => ({
                               ...prevFrame,
@@ -491,8 +492,9 @@ const CreateForm = ({
 
                     <p className="mb-[15px] mt-5 b3">Frame size</p>
                     <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
-                      {sizeOptions.map((item) => (
+                      {sizeOptions.map((item, i) => (
                         <span
+                          key={i}
                           onClick={() => {
                             setFrame((prevFrame) => ({
                               ...prevFrame,
@@ -512,8 +514,9 @@ const CreateForm = ({
 
                     <p className="mb-[15px] mt-5 b3">Frame colour</p>
                     <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
-                      {colourOptions.map((item) => (
+                      {colourOptions.map((item, i) => (
                         <span
+                          key={i}
                           onClick={() => {
                             setFrame((prevFrame) => ({
                               ...prevFrame,
@@ -533,8 +536,9 @@ const CreateForm = ({
 
                     <p className="mb-[15px] mt-5 b3">White border</p>
                     <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
-                      {borderOptions.map((item) => (
+                      {borderOptions.map((item, i) => (
                         <span
+                          key={i}
                           onClick={() => {
                             setFrame((prevFrame) => ({
                               ...prevFrame,
