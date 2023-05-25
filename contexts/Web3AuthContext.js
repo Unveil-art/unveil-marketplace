@@ -5,6 +5,7 @@ import { WalletConnectV1Adapter } from "@web3auth/wallet-connect-v1-adapter";
 import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import Web3 from "web3";
 import RPC from "lib/RPC";
+import { getNonce, doLogin } from "lib/backend";
 
 export const Web3Context = createContext({
   account: "",
@@ -98,10 +99,16 @@ const Web3AuthProvider = ({ children }) => {
         const rpc = new RPC(web3AuthProvider);
         const accounts = await rpc.getAccounts();
         const info = await web3Auth.getUserInfo();
+        console.log(accounts);
+        console.log(info);
         if (info.email) {
-          return;
+          const nonceData = await getNonce({
+            email: info.email,
+            walletAddress: accounts,
+          });
+          await doLogin({ requestId: nonceData.id, signature: signedMessage });
+          console.log(nonceData);
         } else {
-          //call api has-email
         }
         setAccount(accounts);
       } catch (err) {
