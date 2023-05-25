@@ -7,12 +7,13 @@ import OneLiner from "@/components/reusable/Oneliner";
 import SortPeople from "@/components/section/people-page/SortPeople";
 import PeopleList from "@/components/section/people-page/PeopleList";
 
+import { value } from "../../hooks/useLocalStorage";
+
 const People = () => {
   const [filter, setFilter] = useState(0);
 
-  const router = useRouter();
   useEffect(() => {
-    router.push("/404");
+    console.log(value);
   }, []);
 
   return (
@@ -33,3 +34,13 @@ const People = () => {
 };
 
 export default People;
+
+// export async function getServerSideProps() {
+//   const people = await getPeople();
+
+//   return {
+//     props: {
+//       people,
+//     },
+//   };
+// }

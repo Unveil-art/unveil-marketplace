@@ -75,18 +75,18 @@ const PeopleFilterPopIn = ({ open, setOpen, filter }) => {
                       className="border-collapse radio-block left"
                       type="radio"
                       name="category"
-                      id="artworks"
+                      id="established"
                     />
-                    <label htmlFor="artworks">Artworks</label>
+                    <label htmlFor="established">Established</label>
                   </div>
                   <div>
                     <input
                       className=" radio-block right"
                       type="radio"
                       name="category"
-                      id="collections"
+                      id="talent"
                     />
-                    <label htmlFor="collections">Collections</label>
+                    <label htmlFor="talent">Talent</label>
                   </div>
                 </div>
               </div>

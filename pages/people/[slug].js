@@ -15,9 +15,6 @@ const PeopleDetails = ({ faq }) => {
   const [page, setPage] = useState(0);
 
   const router = useRouter();
-  useEffect(() => {
-    router.push("/404");
-  }, []);
 
   return (
     <main className="mt-[120px]">

@@ -26,9 +26,9 @@ const MoreInfoPopIn = ({ open, setOpen, text, title, subtitle }) => {
             </div>
           </div>
           <div>
-            <p className="text-center b4 mt-[80px]">{subtitle}</p>
-            <h3 className="text-center s2 mb-[80px]">{title}</h3>
-            <p className="s2">{text}</p>
+            <p className="text-center b4 mt-[80px]">{subtitle || "Subtitle"}</p>
+            <h3 className="text-center s2 mb-[80px]">{title || "Title"}</h3>
+            <p className="s2">{text || "Text"}</p>
           </div>
         </div>
         <div
