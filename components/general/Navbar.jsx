@@ -1,6 +1,6 @@
 import { gsap } from "gsap";
-import { useRef, useState, useEffect } from "react";
-import Router from "next/router";
+import { useRef, useState, useEffect, useContext } from "react";
+import Router, { useRouter } from "next/router";
 import Link from "next/link";
 
 import Logo from "../svg/Logo";
@@ -8,12 +8,17 @@ import Account from "../svg/Account";
 import NavbarPopIn from "../pop-in/NavbarPopIn";
 import LoginPopIn from "../pop-in/LoginPopIn";
 import LoggedInPopIn from "../pop-in/LoggedInPopIn";
+import Arrow from "@/components/svg/Arrow";
+import { StepContext } from "@/contexts/StepContext";
 
 const Navbar = ({ magic_connect, value }) => {
   const el = useRef();
   const [loggedIn, setLoggedIn] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const router = useRouter();
+
+  const { step, setStep } = useContext(StepContext);
 
   const handleOpen = (setState, state) => {
     setState(!state);
@@ -41,13 +46,29 @@ const Navbar = ({ magic_connect, value }) => {
         ref={el}
         className="fixed top-0 left-0 z-40 flex items-center justify-between w-full px-[15px] pt-[15px] md:pt-[32px] md:px-10"
       >
-        <div
-          onClick={() => handleOpen(setNavOpen, navOpen)}
-          className="relative  w-[20px] md:w-[31px] h-[12px] group cursor-pointer"
-        >
-          <div className="w-full h-[3px] bg-unveilBlack absolute top-0 unveilTransition group-hover:w-[85%]"></div>
-          <div className="w-full h-[3px] bg-unveilBlack absolute bottom-0 unveilTransition group-hover:w-[115%]"></div>
-        </div>
+        {router.asPath !== "/checkout" && (
+          <div
+            onClick={() => handleOpen(setNavOpen, navOpen)}
+            className="relative  w-[20px] md:w-[31px] h-[12px] group cursor-pointer"
+          >
+            <div className="w-full h-[3px] bg-unveilBlack absolute top-0 unveilTransition group-hover:w-[85%]"></div>
+            <div className="w-full h-[3px] bg-unveilBlack absolute bottom-0 unveilTransition group-hover:w-[115%]"></div>
+          </div>
+        )}
+        {router.asPath === "/checkout" && (
+          <div
+            className="rotate-180 cursor-pointer"
+            onClick={() => {
+              if (step === 1) {
+                router.back();
+              } else {
+                setStep(step - 1);
+              }
+            }}
+          >
+            <Arrow />
+          </div>
+        )}
 
         <Link href="/">
           <div className="w-[106px] md:w-[144px] cursor-pointer">

@@ -106,8 +106,18 @@ const Web3AuthProvider = ({ children }) => {
             email: info.email,
             walletAddress: accounts,
           });
-          await doLogin({ requestId: nonceData.id, signature: signedMessage });
-          console.log(nonceData);
+          // await web3.eth.personal
+          //   .sign(nonceData.nonce, accounts[0], "")
+          //   .then((signedMessage) => {
+          //     console.log(signedMessage);
+          //     doLogin({ requestId: nonceData.id, signature: signedMessage });
+          //   })
+          //   .catch((err) => {
+          //     console.log(err);
+          //     magic_connect.wallet.disconnect();
+          //     alert("Login Signature Failed");
+          //     setError("Login Signature Failed");
+          //   });
         } else {
         }
         setAccount(accounts);

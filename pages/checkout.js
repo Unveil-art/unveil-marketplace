@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import useMagic from "@/hooks/useMagic";
-import Web3 from "web3";
 import { useRouter } from "next/router";
 
 import Steps from "@/components/section/checkout-page/Steps";
@@ -9,17 +7,17 @@ import MoreInfoPopIn from "@/components/pop-in/MoreInfoPopIn";
 
 import PaymentSelect from "@/components/section/checkout-page/PaymentSelect";
 import MoreInfo from "@/components/svg/MoreInfo";
-import Chat from "@/components/reusable/Chat";
 
-import Ideal from "@/components/svg/Ideal";
 import Payment from "@/components/section/checkout-page/Payment";
 import ConnectWithWallet from "@/components/section/checkout-page/ConnectWithWallet";
+import { StepContext } from "@/contexts/StepContext";
 
 const Checkout = () => {
   const router = useRouter();
   const { value } = useLocalStorage("token");
 
-  const [step, setStep] = useState(1);
+  const { step, setStep } = useContext(StepContext);
+
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [gasOpen, setGasOpen] = useState(false);
   const [payment, setPayment] = useState("");
