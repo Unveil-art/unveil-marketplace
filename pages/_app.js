@@ -5,6 +5,7 @@ import Router from "next/router";
 import { Lenis, useLenis } from "@studio-freight/react-lenis";
 import { HistoryProvider } from "../contexts/History";
 import Layout from "../components/general/Layout";
+import Web3AuthProvider from "@/contexts/Web3AuthContext";
 
 function MyApp({ Component, pageProps }) {
   const lenis = useLenis();
@@ -23,20 +24,22 @@ function MyApp({ Component, pageProps }) {
   }, [lenis]);
 
   return (
-    <Layout>
-      <HistoryProvider>
-        <Lenis
-          root
-          options={{
-            lerp: 0.2,
-            smoothWheel: true,
-            smoothTouch: false,
-          }}
-        >
-          <Component {...pageProps} />
-        </Lenis>
-      </HistoryProvider>
-    </Layout>
+    <Web3AuthProvider>
+      <Layout>
+        <HistoryProvider>
+          <Lenis
+            root
+            options={{
+              lerp: 0.2,
+              smoothWheel: true,
+              smoothTouch: false,
+            }}
+          >
+            <Component {...pageProps} />
+          </Lenis>
+        </HistoryProvider>
+      </Layout>
+    </Web3AuthProvider>
   );
 }
 

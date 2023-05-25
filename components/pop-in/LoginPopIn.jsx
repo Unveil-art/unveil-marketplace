@@ -1,12 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
 import useMagic from "@/hooks/useMagic";
 import Web3 from "web3";
+import { Web3Context } from "@/contexts/Web3AuthContext";
 
 const LoginPopIn = ({ loginOpen, setLoginOpen }) => {
   const [loading, setLoading] = useState(false);
-  const { magic_connect, login, getNonce } = useMagic();
-  const web3 = magic_connect ? new Web3(magic_connect.rpcProvider) : null;
+
+  const { account, web3Auth, provider, balance, login, logout, getBalance } =
+    useContext(Web3Context);
 
   const el = useRef();
 
@@ -29,42 +31,8 @@ const LoginPopIn = ({ loginOpen, setLoginOpen }) => {
             </h3>
             <button
               className="btn btn-primary btn-full btn-lg"
-              onClick={async () => {
-                if (magic_connect) {
-                  await web3?.eth.getAccounts(async (_, accounts) => {
-                    setLoading(true);
-                    const data =
-                      await magic_connect.wallet.requestUserInfoWithUI();
-                    if (!data.email) {
-                      await magic_connect.wallet.disconnect();
-                      alert("email is required");
-                      setLoading(false);
-                      return;
-                    }
-                    const nonceData = await getNonce({
-                      email: data.email,
-                      walletAddress: accounts[0],
-                    });
-                    await web3.eth.personal
-                      .sign(nonceData.nonce, accounts[0], "")
-                      .then((signedMessage) => {
-                        login({
-                          requestId: nonceData.id,
-                          signature: signedMessage,
-                        });
-                      })
-                      .then(() => {
-                        setLoading(false);
-                        setLoginOpen(false);
-                      })
-                      .catch((err) => {
-                        console.log(err);
-                        magic_connect.wallet.disconnect();
-                        alert("Login Signature Failed");
-                        setLoading(false);
-                      });
-                  });
-                }
+              onClick={() => {
+                login();
               }}
             >
               {!loading && <p>Login/create account</p>}{" "}

@@ -3,43 +3,91 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import useMagic from "@/hooks/useMagic";
 import Web3 from "web3";
 import { useRouter } from "next/router";
-import Title from "@/components/reusable/Title";
+
 import Steps from "@/components/section/checkout-page/Steps";
-import Info from "@/components/svg/Info";
 import MoreInfoPopIn from "@/components/pop-in/MoreInfoPopIn";
+
+import PaymentSelect from "@/components/section/checkout-page/PaymentSelect";
 import MoreInfo from "@/components/svg/MoreInfo";
+import Chat from "@/components/reusable/Chat";
+
+import Ideal from "@/components/svg/Ideal";
+import Payment from "@/components/section/checkout-page/Payment";
+import ConnectWithWallet from "@/components/section/checkout-page/ConnectWithWallet";
 
 const Checkout = () => {
   const router = useRouter();
   const { value } = useLocalStorage("token");
+
   const [step, setStep] = useState(1);
   const [paymentOpen, setPaymentOpen] = useState(false);
-  const { magic_connect, login, logout, getNonce } = useMagic();
-
-  const web3 = magic_connect ? new Web3(magic_connect.rpcProvider) : null;
+  const [gasOpen, setGasOpen] = useState(false);
+  const [payment, setPayment] = useState("");
 
   return (
     <main className="min-h-screen my-[120px] px-10">
       <section className="grid grid-cols-2 md:grid-cols-2 gap-[100px]">
         <div>
           <Steps setStep={setStep} step={step} />
-          <h1 className="mt-5 h3 mb-[80px]">Purchase</h1>
+
           {step === 1 && (
-            <div>
-              <div className="flex items-center gap-1">
-                <p className="font-bold">Choose your Payment Method</p>
-                <div
-                  onClick={() => setPaymentOpen(!paymentOpen)}
-                  className="cursor-pointer"
-                >
-                  <MoreInfo />
-                </div>
+            <>
+              <h1 className="mt-5 h3 mb-[80px]">Purchase</h1>
+              <PaymentSelect
+                setPayment={setPayment}
+                setStep={setStep}
+                paymentOpen={paymentOpen}
+                setPaymentOpen={setPaymentOpen}
+              />
+            </>
+          )}
+          {step === 2 && <ConnectWithWallet setStep={setStep} />}
+          {step === 3 && <Payment payment={payment} />}
+        </div>
+        <div>
+          <div className="h-[3px] md:h-[5px] bg-unveilBlack"></div>
+          <div className="flex items-center justify-between mt-5 mb-10">
+            <div className="flex items-center gap-5">
+              <div className="w-[120px] h-[140px] bg-bgColor"></div>
+              <div>
+                <p className="b3 text-[17px]">Artwork Name</p>
+                <p className="b3 opacity-60">Artist Name</p>
+                <p className="b3 opacity-60">Edition</p>
               </div>
             </div>
-          )}
+            <div className="flex items-end gap-2">
+              <p className="b3 text-[17px]">€1.112</p>
+              <p className="leading-[23px] b5">(0.05 ETH)</p>
+            </div>
+          </div>
+          <div className="flex justify-between border-t border-[#DBDED6] py-5">
+            <div className="flex items-center gap-2">
+              <p className="b3 font-[17px]">Gas Fees</p>{" "}
+              <div
+                className="cursor-pointer"
+                onClick={() => setGasOpen(!gasOpen)}
+              >
+                <MoreInfo />
+              </div>
+            </div>
+            <div className="flex items-end gap-2">
+              <p className="b3 text-[17px]">+ ~$18,08</p>
+              <p className="leading-[23px] b5">(0.05 ETH)</p>
+            </div>
+          </div>
+          <div className="flex justify-between border-t border-[#DBDED6] py-5">
+            <div className="flex items-center gap-2">
+              <p className="b3 font-[17px]">Total price</p>
+            </div>
+            <div className="flex items-end gap-2">
+              <p className="b3 text-[17px]">$2218,08 </p>
+              <p className="leading-[23px] b5">(0.05 ETH)</p>
+            </div>
+          </div>
         </div>
       </section>
       <MoreInfoPopIn open={paymentOpen} setOpen={setPaymentOpen} />
+      <MoreInfoPopIn open={gasOpen} setOpen={setGasOpen} />
     </main>
   );
 };
