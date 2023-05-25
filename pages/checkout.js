@@ -4,7 +4,7 @@ import useMagic from "@/hooks/useMagic";
 import Web3 from "web3";
 import { useRouter } from "next/router";
 import Title from "@/components/reusable/Title";
-import Steps from "@/components/section/checkout-page/steps";
+import Steps from "@/components/section/checkout-page/Steps";
 import Info from "@/components/svg/Info";
 import MoreInfoPopIn from "@/components/pop-in/MoreInfoPopIn";
 import MoreInfo from "@/components/svg/MoreInfo";
