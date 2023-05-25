@@ -13,10 +13,6 @@ const Login = () => {
 
   const web3 = magic_connect ? new Web3(magic_connect.rpcProvider) : null;
 
-  useEffect(() => {
-    router.push("/404");
-  }, []);
-
   if (value) {
     router.push("/account");
 

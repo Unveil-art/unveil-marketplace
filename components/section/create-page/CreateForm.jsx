@@ -12,6 +12,12 @@ import {
 import useLocalStorage from "../../../hooks/useLocalStorage";
 
 const CreateForm = ({
+  editionPrice,
+  setEditionPrice,
+  setEditionPricing,
+  editionPricing,
+  setActiveSize,
+  activeSize,
   errors,
   register,
   reset,
@@ -21,6 +27,8 @@ const CreateForm = ({
   setPapers,
   techniques,
   setTechniques,
+  frame,
+  setFrame,
 }) => {
   const [openCollection, setOpenCollection] = useState(false);
   const [collectionImage, setCollectionImage] = useState(null);
@@ -29,7 +37,6 @@ const CreateForm = ({
   const [royalties, setRoyalties] = useState([
     { from: "First 12 months", percentage: "15%" },
   ]);
-  const [editionPricing, setEditionPricing] = useState([""]);
   const [editionType, setEditionType] = useState("NFT only");
 
   const [sizeOpen, setSizeOpen] = useState(false);
@@ -40,6 +47,12 @@ const CreateForm = ({
 
   const [techniqueOpen, setTechniqueOpen] = useState(false);
   const [customTechniqueInput, setCustomTechniqueInput] = useState("");
+
+  const [frameOpen, setFrameOpen] = useState(false);
+  const frameOptions = ["Oak", "option 2", "option 3"];
+  const sizeOptions = ["2mm", "3mm", "5mm"];
+  const colourOptions = ["White", "Black"];
+  const borderOptions = ["None", "5x10", "10x20"];
 
   const { value } = useLocalStorage("token");
 
@@ -149,7 +162,7 @@ const CreateForm = ({
   };
 
   const handleChangePrice = (value, index) => {
-    setEditionPricing((prevItems) => {
+    setEditionPrice((prevItems) => {
       const updatedItems = [...prevItems];
       updatedItems[index] = value;
       return updatedItems;
@@ -282,7 +295,7 @@ const CreateForm = ({
             <div className=" px-5 py-[15px] border-t border-[#DBDED6]">
               <div className="flex items-start justify-between ">
                 <div>
-                  <p className="mb-[15px]">Sizes</p>
+                  <p className="mb-[15px] b3">Sizes</p>
                   <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
                     {sizes.map((item, i) => {
                       if (!sizeOpen) {
@@ -331,7 +344,10 @@ const CreateForm = ({
               </div>
               {sizeOpen && (
                 <div>
-                  <label htmlFor="custom-size" className="block pb-[15px] pt-5">
+                  <label
+                    htmlFor="custom-size"
+                    className="block b3 pb-[15px] pt-5"
+                  >
                     Enter custom size
                   </label>
                   <div className="flex gap-[10px] max-w-[500px]">
@@ -358,7 +374,7 @@ const CreateForm = ({
             <div className=" px-5 py-[15px] border-t border-[#DBDED6]">
               <div className="flex items-start justify-between ">
                 <div>
-                  <p className="mb-[15px]">Paper</p>
+                  <p className="mb-[15px] b3">Paper</p>
                   <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
                     {papers.map((item, i) => {
                       if (!paperOpen) {
@@ -366,7 +382,7 @@ const CreateForm = ({
                           return (
                             <span
                               key={i}
-                              className="border rounded-full px-[15px] border-unveilDrakGray"
+                              className="border uppercase text-[10px] rounded-full px-[15px] border-unveilDrakGray"
                             >
                               {item.paper}
                             </span>
@@ -381,7 +397,7 @@ const CreateForm = ({
                               item.active
                                 ? "border-unveilBlack"
                                 : "border-unveilDrakGray"
-                            } border rounded-full px-[15px] cursor-pointer`}
+                            } border rounded-full uppercase text-[10px] px-[15px] cursor-pointer`}
                           >
                             {item.paper}
                           </span>
@@ -409,7 +425,7 @@ const CreateForm = ({
                 <div>
                   <label
                     htmlFor="custom-paper"
-                    className="block pb-[15px] pt-5"
+                    className="block pb-[15px] pt-5 b3"
                   >
                     Enter custom paper (not recommended)
                   </label>
@@ -436,20 +452,123 @@ const CreateForm = ({
             </div>
             <div className="border-t border-[#DBDED6] px-5 py-[15px] flex justify-between">
               <div>
-                <p className="mb-[15px]">Frame</p>
-                <div className="flex gap-2 b3 lg:b4">
-                  <span className="border rounded-full px-[15px] border-unveilDrakGray">
-                    oak, 2mm, white frame, White border 5x10
-                  </span>
-                  <span className="bg-[#DBDED6] px-[10px] rounded-full">+</span>
-                </div>
+                <p className="mb-[15px] b3">Frame</p>
+                {!frameOpen && (
+                  <div className="flex gap-2 b3 lg:b4">
+                    <span className="border uppercase text-[10px] rounded-full px-[15px] border-unveilDrakGray">
+                      {frame.frame}, {frame.size}, {frame.colour} frame, White
+                      border {frame.border}
+                    </span>
+                    <span
+                      onClick={() => setFrameOpen(!frameOpen)}
+                      className="bg-[#DBDED6] cursor-pointer px-[10px] rounded-full"
+                    >
+                      +
+                    </span>
+                  </div>
+                )}
+                {frameOpen && (
+                  <>
+                    <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
+                      {frameOptions.map((item, i) => (
+                        <span
+                          key={i}
+                          onClick={() => {
+                            setFrame((prevFrame) => ({
+                              ...prevFrame,
+                              frame: item,
+                            }));
+                          }}
+                          className={`${
+                            item === frame.frame
+                              ? "border-unveilBlack"
+                              : "border-unveilDrakGray"
+                          } border uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+
+                    <p className="mb-[15px] mt-5 b3">Frame size</p>
+                    <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
+                      {sizeOptions.map((item, i) => (
+                        <span
+                          key={i}
+                          onClick={() => {
+                            setFrame((prevFrame) => ({
+                              ...prevFrame,
+                              size: item,
+                            }));
+                          }}
+                          className={`${
+                            item === frame.size
+                              ? "border-unveilBlack"
+                              : "border-unveilDrakGray"
+                          } border uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+
+                    <p className="mb-[15px] mt-5 b3">Frame colour</p>
+                    <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
+                      {colourOptions.map((item, i) => (
+                        <span
+                          key={i}
+                          onClick={() => {
+                            setFrame((prevFrame) => ({
+                              ...prevFrame,
+                              colour: item,
+                            }));
+                          }}
+                          className={`${
+                            item === frame.colour
+                              ? "border-unveilBlack"
+                              : "border-unveilDrakGray"
+                          } border uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+
+                    <p className="mb-[15px] mt-5 b3">White border</p>
+                    <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
+                      {borderOptions.map((item, i) => (
+                        <span
+                          key={i}
+                          onClick={() => {
+                            setFrame((prevFrame) => ({
+                              ...prevFrame,
+                              border: item,
+                            }));
+                          }}
+                          className={`${
+                            item === frame.border
+                              ? "border-unveilBlack"
+                              : "border-unveilDrakGray"
+                          } border uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
-              <button className="btn btn-opacity btn-lg">Edit</button>
+              <p
+                onClick={() => setFrameOpen(!frameOpen)}
+                className="items-center cursor-pointer btn btn-opacity flex  h-[66px] btn-lg"
+              >
+                {frameOpen ? "Save" : "Edit"}
+              </p>
             </div>
             <div className=" px-5 py-[15px] border-t border-[#DBDED6]">
               <div className="flex items-start justify-between ">
                 <div>
-                  <p className="mb-[15px]">Technique</p>
+                  <p className="mb-[15px] b3">Technique</p>
                   <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
                     {techniques.map((item, i) => {
                       if (!techniqueOpen) {
@@ -457,7 +576,7 @@ const CreateForm = ({
                           return (
                             <span
                               key={i}
-                              className="border rounded-full px-[15px] border-unveilDrakGray"
+                              className="border uppercase text-[10px] rounded-full px-[15px] border-unveilDrakGray"
                             >
                               {item.technique}
                             </span>
@@ -472,7 +591,7 @@ const CreateForm = ({
                               item.active
                                 ? "border-unveilBlack"
                                 : "border-unveilDrakGray"
-                            } border rounded-full px-[15px] cursor-pointer`}
+                            } border uppercase text-[10px] rounded-full px-[15px] cursor-pointer`}
                           >
                             {item.technique}
                           </span>
@@ -500,7 +619,7 @@ const CreateForm = ({
                 <div>
                   <label
                     htmlFor="custom-technique"
-                    className="block pb-[15px] pt-5"
+                    className="block pb-[15px] pt-5 b3"
                   >
                     Enter custom technique
                   </label>
@@ -543,7 +662,12 @@ const CreateForm = ({
                   return (
                     <span
                       key={i}
-                      className="border rounded-full px-[15px] border-unveilDrakGray"
+                      onClick={() => setActiveSize(item.size)}
+                      className={`${
+                        activeSize === item.size
+                          ? "border-unveilBlack"
+                          : "border-unveilDrakGray"
+                      } border rounded-full px-[15px] cursor-pointer text-[10px]`}
                     >
                       {item.size}
                     </span>
@@ -561,148 +685,161 @@ const CreateForm = ({
             </div>
           </>
         )}
-        {editionPricing.map((_, i) => (
-          <div
-            key={i}
-            className={`grid grid-cols-6 gap-2 px-5 py-[15px]  ${
-              editionType !== "NFT only" ? "border-y border-[#DBDED6]" : ""
-            }`}
-          >
-            <div className="my-auto">
-              {i + 1}/{editionPricing.length}
-            </div>
-            {editionType !== "NFT only" && (
-              <>
-                <div className="relative">
-                  <select
-                    name={`paper[${i}]`}
-                    id="paper-select"
-                    className="truncate select-input"
-                    {...register(`paper[${i}]`, { required: "Required" })}
-                  >
-                    {papers.map((item, i) => {
-                      if (item.active) {
-                        return <option key={i}>{item.paper}</option>;
-                      }
-                    })}
-                  </select>
-                  {errors.frame && errors.frame[i] && (
-                    <p
-                      className={`text-red-500 opacity-0  b5 absolute -bottom-5 left-0 ${
-                        errors.paper[i]?.message ? "opacity-100 block " : ""
-                      }`}
-                    >
-                      {errors.paper[i]?.message}
-                    </p>
-                  )}
+        {editionPricing.map((item, i) => {
+          if (item === activeSize) {
+            return (
+              <div
+                key={i}
+                className={`grid grid-cols-6 gap-2 px-5 py-[15px]  ${
+                  editionType !== "NFT only" ? "border-b border-[#DBDED6]" : ""
+                }`}
+              >
+                <div className="my-auto">
+                  {i + 1}/{editionPricing.length}
                 </div>
+                {editionType !== "NFT only" && (
+                  <>
+                    <div className="relative">
+                      <select
+                        name={`paper[${i}]`}
+                        id="paper-select"
+                        className="truncate select-input"
+                        {...register(`paper[${i}]`, { required: "Required" })}
+                      >
+                        {papers.map((item, i) => {
+                          if (item.active) {
+                            return <option key={i}>{item.paper}</option>;
+                          }
+                        })}
+                      </select>
+                      {errors.frame && errors.frame[i] && (
+                        <p
+                          className={`text-red-500 opacity-0  b5 absolute -bottom-5 left-0 ${
+                            errors.paper[i]?.message ? "opacity-100 block " : ""
+                          }`}
+                        >
+                          {errors.paper[i]?.message}
+                        </p>
+                      )}
+                    </div>
 
-                <div className="relative">
-                  <select
-                    id="frame-select"
-                    className="truncate select-input"
-                    name={`frame[${i}]`}
-                    {...register(`frame[${i}]`, { required: "Required" })}
-                  >
-                    <option>oak, 2mm, white frame, White border 5x10</option>
-                  </select>
-                  {errors.frame && errors.frame[i] && (
-                    <p
-                      className={`text-red-500 opacity-0  b5 absolute -bottom-5 left-0 ${
-                        errors.frame[i]?.message ? "opacity-100 block " : ""
-                      }`}
-                    >
-                      {errors.frame[i]?.message}
-                    </p>
-                  )}
-                </div>
+                    <div className="relative">
+                      <select
+                        id="frame-select"
+                        className="truncate select-input"
+                        name={`frame[${i}]`}
+                        {...register(`frame[${i}]`, { required: "Required" })}
+                      >
+                        <option>
+                          {frame.frame}, {frame.size}, {frame.colour} frame,
+                          White border {frame.border}
+                        </option>
+                      </select>
+                      {errors.frame && errors.frame[i] && (
+                        <p
+                          className={`text-red-500 opacity-0  b5 absolute -bottom-5 left-0 ${
+                            errors.frame[i]?.message ? "opacity-100 block " : ""
+                          }`}
+                        >
+                          {errors.frame[i]?.message}
+                        </p>
+                      )}
+                    </div>
 
-                <div className="relative">
-                  <select
-                    id="technique-select"
-                    className="truncate select-input"
-                    name={`technique[${i}]`}
-                    {...register(`technique[${i}]`, { required: "Required" })}
-                  >
-                    {techniques.map((item, i) => {
-                      if (item.active) {
-                        return <option key={i}>{item.technique}</option>;
-                      }
-                    })}
-                  </select>
-                  {errors.technique && errors.technique[i] && (
-                    <p
-                      className={`text-red-500 opacity-0 b5 absolute -bottom-5 left-0 ${
-                        errors.technique[i]?.message ? "opacity-100  " : ""
-                      }`}
-                    >
-                      {errors.technique[i]?.message}
-                    </p>
-                  )}
-                </div>
-              </>
-            )}
+                    <div className="relative">
+                      <select
+                        id="technique-select"
+                        className="truncate select-input"
+                        name={`technique[${i}]`}
+                        {...register(`technique[${i}]`, {
+                          required: "Required",
+                        })}
+                      >
+                        {techniques.map((item, i) => {
+                          if (item.active) {
+                            return <option key={i}>{item.technique}</option>;
+                          }
+                        })}
+                      </select>
+                      {errors.technique && errors.technique[i] && (
+                        <p
+                          className={`text-red-500 opacity-0 b5 absolute -bottom-5 left-0 ${
+                            errors.technique[i]?.message ? "opacity-100  " : ""
+                          }`}
+                        >
+                          {errors.technique[i]?.message}
+                        </p>
+                      )}
+                    </div>
+                  </>
+                )}
 
-            <div
-              key={i}
-              className="flex relative items-center gap-[10px] col-span-2"
-            >
-              <div className="relative">
-                <input
-                  type="number"
-                  className="input"
-                  placeholder="Select Price (USD)"
-                  value={editionPricing[i]}
-                  name={`price[${i}]`} // Use a unique identifier for the name attribute
-                  {...register(`price[${i}]`, {
-                    required: "Required",
-                    onChange: (e) => {
-                      handleChangePrice(e.target.value, i);
-                    },
-                  })}
-                />
-                {errors.price && errors.price[i] && (
-                  <p
-                    className={`text-red-500 opacity-0 b5 absolute -bottom-5 left-0 ${
-                      errors.price[i]?.message ? "opacity-100  " : ""
+                <div
+                  key={i}
+                  className="flex relative items-center gap-[10px] col-span-2"
+                >
+                  <div className="relative">
+                    <input
+                      type="number"
+                      className="input"
+                      placeholder="Select Price (USD)"
+                      value={editionPrice[i]}
+                      name={`price[${i}]`} // Use a unique identifier for the name attribute
+                      {...register(`price[${i}]`, {
+                        required: "Required",
+                        onChange: (e) => {
+                          handleChangePrice(e.target.value, i);
+                        },
+                      })}
+                    />
+                    {errors.price && errors.price[i] && (
+                      <p
+                        className={`text-red-500 opacity-0 b5 absolute -bottom-5 left-0 ${
+                          errors.price[i]?.message ? "opacity-100  " : ""
+                        }`}
+                      >
+                        {errors.price[i]?.message}
+                      </p>
+                    )}
+                  </div>
+                  <div
+                    className={`${
+                      editionPricing.length === 1
+                        ? "opacity-40"
+                        : "cursor-pointer"
                     }`}
+                    onClick={() => handleDeleteRow(i, setEditionPricing, true)}
                   >
-                    {errors.price[i]?.message}
-                  </p>
+                    <Delete big />
+                  </div>
+                </div>
+                <div></div>
+                {editionType !== "NFT only" && (
+                  <div className="col-span-4">
+                    <div className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="news"
+                        id="news"
+                        className="checkbox"
+                      />
+                      <label htmlFor="news" className="b3 md:b4">
+                        Previously sold
+                      </label>
+                    </div>
+                  </div>
                 )}
               </div>
-              <div
-                className={`${
-                  editionPricing.length === 1 ? "opacity-40" : "cursor-pointer"
-                }`}
-                onClick={() => handleDeleteRow(i, setEditionPricing, true)}
-              >
-                <Delete big />
-              </div>
-            </div>
-            <div></div>
-            {editionType !== "NFT only" && (
-              <div className="col-span-4">
-                <div className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    name="news"
-                    id="news"
-                    className="checkbox"
-                  />
-                  <label htmlFor="news" className="b3 md:b4">
-                    Previously sold
-                  </label>
-                </div>
-              </div>
-            )}
-          </div>
-        ))}
+            );
+          }
+        })}
 
         <div className="grid grid-cols-2 lg:grid-cols-6 gap-2 px-5 pt-[15px] pb-5 lg:pb-[30px]">
           <div className="hidden lg:block"></div>
           <p
-            onClick={() => setEditionPricing((prevItems) => [...prevItems, ""])}
+            onClick={() =>
+              setEditionPricing((prevItems) => [...prevItems, activeSize])
+            }
             className={`${
               editionType !== "NFT only" ? "lg:col-span-3" : "lg:col-span-5"
             } btn btn-secondary cursor-pointer inline-block text-center`}
@@ -814,9 +951,10 @@ const CreateForm = ({
         <div className="px-5 pb-[15px] ">
           <select
             id="collection-select"
-            name="collection-select"
+            name="collection_id"
             className="truncate select-input"
             defaultValue="Select collection"
+            {...register("collection_id", { required: "Required" })}
           >
             <option disabled>Select collection</option>
             {collections.map((item, i) => (

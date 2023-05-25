@@ -13,7 +13,7 @@ const Browse = ({ filter, setFilter }) => {
               : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
           } px-2 border rounded-full cursor-pointer unveilTransition md:px-4 l2`}
         >
-          Artworks
+          Artists
         </span>
         <span
           onClick={() => setFilter(1)}
@@ -23,7 +23,7 @@ const Browse = ({ filter, setFilter }) => {
               : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
           } px-2 border rounded-full cursor-pointer unveilTransition md:px-4 l2 `}
         >
-          Collections
+          Curators
         </span>
         <span
           onClick={() => setFilter(2)}
@@ -33,7 +33,7 @@ const Browse = ({ filter, setFilter }) => {
               : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
           } px-2 border rounded-full cursor-pointer unveilTransition md:px-4 l2 `}
         >
-          Collections
+          Collectors
         </span>
       </div>
     </section>

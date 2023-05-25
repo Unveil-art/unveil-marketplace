@@ -12,9 +12,7 @@ import { useRouter } from "next/router";
 
 export default function Gallery({ collections, artworks }) {
   const router = useRouter();
-  useEffect(() => {
-    router.push("/404");
-  }, []);
+
   return (
     <>
       <PageHead />

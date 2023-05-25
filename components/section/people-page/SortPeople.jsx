@@ -63,18 +63,18 @@ const SortPeople = ({ filter }) => {
                 className="border-collapse radio-block left"
                 type="radio"
                 name="category"
-                id="artworks"
+                id="established1"
               />
-              <label htmlFor="artworks">Artworks</label>
+              <label htmlFor="established1">Established</label>
             </div>
             <div>
               <input
                 className=" radio-block right"
                 type="radio"
                 name="category"
-                id="collections"
+                id="talent1"
               />
-              <label htmlFor="collections">Collections</label>
+              <label htmlFor="talent1">Talent</label>
             </div>
           </div>
         </div>

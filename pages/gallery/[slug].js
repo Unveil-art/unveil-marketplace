@@ -9,9 +9,6 @@ import Provenance from "../../components/section/gallery-page/Provenance";
 
 const Details = () => {
   const router = useRouter();
-  useEffect(() => {
-    router.push("/404");
-  }, []);
 
   return (
     <main>
