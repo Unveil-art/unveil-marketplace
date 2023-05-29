@@ -3,18 +3,19 @@ import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 import Link from "next/link";
+import RPC from "lib/RPC";
 
 const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
   const { value } = useLocalStorage("token");
-  const { account, web3Auth, provider, balance, login, logout, getBalance } =
-    useContext(Web3Context);
+  const { value: localProvider } = useLocalStorage("tw:provider:connectors");
+  const { value: wallet } = useLocalStorage("walletAddress");
+  const { balance, logout, getBalance } = useContext(Web3Context);
 
   const el = useRef();
 
   useEffect(() => {
-    console.log(value);
     getBalance();
-    console.log("provider", provider);
+    console.log();
   }, []);
 
   useAsideAnimation(el, loggedIn);
@@ -37,7 +38,7 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
             <div className="grid grid-cols-2 text-center border-y border-bgColorHover">
               <div className="py-10 border-r my-[10px] border-bgColorHover">
                 <p className=" b3">Account name</p>
-                <p className="px-10 truncate br">{account}</p>
+                <p className="truncate px-14 l2">{wallet}</p>
               </div>
               <div className="py-10 my-[10px] border-bgColorHover">
                 <p className="b3">Funds</p>
@@ -46,7 +47,9 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
             </div>
             <div className="text-center py-10 my-[10px]">
               <p className="b3">Network</p>
-              {/* <p className=" l2">{provider}</p> */}
+              <p className=" l2">
+                {localProvider.replace('"', "").replace('"', "")}
+              </p>
             </div>
             <Link href="/account">
               <button className="mt-10 btn btn-lg btn-full btn-primary">

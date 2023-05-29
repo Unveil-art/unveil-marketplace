@@ -33,6 +33,8 @@ const CreateForm = ({
   setFrame,
   editionType,
   setEditionType,
+  name,
+  setName,
 }) => {
   const [openCollection, setOpenCollection] = useState(false);
   const [collectionImage, setCollectionImage] = useState(null);
@@ -44,8 +46,10 @@ const CreateForm = ({
   ]);
 
   useEffect(() => {
-    console.log(collections);
-  }, [collections]);
+    if (artwork) {
+      setName(artwork.name);
+    }
+  }, []);
 
   const [sizeOpen, setSizeOpen] = useState(false);
   const [customSizeInput, setCustomSizeInput] = useState("");
@@ -265,6 +269,9 @@ const CreateForm = ({
   const handleChangeCollection = (event) => {
     setCollection(event.target.value);
   };
+  const handleNameNFT = (event) => {
+    setName(event.target.value);
+  };
 
   return (
     <div className="w-full lg:w-[710px] space-y-[15px] lg:space-y-5">
@@ -276,10 +283,14 @@ const CreateForm = ({
           className="input"
           name="name"
           id="name"
+          value={name}
           defaultValue={artwork ? artwork.name : null}
           placeholder="Artwork name"
           {...register("name", {
             required: "Required",
+            onChange: (e) => {
+              handleNameNFT(e);
+            },
           })}
         />
         <select
@@ -803,7 +814,9 @@ const CreateForm = ({
                         id="frame-select"
                         className="truncate select-input"
                         defaultValue={
-                          artwork.editions ? artwork.editions[i].value : null
+                          artwork.editions && artwork.editions <= i
+                            ? artwork.editions[i].value
+                            : null
                         }
                         name={`frame[${i}]`}
                         {...register(`frame[${i}]`, { required: "Required" })}

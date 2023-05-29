@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 
 import CreateForm from "@/components/section/create-page/CreateForm";
 import CreateSidebar from "@/components/section/create-page/CreateSidebar";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import { getArtworkById, putArtwork } from "lib/backend";
+import { getArtworkById, putArtwork, uploadJSON, createNFT } from "lib/backend";
+import { Web3Context } from "@/contexts/Web3AuthContext";
+import { FACTORY_ABI } from "lib/constants";
+import RPC from "lib/RPC";
 
 const Edit = ({ artwork }) => {
   console.log(artwork);
+  const { provider, account } = useContext(Web3Context);
 
   const {
     register,
@@ -18,6 +22,7 @@ const Edit = ({ artwork }) => {
   } = useForm();
 
   const { value } = useLocalStorage("token");
+  const { value: accountValue } = useLocalStorage("account");
 
   const [sizes, setSizes] = useState([
     { active: false, size: "5x10" },
@@ -48,6 +53,58 @@ const Edit = ({ artwork }) => {
   const [editionPricing, setEditionPricing] = useState([]);
   const [editionPrice, setEditionPrice] = useState([]);
   const [editionType, setEditionType] = useState("NFT_Only");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handleCreateNFT = async () => {
+    if (provider) {
+      const rpc = new RPC(provider);
+      const accounts = await rpc.getAccounts();
+      const contract = await rpc.getContract(
+        FACTORY_ABI,
+        process.env.NEXT_PUBLIC_FACTORY_ADDRESS
+      );
+
+      const json = await uploadJSON(value, {
+        name,
+        description,
+        image: artwork.media_url,
+      });
+
+      let gas = await rpc.getGasPrice();
+
+      try {
+        const tx = await contract.methods
+          .create(name, name, json.data, 1685196478, [
+            "0x3ED87449591524deF3A2f9aeA247dcD3BD38687f",
+            1000,
+            1685099478,
+            1000,
+            2000,
+            1685196478,
+          ])
+          .send({ from: accounts, gasPrice: gas });
+
+        const x = await createNFT(
+          value,
+          {
+            contract_address: tx.events[0].address,
+            json_uri: json.data,
+          },
+          artwork.id
+        );
+        console.log("ress", x);
+        console.log("ress", x);
+        console.log("ress", x);
+        console.log("ress", x);
+        console.log("ress", x);
+        console.log("ress", x);
+      } catch (error) {
+        console.error(error);
+        console.log(JSON.stringify(error));
+      }
+    }
+  };
 
   useEffect(() => {
     const getActiveSize = sizes.find((item) => item.active)?.size;
@@ -59,7 +116,7 @@ const Edit = ({ artwork }) => {
   const onSubmitForm = async (values, e) => {
     e.preventDefault();
 
-    let editions;
+    let editions = [];
     let activeSizes;
     let activePapers;
     let activeTechniques;
@@ -70,21 +127,32 @@ const Edit = ({ artwork }) => {
       console.log("NOT NFT ONLY");
       console.log("NOT NFT ONLY");
       console.log("NOT NFT ONLY");
-      editions = values.price.map((_, index) => ({
-        id: artwork.editions[index].id,
-        edition_id: artwork.editions[index].edition_id,
-        collection_id: artwork.editions[index].collection_id,
-        artwork_id: artwork.editions[index].artwork_id,
-        paper: values.paper[index],
-        frame: values.frame[index],
-        technique: values.technique[index],
-        price: parseInt(editionPrice[index]),
-        size: editionPricing[index],
-        json_uri: null,
-        max_copies: 1,
-        token_id: null,
-        transaction_hash: null,
-      }));
+      editionPricing.map((_, i) => {
+        if (i < artwork.editions.length) {
+          editions.push({
+            id: artwork.editions[index].id,
+            edition_id: artwork.editions[index].edition_id,
+            collection_id: artwork.editions[index].collection_id,
+            artwork_id: artwork.editions[index].artwork_id,
+            paper: values.paper[index],
+            frame: values.frame[index],
+            technique: values.technique[index],
+            price: parseInt(editionPrice[index]),
+            size: editionPricing[index],
+            max_copies: 1,
+          });
+        } else {
+          editions.push({
+            price: parseInt(editionPrice[i]),
+            paper: null,
+            frame: null,
+            technique: null,
+            size: null,
+            max_copies: 1,
+          });
+        }
+      });
+      editions = values.price.map((_, index) => ({}));
 
       activeSizes = sizes
         .filter((item) => item.active)
@@ -115,28 +183,37 @@ const Edit = ({ artwork }) => {
         console.error(err);
       }
     } else {
-      editions = editionPricing.map((_, i) => ({
-        id: artwork.editions[i].id,
-        edition_id: artwork.editions[i].edition_id,
-        collection_id: artwork.editions[i].collection_id,
-        artwork_id: artwork.editions[i].artwork_id,
-        price: parseInt(editionPrice[i]),
-        paper: null,
-        frame: null,
-        technique: null,
-        size: null,
-        json_uri: null,
-        max_copies: 1,
-        token_id: null,
-        transaction_hash: null,
-      }));
+      editionPricing.map((_, i) => {
+        if (i < artwork.editions.length) {
+          editions.push({
+            id: artwork.editions[i].id,
+            edition_id: artwork.editions[i].edition_id,
+            collection_id: artwork.editions[i].collection_id,
+            artwork_id: artwork.editions[i].artwork_id,
+            price: parseInt(editionPrice[i]),
+            paper: null,
+            frame: null,
+            technique: null,
+            size: null,
+            max_copies: 1,
+          });
+        } else {
+          editions.push({
+            price: parseInt(editionPrice[i]),
+            paper: null,
+            frame: null,
+            technique: null,
+            size: null,
+            max_copies: 1,
+          });
+        }
+      });
 
       const mergedValues = {
         ...values,
         editions: editions,
         editionType: editionType,
       };
-      console.log(mergedValues);
 
       try {
         await putArtwork(value, mergedValues, artwork);
@@ -176,23 +253,43 @@ const Edit = ({ artwork }) => {
             reset={reset}
             editionType={editionType}
             setEditionType={setEditionType}
+            name={name}
+            setName={setName}
           />
           <div className="hidden lg:grid grid-cols-2 mt-5 gap-[15px]">
-            <button type="submit" className="btn btn-primary btn-lg btn-full">
+            <p
+              onClick={() => handleCreateNFT()}
+              className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
+            >
               Create NFTs
-            </button>
-            <button className="btn btn-secondary btn-lg btn-full bg-unveilWhite">
+            </p>
+            <button
+              type="submit"
+              className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
+            >
               Save
             </button>
           </div>
         </div>
 
-        <CreateSidebar artwork={artwork} errors={errors} register={register} />
+        <CreateSidebar
+          artwork={artwork}
+          errors={errors}
+          register={register}
+          description={description}
+          setDescription={setDescription}
+        />
         <div className="grid grid-cols-1 mt-5 gap-[15px] lg:hidden ">
-          <button type="submit" className="btn btn-primary btn-lg btn-full">
+          <p
+            onClick={() => handleCreateNFT()}
+            className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
+          >
             Create NFTs
-          </button>
-          <button className="btn btn-secondary btn-lg btn-full bg-unveilWhite">
+          </p>
+          <button
+            type="submit"
+            className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
+          >
             Save
           </button>
         </div>

@@ -1,13 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
-const CreateSidebar = ({ errors, register, artwork }) => {
+const CreateSidebar = ({
+  errors,
+  register,
+  artwork,
+  description,
+  setDescription,
+}) => {
   const [image, setImage] = useState(null);
   const [detailImage1, setDetailImage1] = useState(null);
   const [detailImage2, setDetailImage2] = useState(null);
   const [soundbite, setSoundBite] = useState(null);
 
-  const handleImageChange = (e, setState) => {
+  useEffect(() => {
+    if (artwork) {
+      setDescription(artwork.detail_shots[0].caption);
+    }
+  }, []);
+
+  const handleDescription = (e) => {
+    setDescription(e.target.value);
+  };
+
+  const handleImageChange = (e, setState, image) => {
     const file = e.target.files[0];
     setState(file);
   };
@@ -59,7 +75,7 @@ const CreateSidebar = ({ errors, register, artwork }) => {
             id="main-image"
             {...register("mainImage", {
               onChange: (e) => {
-                handleImageChange(e, setImage);
+                handleImageChange(e, setImage, true);
               },
             })}
           />
@@ -207,12 +223,16 @@ const CreateSidebar = ({ errors, register, artwork }) => {
           <textarea
             name="detailShotCaption1"
             id="detail-shot-caption-1"
+            value={description}
             placeholder="Add caption (max 300 char)"
             defaultValue={artwork ? artwork.detail_shots[0].caption : null}
             className="bg-bgColor rounded-[10px] w-full h-[120px] mt-5 p-2 focus:bg-bgColorHover focus:outline-none"
             {...register("detailShotCaption1", {
               required: "Required",
               maxLength: 300,
+              onChange: (e) => {
+                handleDescription(e);
+              },
             })}
           ></textarea>
           <p

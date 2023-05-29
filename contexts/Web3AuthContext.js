@@ -31,9 +31,22 @@ const Web3AuthProvider = ({ children }) => {
 
   const [web3Auth, setWeb3Auth] = useState(null);
   const [provider, setProvider] = useState(null);
-  const [account, setAccount] = useState("");
-  const [balance, setBalance] = useState("");
 
+  const {
+    value: balance,
+    setValue: setBalance,
+    removeValue: removeBalance,
+  } = useLocalStorage("balance");
+  const {
+    value: wallet,
+    setValue: setWallet,
+    removeValue: removeWallet,
+  } = useLocalStorage("walletAddress");
+  const {
+    value: account,
+    setValue: setAccount,
+    removeValue: removeAccount,
+  } = useLocalStorage("accounts");
   const { setValue, removeValue } = useLocalStorage("token");
 
   const init = async () => {
@@ -114,17 +127,17 @@ const Web3AuthProvider = ({ children }) => {
           console.log(nonceData);
 
           const signedMessage = await rpc.signMessage(nonceData.nonce);
-          console.log(signedMessage);
 
           const token = await doLogin({
             requestId: nonceData.id,
             signature: signedMessage,
           });
 
+          setWallet(accounts);
           setValue(token.accessToken);
-          console.log(token);
           setAccount(accounts);
         } else {
+          //TODO: if no email
         }
         setAccount(accounts);
       } catch (err) {
@@ -139,14 +152,16 @@ const Web3AuthProvider = ({ children }) => {
         await web3Auth.logout();
         await doLogout();
         setProvider(null);
-        setAccount("");
-        setBalance("");
+        removeAccount();
+        removeWallet();
+        removeBalance();
         removeValue();
       } catch (err) {
         console.log(err);
         setProvider(null);
-        setAccount("");
-        setBalance("");
+        removeAccount();
+        removeWallet();
+        removeBalance();
         removeValue();
       }
     }

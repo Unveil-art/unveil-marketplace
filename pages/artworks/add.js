@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 
@@ -92,8 +92,9 @@ const Create = () => {
 
       try {
         const mainImage = await uploadImage(value, values.mainImage[0]);
-        await postArtwork(value, mergedValues, mainImage);
-        router.push("/account");
+        const data = await postArtwork(value, mergedValues, mainImage);
+
+        router.push(`/artworks/${data.id}`);
       } catch (err) {
         console.error(err);
       }
@@ -119,8 +120,9 @@ const Create = () => {
 
       try {
         const mainImage = await uploadImage(value, values.mainImage[0]);
-        await postArtwork(value, mergedValues, mainImage);
-        router.push("/account");
+        const data = await postArtwork(value, mergedValues, mainImage);
+
+        router.push(`/artworks/${data.data.id}`);
       } catch (err) {
         console.error(err);
       }
@@ -156,22 +158,39 @@ const Create = () => {
             editionType={editionType}
             setEditionType={setEditionType}
           />
-          <div className="hidden lg:grid grid-cols-2 mt-5 gap-[15px]">
-            <button type="submit" className="btn btn-primary btn-lg btn-full">
+          <div className="hidden lg:grid grid-cols-1 mt-5 gap-[15px]">
+            {/* <p
+              onClick={() => handleCreateNFT()}
+              className="text-center btn btn-primary btn-lg btn-full"
+            >
               Create NFTs
-            </button>
-            <button className="btn btn-secondary btn-lg btn-full bg-unveilWhite">
+            </p> */}
+            <button
+              type="submit"
+              className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
+            >
               Save
             </button>
           </div>
         </div>
 
-        <CreateSidebar errors={errors} register={register} />
+        <CreateSidebar
+          errors={errors}
+          register={register}
+          description={description}
+          setDescription={setDescription}
+        />
         <div className="grid grid-cols-1 mt-5 gap-[15px] lg:hidden ">
-          <button type="submit" className="btn btn-primary btn-lg btn-full">
+          {/* <p
+            onClick={() => handleCreateNFT()}
+            className="text-center btn btn-primary btn-lg btn-full"
+          >
             Create NFTs
-          </button>
-          <button className="btn btn-secondary btn-lg btn-full bg-unveilWhite">
+          </p> */}
+          <button
+            type="submit"
+            className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
+          >
             Save
           </button>
         </div>
