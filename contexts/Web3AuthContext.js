@@ -7,6 +7,7 @@ import Web3 from "web3";
 import RPC from "lib/RPC";
 import { useAuth } from "@/hooks/useAuth";
 import { getNonce } from "lib/backend";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export const Web3Context = createContext({
   account: "",
@@ -32,6 +33,8 @@ const Web3AuthProvider = ({ children }) => {
   const [provider, setProvider] = useState(null);
   const [account, setAccount] = useState("");
   const [balance, setBalance] = useState("");
+
+  const { setValue, removeValue } = useLocalStorage("token");
 
   const init = async () => {
     try {
@@ -113,7 +116,13 @@ const Web3AuthProvider = ({ children }) => {
           const signedMessage = await rpc.signMessage(nonceData.nonce);
           console.log(signedMessage);
 
-          await doLogin({ requestId: nonceData.id, signature: signedMessage });
+          const token = await doLogin({
+            requestId: nonceData.id,
+            signature: signedMessage,
+          });
+
+          setValue(token.accessToken);
+          console.log(token);
           setAccount(accounts);
         } else {
         }
@@ -132,11 +141,13 @@ const Web3AuthProvider = ({ children }) => {
         setProvider(null);
         setAccount("");
         setBalance("");
+        removeValue();
       } catch (err) {
         console.log(err);
         setProvider(null);
         setAccount("");
         setBalance("");
+        removeValue();
       }
     }
   };

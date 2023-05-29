@@ -2,6 +2,7 @@ import { useEffect, useRef, useContext } from "react";
 import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { Web3Context } from "@/contexts/Web3AuthContext";
+import Link from "next/link";
 
 const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
   const { value } = useLocalStorage("token");
@@ -47,9 +48,11 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
               <p className="b3">Network</p>
               {/* <p className=" l2">{provider}</p> */}
             </div>
-            <button className="mt-10 btn btn-lg btn-full btn-primary">
-              My NFTs
-            </button>
+            <Link href="/account">
+              <button className="mt-10 btn btn-lg btn-full btn-primary">
+                My NFTs
+              </button>
+            </Link>
             <p
               onClick={() => logout()}
               className="mx-auto mt-5 text-center underline cursor-pointer w-fit b3"

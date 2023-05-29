@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 
 import CreateForm from "@/components/section/create-page/CreateForm";
 import CreateSidebar from "@/components/section/create-page/CreateSidebar";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { postArtworks, uploadImage } from "lib/backend";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { postArtwork, uploadImage } from "lib/backend";
 
 const Create = () => {
   const {
@@ -40,12 +41,13 @@ const Create = () => {
     border: "5x10",
   });
 
-  const getFirstActivePaper = papers.find((item) => item.active);
-  const getFirstTechniques = techniques.find((item) => item.active);
   const getActiveSize = sizes.find((item) => item.active)?.size;
   const [activeSize, setActiveSize] = useState(getActiveSize);
   const [editionPricing, setEditionPricing] = useState([activeSize]);
   const [editionPrice, setEditionPrice] = useState([]);
+  const [editionType, setEditionType] = useState("NFT_Only");
+
+  const router = useRouter();
 
   const onSubmitForm = async (values, e) => {
     e.preventDefault();
@@ -53,13 +55,19 @@ const Create = () => {
     let activeSizes;
     let activePapers;
     let activeTechniques;
-    if (values.edition_type !== "NFT only") {
-      editions = values.frame.map((_, index) => ({
+
+    console.log(values);
+    if (values.edition_type !== "NFT_Only") {
+      editions = values.price.map((_, index) => ({
         paper: values.paper[index],
         frame: values.frame[index],
         technique: values.technique[index],
-        price: editionPrice[index],
+        price: parseInt(editionPrice[index]),
         size: editionPricing[index],
+        json_uri: null,
+        max_copies: 1,
+        token_id: null,
+        transaction_hash: null,
       }));
 
       activeSizes = sizes
@@ -82,38 +90,41 @@ const Create = () => {
         techniques: activeTechniques,
       };
 
-      const mainImage = await uploadImage(value, values.mainImage[0]);
-      const detailShotImage1 = await uploadImage(
-        value,
-        values.detailShotImage1[0]
-      );
-      const detailShotImage2 = await uploadImage(
-        value,
-        values.detailShotImage2[0]
-      );
-      const audio = await uploadAudio(value, values.soundbite[0]);
+      try {
+        const mainImage = await uploadImage(value, values.mainImage[0]);
+        await postArtwork(value, mergedValues, mainImage);
+        router.push("/account");
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      editions = editionPrice.map((_, index) => ({
+        price: parseInt(editionPrice[index]),
+        paper: null,
+        frame: null,
+        technique: null,
+        size: null,
+        json_uri: null,
+        max_copies: 1,
+        token_id: null,
+        transaction_hash: null,
+      }));
+
+      const mergedValues = {
+        ...values,
+        editions: editions,
+      };
+
       console.log(mergedValues);
-      await postArtworks(
-        value,
-        mergedValues,
-        mainImage,
-        detailShotImage1,
-        detailShotImage2,
-        audio
-      );
 
-      return;
+      try {
+        const mainImage = await uploadImage(value, values.mainImage[0]);
+        await postArtwork(value, mergedValues, mainImage);
+        router.push("/account");
+      } catch (err) {
+        console.error(err);
+      }
     }
-    editions = values.frame.map((_, index) => ({
-      price: editionPrice[index],
-    }));
-
-    const mergedValues = {
-      ...values,
-      editions: editions,
-    };
-
-    // await postArtworks(value, mergedValues);
   };
 
   return (
@@ -142,6 +153,8 @@ const Create = () => {
             errors={errors}
             register={register}
             reset={reset}
+            editionType={editionType}
+            setEditionType={setEditionType}
           />
           <div className="hidden lg:grid grid-cols-2 mt-5 gap-[15px]">
             <button type="submit" className="btn btn-primary btn-lg btn-full">

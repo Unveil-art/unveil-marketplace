@@ -13,7 +13,7 @@ import Following from "../../components/section/accout-page/Following";
 
 import { Web3Context } from "@/contexts/Web3AuthContext";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import { getUserMe } from "lib/backend";
+import { getArtworksMe, getUserMe } from "lib/backend";
 
 const AccountPage = () => {
   const [accountState, setAccountState] = useState(0);
@@ -21,18 +21,15 @@ const AccountPage = () => {
   const { value } = useLocalStorage("token");
   const [user, setUser] = useState();
 
-  useEffect(() => {
-    console.log(value);
-
-    const fetchUser = async () => {
-      const userData = await getUserMe(value);
-      setUser(userData);
-    };
-    if (value) {
-      fetchUser();
-      console.log("USERRRR", user);
-    }
-  }, [value]);
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     const userData = await getUserMe(value);
+  //     setUser(userData);
+  //   };
+  //   if (value) {
+  //     fetchUser();
+  //   }
+  // }, [value]);
 
   const handleAccountState = (e) => {
     window.scrollTo(0, 0);
