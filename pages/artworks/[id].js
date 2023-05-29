@@ -11,8 +11,7 @@ import { FACTORY_ABI } from "lib/constants";
 import RPC from "lib/RPC";
 
 const Edit = ({ artwork }) => {
-  console.log(artwork);
-  const { provider, account } = useContext(Web3Context);
+  const { provider } = useContext(Web3Context);
 
   const {
     register,
@@ -22,7 +21,6 @@ const Edit = ({ artwork }) => {
   } = useForm();
 
   const { value } = useLocalStorage("token");
-  const { value: accountValue } = useLocalStorage("account");
 
   const [sizes, setSizes] = useState([
     { active: false, size: "5x10" },
@@ -122,11 +120,6 @@ const Edit = ({ artwork }) => {
     let activeTechniques;
 
     if (values.edition_type !== "NFT_Only") {
-      console.log("NOT NFT ONLY");
-      console.log("NOT NFT ONLY");
-      console.log("NOT NFT ONLY");
-      console.log("NOT NFT ONLY");
-      console.log("NOT NFT ONLY");
       editionPricing.map((_, i) => {
         if (i < artwork.editions.length) {
           editions.push({
@@ -152,7 +145,6 @@ const Edit = ({ artwork }) => {
           });
         }
       });
-      editions = values.price.map((_, index) => ({}));
 
       activeSizes = sizes
         .filter((item) => item.active)

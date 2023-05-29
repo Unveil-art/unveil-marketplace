@@ -7,14 +7,8 @@ import OneLiner from "@/components/reusable/Oneliner";
 import SortPeople from "@/components/section/people-page/SortPeople";
 import PeopleList from "@/components/section/people-page/PeopleList";
 
-import { value } from "../../hooks/useLocalStorage";
-
 const People = () => {
   const [filter, setFilter] = useState(0);
-
-  useEffect(() => {
-    console.log(value);
-  }, []);
 
   return (
     <main className="pt-[120px] min-h-screen overflow-y-hidden">

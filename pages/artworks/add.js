@@ -46,6 +46,8 @@ const Create = () => {
   const [editionPricing, setEditionPricing] = useState([activeSize]);
   const [editionPrice, setEditionPrice] = useState([]);
   const [editionType, setEditionType] = useState("NFT_Only");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
   const router = useRouter();
 
@@ -157,6 +159,8 @@ const Create = () => {
             reset={reset}
             editionType={editionType}
             setEditionType={setEditionType}
+            name={name}
+            setName={setName}
           />
           <div className="hidden lg:grid grid-cols-1 mt-5 gap-[15px]">
             {/* <p

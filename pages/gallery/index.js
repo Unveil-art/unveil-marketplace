@@ -7,7 +7,7 @@ import SortAndSearch from "../../components/section/SortAndSearch";
 import PageHead from "../../components/general/Head";
 import SearchBlockItems from "../../components/section/SearchBlockItems";
 import GalleryBlockItems from "../../components/section/GalleryBlockItems";
-import { getCollections, getArtworks } from "lib/strapi";
+import { getCollection, getArtworks } from "lib/backend";
 import { useRouter } from "next/router";
 
 export default function Gallery({ collections, artworks }) {
