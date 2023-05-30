@@ -116,6 +116,12 @@ const Edit = ({ artwork }) => {
   };
 
   useEffect(() => {
+    if (!artwork.is_draft) {
+      router.push("/account");
+    }
+  }, [artwork.is_draft]);
+
+  useEffect(() => {
     const getActiveSize = sizes.find((item) => item.active)?.size;
     setActiveSize(getActiveSize);
   }, [sizes]);
@@ -232,70 +238,41 @@ const Edit = ({ artwork }) => {
       }
     }
   };
-  if (artwork.is_draft) {
-    return (
-      <main className="bg-[#F0EDE4] ">
-        <ToastContainer />
-        {creating && <CreatingNFT />}
-        <form
-          onSubmit={handleArtworkSubmit(onSubmitForm)}
-          className="pb-[120px] px-[15px] md:px-10 lg:flex justify-between"
-        >
-          <div>
-            <h1 className="lg:py-[120px] pt-[120px] pb-[60px]">Edit Artwork</h1>
-            <CreateForm
-              artwork={artwork}
-              editionPrice={editionPrice}
-              setEditionPrice={setEditionPrice}
-              setEditionPricing={setEditionPricing}
-              editionPricing={editionPricing}
-              setActiveSize={setActiveSize}
-              activeSize={activeSize}
-              frame={frame}
-              setFrame={setFrame}
-              techniques={techniques}
-              setTechniques={setTechniques}
-              papers={papers}
-              setPapers={setPapers}
-              sizes={sizes}
-              setSizes={setSizes}
-              errors={errors}
-              register={register}
-              reset={reset}
-              editionType={editionType}
-              setEditionType={setEditionType}
-              name={name}
-              setName={setName}
-            />
-            <div className="hidden lg:grid grid-cols-2 mt-5 gap-[15px]">
-              <p
-                onClick={() => handleCreateNFT()}
-                className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
-              >
-                Create NFTs
-              </p>
-              <button
-                type="submit"
-                className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
-              >
-                {loading && (
-                  <div className="flex justify-center h-[25px] items-center animate-spin">
-                    <Loader />
-                  </div>
-                )}
-                {!loading && <p>Save</p>}
-              </button>
-            </div>
-          </div>
-
-          <CreateSidebar
+  return (
+    <main className="bg-[#F0EDE4] ">
+      <ToastContainer />
+      {creating && <CreatingNFT />}
+      <form
+        onSubmit={handleArtworkSubmit(onSubmitForm)}
+        className="pb-[120px] px-[15px] md:px-10 lg:flex justify-between"
+      >
+        <div>
+          <h1 className="lg:py-[120px] pt-[120px] pb-[60px]">Edit Artwork</h1>
+          <CreateForm
             artwork={artwork}
+            editionPrice={editionPrice}
+            setEditionPrice={setEditionPrice}
+            setEditionPricing={setEditionPricing}
+            editionPricing={editionPricing}
+            setActiveSize={setActiveSize}
+            activeSize={activeSize}
+            frame={frame}
+            setFrame={setFrame}
+            techniques={techniques}
+            setTechniques={setTechniques}
+            papers={papers}
+            setPapers={setPapers}
+            sizes={sizes}
+            setSizes={setSizes}
             errors={errors}
             register={register}
-            description={description}
-            setDescription={setDescription}
+            reset={reset}
+            editionType={editionType}
+            setEditionType={setEditionType}
+            name={name}
+            setName={setName}
           />
-          <div className="grid grid-cols-1 mt-5 gap-[15px] lg:hidden ">
+          <div className="hidden lg:grid grid-cols-2 mt-5 gap-[15px]">
             <p
               onClick={() => handleCreateNFT()}
               className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
@@ -314,14 +291,37 @@ const Edit = ({ artwork }) => {
               {!loading && <p>Save</p>}
             </button>
           </div>
-        </form>
-      </main>
-    );
-  } else {
-    //TODO: push to account
-    router.push("/account");
-    return <></>;
-  }
+        </div>
+
+        <CreateSidebar
+          artwork={artwork}
+          errors={errors}
+          register={register}
+          description={description}
+          setDescription={setDescription}
+        />
+        <div className="grid grid-cols-1 mt-5 gap-[15px] lg:hidden ">
+          <p
+            onClick={() => handleCreateNFT()}
+            className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
+          >
+            Create NFTs
+          </p>
+          <button
+            type="submit"
+            className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
+          >
+            {loading && (
+              <div className="flex justify-center h-[25px] items-center animate-spin">
+                <Loader />
+              </div>
+            )}
+            {!loading && <p>Save</p>}
+          </button>
+        </div>
+      </form>
+    </main>
+  );
 };
 
 export default Edit;
