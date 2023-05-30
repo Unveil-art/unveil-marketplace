@@ -1,9 +1,50 @@
 import { useRef } from "react";
 import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
 import Close from "../svg/Close";
+import React from "react";
+const axios = require("axios");
 
 const AccessPopIn2 = ({ accessOpen, setAccessOpen, data, i }) => {
   const el = useRef();
+
+  const [isSuccess, setSuccessMessage] = React.useState('hide');
+  const [isError, setErrorMessage] = React.useState('hide');
+
+  const sendCrmRequest = async (e) =>{
+    e.preventDefault();
+    const name = document.querySelector('input[name="name"]').value;
+    const email = document.querySelector('input[name="email"]').value;
+    const website = document.querySelector('input[name="website"]').value;
+    const type = document.querySelector('input[name="type-selected"]').value;
+    
+    const {data}= await axios({
+      method: "POST",
+      url: `https://cumbersome-furtive-fowl.strapiapp.com/api/crm`,
+      data: {
+        "name" : name,
+        "email" : email,
+        "website" : website,
+        "type" : type
+    },
+      withCredentials: true,
+    });
+    if(data.status == 200){
+      setSuccessMessage('show');
+      e.target.reset()
+    } else {
+      setErrorMessage('show');
+    }
+    setTimeout(() => {
+      setAccessOpen(false);
+      setSuccessMessage('hide');
+      setErrorMessage('hide');
+    }, 4000);
+    
+  }
+
+  function changeType(type) {
+    document.querySelector('input[name="type-selected"]').value = type;
+  }
 
   useAsideAnimation(el, accessOpen);
 
@@ -12,6 +53,7 @@ const AccessPopIn2 = ({ accessOpen, setAccessOpen, data, i }) => {
       ref={el}
       className="fixed z-50 invisible w-full h-screen overflow-hidden"
     >
+      
       <div className="gsap-el fixed overflow-y-scroll top-[15px] right-[15px] sm:top-5 sm:right-5 w-[280px] sm:w-[380px]  bg-[#ECE8DE] px-5 py-10 z-50 rounded-[20px] h-screen sm:h-fit">
         <div
           onClick={() => setAccessOpen(false)}
@@ -27,20 +69,26 @@ const AccessPopIn2 = ({ accessOpen, setAccessOpen, data, i }) => {
         <h3 className="mb-[60px] text-center s2 max-w-[270px] mx-auto">
           {data ? data.heading : "Show us your work and get access to Unveil"}
         </h3>
+        <h5 className={`text-teal-500 mb-[20px] text-center s2 max-w-[270px] mx-auto ${isSuccess}`}>Your request has been sent successfully</h5>
+        <h5 className={`text-rose-500 mb-[20px] text-center s2 max-w-[270px] mx-auto ${isError}`}>Your request has been made!</h5>
         <p className="b3 leading-[16px] text-[11px] max-w-[250px]">
           {data
             ? data.description
             : "Provide a link to your work and submitting a series of works upon selection by our curator."}
         </p>
-        <form className="mt-5 ">
-          <input type="text" placeholder="Name" className="input" />
-          <input type="email" placeholder="Email" className="my-1 input" />
+        <form className="mt-5 " onSubmit={sendCrmRequest}>
+          <input type="text" required name="name" id="name" placeholder="Name" className="input" />
+          <input type="email" required name="email" id="email"  placeholder="Email" className="my-1 input" />
           <input
-            type="text"
+            type="url"
             placeholder="Website (or social)"
             className="input"
+            required
+            id="website"
+            name="website"
           />
           <p className="py-5">i&apos;m a:</p>
+          <input type="hidden" id="type-selected" name="type-selected" value="artist" />
           <div className="grid grid-cols-2 pb-[15px]">
             <div>
               <input
@@ -49,7 +97,7 @@ const AccessPopIn2 = ({ accessOpen, setAccessOpen, data, i }) => {
                 name="type"
                 id={`artist${i}`}
               />
-              <label htmlFor={`artist${i}`}>Artist</label>
+              <label htmlFor={`artist${i}`} onClick={() => changeType('artist')}>Artist</label>
             </div>
             <div>
               <input
@@ -58,7 +106,7 @@ const AccessPopIn2 = ({ accessOpen, setAccessOpen, data, i }) => {
                 name="type"
                 id={`gallery${i}`}
               />
-              <label htmlFor={`gallery${i}`}>Gallery</label>
+              <label htmlFor={`gallery${i}`} onClick={() => changeType('gallery')}>Gallery</label>
             </div>
           </div>
 

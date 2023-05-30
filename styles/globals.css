@@ -355,3 +355,10 @@
   font-weight: 500;
   font-style: normal;
 }
+
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+}
