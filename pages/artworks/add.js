@@ -7,6 +7,11 @@ import CreateSidebar from "@/components/section/create-page/CreateSidebar";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { postArtwork, uploadImage } from "lib/backend";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import Loader from "@/components/svg/Loader";
+
 const Create = () => {
   const {
     register,
@@ -15,6 +20,7 @@ const Create = () => {
     reset,
   } = useForm();
 
+  const notify = (message) => toast.error(message);
   const { value } = useLocalStorage("token");
 
   const [sizes, setSizes] = useState([
@@ -48,17 +54,18 @@ const Create = () => {
   const [editionType, setEditionType] = useState("NFT_Only");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
   const onSubmitForm = async (values, e) => {
     e.preventDefault();
+    setLoading(true);
     let editions;
     let activeSizes;
     let activePapers;
     let activeTechniques;
 
-    console.log(values);
     if (values.edition_type !== "NFT_Only") {
       editions = values.price.map((_, index) => ({
         paper: values.paper[index],
@@ -97,8 +104,11 @@ const Create = () => {
         const data = await postArtwork(value, mergedValues, mainImage);
 
         router.push(`/artworks/${data.id}`);
+        setLoading(false);
       } catch (err) {
-        console.error(err);
+        setLoading(false);
+        notify(err.message);
+        console.log("error", err.message);
       }
     } else {
       editions = editionPrice.map((_, index) => ({
@@ -125,14 +135,18 @@ const Create = () => {
         const data = await postArtwork(value, mergedValues, mainImage);
 
         router.push(`/artworks/${data.data.id}`);
+        setLoading(false);
       } catch (err) {
-        console.error(err);
+        setLoading(false);
+        notify(err.message);
+        console.log("error", err.message);
       }
     }
   };
 
   return (
     <main className="bg-[#F0EDE4] ">
+      <ToastContainer />
       <form
         onSubmit={handleArtworkSubmit(onSubmitForm)}
         className="pb-[120px] px-[15px] md:px-10 lg:flex justify-between"
@@ -163,17 +177,16 @@ const Create = () => {
             setName={setName}
           />
           <div className="hidden lg:grid grid-cols-1 mt-5 gap-[15px]">
-            {/* <p
-              onClick={() => handleCreateNFT()}
-              className="text-center btn btn-primary btn-lg btn-full"
-            >
-              Create NFTs
-            </p> */}
             <button
               type="submit"
               className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
             >
-              Save
+              {loading && (
+                <div className="flex justify-center h-[25px] items-center animate-spin">
+                  <Loader />
+                </div>
+              )}
+              {!loading && <p>Save</p>}
             </button>
           </div>
         </div>
@@ -195,7 +208,12 @@ const Create = () => {
             type="submit"
             className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
           >
-            Save
+            {loading && (
+              <div className="flex justify-center h-[25px] items-center animate-spin">
+                <Loader />
+              </div>
+            )}
+            {!loading && <p>Save</p>}
           </button>
         </div>
       </form>

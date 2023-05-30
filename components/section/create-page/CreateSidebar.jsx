@@ -225,7 +225,6 @@ const CreateSidebar = ({
             id="detail-shot-caption-1"
             value={description}
             placeholder="Add caption (max 300 char)"
-            defaultValue={artwork ? artwork.detail_shots[0].caption : null}
             className="bg-bgColor rounded-[10px] w-full h-[120px] mt-5 p-2 focus:bg-bgColorHover focus:outline-none"
             {...register("detailShotCaption1", {
               required: "Required",

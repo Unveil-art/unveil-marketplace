@@ -9,16 +9,26 @@ import { getArtworkById, putArtwork, uploadJSON, createNFT } from "lib/backend";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 import { FACTORY_ABI } from "lib/constants";
 import RPC from "lib/RPC";
+import Loader from "@/components/svg/Loader";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import CreatingNFT from "@/components/section/create-page/CreatingNFT";
 
 const Edit = ({ artwork }) => {
   const { provider } = useContext(Web3Context);
-
+  const notify = (message) => toast.error(message);
   const {
     register,
     handleSubmit: handleArtworkSubmit,
     formState: { errors },
     reset,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      collectionId: artwork.collection_id,
+    },
+  });
+  const router = useRouter();
 
   const { value } = useLocalStorage("token");
 
@@ -53,9 +63,12 @@ const Edit = ({ artwork }) => {
   const [editionType, setEditionType] = useState("NFT_Only");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [creating, setCreating] = useState(false);
 
   const handleCreateNFT = async () => {
     if (provider) {
+      setCreating(true);
       const rpc = new RPC(provider);
       const accounts = await rpc.getAccounts();
       const contract = await rpc.getContract(
@@ -91,15 +104,13 @@ const Edit = ({ artwork }) => {
           },
           artwork.id
         );
-        console.log("ress", x);
-        console.log("ress", x);
-        console.log("ress", x);
-        console.log("ress", x);
-        console.log("ress", x);
-        console.log("ress", x);
+
+        router.push("/account");
+        setCreating(false);
       } catch (error) {
-        console.error(error);
         console.log(JSON.stringify(error));
+        notify(error.data.message);
+        setCreating(false);
       }
     }
   };
@@ -109,10 +120,9 @@ const Edit = ({ artwork }) => {
     setActiveSize(getActiveSize);
   }, [sizes]);
 
-  const router = useRouter();
-
   const onSubmitForm = async (values, e) => {
     e.preventDefault();
+    setLoading(true);
 
     let editions = [];
     let activeSizes;
@@ -121,17 +131,19 @@ const Edit = ({ artwork }) => {
 
     if (values.edition_type !== "NFT_Only") {
       editionPricing.map((_, i) => {
+        console.log(editionPricing);
+        console.log(artwork.editions);
         if (i < artwork.editions.length) {
           editions.push({
-            id: artwork.editions[index].id,
-            edition_id: artwork.editions[index].edition_id,
-            collection_id: artwork.editions[index].collection_id,
-            artwork_id: artwork.editions[index].artwork_id,
-            paper: values.paper[index],
-            frame: values.frame[index],
-            technique: values.technique[index],
-            price: parseInt(editionPrice[index]),
-            size: editionPricing[index],
+            id: artwork.editions[i].id,
+            edition_id: artwork.editions[i].edition_id,
+            collection_id: artwork.editions[i].collection_id,
+            artwork_id: artwork.editions[i].artwork_id,
+            paper: values.paper[i],
+            frame: values.frame[i],
+            technique: values.technique[i],
+            price: parseInt(editionPrice[i]),
+            size: editionPricing[i],
             max_copies: 1,
           });
         } else {
@@ -166,13 +178,15 @@ const Edit = ({ artwork }) => {
         techniques: activeTechniques,
         editionType: editionType,
       };
-      console.log(mergedValues);
 
       try {
         await putArtwork(value, mergedValues, artwork);
         router.push("/account");
+        setLoading(false);
       } catch (err) {
+        setLoading(false);
         console.error(err);
+        notify(err.message);
       }
     } else {
       editionPricing.map((_, i) => {
@@ -210,45 +224,78 @@ const Edit = ({ artwork }) => {
       try {
         await putArtwork(value, mergedValues, artwork);
         router.push("/account");
+        setLoading(false);
       } catch (err) {
+        setLoading(false);
         console.error(err);
+        notify(err.message);
       }
     }
   };
+  if (artwork.is_draft) {
+    return (
+      <main className="bg-[#F0EDE4] ">
+        <ToastContainer />
+        {creating && <CreatingNFT />}
+        <form
+          onSubmit={handleArtworkSubmit(onSubmitForm)}
+          className="pb-[120px] px-[15px] md:px-10 lg:flex justify-between"
+        >
+          <div>
+            <h1 className="lg:py-[120px] pt-[120px] pb-[60px]">Edit Artwork</h1>
+            <CreateForm
+              artwork={artwork}
+              editionPrice={editionPrice}
+              setEditionPrice={setEditionPrice}
+              setEditionPricing={setEditionPricing}
+              editionPricing={editionPricing}
+              setActiveSize={setActiveSize}
+              activeSize={activeSize}
+              frame={frame}
+              setFrame={setFrame}
+              techniques={techniques}
+              setTechniques={setTechniques}
+              papers={papers}
+              setPapers={setPapers}
+              sizes={sizes}
+              setSizes={setSizes}
+              errors={errors}
+              register={register}
+              reset={reset}
+              editionType={editionType}
+              setEditionType={setEditionType}
+              name={name}
+              setName={setName}
+            />
+            <div className="hidden lg:grid grid-cols-2 mt-5 gap-[15px]">
+              <p
+                onClick={() => handleCreateNFT()}
+                className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
+              >
+                Create NFTs
+              </p>
+              <button
+                type="submit"
+                className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
+              >
+                {loading && (
+                  <div className="flex justify-center h-[25px] items-center animate-spin">
+                    <Loader />
+                  </div>
+                )}
+                {!loading && <p>Save</p>}
+              </button>
+            </div>
+          </div>
 
-  return (
-    <main className="bg-[#F0EDE4] ">
-      <form
-        onSubmit={handleArtworkSubmit(onSubmitForm)}
-        className="pb-[120px] px-[15px] md:px-10 lg:flex justify-between"
-      >
-        <div>
-          <h1 className="lg:py-[120px] pt-[120px] pb-[60px]">Edit Artwork</h1>
-          <CreateForm
+          <CreateSidebar
             artwork={artwork}
-            editionPrice={editionPrice}
-            setEditionPrice={setEditionPrice}
-            setEditionPricing={setEditionPricing}
-            editionPricing={editionPricing}
-            setActiveSize={setActiveSize}
-            activeSize={activeSize}
-            frame={frame}
-            setFrame={setFrame}
-            techniques={techniques}
-            setTechniques={setTechniques}
-            papers={papers}
-            setPapers={setPapers}
-            sizes={sizes}
-            setSizes={setSizes}
             errors={errors}
             register={register}
-            reset={reset}
-            editionType={editionType}
-            setEditionType={setEditionType}
-            name={name}
-            setName={setName}
+            description={description}
+            setDescription={setDescription}
           />
-          <div className="hidden lg:grid grid-cols-2 mt-5 gap-[15px]">
+          <div className="grid grid-cols-1 mt-5 gap-[15px] lg:hidden ">
             <p
               onClick={() => handleCreateNFT()}
               className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
@@ -259,35 +306,22 @@ const Edit = ({ artwork }) => {
               type="submit"
               className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
             >
-              Save
+              {loading && (
+                <div className="flex justify-center h-[25px] items-center animate-spin">
+                  <Loader />
+                </div>
+              )}
+              {!loading && <p>Save</p>}
             </button>
           </div>
-        </div>
-
-        <CreateSidebar
-          artwork={artwork}
-          errors={errors}
-          register={register}
-          description={description}
-          setDescription={setDescription}
-        />
-        <div className="grid grid-cols-1 mt-5 gap-[15px] lg:hidden ">
-          <p
-            onClick={() => handleCreateNFT()}
-            className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
-          >
-            Create NFTs
-          </p>
-          <button
-            type="submit"
-            className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
-          >
-            Save
-          </button>
-        </div>
-      </form>
-    </main>
-  );
+        </form>
+      </main>
+    );
+  } else {
+    //TODO: push to account
+    router.push("/account");
+    return <></>;
+  }
 };
 
 export default Edit;

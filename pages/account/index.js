@@ -14,6 +14,7 @@ import Following from "../../components/section/accout-page/Following";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { getArtworksMe, getUserMe } from "lib/backend";
+import { ToastContainer, toast } from "react-toastify";
 
 const AccountPage = () => {
   const [accountState, setAccountState] = useState(0);
@@ -41,6 +42,7 @@ const AccountPage = () => {
 
   return (
     <div className="relative flex pb-5 md:pb-[80px]">
+      <ToastContainer />
       <Sidebar accountState={accountState} setAccountState={setAccountState} />
       <section className="mt-[120px] w-full">
         {accountState === 0 && <Title title="Account" />}

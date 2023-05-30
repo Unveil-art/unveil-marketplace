@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 
+import Router from "next/router";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { listArtwork } from "lib/backend";
+import useLocalStorage from "@/hooks/useLocalStorage";
+
 const ArtworkListItem = ({ i, item }) => {
+  const [list, setList] = useState(item);
+  const { value } = useLocalStorage("token");
+
+  const handleListing = async (e) => {
+    e.preventDefault();
+    try {
+      const data = await listArtwork(value, item.id, !list.listed);
+
+      setList(data.data);
+      toast.success("Successful");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <div
       key={i}
@@ -15,14 +36,29 @@ const ArtworkListItem = ({ i, item }) => {
         </div>
         <div>
           <h4 className="mb-2 md:mb-0 s1">{item.name}</h4>
-          <button className="block btn btn-secondary btn-lg md:hidden">
-            View
-          </button>
+          {item.is_draft && (
+            <Link href={`/artworks/${item.id}`}>
+              <button className="block btn btn-secondary btn-lg md:hidden">
+                View
+              </button>
+            </Link>
+          )}
         </div>
       </div>
-      <Link href={`/artworks/${item.id}`}>
-        <button className="hidden btn btn-secondary md:block">View</button>
-      </Link>
+      {item.is_draft && (
+        <Link href={`/artworks/${item.id}`}>
+          <button className="hidden btn btn-secondary md:block">View</button>
+        </Link>
+      )}
+      {item.is_draft === false && (
+        <button
+          onClick={(e) => handleListing(e)}
+          className="hidden btn btn-secondary md:block"
+        >
+          {!list.listed && <p> List for sale</p>}
+          {list.listed && <p> Unlist for sale</p>}
+        </button>
+      )}
     </div>
   );
 };

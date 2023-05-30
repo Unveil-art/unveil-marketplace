@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import Delete from "@/components/svg/Delete";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Loader from "@/components/svg/Loader";
 import {
   getUsers,
   uploadImage,
@@ -51,6 +53,8 @@ const CreateForm = ({
     }
   }, []);
 
+  const notify = (message) => toast.error(message);
+
   const [sizeOpen, setSizeOpen] = useState(false);
   const [customSizeInput, setCustomSizeInput] = useState("");
 
@@ -65,6 +69,7 @@ const CreateForm = ({
   const sizeOptions = ["2mm", "3mm", "5mm"];
   const colourOptions = ["White", "Black"];
   const borderOptions = ["None", "5x10", "10x20"];
+  const [loading, setLoading] = useState(false);
 
   const [artworksEditions, setArtworksEditions] = useState(artwork.editions);
 
@@ -123,6 +128,7 @@ const CreateForm = ({
     formState: { errors: errorColl },
     reset: resetColl,
     watch,
+    getValues,
   } = useForm();
 
   const curatorValue = watch("curator");
@@ -159,6 +165,7 @@ const CreateForm = ({
       return data;
     } catch (err) {
       console.error(err);
+      notify(err.message);
     }
   };
 
@@ -183,16 +190,13 @@ const CreateForm = ({
 
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setCollectionImage(file);
   };
-
   const handleRemoveImage = (setState) => {
     setState(null);
   };
-
   const handleDeleteRow = async (index, setState, edition = false, i) => {
     try {
       await deleteArtwork(value, artworksEditions[i].id);
@@ -214,24 +218,34 @@ const CreateForm = ({
       }
     });
   };
-
   const isFieldRequired = (dependentFieldValue) => {
     return dependentFieldValue ? "This field is required" : false;
   };
+  const onSubmitForm = async () => {
+    setLoading(true);
+    const values = getValues();
 
-  const onSubmitForm = async (values, e) => {
-    e.preventDefault();
+    try {
+      const image = await uploadImage(value, values.imageCollection[0]);
 
-    const image = await uploadImage(value, values.imageCollection[0]);
+      await postCollection(value, values, image.data);
+      await fetchCollection();
 
-    await postCollection(value, values, image.data);
-    await fetchCollection();
-
-    resetColl();
-    setCollectionImage(null);
-    setOpenCollection(false);
+      resetColl();
+      setCollectionImage(null);
+      setOpenCollection(false);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      notify(error.message);
+    }
   };
-
+  const handleSubmitOnClick = (e) => {
+    e.preventDefault(); // If you need to prevent default behavior
+    console.log("submit");
+    handleCollectionSubmit(onSubmitForm)();
+  };
   const handleChangePrice = (value, index) => {
     setEditionPrice((prevItems) => {
       const updatedItems = [...prevItems];
@@ -284,7 +298,6 @@ const CreateForm = ({
           name="name"
           id="name"
           value={name}
-          defaultValue={artwork ? artwork.name : null}
           placeholder="Artwork name"
           {...register("name", {
             required: "Required",
@@ -1064,26 +1077,56 @@ const CreateForm = ({
             Which collection does this artwork belong to?
           </p>
         </div>
-        <div className="px-5 pb-[15px] ">
-          <select
-            id="collection-select"
-            name="collectionId"
-            className="truncate select-input"
-            value={collection ? collection : "Select collection"}
-            {...register("collectionId", {
-              required: "Required",
-              onChange: (e) => {
-                handleChangeCollection(e);
-              },
-            })}
+        <div className="px-5 pb-[15px] relative ">
+          {artwork && (
+            <select
+              id="collection-select"
+              name="collectionId"
+              className="truncate select-input "
+              value={collection}
+              {...register("collectionId", {
+                onChange: (e) => {
+                  handleChangeCollection(e);
+                },
+              })}
+            >
+              {!artwork && <option disabled>Select collection</option>}
+              {collections.map((item, i) => (
+                <option key={i} value={item.id}>
+                  {item.title}
+                </option>
+              ))}
+            </select>
+          )}
+          {!artwork && (
+            <select
+              id="collection-select"
+              name="collectionId"
+              className="truncate select-input "
+              value={collection ? collection : "Select collection"}
+              {...register("collectionId", {
+                required: "Required",
+                onChange: (e) => {
+                  handleChangeCollection(e);
+                },
+              })}
+            >
+              {!artwork && <option disabled>Select collection</option>}
+              {collections.map((item, i) => (
+                <option key={i} value={item.id}>
+                  {item.title}
+                </option>
+              ))}
+            </select>
+          )}
+
+          <p
+            className={`text-red-500 opacity-100 b5 absolute -bottom-1 left-5 ${
+              errors.collectionId?.message ? "opacity-100" : ""
+            }`}
           >
-            {!artwork && <option disabled>Select collection</option>}
-            {collections.map((item, i) => (
-              <option key={i} value={item.id}>
-                {item.title}
-              </option>
-            ))}
-          </select>
+            {errors.collectionId?.message}
+          </p>
         </div>
         {!openCollection && (
           <div className="flex border-t border-[#DBDED6] gap-[30px] items-center underline-offset-2 decoration-1 px-5 pt-[15px] pb-5 lg:pb-[30px] b3">
@@ -1097,10 +1140,7 @@ const CreateForm = ({
           </div>
         )}
         {openCollection && (
-          <form
-            onSubmit={handleCollectionSubmit(onSubmitForm)}
-            className="border-t  border-[#DBDED6]"
-          >
+          <div className="border-t  border-[#DBDED6]">
             <p className="py-[35px] px-5 b3">Add new collection</p>
             <div className="flex relative px-5 items-center gap-[10px]">
               <label
@@ -1310,17 +1350,25 @@ const CreateForm = ({
               </div>
             </div>
             <div className="grid grid-cols-2 px-5 gap-[10px] border-t border-[#DBDED6] pt-[35px] pb-10">
-              <button type="submit" className="btn btn-full btn-primary btn-lg">
-                Save new collection
-              </button>
-              <button
+              <div
+                onClick={handleSubmitOnClick}
+                className="text-center cursor-pointer btn btn-full btn-primary btn-lg"
+              >
+                {loading && (
+                  <div className="flex justify-center h-[25px] items-center animate-spin">
+                    <Loader />
+                  </div>
+                )}
+                {!loading && <p> Save new collection</p>}
+              </div>
+              <p
                 onClick={() => setOpenCollection(false)}
-                className="btn btn-full btn-secondary btn-lg"
+                className="text-center cursor-pointer btn btn-full btn-secondary btn-lg"
               >
                 Cancel
-              </button>
+              </p>
             </div>
-          </form>
+          </div>
         )}
       </div>
     </div>
