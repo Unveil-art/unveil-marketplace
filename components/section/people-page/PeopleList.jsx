@@ -62,7 +62,7 @@ const PeopleList = ({ people }) => {
             </>
           )}
 
-          {people.length < 1 && <p className="b3">It's empty here</p>}
+          {people.length < 1 && <p className="b3">It&apos;s empty here</p>}
         </div>
       )}
     </>
