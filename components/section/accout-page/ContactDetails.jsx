@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const ContactDetails = () => {
+const ContactDetails = ({ user }) => {
   return (
     <>
       <form className="ml-[40px] md:ml-[35svw] pr-[15px] md:pr-10 max-w-[640px]">

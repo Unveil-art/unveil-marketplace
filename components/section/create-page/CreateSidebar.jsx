@@ -1,13 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
-const CreateSidebar = ({ errors, register }) => {
+const CreateSidebar = ({
+  errors,
+  register,
+  artwork,
+  description,
+  setDescription,
+}) => {
   const [image, setImage] = useState(null);
   const [detailImage1, setDetailImage1] = useState(null);
   const [detailImage2, setDetailImage2] = useState(null);
   const [soundbite, setSoundBite] = useState(null);
 
-  const handleImageChange = (e, setState) => {
+  useEffect(() => {
+    if (artwork) {
+      setDescription(artwork.detail_shots[0].caption);
+    }
+  }, []);
+
+  const handleDescription = (e) => {
+    setDescription(e.target.value);
+  };
+
+  const handleImageChange = (e, setState, image) => {
     const file = e.target.files[0];
     setState(file);
   };
@@ -26,6 +42,13 @@ const CreateSidebar = ({ errors, register }) => {
               image ? "mx-20" : "w-[150px] h-[200px]"
             } relative shadow  bg-unveilWhite`}
           >
+            {artwork && !image && (
+              <img
+                className="object-contain h-full w-fit"
+                src={artwork.media_url}
+                alt="Selected"
+              />
+            )}
             {image && (
               <img
                 className="object-contain h-full w-fit"
@@ -40,21 +63,39 @@ const CreateSidebar = ({ errors, register }) => {
           className="block text-center cursor-pointer btn btn-secondary btn-full btn-lg"
         >
           {image && <p>{image.name}</p>}
-          {!image && <p>upload image</p>}
+          {!image && !artwork && <p>Upload image</p>}
+          {!image && artwork && <p>Change image</p>}
         </label>
-        <input
-          accept="image/*"
-          type="file"
-          hidden
-          name="mainImage"
-          id="main-image"
-          {...register("mainImage", {
-            required: "Required",
-            onChange: (e) => {
-              handleImageChange(e, setImage);
-            },
-          })}
-        />
+        {artwork && (
+          <input
+            accept="image/*"
+            type="file"
+            hidden
+            name="mainImage"
+            id="main-image"
+            {...register("mainImage", {
+              onChange: (e) => {
+                handleImageChange(e, setImage, true);
+              },
+            })}
+          />
+        )}
+        {!artwork && (
+          <input
+            accept="image/*"
+            type="file"
+            hidden
+            name="mainImage"
+            id="main-image"
+            {...register("mainImage", {
+              required: "Required",
+              onChange: (e) => {
+                handleImageChange(e, setImage);
+              },
+            })}
+          />
+        )}
+
         {image && (
           <p
             onClick={() => handleRemoveImage(setImage)}
@@ -82,24 +123,44 @@ const CreateSidebar = ({ errors, register }) => {
           >
             {!detailImage1 && (
               <>
-                <div className="absolute w-5 h-px -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
-                <div className="absolute w-5 h-px rotate-90 -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
+                {!artwork && (
+                  <>
+                    <div className="absolute z-10 w-5 h-px -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
+                    <div className="absolute z-10 w-5 h-px rotate-90 -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
+                  </>
+                )}
               </>
             )}
+            {artwork && (
+              <input
+                accept="image/*"
+                type="file"
+                hidden
+                name="detailShotImage1"
+                id="detail-shot-image-1"
+                {...register("detailShotImage1", {
+                  onChange: (e) => {
+                    handleImageChange(e, setDetailImage1);
+                  },
+                })}
+              />
+            )}
+            {!artwork && (
+              <input
+                accept="image/*"
+                type="file"
+                hidden
+                name="detailShotImage1"
+                id="detail-shot-image-1"
+                {...register("detailShotImage1", {
+                  required: "Required",
+                  onChange: (e) => {
+                    handleImageChange(e, setDetailImage1);
+                  },
+                })}
+              />
+            )}
 
-            <input
-              accept="image/*"
-              type="file"
-              hidden
-              name="detailShotImage1"
-              id="detail-shot-image-1"
-              {...register("detailShotImage1", {
-                required: "Required",
-                onChange: (e) => {
-                  handleImageChange(e, setDetailImage1);
-                },
-              })}
-            />
             {detailImage1 && (
               <Image
                 src={URL.createObjectURL(detailImage1)}
@@ -108,11 +169,19 @@ const CreateSidebar = ({ errors, register }) => {
                 objectFit="cover"
               />
             )}
+            {!detailImage1 && artwork && (
+              <Image
+                src={artwork.detail_shots[0].image_url}
+                alt="Selected"
+                layout="fill"
+                objectFit="cover"
+              />
+            )}
           </label>
-          <div>
+          <div className="w-full">
             {detailImage1 && (
               <>
-                <p className="b3">{detailImage1.name}</p>
+                <p className="truncate b3">{detailImage1.name}</p>
                 <p
                   onClick={() => handleRemoveImage(setDetailImage1)}
                   className="underline cursor-pointer underline-offset-2 b4 decoration-1"
@@ -121,9 +190,22 @@ const CreateSidebar = ({ errors, register }) => {
                 </p>
               </>
             )}
-            {!detailImage1 && (
+            {!detailImage1 && !artwork && (
               <>
                 <p className="b3">Add image</p>
+                <p className="b4">(minimally 2000px)</p>
+                <p
+                  className={`text-red-500 opacity-0 b5 ${
+                    errors.detailShotImage1?.message ? "opacity-100" : ""
+                  }`}
+                >
+                  {errors.detailShotImage1?.message}
+                </p>
+              </>
+            )}
+            {!detailImage1 && artwork && (
+              <>
+                <p className="b3">Change image</p>
                 <p className="b4">(minimally 2000px)</p>
                 <p
                   className={`text-red-500 opacity-0 b5 ${
@@ -141,11 +223,15 @@ const CreateSidebar = ({ errors, register }) => {
           <textarea
             name="detailShotCaption1"
             id="detail-shot-caption-1"
+            value={description}
             placeholder="Add caption (max 300 char)"
             className="bg-bgColor rounded-[10px] w-full h-[120px] mt-5 p-2 focus:bg-bgColorHover focus:outline-none"
             {...register("detailShotCaption1", {
               required: "Required",
               maxLength: 300,
+              onChange: (e) => {
+                handleDescription(e);
+              },
             })}
           ></textarea>
           <p
@@ -159,13 +245,29 @@ const CreateSidebar = ({ errors, register }) => {
         <div className="px-5 pt-[15px] relative">
           <p>Add soundbite (optional)</p>
 
-          <label
-            htmlFor="soundbite"
-            className="block cursor-pointer text-center my-[15px] btn btn-secondary btn-full btn-lg"
-          >
-            {soundbite && <p>{soundbite.name}</p>}
-            {!soundbite && <p>upload soundbite</p>}
-          </label>
+          {artwork && (
+            <label
+              htmlFor="soundbite"
+              className="block cursor-pointer text-center my-[15px] btn btn-secondary btn-full btn-lg"
+            >
+              {soundbite && <p className="truncate b3">{soundbite.name}</p>}
+              {!soundbite && !artwork.detail_shots[0].audio_url && (
+                <p className="b3">Upload soundbite</p>
+              )}
+              {!soundbite && artwork.detail_shots[0].audio_url && (
+                <p className="b3">Change soundbite</p>
+              )}
+            </label>
+          )}
+          {!artwork && (
+            <label
+              htmlFor="soundbite"
+              className="block cursor-pointer text-center my-[15px] btn btn-secondary btn-full btn-lg"
+            >
+              {soundbite && <p className="truncate b3">{soundbite.name}</p>}
+              {!soundbite && <p className="b3">upload soundbite</p>}
+            </label>
+          )}
           <input
             onChange={(e) => handleImageChange(e, setSoundBite)}
             accept="audio/*"
@@ -213,27 +315,56 @@ const CreateSidebar = ({ errors, register }) => {
           >
             {!detailImage2 && (
               <>
-                <div className="absolute w-5 h-px -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
-                <div className="absolute w-5 h-px rotate-90 -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
+                {!artwork && (
+                  <>
+                    <div className="absolute z-10 w-5 h-px -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
+                    <div className="absolute z-10 w-5 h-px rotate-90 -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
+                  </>
+                )}
               </>
             )}
-
-            <input
-              accept="image/*"
-              type="file"
-              hidden
-              name="detailShotImage2"
-              id="detail-shot-2"
-              {...register("detailShotImage2", {
-                required: "Required",
-                onChange: (e) => {
-                  handleImageChange(e, setDetailImage2);
-                },
-              })}
-            />
+            {artwork && (
+              <input
+                accept="image/*"
+                type="file"
+                hidden
+                name="detailShotImage2"
+                id="detail-shot-2"
+                {...register("detailShotImage2", {
+                  onChange: (e) => {
+                    handleImageChange(e, setDetailImage2);
+                  },
+                })}
+              />
+            )}
+            {!artwork && (
+              <input
+                accept="image/*"
+                type="file"
+                hidden
+                name="detailShotImage2"
+                id="detail-shot-2"
+                {...register("detailShotImage2", {
+                  required: "required",
+                  onChange: (e) => {
+                    handleImageChange(e, setDetailImage2);
+                  },
+                })}
+              />
+            )}
             {detailImage2 && (
+              <div className="relative z-20 w-full h-full">
+                <Image
+                  src={URL.createObjectURL(detailImage2)}
+                  alt="Selected"
+                  layout="fill"
+                  objectFit="cover"
+                />
+              </div>
+            )}
+            {!detailImage2 && artwork && (
               <Image
-                src={URL.createObjectURL(detailImage2)}
+                src={artwork.detail_shots[1].image_url}
                 alt="Selected"
                 layout="fill"
                 objectFit="cover"
@@ -243,7 +374,7 @@ const CreateSidebar = ({ errors, register }) => {
           <div>
             {detailImage2 && (
               <>
-                <p className="b3">{detailImage2.name}</p>
+                <p className="truncate b3">{detailImage2.name}</p>
                 <p
                   onClick={() => handleRemoveImage(setDetailImage2)}
                   className="underline cursor-pointer underline-offset-2 b4 decoration-1"
@@ -252,9 +383,22 @@ const CreateSidebar = ({ errors, register }) => {
                 </p>
               </>
             )}
-            {!detailImage2 && (
+            {!detailImage2 && !artwork && (
               <>
                 <p className="b3">Add image</p>
+                <p className="b4">(minimally 2000px)</p>
+                <p
+                  className={`text-red-500 opacity-0 b5 ${
+                    errors.detailShotImage2?.message ? "opacity-100" : ""
+                  }`}
+                >
+                  {errors.detailShotImage2?.message}
+                </p>
+              </>
+            )}
+            {!detailImage2 && artwork && (
+              <>
+                <p className="b3">Change image</p>
                 <p className="b4">(minimally 2000px)</p>
                 <p
                   className={`text-red-500 opacity-0 b5 ${
@@ -274,6 +418,7 @@ const CreateSidebar = ({ errors, register }) => {
             name="detailShotCaption2"
             id="detail-shot-caption-1"
             placeholder="Add caption (max 300 char)"
+            defaultValue={artwork ? artwork.detail_shots[1].caption : null}
             className="bg-bgColor rounded-[10px] w-full h-[120px] mt-5 p-2 focus:bg-bgColorHover focus:outline-none"
             {...register("detailShotCaption2", {
               required: "Required",

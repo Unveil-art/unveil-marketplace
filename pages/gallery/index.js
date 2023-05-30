@@ -7,12 +7,17 @@ import SortAndSearch from "../../components/section/SortAndSearch";
 import PageHead from "../../components/general/Head";
 import SearchBlockItems from "../../components/section/SearchBlockItems";
 import GalleryBlockItems from "../../components/section/GalleryBlockItems";
-import { getCollections, getArtworks } from "lib/strapi";
+import { getArtworks } from "lib/backend";
 import { useRouter } from "next/router";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
-export default function Gallery({ collections, artworks }) {
+export default function Gallery() {
   const router = useRouter();
 
+  const { value } = useLocalStorage("token");
+  useEffect(() => {
+    console.log(value);
+  }, []);
   return (
     <>
       <PageHead />
@@ -35,16 +40,4 @@ export default function Gallery({ collections, artworks }) {
       </main>
     </>
   );
-}
-
-export async function getServerSideProps() {
-  const collections = await getCollections();
-  const artworks = await getArtworks();
-
-  return {
-    props: {
-      collections,
-      artworks,
-    },
-  };
 }

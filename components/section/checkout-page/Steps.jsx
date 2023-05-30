@@ -6,13 +6,17 @@ const Steps = ({ step, setStep }) => {
     <div className="flex gap-[5px] items-center">
       <p
         className={`
-        ${step !== 1 ? "py-[9px] px-[8px]" : "px-[10px]"}
+        ${
+          step !== 1
+            ? "py-[6px] px-[5px] md:py-[9px] md:px-[8px]"
+            : "px-[8px] md:px-[10px]"
+        }
         ${
           step === 2 || step === 3
             ? "bg-unveilDrakGray border-unveilDrakGray"
             : "border-unveilBlack"
         }
-         px-[10px] border rounded-full b4 w-fit `}
+         px-[8px] md:px-[10px] border rounded-full b4 w-fit `}
       >
         {step === 1 && <>1</>}
         {step !== 1 && <Check />}
@@ -23,9 +27,13 @@ const Steps = ({ step, setStep }) => {
         }  w-5 h-px`}
       ></div>
       <p
-        className={` ${step === 3 ? "py-[9px] px-[8px]" : "px-[10px]"} ${
-          step === 1 ? "text-unveilDrakGray border-unveilDrakGray" : ""
-        } ${step === 2 ? "text-unveilBlack border-unveilBlack" : ""} ${
+        className={` ${
+          step === 3
+            ? "py-[6px] px-[5px] md:py-[9px] md:px-[8px]"
+            : "px-[7px] md:px-[10px]"
+        } ${step === 1 ? "text-unveilDrakGray border-unveilDrakGray" : ""} ${
+          step === 2 ? "text-unveilBlack border-unveilBlack" : ""
+        } ${
           step === 3
             ? "bg-unveilDrakGray border-unveilDrakGray"
             : "border-unveilBlack"
@@ -44,7 +52,7 @@ const Steps = ({ step, setStep }) => {
           step === 1 ? "text-unveilDrakGray border-unveilDrakGray" : ""
         } ${
           step === 2 ? "text-unveilDrakGray border-unveilDrakGray" : ""
-        } px-[8px] border rounded-full b4 w-fit border-unveilBlack`}
+        } px-[7px] md:px-[8px] border rounded-full b4 w-fit border-unveilBlack`}
       >
         3
       </p>

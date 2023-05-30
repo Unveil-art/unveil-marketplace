@@ -4,7 +4,7 @@ import React from "react";
 const ConnectWithWallet = ({ setStep }) => {
   return (
     <>
-      <h1 className="mt-5 h3 mb-[80px]">Wallet connected</h1>
+      <h1 className="mt-5 h3 mb-[80px] lg:block hidden">Wallet connected</h1>
       <input
         type="email"
         className="input"

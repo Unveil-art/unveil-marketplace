@@ -5,12 +5,16 @@ import { WalletConnectV1Adapter } from "@web3auth/wallet-connect-v1-adapter";
 import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import Web3 from "web3";
 import RPC from "lib/RPC";
+import { useAuth } from "@/hooks/useAuth";
+import { getNonce } from "lib/backend";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export const Web3Context = createContext({
   account: "",
   web3Auth: null,
   provider: null,
   balance: "",
+  email: true,
   login: () => {},
   logout: () => {},
   getBalance: () => {},
@@ -24,10 +28,29 @@ export const rpcUrl = "https://rpc-mumbai.maticvigil.com";
 export const chainId = "0x13881"; //"0x1";
 
 const Web3AuthProvider = ({ children }) => {
+  const { doLogin, doLogout } = useAuth();
+
   const [web3Auth, setWeb3Auth] = useState(null);
   const [provider, setProvider] = useState(null);
-  const [account, setAccount] = useState("");
-  const [balance, setBalance] = useState("");
+
+  const {
+    value: balance,
+    setValue: setBalance,
+    removeValue: removeBalance,
+  } = useLocalStorage("balance");
+  const {
+    value: wallet,
+    setValue: setWallet,
+    removeValue: removeWallet,
+  } = useLocalStorage("walletAddress");
+
+  const {
+    value: account,
+    setValue: setAccount,
+    removeValue: removeAccount,
+  } = useLocalStorage("accounts");
+  const { setValue, removeValue } = useLocalStorage("token");
+  const [email, setEmail] = useState();
 
   const init = async () => {
     try {
@@ -87,21 +110,60 @@ const Web3AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async () => {
+  const login = async (formEmail) => {
     if (!web3Auth) {
       console.log("web3auth not initialized yet");
       return;
     } else {
       try {
+        setEmail(false);
         const web3AuthProvider = await web3Auth.connect();
         setProvider(web3AuthProvider);
         const rpc = new RPC(web3AuthProvider);
         const accounts = await rpc.getAccounts();
         const info = await web3Auth.getUserInfo();
+
         if (info.email) {
-          return;
+          console.log("YES EMAIL");
+
+          const nonceData = await getNonce({
+            email: info.email,
+            walletAddress: accounts,
+          });
+          console.log(nonceData);
+
+          const signedMessage = await rpc.signMessage(nonceData.nonce);
+
+          const token = await doLogin({
+            requestId: nonceData.id,
+            signature: signedMessage,
+          });
+
+          setWallet(accounts);
+          setValue(token.accessToken);
+          setAccount(accounts);
         } else {
-          //call api has-email
+          console.log("NO EMAIL");
+          setEmail(true);
+          if (formEmail) {
+            const nonceData = await getNonce({
+              email: formEmail,
+              walletAddress: accounts,
+            });
+
+            const signedMessage = await rpc.signMessage(nonceData.nonce);
+
+            const token = await doLogin({
+              requestId: nonceData.id,
+              signature: signedMessage,
+            });
+            console.log("token", token);
+
+            setEmail(false);
+            setWallet(accounts);
+            setAccount(accounts);
+            setValue(token.accessToken);
+          }
         }
         setAccount(accounts);
       } catch (err) {
@@ -114,14 +176,21 @@ const Web3AuthProvider = ({ children }) => {
     if (web3Auth) {
       try {
         await web3Auth.logout();
+        await doLogout();
         setProvider(null);
-        setAccount("");
-        setBalance("");
+        removeAccount();
+        removeWallet();
+        removeBalance();
+        removeValue();
+        setEmail(false);
       } catch (err) {
         console.log(err);
         setProvider(null);
-        setAccount("");
-        setBalance("");
+        removeAccount();
+        removeWallet();
+        removeBalance();
+        removeValue();
+        setEmail(false);
       }
     }
   };
@@ -149,6 +218,8 @@ const Web3AuthProvider = ({ children }) => {
         login,
         logout,
         getBalance,
+        email,
+        setEmail,
       }}
     >
       {children}

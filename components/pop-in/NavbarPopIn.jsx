@@ -63,7 +63,7 @@ const NavbarPopIn = ({ navOpen, setNavOpen }) => {
               </Link>
             </div>
             <div className="grid grid-cols-2 border-b border-b-bgColorHover">
-              <Link href="/">
+              <Link href="/people">
                 <p
                   onClick={() => setNavOpen(!navOpen)}
                   className="text-center b3 border-r cursor-pointer border-r-bgColorHover py-[25px] my-[15px]"
@@ -71,7 +71,7 @@ const NavbarPopIn = ({ navOpen, setNavOpen }) => {
                   Artists
                 </p>
               </Link>
-              <Link href="/">
+              <Link href="/people">
                 <p
                   onClick={() => setNavOpen(!navOpen)}
                   className="text-center b3 py-[25px] cursor-pointer my-[15px]"

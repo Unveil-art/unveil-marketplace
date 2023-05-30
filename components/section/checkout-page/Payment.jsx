@@ -6,7 +6,7 @@ import Ideal from "@/components/svg/Ideal";
 const Payment = ({ payment }) => {
   return (
     <>
-      <h1 className="mt-5 h3 mb-[80px]">Select {payment}</h1>
+      <h1 className="mt-5 h3 mb-[80px] hidden lg:block">Select {payment}</h1>
       {payment === "Creditcard" && (
         <>
           <input

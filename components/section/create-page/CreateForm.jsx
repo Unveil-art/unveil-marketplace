@@ -2,16 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import Delete from "@/components/svg/Delete";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Loader from "@/components/svg/Loader";
 import {
   getUsers,
   uploadImage,
   postCollection,
   getCollection,
+  deleteArtwork,
 } from "lib/backend";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 
 const CreateForm = ({
+  artwork = false,
   editionPrice,
   setEditionPrice,
   setEditionPricing,
@@ -29,15 +33,27 @@ const CreateForm = ({
   setTechniques,
   frame,
   setFrame,
+  editionType,
+  setEditionType,
+  name,
+  setName,
 }) => {
   const [openCollection, setOpenCollection] = useState(false);
   const [collectionImage, setCollectionImage] = useState(null);
   const [curatorNames, setCuratorNames] = useState([]);
   const [collections, setCollections] = useState([]);
+  const [collection, setCollection] = useState();
   const [royalties, setRoyalties] = useState([
     { from: "First 12 months", percentage: "15%" },
   ]);
-  const [editionType, setEditionType] = useState("NFT only");
+
+  useEffect(() => {
+    if (artwork) {
+      setName(artwork.name);
+    }
+  }, []);
+
+  const notify = (message) => toast.error(message);
 
   const [sizeOpen, setSizeOpen] = useState(false);
   const [customSizeInput, setCustomSizeInput] = useState("");
@@ -53,10 +69,58 @@ const CreateForm = ({
   const sizeOptions = ["2mm", "3mm", "5mm"];
   const colourOptions = ["White", "Black"];
   const borderOptions = ["None", "5x10", "10x20"];
+  const [loading, setLoading] = useState(false);
+
+  const [artworksEditions, setArtworksEditions] = useState(artwork.editions);
 
   const { value } = useLocalStorage("token");
 
   const defaultRoyalties = { from: "After 12 months", percentage: "15%" };
+
+  useEffect(() => {
+    if (artwork) {
+      reset();
+      const formattedSizes = artwork.size.map((size) => ({
+        active: true,
+        size,
+      }));
+      setSizes(formattedSizes);
+      const formattedPapers = artwork.paper.map((paper) => ({
+        active: true,
+        paper,
+      }));
+      setPapers(formattedPapers);
+      const formattedTechniques = artwork.technique.map((technique) => ({
+        active: true,
+        technique,
+      }));
+      setTechniques(formattedTechniques);
+      setCollection(artwork.collection_id);
+
+      const splitText = artwork?.frame[0]?.split(", ");
+      if (splitText && splitText.length === 4) {
+        const [frameValue, sizeValue, colourValue, borderValue] = splitText;
+
+        setFrame({
+          frame: frameValue.replace(" frame", ""),
+          size: sizeValue,
+          colour: colourValue.replace(" frame", ""),
+          border: borderValue.replace("White border ", ""),
+        });
+      }
+
+      artwork.editions.forEach((edition) => {
+        setEditionPricing((prevItems) => [...prevItems, edition.size]);
+      });
+
+      artwork.editions.forEach((edition) => {
+        setEditionPrice((prevItems) => [...prevItems, edition.price]);
+      });
+
+      setRoyalties(artwork.royalties);
+      setEditionType(artwork.edition_type);
+    }
+  }, []);
 
   const {
     register: registerColl,
@@ -64,12 +128,15 @@ const CreateForm = ({
     formState: { errors: errorColl },
     reset: resetColl,
     watch,
+    getValues,
   } = useForm();
 
   const curatorValue = watch("curator");
 
   const handleEditionTypeChange = (event) => {
     setEditionType(event.target.value);
+    console.log(event.target.value);
+    console.log(editionType);
   };
 
   const fetchUsers = async () => {
@@ -98,6 +165,7 @@ const CreateForm = ({
       return data;
     } catch (err) {
       console.error(err);
+      notify(err.message);
     }
   };
 
@@ -122,17 +190,24 @@ const CreateForm = ({
 
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setCollectionImage(file);
   };
-
   const handleRemoveImage = (setState) => {
     setState(null);
   };
+  const handleDeleteRow = async (index, setState, edition = false, i) => {
+    try {
+      await deleteArtwork(value, artworksEditions[i].id);
+    } catch (err) {
+      console.error(err);
+    }
 
-  const handleDeleteRow = (index, setState, edition = false) => {
+    const updatedArtwork = [...artworksEditions];
+    updatedArtwork.splice(i, 1);
+    setArtworksEditions(updatedArtwork);
+
     setState((prev) => {
       if (edition && prev.length === 1) {
         return prev;
@@ -143,24 +218,34 @@ const CreateForm = ({
       }
     });
   };
-
   const isFieldRequired = (dependentFieldValue) => {
     return dependentFieldValue ? "This field is required" : false;
   };
+  const onSubmitForm = async () => {
+    setLoading(true);
+    const values = getValues();
 
-  const onSubmitForm = async (values, e) => {
-    e.preventDefault();
+    try {
+      const image = await uploadImage(value, values.imageCollection[0]);
 
-    const image = await uploadImage(value, values.imageCollection[0]);
+      await postCollection(value, values, image.data);
+      await fetchCollection();
 
-    await postCollection(value, values, image.data);
-    await fetchCollection();
-
-    resetColl();
-    setCollectionImage(null);
-    setOpenCollection(false);
+      resetColl();
+      setCollectionImage(null);
+      setOpenCollection(false);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      notify(error.message);
+    }
   };
-
+  const handleSubmitOnClick = (e) => {
+    e.preventDefault(); // If you need to prevent default behavior
+    console.log("submit");
+    handleCollectionSubmit(onSubmitForm)();
+  };
   const handleChangePrice = (value, index) => {
     setEditionPrice((prevItems) => {
       const updatedItems = [...prevItems];
@@ -195,6 +280,12 @@ const CreateForm = ({
       ]);
     }
   };
+  const handleChangeCollection = (event) => {
+    setCollection(event.target.value);
+  };
+  const handleNameNFT = (event) => {
+    setName(event.target.value);
+  };
 
   return (
     <div className="w-full lg:w-[710px] space-y-[15px] lg:space-y-5">
@@ -206,15 +297,20 @@ const CreateForm = ({
           className="input"
           name="name"
           id="name"
+          value={name}
           placeholder="Artwork name"
           {...register("name", {
             required: "Required",
+            onChange: (e) => {
+              handleNameNFT(e);
+            },
           })}
         />
         <select
           className="select-input"
           name="year"
           id="year"
+          defaultValue={artwork ? artwork.year : null}
           {...register("year", {
             required: "Required",
           })}
@@ -246,51 +342,51 @@ const CreateForm = ({
               className="radio-block left"
               type="radio"
               name="edition_type"
-              id="nft-print"
-              value="NFT backed by print"
-              checked={editionType === "NFT backed by print"}
+              id="NFT_Backed_by_print"
+              value="NFT_Backed_by_print"
+              checked={editionType === "NFT_Backed_by_print"}
               {...register("edition_type", {
                 onChange: (e) => {
                   handleEditionTypeChange(e);
                 },
               })}
             />
-            <label htmlFor="nft-print">NFT backed by print</label>
+            <label htmlFor="NFT_Backed_by_print">NFT backed by print</label>
           </div>
           <div>
             <input
               className="radio-block"
               type="radio"
               name="edition_type"
-              id="nft"
-              value="NFT only"
-              checked={editionType === "NFT only"}
+              id="NFT_Only"
+              value="NFT_Only"
+              checked={editionType === "NFT_Only"}
               {...register("edition_type", {
                 onChange: (e) => {
                   handleEditionTypeChange(e);
                 },
               })}
             />
-            <label htmlFor="nft">NFT Only</label>
+            <label htmlFor="NFT_Only">NFT Only</label>
           </div>
           <div>
             <input
               className="radio-block right"
               type="radio"
               name="edition_type"
-              id="print"
-              value="Print only"
-              checked={editionType === "Print only"}
+              id="Print_Only"
+              value="Print_Only"
+              checked={editionType === "Print_Only"}
               {...register("edition_type", {
                 onChange: (e) => {
                   handleEditionTypeChange(e);
                 },
               })}
             />
-            <label htmlFor="print">Print only</label>
+            <label htmlFor="Print_Only">Print only</label>
           </div>
         </div>
-        {editionType !== "NFT only" && (
+        {editionType !== "NFT_Only" && (
           <>
             <div className=" px-5 py-[15px] border-t border-[#DBDED6]">
               <div className="flex items-start justify-between ">
@@ -654,7 +750,7 @@ const CreateForm = ({
       {/* Edition pricing */}
       <div className="bg-[#F9F7F2] rounded-[10px]">
         <p className="mb-[15px] lg:mb-[35px] b3 pt-5 px-5">Edition pricing</p>
-        {editionType !== "NFT only" && (
+        {editionType !== "NFT_Only" && (
           <>
             <div className="flex gap-2 px-5 b3 lg:b4">
               {sizes.map((item, i) => {
@@ -662,7 +758,9 @@ const CreateForm = ({
                   return (
                     <span
                       key={i}
-                      onClick={() => setActiveSize(item.size)}
+                      onClick={() => {
+                        setActiveSize(item.size);
+                      }}
                       className={`${
                         activeSize === item.size
                           ? "border-unveilBlack"
@@ -686,23 +784,24 @@ const CreateForm = ({
           </>
         )}
         {editionPricing.map((item, i) => {
-          if (item === activeSize) {
+          if (editionType === "NFT_Only" || activeSize === item) {
             return (
               <div
                 key={i}
                 className={`grid grid-cols-6 gap-2 px-5 py-[15px]  ${
-                  editionType !== "NFT only" ? "border-b border-[#DBDED6]" : ""
+                  editionType !== "NFT_Only" ? "border-b border-[#DBDED6]" : ""
                 }`}
               >
                 <div className="my-auto">
                   {i + 1}/{editionPricing.length}
                 </div>
-                {editionType !== "NFT only" && (
+                {editionType !== "NFT_Only" && (
                   <>
                     <div className="relative">
                       <select
                         name={`paper[${i}]`}
                         id="paper-select"
+                        defaultValue={artwork ? artwork.editions[0].paper : ""}
                         className="truncate select-input"
                         {...register(`paper[${i}]`, { required: "Required" })}
                       >
@@ -727,6 +826,11 @@ const CreateForm = ({
                       <select
                         id="frame-select"
                         className="truncate select-input"
+                        defaultValue={
+                          artwork.editions && artwork.editions <= i
+                            ? artwork.editions[i].value
+                            : null
+                        }
                         name={`frame[${i}]`}
                         {...register(`frame[${i}]`, { required: "Required" })}
                       >
@@ -751,6 +855,11 @@ const CreateForm = ({
                         id="technique-select"
                         className="truncate select-input"
                         name={`technique[${i}]`}
+                        defaultValue={
+                          artwork.editions
+                            ? artwork.editions[i].technique
+                            : null
+                        }
                         {...register(`technique[${i}]`, {
                           required: "Required",
                         })}
@@ -783,8 +892,8 @@ const CreateForm = ({
                       type="number"
                       className="input"
                       placeholder="Select Price (USD)"
-                      value={editionPrice[i]}
-                      name={`price[${i}]`} // Use a unique identifier for the name attribute
+                      defaultValue={editionPrice[i]}
+                      name={`price[${i}]`}
                       {...register(`price[${i}]`, {
                         required: "Required",
                         onChange: (e) => {
@@ -808,13 +917,15 @@ const CreateForm = ({
                         ? "opacity-40"
                         : "cursor-pointer"
                     }`}
-                    onClick={() => handleDeleteRow(i, setEditionPricing, true)}
+                    onClick={() =>
+                      handleDeleteRow(i, setEditionPricing, true, i, item)
+                    }
                   >
                     <Delete big />
                   </div>
                 </div>
                 <div></div>
-                {editionType !== "NFT only" && (
+                {editionType !== "NFT_Only" && (
                   <div className="col-span-4">
                     <div className="flex items-center gap-2 cursor-pointer">
                       <input
@@ -841,12 +952,12 @@ const CreateForm = ({
               setEditionPricing((prevItems) => [...prevItems, activeSize])
             }
             className={`${
-              editionType !== "NFT only" ? "lg:col-span-3" : "lg:col-span-5"
+              editionType !== "NFT_Only" ? "lg:col-span-3" : "lg:col-span-5"
             } btn btn-secondary cursor-pointer inline-block text-center`}
           >
             Add edition
           </p>
-          {editionType !== "NFT only" && (
+          {editionType !== "NFT_Only" && (
             <p className="lg:col-span-2 cursor-pointer inline-block text-center lg:mr-[28px] btn btn-secondary">
               Add Artist proof
             </p>
@@ -865,7 +976,7 @@ const CreateForm = ({
           </p>
         </div>
 
-        {royalties.map((_, i) => (
+        {royalties.map((item, i) => (
           <div
             key={i}
             className="grid relative grid-cols-2 pr-10 gap-2 px-5 py-[15px] border-b border-[#DBDED6]"
@@ -873,6 +984,7 @@ const CreateForm = ({
             <select
               name={`from[${i}]`}
               className="truncate select-input"
+              defaultValue={artwork ? item.from : null}
               {...register(`from[${i}]`)}
             >
               <option value="First month">First month</option>
@@ -903,22 +1015,39 @@ const CreateForm = ({
             <select
               name={`percentage[${i}]`}
               className="truncate select-input"
+              defaultValue={artwork ? item.percentage : null}
               {...register(`percentage[${i}]`)}
             >
+              <option value="1">0%</option>
+              <option value="1">0.5%</option>
               <option value="1">1%</option>
+              <option value="1">1.5%</option>
               <option value="2">2%</option>
+              <option value="2">2.5%</option>
               <option value="3">3%</option>
+              <option value="3">3.5%</option>
               <option value="4">4%</option>
+              <option value="4">4.5%</option>
               <option value="5">5%</option>
+              <option value="5">5.5%</option>
               <option value="6">6%</option>
+              <option value="6">6.5%</option>
               <option value="7">7%</option>
+              <option value="7">7.5%</option>
               <option value="8">8%</option>
+              <option value="8">8.5%</option>
               <option value="9">9%</option>
+              <option value="9">9.5%</option>
               <option value="10">10%</option>
+              <option value="10">10.5%</option>
               <option value="11">11%</option>
+              <option value="11">11.5%</option>
               <option value="12">12%</option>
+              <option value="12">12.5%</option>
               <option value="13">13%</option>
+              <option value="13">13.5%</option>
               <option value="14">14%</option>
+              <option value="14">14.5%</option>
               <option value="15">15%</option>
             </select>
             <div
@@ -948,21 +1077,56 @@ const CreateForm = ({
             Which collection does this artwork belong to?
           </p>
         </div>
-        <div className="px-5 pb-[15px] ">
-          <select
-            id="collection-select"
-            name="collection_id"
-            className="truncate select-input"
-            defaultValue="Select collection"
-            {...register("collection_id", { required: "Required" })}
+        <div className="px-5 pb-[15px] relative ">
+          {artwork && (
+            <select
+              id="collection-select"
+              name="collectionId"
+              className="truncate select-input "
+              value={collection}
+              {...register("collectionId", {
+                onChange: (e) => {
+                  handleChangeCollection(e);
+                },
+              })}
+            >
+              {!artwork && <option disabled>Select collection</option>}
+              {collections.map((item, i) => (
+                <option key={i} value={item.id}>
+                  {item.title}
+                </option>
+              ))}
+            </select>
+          )}
+          {!artwork && (
+            <select
+              id="collection-select"
+              name="collectionId"
+              className="truncate select-input "
+              value={collection ? collection : "Select collection"}
+              {...register("collectionId", {
+                required: "Required",
+                onChange: (e) => {
+                  handleChangeCollection(e);
+                },
+              })}
+            >
+              {!artwork && <option disabled>Select collection</option>}
+              {collections.map((item, i) => (
+                <option key={i} value={item.id}>
+                  {item.title}
+                </option>
+              ))}
+            </select>
+          )}
+
+          <p
+            className={`text-red-500 opacity-100 b5 absolute -bottom-1 left-5 ${
+              errors.collectionId?.message ? "opacity-100" : ""
+            }`}
           >
-            <option disabled>Select collection</option>
-            {collections.map((item, i) => (
-              <option key={i} value={item.id}>
-                {item.title}
-              </option>
-            ))}
-          </select>
+            {errors.collectionId?.message}
+          </p>
         </div>
         {!openCollection && (
           <div className="flex border-t border-[#DBDED6] gap-[30px] items-center underline-offset-2 decoration-1 px-5 pt-[15px] pb-5 lg:pb-[30px] b3">
@@ -976,10 +1140,7 @@ const CreateForm = ({
           </div>
         )}
         {openCollection && (
-          <form
-            onSubmit={handleCollectionSubmit(onSubmitForm)}
-            className="border-t  border-[#DBDED6]"
-          >
+          <div className="border-t  border-[#DBDED6]">
             <p className="py-[35px] px-5 b3">Add new collection</p>
             <div className="flex relative px-5 items-center gap-[10px]">
               <label
@@ -1189,17 +1350,25 @@ const CreateForm = ({
               </div>
             </div>
             <div className="grid grid-cols-2 px-5 gap-[10px] border-t border-[#DBDED6] pt-[35px] pb-10">
-              <button type="submit" className="btn btn-full btn-primary btn-lg">
-                Save new collection
-              </button>
-              <button
+              <div
+                onClick={handleSubmitOnClick}
+                className="text-center cursor-pointer btn btn-full btn-primary btn-lg"
+              >
+                {loading && (
+                  <div className="flex justify-center h-[25px] items-center animate-spin">
+                    <Loader />
+                  </div>
+                )}
+                {!loading && <p> Save new collection</p>}
+              </div>
+              <p
                 onClick={() => setOpenCollection(false)}
-                className="btn btn-full btn-secondary btn-lg"
+                className="text-center cursor-pointer btn btn-full btn-secondary btn-lg"
               >
                 Cancel
-              </button>
+              </p>
             </div>
-          </form>
+          </div>
         )}
       </div>
     </div>

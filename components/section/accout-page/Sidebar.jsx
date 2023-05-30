@@ -1,8 +1,8 @@
-import React from "react";
-import useMagic from "@/hooks/useMagic";
+import React, { useContext } from "react";
+import { Web3Context } from "@/contexts/Web3AuthContext";
 
 const Sidebar = ({ accountState, setAccountState }) => {
-  const { magic_connect, logout } = useMagic();
+  const { logout } = useContext(Web3Context);
 
   const handleAccountState = (i) => {
     window.scrollTo(0, 0);
@@ -84,12 +84,7 @@ const Sidebar = ({ accountState, setAccountState }) => {
         Followed artists
       </p>
       <p
-        onClick={() => {
-          if (magic_connect) {
-            magic_connect.wallet.disconnect();
-          }
-          logout();
-        }}
+        onClick={() => logout()}
         className={` cursor-pointer hover:text-unveilBlack unveilTransition whitespace-nowrap`}
       >
         Logout

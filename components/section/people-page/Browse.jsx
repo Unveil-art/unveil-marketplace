@@ -6,9 +6,9 @@ const Browse = ({ filter, setFilter }) => {
       <p>Browse</p>{" "}
       <div className="flex items-center gap-1">
         <span
-          onClick={() => setFilter(0)}
+          onClick={() => setFilter("artist")}
           className={`${
-            filter === 0
+            filter === "artist"
               ? "border-unveilBlack"
               : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
           } px-2 border rounded-full cursor-pointer unveilTransition md:px-4 l2`}
@@ -16,9 +16,9 @@ const Browse = ({ filter, setFilter }) => {
           Artists
         </span>
         <span
-          onClick={() => setFilter(1)}
+          onClick={() => setFilter("curator")}
           className={`${
-            filter === 1
+            filter === "curator"
               ? "border-unveilBlack"
               : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
           } px-2 border rounded-full cursor-pointer unveilTransition md:px-4 l2 `}
@@ -26,9 +26,9 @@ const Browse = ({ filter, setFilter }) => {
           Curators
         </span>
         <span
-          onClick={() => setFilter(2)}
+          onClick={() => setFilter("collector")}
           className={`${
-            filter === 2
+            filter === "collector"
               ? "border-unveilBlack"
               : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
           } px-2 border rounded-full cursor-pointer unveilTransition md:px-4 l2 `}
