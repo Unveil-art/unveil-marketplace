@@ -10,8 +10,10 @@ import LoginPopIn from "../pop-in/LoginPopIn";
 import LoggedInPopIn from "../pop-in/LoggedInPopIn";
 import Arrow from "@/components/svg/Arrow";
 import { StepContext } from "@/contexts/StepContext";
+import { Web3Context } from "@/contexts/Web3AuthContext";
 
-const Navbar = ({ magic_connect, value }) => {
+const Navbar = ({ value }) => {
+  const { login, logout, email } = useContext(Web3Context);
   const el = useRef();
   const [loggedIn, setLoggedIn] = useState(false);
   const [navOpen, setNavOpen] = useState(false);

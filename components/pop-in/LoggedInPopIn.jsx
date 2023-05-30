@@ -6,7 +6,6 @@ import Link from "next/link";
 import RPC from "lib/RPC";
 
 const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
-  const { value } = useLocalStorage("token");
   const { value: localProvider } = useLocalStorage("tw:provider:connectors");
   const { value: wallet } = useLocalStorage("walletAddress");
   const { balance, logout, getBalance } = useContext(Web3Context);
@@ -15,7 +14,6 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
 
   useEffect(() => {
     getBalance();
-    console.log();
   }, []);
 
   useAsideAnimation(el, loggedIn);
@@ -52,7 +50,10 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
               </p>
             </div>
             <Link href="/account">
-              <button className="mt-10 btn btn-lg btn-full btn-primary">
+              <button
+                onClick={() => setLoggedIn(false)}
+                className="mt-10 btn btn-lg btn-full btn-primary"
+              >
                 My NFTs
               </button>
             </Link>

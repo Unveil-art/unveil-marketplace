@@ -14,6 +14,7 @@ export const Web3Context = createContext({
   web3Auth: null,
   provider: null,
   balance: "",
+  email: true,
   login: () => {},
   logout: () => {},
   getBalance: () => {},
@@ -42,12 +43,14 @@ const Web3AuthProvider = ({ children }) => {
     setValue: setWallet,
     removeValue: removeWallet,
   } = useLocalStorage("walletAddress");
+
   const {
     value: account,
     setValue: setAccount,
     removeValue: removeAccount,
   } = useLocalStorage("accounts");
   const { setValue, removeValue } = useLocalStorage("token");
+  const [email, setEmail] = useState();
 
   const init = async () => {
     try {
@@ -107,12 +110,13 @@ const Web3AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async () => {
+  const login = async (formEmail) => {
     if (!web3Auth) {
       console.log("web3auth not initialized yet");
       return;
     } else {
       try {
+        setEmail(false);
         const web3AuthProvider = await web3Auth.connect();
         setProvider(web3AuthProvider);
         const rpc = new RPC(web3AuthProvider);
@@ -120,6 +124,8 @@ const Web3AuthProvider = ({ children }) => {
         const info = await web3Auth.getUserInfo();
 
         if (info.email) {
+          console.log("YES EMAIL");
+
           const nonceData = await getNonce({
             email: info.email,
             walletAddress: accounts,
@@ -137,7 +143,27 @@ const Web3AuthProvider = ({ children }) => {
           setValue(token.accessToken);
           setAccount(accounts);
         } else {
-          //TODO: if no email
+          console.log("NO EMAIL");
+          setEmail(true);
+          if (formEmail) {
+            const nonceData = await getNonce({
+              email: formEmail,
+              walletAddress: accounts,
+            });
+
+            const signedMessage = await rpc.signMessage(nonceData.nonce);
+
+            const token = await doLogin({
+              requestId: nonceData.id,
+              signature: signedMessage,
+            });
+            console.log("token", token);
+
+            setEmail(false);
+            setWallet(accounts);
+            setAccount(accounts);
+            setValue(token.accessToken);
+          }
         }
         setAccount(accounts);
       } catch (err) {
@@ -156,6 +182,7 @@ const Web3AuthProvider = ({ children }) => {
         removeWallet();
         removeBalance();
         removeValue();
+        setEmail(false);
       } catch (err) {
         console.log(err);
         setProvider(null);
@@ -163,6 +190,7 @@ const Web3AuthProvider = ({ children }) => {
         removeWallet();
         removeBalance();
         removeValue();
+        setEmail(false);
       }
     }
   };
@@ -190,6 +218,8 @@ const Web3AuthProvider = ({ children }) => {
         login,
         logout,
         getBalance,
+        email,
+        setEmail,
       }}
     >
       {children}
