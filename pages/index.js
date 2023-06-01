@@ -45,7 +45,6 @@ export default function Home({ data, faq, editorials }) {
         data={homeData.page6}
         request={homeData.page1.request_access}
       />
-
       <WhyCollect data={homeData.page7} />
       <Editorial data={homeData.page8} editorial={editorialData} />
       <FAQ data={faqData.block} />
