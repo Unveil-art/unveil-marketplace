@@ -18,6 +18,7 @@ export const Web3Context = createContext({
   login: () => {},
   logout: () => {},
   getBalance: () => {},
+  convertWei: () => {},
 });
 
 const clientId =
@@ -108,6 +109,12 @@ const Web3AuthProvider = ({ children }) => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const convertWei = (numberInString) => {
+    const web3 = new Web3();
+    const eth = web3.utils.fromWei(numberInString, "ether");
+    return eth;
   };
 
   const login = async (formEmail) => {
@@ -220,6 +227,7 @@ const Web3AuthProvider = ({ children }) => {
         getBalance,
         email,
         setEmail,
+        convertWei,
       }}
     >
       {children}

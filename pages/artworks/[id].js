@@ -5,7 +5,13 @@ import { useRouter } from "next/router";
 import CreateForm from "@/components/section/create-page/CreateForm";
 import CreateSidebar from "@/components/section/create-page/CreateSidebar";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import { getArtworkById, putArtwork, uploadJSON, createNFT } from "lib/backend";
+import {
+  getArtworkById,
+  putArtwork,
+  uploadJSON,
+  createNFT,
+  postTransaction,
+} from "lib/backend";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 import { FACTORY_ABI } from "lib/constants";
 import RPC from "lib/RPC";
@@ -16,7 +22,8 @@ import "react-toastify/dist/ReactToastify.css";
 import CreatingNFT from "@/components/section/create-page/CreatingNFT";
 
 const Edit = ({ artwork }) => {
-  const { provider } = useContext(Web3Context);
+  const { provider, convertWei } = useContext(Web3Context);
+
   const notify = (message) => toast.error(message);
   const {
     register,
@@ -95,8 +102,9 @@ const Edit = ({ artwork }) => {
             1685196478,
           ])
           .send({ from: accounts, gasPrice: gas });
+        console.log(tx);
 
-        const x = await createNFT(
+        const nft = await createNFT(
           value,
           {
             contract_address: tx.events[0].address,
@@ -105,11 +113,22 @@ const Edit = ({ artwork }) => {
           artwork.id
         );
 
+        console.log(nft);
+
+        await postTransaction(value, {
+          transaction_hash: tx.transactionHash,
+          amount: parseInt(convertWei(String(tx.gasUsed))),
+          currency: "ETH",
+          transaction_type: "DEPLOY_ARTWORK",
+          chain_link: process.env.NEXT_PUBLIC_CHAIN_LINK,
+          artwork_id: artwork.id,
+        });
+
         router.push("/account");
         setCreating(false);
       } catch (error) {
         console.log(JSON.stringify(error));
-        notify(error.data.message);
+        notify(error.message);
         setCreating(false);
       }
     }

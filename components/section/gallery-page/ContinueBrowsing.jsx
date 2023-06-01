@@ -5,7 +5,7 @@ const ContinueBrowsing = () => {
   return (
     <section>
       <h2 className="text-center my-[100px]">Continue browsing</h2>
-      <ThreeBlockItems />
+      {/* <ThreeBlockItems /> */}
     </section>
   );
 };
