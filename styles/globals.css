@@ -346,17 +346,9 @@
 
 @font-face {
   font-family: "Teodor";
-  src: url("/fonts/Teodor-light.woff2") format("woff2"),
-    url("/fonts/Teodor-light.woff2") format("woff2");
+  src: url("/fonts/Teodor-Light.woff2") format("woff2"),
+    url("/fonts/Teodor-Light.woff") format("woff2");
   font-weight: 300;
-}
-
-@font-face {
-  font-family: "Teodor";
-  src: url("/fonts/Teodor-Regular.woff2") format("woff2"),
-    url("/fonts/Teodor-Regular.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
 }
 
 .hide {
