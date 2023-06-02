@@ -257,6 +257,7 @@ const Edit = ({ artwork }) => {
       }
     }
   };
+
   return (
     <main className="bg-[#F0EDE4] ">
       <ToastContainer />

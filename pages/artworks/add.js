@@ -103,8 +103,11 @@ const Create = () => {
         const mainImage = await uploadImage(value, values.mainImage[0]);
         const data = await postArtwork(value, mergedValues, mainImage);
 
-        router.push(`/artworks/${data.id}`);
         setLoading(false);
+        const id = data.data.id;
+        if (id) {
+          router.push(`/artworks/${id}`);
+        }
       } catch (err) {
         setLoading(false);
         notify(err.message);
@@ -134,8 +137,11 @@ const Create = () => {
         const mainImage = await uploadImage(value, values.mainImage[0]);
         const data = await postArtwork(value, mergedValues, mainImage);
 
-        router.push(`/artworks/${data.data.id}`);
         setLoading(false);
+        const id = data.data.id;
+        if (id) {
+          router.push(`/artworks/${id}`);
+        }
       } catch (err) {
         setLoading(false);
         notify(err.message);
