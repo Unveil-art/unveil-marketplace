@@ -17,7 +17,6 @@ export default function Home({ data, faq, editorials }) {
   const homeData = data.data[0].attributes;
   const faqData = faq.data[0].attributes.faq;
   const editorialData = editorials.data;
-  console.log(homeData);
 
   return (
     <>

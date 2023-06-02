@@ -19,6 +19,7 @@ import OneLiner from "@/components/reusable/Oneliner";
 import PageNotFound from "@/components/general/PageNotFound";
 
 const Details = ({ data, recent }) => {
+  
   if (data.data.length > 0) {
     return (
       <main className="md:mt-[120px] relative">
