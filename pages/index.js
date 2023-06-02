@@ -25,7 +25,7 @@ export default function Home({ data, faq, editorials }) {
       <GridColThree data={homeData.page1.blocks} />
       <Collection
         data={homeData.page5}
-        oneLiner="New works, freshtalent. Discover the unseen."
+        oneLiner={homeData.page5.oneliner}
         title={homeData.page5.heading}
         backgroundColor={homeData.page5.backgroundcolor}
         color={homeData.page5.fontcolor}
