@@ -346,8 +346,8 @@
 
 @font-face {
   font-family: "Teodor";
-  src: url("/fonts/Teodor-Light.woff2") format("woff2"),
-    url("/fonts/Teodor-Light.woff") format("woff2");
+  src: url("/fonts/Teodor-Light.woff") format("woff"),
+    url("/fonts/Teodor-Light.woff2") format("woff2");
   font-weight: 300;
 }
 
