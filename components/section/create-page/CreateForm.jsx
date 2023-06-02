@@ -1171,8 +1171,8 @@ const CreateForm = ({
                   <Image
                     src={URL.createObjectURL(collectionImage)}
                     alt="Selected"
-                    layout="fill"
-                    objectFit="cover"
+                    fill={true}
+                    style={{ objectFit: "cover" }}
                   />
                 )}
               </label>

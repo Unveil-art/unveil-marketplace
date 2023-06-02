@@ -17,8 +17,8 @@ const ArtistAnnouncement = ({ data }) => {
             <Image
               src={data.media.data.attributes.url}
               alt={data.media.data.attributes.alt}
-              layout="fill"
-              objectFit="cover"
+              fill={true}
+              style={{ objectFit: "cover" }}
             />
           </div>
         </div>

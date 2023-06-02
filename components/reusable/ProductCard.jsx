@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 const ProductCard = ({ rounded = false, item }) => {
-  console.log(item);
   return (
     <Animate
       options={{
@@ -15,20 +14,39 @@ const ProductCard = ({ rounded = false, item }) => {
       }}
       className="[&:nth-child(3)]:mt-[120px]"
     >
-      <Link href={`/gallery/${item.id}`}>
-        <div
-          className={`${
-            rounded ? "rounded-t-full" : ""
-          } bg-bgColor relative overflow-hidden aspect-[3/4] mb-1`}
-        >
-          <Image
-            src={item.media_url}
-            alt={item.name}
-            layout="fill"
-            objectFit="cover"
-          />
-        </div>
-      </Link>
+      {item.title && (
+        <Link href={`/gallery/collection/${item.id}`}>
+          <div
+            className={`${
+              rounded ? "rounded-t-full" : ""
+            } bg-bgColor relative overflow-hidden aspect-[3/4] mb-1`}
+          >
+            <Image
+              src={item.media_url}
+              alt={item.title}
+              fill={true}
+              style={{ objectFit: "cover" }}
+            />
+          </div>
+        </Link>
+      )}
+      {item.name && (
+        <Link href={`/gallery/artwork/${item.id}`}>
+          <div
+            className={`${
+              rounded ? "rounded-t-full" : ""
+            } bg-bgColor relative overflow-hidden aspect-[3/4] mb-1`}
+          >
+            <Image
+              src={item.media_url}
+              alt={item.name}
+              fill={true}
+              style={{ objectFit: "cover" }}
+            />
+          </div>
+        </Link>
+      )}
+
       {item.edition_type && (
         <>
           {item.edition_type === "NFT_Backed_by_print" && (
@@ -40,10 +58,17 @@ const ProductCard = ({ rounded = false, item }) => {
           )}
         </>
       )}
-      <Link href={`/gallery/${item.id}`}>
-        {item.title && <h5 className="b3">{item.title}</h5>}
-        {item.name && <h5 className="b3">{item.name}</h5>}
-      </Link>
+      {item.title && (
+        <Link href={`/gallery/collection/${item.id}`}>
+          <h5 className="b3">{item.title}</h5>
+        </Link>
+      )}
+      {item.name && (
+        <Link href={`/gallery/artwork/${item.id}`}>
+          <h5 className="b3">{item.name}</h5>
+        </Link>
+      )}
+
       <Link href={`/people/${item.owner_id}`}>
         <p className="b3 opacity-60 w-fit">{item.owner_id}</p>
       </Link>

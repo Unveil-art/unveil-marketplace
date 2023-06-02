@@ -12,12 +12,12 @@ const About = ({ bg, item }) => {
         <Image
           src={item.media_url}
           alt={item.name}
-          layout="fill"
-          objectFit="cover"
+          fill={true}
+          style={{ objectFit: "cover" }}
         />
         {item.name && (
           <div className="absolute bottom-[15px] left-[15px] w-[200px] bg-bgBlackOpacity border rounded-[10px] border-bgColorHover text-unveilWhite py-2 md:py-5 px-2 md:px-[15px] bg-blur">
-            <Link href={`/gallery/${item.id}`}>
+            <Link href={`/gallery/artwork/${item.id}`}>
               <p className="leading-tight mb-[2px] b5"> {item.name}</p>
             </Link>
             <Link href={`/people/${item.owner_id}`}>
@@ -37,22 +37,27 @@ const About = ({ bg, item }) => {
         style={{ backgroundColor: bg }}
         className="relative p-[15px] pt-10 md:p-10 text-unveilWhite aspect-[10/11] md:aspect-auto"
       >
-        <Link href={`/gallery/${item.id}`}>
-          {item.name && (
-            <h2 className="h1 max-w-[75%] md:max-w-[90%] w-fit">{item.name}</h2>
-          )}
-          {item.title && (
+        {item.title && (
+          <Link href={`/gallery/collection/${item.id}`}>
             <h2 className="h1 max-w-[75%] md:max-w-[90%] w-fit">
               {item.title}
             </h2>
-          )}
-        </Link>
-        <div className="s2">
-          <CountdownTimer
-            targetDate={new Date(item.live_time)}
-            owner={item.owner_id}
-          />
-        </div>
+          </Link>
+        )}
+        {item.name && (
+          <Link href={`/gallery/artwork/${item.id}`}>
+            <h2 className="h1 max-w-[75%] md:max-w-[90%] w-fit">{item.name}</h2>
+          </Link>
+        )}
+        {item.live_time && (
+          <div className="s2">
+            <CountdownTimer
+              targetDate={new Date(item.live_time)}
+              owner={item.owner_id}
+            />
+          </div>
+        )}
+
         <div className="absolute bottom-[40px] md:bottom-20 left-32 md:left-1/2 max-w-[310px]">
           {item.curator_id && (
             <Link href={`/people/${item.curator_id}`}>

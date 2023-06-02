@@ -5,18 +5,32 @@ import Link from "next/link";
 const TwoBlockItems = ({ items }) => {
   return (
     <div className="px-[15px] my-5 md:my-10 md:px-10 grid grid-cols-1 md:grid-cols-2 gap-[15px] md:gap-5">
-      {items.map((item) => (
-        <div>
-          <Link href={`/gallery/${item.id}`}>
-            <div className="relative w-full bg-bgColor aspect-square">
-              <Image
-                src={item.media_url}
-                alt={item.name}
-                layout="fill"
-                objectFit="cover"
-              />
-            </div>
-          </Link>
+      {items.map((item, i) => (
+        <div key={i}>
+          {item.title && (
+            <Link href={`/gallery/collection/${item.id}`}>
+              <div className="relative w-full bg-bgColor aspect-square">
+                <Image
+                  src={item.media_url}
+                  alt={item.name}
+                  fill={true}
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+            </Link>
+          )}
+          {item.name && (
+            <Link href={`/gallery/artwork/${item.id}`}>
+              <div className="relative w-full bg-bgColor aspect-square">
+                <Image
+                  src={item.media_url}
+                  alt={item.name}
+                  fill={true}
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+            </Link>
+          )}
           {item.edition_type && (
             <>
               {item.edition_type === "NFT_Backed_by_print" && (
@@ -30,10 +44,16 @@ const TwoBlockItems = ({ items }) => {
               )}
             </>
           )}
-          <Link href={`/gallery/${item.id}`}>
-            {item.name && <h5 className="b3">{item.name}</h5>}
-            {item.title && <h5 className="b3">{item.title}</h5>}
-          </Link>
+          {item.title && (
+            <Link href={`/gallery/collection/${item.id}`}>
+              <h5 className="b3">{item.title}</h5>
+            </Link>
+          )}
+          {item.name && (
+            <Link href={`/gallery/artwork/${item.id}`}>
+              <h5 className="b3">{item.name}</h5>
+            </Link>
+          )}
           <Link href={`/people/${items.owner_id}`}>
             <p className="b3 opacity-60">{item.owner_id}</p>
           </Link>

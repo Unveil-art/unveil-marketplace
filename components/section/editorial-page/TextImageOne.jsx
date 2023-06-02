@@ -18,8 +18,8 @@ const TextImageOne = ({ data, title }) => {
             <Image
               src={data.Image.data.attributes.url}
               alt={data.Image.data.attributes.alt}
-              layout="fill"
-              objectFit="cover"
+              fill={true}
+              style={{ objectFit: "cover" }}
               className="gsap-image"
             />
           )}
@@ -45,8 +45,8 @@ const TextImageOne = ({ data, title }) => {
               <Image
                 src={data.media.data.attributes.url}
                 alt={data.media.data.attributes.alt}
-                layout="fill"
-                objectFit="cover"
+                fill={true}
+                style={{ objectFit: "cover" }}
                 className="gsap-image"
               />
             )}

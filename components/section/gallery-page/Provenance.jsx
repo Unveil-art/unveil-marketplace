@@ -2,7 +2,7 @@ import React from "react";
 
 const Provenance = () => {
   return (
-    <section className="px-10 py-[100px]">
+    <section className="px-[15px] md:px-10 py-[100px]">
       <h2 className="mb-10 s1">Provenance</h2>
       <div className="gap-10 md:flex">
         <div className="w-full">

@@ -30,38 +30,49 @@ const WhyCollect = ({ data }) => {
   useEffect(() => {
     // avoid re-running when iOS bar hides/shows
     // this would trigger the effect on scroll
-    if (size.width && (sizeWidth.current !== size.width)) {
+    if (size.width && sizeWidth.current !== size.width) {
       const query = gsap.utils.selector(el);
       const ctx = gsap.matchMedia();
       sizeWidth.current = size.width;
-      ctx.add('(max-width: 767px)', () => {
-        tl.current = gsap.timeline({
-          paused: true
-        }).to(query('.gsap-scroll'), {
-          xPercent: -100,
-          x: sizeWidth.current,
-          ease: 'power2.inOut'
-        })
-      }, el);
+      ctx.add(
+        "(max-width: 767px)",
+        () => {
+          tl.current = gsap
+            .timeline({
+              paused: true,
+            })
+            .to(query(".gsap-scroll"), {
+              xPercent: -100,
+              x: sizeWidth.current,
+              ease: "power2.inOut",
+            });
+        },
+        el
+      );
     }
   }, [size]);
 
-  useLenis(({ scroll }) => {
-    if (tl.current) {
-      const top = rect.top - scroll
-      const progress = gsap.utils.clamp(0, 1, (top / (rect.top - size.height * 5.0)) * -1)
-      tl.current.progress(progress)
-    }
-  }, [rect, tl.current], 1);
+  useLenis(
+    ({ scroll }) => {
+      if (tl.current) {
+        const top = rect.top - scroll;
+        const progress = gsap.utils.clamp(
+          0,
+          1,
+          (top / (rect.top - size.height * 5.0)) * -1
+        );
+        tl.current.progress(progress);
+      }
+    },
+    [rect, tl.current],
+    1
+  );
 
   return (
     <>
-      <section
-        ref={el}
-        className="block w-full h-[300vh] md:h-auto"
-      >
+      <section ref={el} className="block w-full h-[300vh] md:h-auto">
         <div
-          className="block w-full sticky top-0 pt-11 md:pt-0 md:relative"
+          className="sticky top-0 block w-full pt-11 md:pt-0 md:relative"
           ref={(node) => setRef(node)}
         >
           <h2 className="m-[15px] lg:m-10 h3">{data.heading}</h2>
@@ -91,10 +102,14 @@ const WhyCollect = ({ data }) => {
                   <div className="relative w-full h-full">
                     {data.blocks[0].background_image && (
                       <Image
-                        src={data.blocks[0].background_image.data.attributes.url}
-                        alt={data.blocks[0].background_image.data.attributes.alt}
-                        layout="fill"
-                        objectFit="cover"
+                        src={
+                          data.blocks[0].background_image.data.attributes.url
+                        }
+                        alt={
+                          data.blocks[0].background_image.data.attributes.alt
+                        }
+                        fill={true}
+                        style={{ objectFit: "cover" }}
                       />
                     )}
                   </div>
@@ -105,8 +120,8 @@ const WhyCollect = ({ data }) => {
                       <Image
                         src={data.blocks[0].main_image.data[0].attributes.url}
                         alt={data.blocks[0].main_image.data[0].attributes.alt}
-                        layout="fill"
-                        objectFit="cover"
+                        fill={true}
+                        style={{ objectFit: "cover" }}
                       />
                     )}
                   </div>
@@ -116,15 +131,15 @@ const WhyCollect = ({ data }) => {
                     {data.blocks[0].background_image_optional && (
                       <Image
                         src={
-                          data.blocks[0].background_image_optional.data.attributes
-                            .url
+                          data.blocks[0].background_image_optional.data
+                            .attributes.url
                         }
                         alt={
-                          data.blocks[0].background_image_optional.data.attributes
-                            .alt
+                          data.blocks[0].background_image_optional.data
+                            .attributes.alt
                         }
-                        layout="fill"
-                        objectFit="cover"
+                        fill={true}
+                        style={{ objectFit: "cover" }}
                       />
                     )}
                   </div>
@@ -134,7 +149,10 @@ const WhyCollect = ({ data }) => {
                 options={{ alpha: true }}
                 className="h-[315px] lg:h-auto min-w-[270px] max-w-[270px] lg:max-w-[unset] lg:min-w-[unset] lg:aspect-[10/11] bg-unveilYellow rounded-[10px] text-center pt-5 md:pt-[60px]"
               >
-                <h4 className="s1  px-[15px]"> {data.blocks[1].banner_heading}</h4>
+                <h4 className="s1  px-[15px]">
+                  {" "}
+                  {data.blocks[1].banner_heading}
+                </h4>
                 <p className="b4 mt-2 px-[15px]">
                   {data.blocks[1].banner_description}
                   <span
@@ -215,10 +233,14 @@ const WhyCollect = ({ data }) => {
                   <div className="relative w-full h-full">
                     {data.blocks[2].background_image && (
                       <Image
-                        src={data.blocks[2].background_image.data.attributes.url}
-                        alt={data.blocks[2].background_image.data.attributes.url}
-                        layout="fill"
-                        objectFit="cover"
+                        src={
+                          data.blocks[2].background_image.data.attributes.url
+                        }
+                        alt={
+                          data.blocks[2].background_image.data.attributes.url
+                        }
+                        fill={true}
+                        style={{ objectFit: "cover" }}
                       />
                     )}
                   </div>
@@ -229,8 +251,8 @@ const WhyCollect = ({ data }) => {
                       <Image
                         src={data.blocks[2].main_image.data[0].attributes.url}
                         alt={data.blocks[2].main_image.data[0].attributes.url}
-                        layout="fill"
-                        objectFit="cover"
+                        fill={true}
+                        style={{ objectFit: "cover" }}
                       />
                     )}
                   </div>

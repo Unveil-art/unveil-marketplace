@@ -8,7 +8,7 @@ import AboutIntro from "@/components/section/gallery-page/AboutIntro";
 import AboutItem from "@/components/section/gallery-page/AboutItem";
 import ItemStatistics from "@/components/section/gallery-page/ItemStatistics";
 
-const GalleryAbout = () => {
+const GalleryAbout = ({ artwork }) => {
   const el = useRef();
   const tl = useRef();
   const size = useWindowSize();
@@ -17,38 +17,49 @@ const GalleryAbout = () => {
   useEffect(() => {
     const query = gsap.utils.selector(el);
     const ctx = gsap.matchMedia();
-    ctx.add('(min-width: 768px)', () => {
-      tl.current = gsap.timeline({
-        paused: true
-      }).to(query('.gsap-scroll'), {
-        xPercent: -100,
-        ease: 'power2.inOut'
-      })
-      return () => {
-        tl.current = null
-      }
-    }, el)
+    ctx.add(
+      "(min-width: 768px)",
+      () => {
+        tl.current = gsap
+          .timeline({
+            paused: true,
+          })
+          .to(query(".gsap-scroll"), {
+            xPercent: -100,
+            ease: "power2.inOut",
+          });
+        return () => {
+          tl.current = null;
+        };
+      },
+      el
+    );
   }, []);
 
-  useLenis(({ scroll }) => {
-    if (tl.current) {
-      const top = rect.top - scroll
-      const progress = gsap.utils.clamp(0, 1, top / (rect.top - rect.height + size.width))
-      tl.current.progress(progress)
-    }
-  }, [rect], 1);
+  useLenis(
+    ({ scroll }) => {
+      if (tl.current) {
+        const top = rect.top - scroll;
+        const progress = gsap.utils.clamp(
+          0,
+          1,
+          top / (rect.top - rect.height + size.width)
+        );
+        tl.current.progress(progress);
+      }
+    },
+    [rect],
+    1
+  );
 
   return (
     <>
-      <AboutIntro />
+      <AboutIntro collection={artwork.collection} />
       <section ref={el} className="relative w-full">
-        <div
-          className="block w-full md:h-[500vh]"
-          ref={(node) => setRef(node)}
-        >
+        <div className="block w-full md:h-[500vh]" ref={(node) => setRef(node)}>
           <div className="block w-full md:sticky md:top-0">
-            <AboutItem />
-            <ItemStatistics />
+            <AboutItem detail_shots={artwork.detail_shots} />
+            <ItemStatistics artwork={artwork} />
           </div>
         </div>
       </section>

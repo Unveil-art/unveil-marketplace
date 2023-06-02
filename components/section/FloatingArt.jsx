@@ -184,8 +184,8 @@ const FloatingArt = ({ data }) => {
                 <Image
                   src={data.topleft.data.attributes.url}
                   alt={data.topleft.data.attributes.alt}
-                  layout="fill"
-                  objectFit="cover"
+                  fill={true}
+                  style={{ objectFit: "cover" }}
                 />
               )}
 
@@ -193,8 +193,8 @@ const FloatingArt = ({ data }) => {
                 <Image
                   src="/images/bubble-wrap.png"
                   alt="Bubble wrap - coming soon"
-                  layout="fill"
-                  objectFit="cover"
+                  fill={true}
+                  style={{ objectFit: "cover" }}
                   className="gsap-bubblewrap"
                 />
               )}
@@ -217,16 +217,16 @@ const FloatingArt = ({ data }) => {
                 <Image
                   src={data.bottomleft.data.attributes.url}
                   alt={data.bottomleft.data.attributes.alt}
-                  layout="fill"
-                  objectFit="cover"
+                  fill={true}
+                  style={{ objectFit: "cover" }}
                 />
               )}
               {data.bottomleft_bubblewrap && (
                 <Image
                   src="/images/bubble-wrap.png"
                   alt="Bubble wrap - coming soon"
-                  layout="fill"
-                  objectFit="cover"
+                  fill={true}
+                  style={{ objectFit: "cover" }}
                   className="gsap-bubblewrap"
                 />
               )}
@@ -248,16 +248,16 @@ const FloatingArt = ({ data }) => {
                 <Image
                   src={data.topright.data.attributes.url}
                   alt={data.topright.data.attributes.alt}
-                  layout="fill"
-                  objectFit="cover"
+                  fill={true}
+                  style={{ objectFit: "cover" }}
                 />
               )}
               {data.topright_bubblewrap && (
                 <Image
                   src="/images/bubble-wrap.png"
                   alt="Bubble wrap - coming soon"
-                  layout="fill"
-                  objectFit="cover"
+                  fill={true}
+                  style={{ objectFit: "cover" }}
                   className="gsap-bubblewrap"
                 />
               )}
@@ -279,16 +279,16 @@ const FloatingArt = ({ data }) => {
                 <Image
                   src={data.centerright.data.attributes.url}
                   alt={data.centerright.data.attributes.alt}
-                  layout="fill"
-                  objectFit="cover"
+                  fill={true}
+                  style={{ objectFit: "cover" }}
                 />
               )}
               {data.centerright_bubblewrap && (
                 <Image
                   src="/images/bubble-wrap.png"
                   alt="Bubble wrap - coming soon"
-                  layout="fill"
-                  objectFit="cover"
+                  fill={true}
+                  style={{ objectFit: "cover" }}
                   className="gsap-bubblewrap"
                 />
               )}

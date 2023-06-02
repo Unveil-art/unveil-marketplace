@@ -172,7 +172,7 @@ export default function Gallery({ artworks }) {
           className="mx-auto btn btn-secondary w-[128px] block mb-[100px] cursor-pointer"
         >
           {loading && (
-            <div className="h-[25px] justify-center flex items-center">
+            <div className="h-[25px] animate-spin justify-center flex items-center">
               <Loader />
             </div>
           )}

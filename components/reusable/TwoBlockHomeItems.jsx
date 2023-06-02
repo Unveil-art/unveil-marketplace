@@ -46,8 +46,8 @@ const TwoBlockHomeItems = ({ homePage = false, data }) => {
               <Image
                 src={data[0].banner.data.attributes.url}
                 alt={data[0].banner.data.attributes.alt}
-                layout="fill"
-                objectFit="cover"
+                fill={true}
+                style={{ objectFit: "cover" }}
                 className="gsap-image"
               />
             )}
@@ -56,8 +56,8 @@ const TwoBlockHomeItems = ({ homePage = false, data }) => {
               <Image
                 src="/images/bubble-wrap.png"
                 alt="Bubble wrap - coming soon"
-                layout="fill"
-                objectFit="cover"
+                fill={true}
+                style={{ objectFit: "cover" }}
                 className="gsap-bubblewrap"
               />
             )}
@@ -97,8 +97,8 @@ const TwoBlockHomeItems = ({ homePage = false, data }) => {
                 <Image
                   src={data[1].banner.data.attributes.url}
                   alt={data[1].banner.data.attributes.alt}
-                  layout="fill"
-                  objectFit="cover"
+                  fill={true}
+                  style={{ objectFit: "cover" }}
                   className="gsap-image"
                 />
               )}
@@ -106,8 +106,8 @@ const TwoBlockHomeItems = ({ homePage = false, data }) => {
                 <Image
                   src="/images/bubble-wrap.png"
                   alt="Bubble wrap - coming soon"
-                  layout="fill"
-                  objectFit="cover"
+                  fill={true}
+                  style={{ objectFit: "cover" }}
                   className="gsap-bubblewrap"
                 />
               )}
