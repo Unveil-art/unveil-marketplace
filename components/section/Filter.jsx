@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import Animate from "@/components/reusable/Animate";
 
-const Filter = () => {
-  const [category, setCategory] = useState(0);
-  const [artist, setArtist] = useState(0);
-  const [medium, setMedium] = useState(0);
-
+const Filter = ({
+  category,
+  setCategory,
+  artist,
+  setArtist,
+  medium,
+  setMedium,
+}) => {
   return (
     <Animate
       options={{ alpha: true, delay: 0.5 }}

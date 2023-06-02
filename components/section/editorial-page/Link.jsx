@@ -22,8 +22,8 @@ const Link = ({ data }) => {
               <Image
                 src={data.Image.data[0].attributes.url}
                 alt={data.Image.data[0].attributes.alt}
-                layout="fill"
-                objectFit="cover"
+                fill={true}
+                style={{ objectFit: "cover" }}
               />
             </div>
             <div>

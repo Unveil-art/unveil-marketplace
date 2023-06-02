@@ -1,8 +1,18 @@
-const ItemStatistics = () => {
+import React from "react";
+import Image from "next/image";
+import Chat from "@/components/reusable/Chat";
+
+const ItemStatistics = ({ artwork }) => {
   return (
     <div className="relative grid grid-cols-1 mx-0 mt-10 md:grid-cols-5 md:mx-10 md:mt-[100px]">
       <div className="relative md:col-span-2 bg-bgColor py-[120px] hidden md:block w-full">
-        <div className="w-[200px] md:sticky md:top-[120px] md:left-[22%] md:-translate-x-1/2 aspect-[3/4] shadow2 bg-unveilGreen"></div>
+        <div className=" mx-32 md:sticky md:top-[120px] md:left-[22%]  aspect-[3/4] ">
+          <img
+            className="object-contain shadow2"
+            src={artwork.media_url}
+            alt={artwork.name}
+          />
+        </div>
       </div>
       <div className="md:col-span-3">
         <div className="md:mb-[100px] px-[15px] md:pl-10 md:pr-5">
@@ -54,13 +64,7 @@ const ItemStatistics = () => {
                 <p className="truncate b4">9</p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack col-span-2 md:col-span-1 flex overflow-hidden bg-bgColor text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
-                <div className="h-[57px] md:h-[68px] bg-unveilGreen aspect-square"></div>
-                <div className="md:py-[8px] px-[12px] py-[6px] md:px-[16px] ">
-                  <p className="font-bold b4">Get advice</p>
-                  <p className="truncate b5">
-                    Our art advisor is just one click away
-                  </p>
-                </div>
+                <Chat title="Get help" text="About this art piece" />
               </div>
             </div>
             <div className="absolute bottom-0 right-0 w-[130px] md:block hidden">
@@ -83,29 +87,38 @@ const ItemStatistics = () => {
           </div>
           <div className="relative pt-5 md:pt-[80px] flex justify-between gap-5">
             <div className="md:space-y-[6px] w-full md:block grid grid-cols-2 gap-[6px]">
-              <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
-                <p className="b5">Print material (PAB)</p>
-                <p className="truncate b4">Archival pigment print</p>
-              </div>
+              {artwork.edition_type !== "NFT_Only" && (
+                <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
+                  <p className="b5">Print material (PAB)</p>
+                  <p className="truncate b4">
+                    {artwork.technique.map((item, i) => (
+                      <span key={i}>
+                        {item}
+                        {i < artwork.technique.length - 1 && <>, </>}
+                      </span>
+                    ))}
+                  </p>
+                </div>
+              )}
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5">Dimentions (DAB)</p>
-                <p className="truncate b4">2000x4000</p>
+                <p className="truncate b4">Dimentions...</p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5">File size</p>
-                <p className="truncate b4">4MB</p>
+                <p className="truncate b4">File size...</p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5">Blockchain</p>
-                <p className="truncate b4">Polygon</p>
+                <p className="truncate b4">Blockchain...</p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5">Token standard</p>
-                <p className="truncate b4">ERC-721</p>
+                <p className="truncate b4">Token..</p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5">Collection address</p>
-                <p className="truncate b4">0xB365AA6973...</p>
+                <p className="truncate w-[100px] b4">adres...</p>
               </div>
               <button className="btn btn-secondary w-full md:col-span-1 col-span-2 md:w-[250px] lg:w-[290px] 2xl:w-[320px]">
                 View on Etherscan

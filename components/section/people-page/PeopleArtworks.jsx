@@ -5,7 +5,7 @@ import AboutStats from "../../reusable/AboutStats";
 const PeopleArtworks = () => {
   return (
     <section className="my-10">
-      <ThreeBlockItems />
+      {/* <ThreeBlockItems /> */}
       <AboutStats
         bigLetters
         h1="artworks"
@@ -17,7 +17,7 @@ const PeopleArtworks = () => {
         h4="Average increase"
         b4="53%"
       />
-      <ThreeBlockItems />
+      {/* <ThreeBlockItems /> */}
     </section>
   );
 };

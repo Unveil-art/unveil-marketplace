@@ -8,8 +8,8 @@ const Chat = ({ title, text }) => {
         <Image
           src="/images/Nick_Fancher.png"
           alt="Nick Fancher"
-          layout="fill"
-          objectFit="cover"
+          fill={true}
+          style={{ objectFit: "cover" }}
         />
       </div>
       <div className="md:pt-[8px] px-[12px] pt-[6px] md:px-[16px] ">

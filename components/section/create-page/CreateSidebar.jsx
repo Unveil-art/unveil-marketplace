@@ -165,16 +165,16 @@ const CreateSidebar = ({
               <Image
                 src={URL.createObjectURL(detailImage1)}
                 alt="Selected"
-                layout="fill"
-                objectFit="cover"
+                fill={true}
+                style={{ objectFit: "cover" }}
               />
             )}
             {!detailImage1 && artwork && (
               <Image
                 src={artwork.detail_shots[0].image_url}
                 alt="Selected"
-                layout="fill"
-                objectFit="cover"
+                fill={true}
+                style={{ objectFit: "cover" }}
               />
             )}
           </label>
@@ -357,8 +357,8 @@ const CreateSidebar = ({
                 <Image
                   src={URL.createObjectURL(detailImage2)}
                   alt="Selected"
-                  layout="fill"
-                  objectFit="cover"
+                  fill={true}
+                  style={{ objectFit: "cover" }}
                 />
               </div>
             )}
@@ -366,8 +366,8 @@ const CreateSidebar = ({
               <Image
                 src={artwork.detail_shots[1].image_url}
                 alt="Selected"
-                layout="fill"
-                objectFit="cover"
+                fill={true}
+                style={{ objectFit: "cover" }}
               />
             )}
           </label>

@@ -46,8 +46,8 @@ const ArtistHighlights = ({ data }) => {
             <Image
               src={item.media.data.attributes.url}
               alt={item.media.data.attributes.alt}
-              layout="fill"
-              objectFit="cover"
+              fill={true}
+              style={{ objectFit: "cover" }}
             />
             <h4 className="absolute text-unveilWhite bottom-5 left-5 s2">
               {item.text}

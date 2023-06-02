@@ -37,8 +37,8 @@ const TwoArticles = ({ data }) => {
                   <Image
                     src={item.attributes.Image.data.attributes.url}
                     alt={item.attributes.Image.data.attributes.alt}
-                    layout="fill"
-                    objectFit="cover"
+                    fill={true}
+                    style={{ objectFit: "cover" }}
                   />
                 )}
               </div>

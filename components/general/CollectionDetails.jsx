@@ -86,8 +86,8 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
               <Image
                 src="/images/bubble-wrap.png"
                 alt="Bubble wrap - coming soon"
-                layout="fill"
-                objectFit="cover"
+                fill={true}
+                style={{ objectFit: "cover" }}
                 className="gsap-bubblewrap"
               />
             )}
@@ -127,9 +127,9 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
           <a
             className={`${
               data.is_button_blocked ? "cursor-not-allowed" : ""
-        } btn btn-primary hover:!bg-[#292928] pt-3.5 pb-3.5`}
+            } btn btn-primary hover:!bg-[#292928] pt-3.5 pb-3.5`}
             style={{ backgroundColor: color, color: backgroundColor }}
-            href={data.is_button_blocked ? 'javascript:;' : data.link}
+            href={data.is_button_blocked ? "javascript:;" : data.link}
           >
             {data.button_name}
           </a>
