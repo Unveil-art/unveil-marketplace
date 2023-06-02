@@ -101,7 +101,7 @@ const GalleryHero = ({ artwork }) => {
                     <p className="b5">Available sizes</p>
                     <p className="truncate b4">
                       {artwork.size.map((item, i) => (
-                        <span>
+                        <span key={i}>
                           {item}
                           {i < artwork.size.length - 1 && <>, </>}
                         </span>

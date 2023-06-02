@@ -92,7 +92,7 @@ const ItemStatistics = ({ artwork }) => {
                   <p className="b5">Print material (PAB)</p>
                   <p className="truncate b4">
                     {artwork.technique.map((item, i) => (
-                      <span>
+                      <span key={i}>
                         {item}
                         {i < artwork.technique.length - 1 && <>, </>}
                       </span>

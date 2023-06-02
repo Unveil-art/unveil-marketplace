@@ -9,9 +9,6 @@ import Provenance from "../../../components/section/gallery-page/Provenance";
 import { getArtworkById, getArtworks } from "lib/backend";
 
 const Details = ({ artwork, browse }) => {
-  console.log(artwork);
-  const router = useRouter();
-
   return (
     <main>
       <GalleryHero artwork={artwork} />
