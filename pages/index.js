@@ -22,9 +22,13 @@ export default function Home({ data, faq, editorials }) {
     <>
       <FloatingArt data={homeData.page1} />
       <GridColThree data={homeData.page1.blocks} />
-      <RequestAccess
-        data={homeData.page6}
-        request={homeData.page1.request_access}
+      <Collection
+        data={homeData.page5}
+        oneLiner={homeData.page5.oneliner}
+        title={homeData.page5.heading}
+        backgroundColor={homeData.page5.backgroundcolor}
+        color={homeData.page5.fontcolor}
+        imageMargin={homeData.page5.margin}
       />
       <Socials title={homeData.page6.heading} data={homeData.page6.block} />
       <Collection
@@ -36,15 +40,10 @@ export default function Home({ data, faq, editorials }) {
       />
       <NewlyCurated data={homeData.page3} />
       <TrustedPartners data={homeData.page4} />
-      <Collection
-        data={homeData.page5}
-        oneLiner="New works, freshtalent. Discover the unseen."
-        title={homeData.page5.heading}
-        backgroundColor={homeData.page5.backgroundcolor}
-        color={homeData.page5.fontcolor}
-        imageMargin={homeData.page5.margin}
+      <RequestAccess
+        data={homeData.page6}
+        request={homeData.page1.request_access}
       />
-
       <WhyCollect data={homeData.page7} />
       <Editorial data={homeData.page8} editorial={editorialData} />
       <FAQ data={faqData.block} />
