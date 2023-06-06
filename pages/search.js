@@ -4,6 +4,7 @@ import useDebounce from "@/hooks/useDebounce";
 import { getArtworksSearch, getCollectionsSearch } from "lib/backend";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import Image from "next/image";
+import Link from "next/link";
 
 const Search = () => {
   const [search, setSearch] = useState("");
@@ -114,14 +115,18 @@ const Search = () => {
                     key={i}
                     className="flex items-center gap-5 py-5 border-b last:border-none border-bgColorHover"
                   >
-                    <div className="relative w-[120px] h-[140px] flex justify-center items-center p-5 bg-bgColor">
-                      <img
-                        className="object-contain frame-1"
-                        src={artwork.media_url}
-                        alt={artwork.name}
-                      />
-                    </div>
-                    <h4 className="s1 w-[300px]">{artwork.name}</h4>
+                    <Link href={`/gallery/artwork/${artwork.id}`}>
+                      <div className="relative w-[120px] h-[140px] flex justify-center items-center p-5 bg-bgColor">
+                        <img
+                          className="object-contain frame-1"
+                          src={artwork.media_url}
+                          alt={artwork.name}
+                        />
+                      </div>
+                    </Link>
+                    <Link href={`/gallery/artwork/${artwork.id}`}>
+                      <h4 className="s1 w-[300px]">{artwork.name}</h4>
+                    </Link>
                     <div>
                       <p className="leading-none b4 opacity-60">Editions</p>
                       <p className="b3">x</p>
@@ -145,15 +150,19 @@ const Search = () => {
                     key={i}
                     className="flex items-center gap-5 py-5 border-b last:border-none border-bgColorHover"
                   >
-                    <div className="relative w-[120px] h-[140px]">
-                      <Image
-                        src={collection.media_url}
-                        alt={collection.title}
-                        fill={true}
-                        style={{ objectFit: "cover" }}
-                      />
-                    </div>
-                    <h4 className="s1 w-[300px]">{collection.title}</h4>
+                    <Link href={`/gallery/collection/${collection.id}`}>
+                      <div className="relative w-[120px] h-[140px]">
+                        <Image
+                          src={collection.media_url}
+                          alt={collection.title}
+                          fill={true}
+                          style={{ objectFit: "cover" }}
+                        />
+                      </div>
+                    </Link>
+                    <Link href={`/gallery/collection/${collection.id}`}>
+                      <h4 className="s1 w-[300px]">{collection.title}</h4>
+                    </Link>
                     <div>
                       <p className="leading-none b4 opacity-60">Artworks</p>
                       <p className="b3">x</p>

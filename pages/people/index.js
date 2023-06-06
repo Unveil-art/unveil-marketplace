@@ -41,7 +41,6 @@ const People = () => {
       <Title title="People" />
       <OneLiner
         text="Top art photography projects for their excellence and stunning visuals."
-        info
         gallery
       />
       <Browse filter={filter} setFilter={setFilter} />

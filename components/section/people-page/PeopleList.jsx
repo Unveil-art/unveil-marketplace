@@ -31,7 +31,7 @@ const PeopleList = ({ people }) => {
                         <div className="flex items-center gap-5 py-5">
                           <div className="h-[140px] w-[120px] bg-bgColor"></div>
                           <div>
-                            <p className="mb-[10px] s1 max-w-[90%] md:max-w-[170px] lg:max-w-[270px] lg:min-w-[270px] truncate">
+                            <p className="mb-[10px] s1 max-w-[180px] md:max-w-[170px] lg:max-w-[270px] lg:min-w-[270px] truncate">
                               {displayName}
                             </p>
                             <div className="block md:hidden">

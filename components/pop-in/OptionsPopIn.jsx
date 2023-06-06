@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
 import Close from "../svg/Close";
+import Link from "next/link";
 
 const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork }) => {
   const [editionSizes, setEditionSizes] = useState([]);
@@ -78,9 +79,11 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork }) => {
                               </p>
                               <p>€{edition.price}</p>
                             </div>
-                            <button className="btn btn-secondary btn-full">
-                              Buy from artist
-                            </button>
+                            <Link href="/checkout">
+                              <button className="btn btn-secondary btn-full">
+                                Buy from artist
+                              </button>
+                            </Link>
                           </div>
                         </div>
                       ))}
@@ -112,9 +115,11 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork }) => {
                       </p>
                       <p>€{edition.price}</p>
                     </div>
-                    <button className="btn btn-secondary btn-full">
-                      Buy from artist
-                    </button>
+                    <Link href="/checkout">
+                      <button className="btn btn-secondary btn-full">
+                        Buy from artist
+                      </button>
+                    </Link>
                   </div>
                 </div>
               ))}

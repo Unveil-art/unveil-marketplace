@@ -57,10 +57,10 @@ const GalleryHero = ({ artwork }) => {
   return (
     <>
       <section className="relative grid grid-cols-1 md:grid-cols-5">
-        <div className="h-[50svh] md:h-screen md:sticky top-0 flex items-center justify-center md:col-span-3 bg-bgColor py-[120px]">
-          <div className="relative m-20 md:m-40 ">
+        <div className="h-[50svh] md:h-screen md:sticky  top-0 flex items-center justify-center md:col-span-3 bg-bgColor py-[120px]">
+          <div className="relative md:p-10 h-full md:h-[80%] ">
             <img
-              className="object-contain frame-1"
+              className="object-contain h-full frame-1"
               src={artwork.media_url}
               alt={artwork.name}
             />

@@ -293,12 +293,6 @@ const Edit = ({ artwork }) => {
             setName={setName}
           />
           <div className="hidden lg:grid grid-cols-2 mt-5 gap-[15px]">
-            <p
-              onClick={() => handleCreateNFT()}
-              className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
-            >
-              Create NFTs
-            </p>
             <button
               type="submit"
               className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
@@ -310,6 +304,12 @@ const Edit = ({ artwork }) => {
               )}
               {!loading && <p>Save</p>}
             </button>
+            <p
+              onClick={() => handleCreateNFT()}
+              className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
+            >
+              Create NFTs
+            </p>
           </div>
         </div>
 
@@ -321,12 +321,6 @@ const Edit = ({ artwork }) => {
           setDescription={setDescription}
         />
         <div className="grid grid-cols-1 mt-5 gap-[15px] lg:hidden ">
-          <p
-            onClick={() => handleCreateNFT()}
-            className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
-          >
-            Create NFTs
-          </p>
           <button
             type="submit"
             className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
@@ -338,6 +332,12 @@ const Edit = ({ artwork }) => {
             )}
             {!loading && <p>Save</p>}
           </button>
+          <p
+            onClick={() => handleCreateNFT()}
+            className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
+          >
+            Create NFTs
+          </p>
         </div>
       </form>
     </main>
