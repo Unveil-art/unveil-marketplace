@@ -155,7 +155,7 @@ const CreateForm = ({
 
   const fetchCollection = async () => {
     try {
-      const data = await getCollection(value);
+      const data = await getCollection();
       const extractedCollections = data.map((collection) => ({
         id: collection.id,
         title: collection.title,
@@ -168,6 +168,10 @@ const CreateForm = ({
       notify(err.message);
     }
   };
+
+  useEffect(() => {
+    console.log(collections);
+  }, [collections]);
 
   useEffect(() => {
     fetchCollection();
@@ -229,12 +233,12 @@ const CreateForm = ({
       const image = await uploadImage(value, values.imageCollection[0]);
 
       await postCollection(value, values, image.data);
-      await fetchCollection();
 
       resetColl();
       setCollectionImage(null);
       setOpenCollection(false);
       setLoading(false);
+      await fetchCollection();
     } catch (error) {
       setLoading(false);
       console.log(error);

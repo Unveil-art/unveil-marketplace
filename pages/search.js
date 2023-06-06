@@ -1,20 +1,40 @@
 import React, { useEffect, useRef, useState } from "react";
 import Arrow from "@/components/svg/Arrow";
 import useDebounce from "@/hooks/useDebounce";
-import { useRouter } from "next/router";
+import { getArtworksSearch, getCollectionsSearch } from "lib/backend";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import Image from "next/image";
+import Link from "next/link";
 
 const Search = () => {
   const [search, setSearch] = useState("");
   const searchEl = useRef();
   const debounce = useDebounce(search, 500);
-  const router = useRouter();
+  const [searching, setSearching] = useState(false);
+  const [artworks, setArtworks] = useState([]);
+  const [collections, setCollections] = useState();
 
   const handleSuggestions = (value) => {
     setSearch(value);
   };
 
+  const fetchSearch = async (query) => {
+    const artworksRes = await getArtworksSearch(query);
+    const collectionsRes = await getCollectionsSearch(query);
+
+    setArtworks(artworksRes);
+    setCollections(collectionsRes);
+  };
+
   useEffect(() => {
-    console.log("Debounce");
+    if (search !== "") {
+      fetchSearch(search);
+      setSearching(true);
+    } else {
+      setSearching(false);
+      setArtworks([]);
+      setCollections([]);
+    }
   }, [debounce]);
 
   return (
@@ -41,39 +61,118 @@ const Search = () => {
         )}
       </div>
       <div className="ml-[40px] md:ml-[35svw] md:pr-[40px] mt-[60px]">
-        <p className="b3 text-[17px] mb-1">Suggestions</p>
-        <div className="space-y-[2px]">
-          <div className="text-[#545454] items-center flex gap-1 b3">
-            <Arrow small />
-            Collection:{" "}
-            <span
-              onClick={() => handleSuggestions("Alexander Sporre")}
-              className="cursor-pointer underline-on-hover"
-            >
-              Alexander Sporre
-            </span>
-          </div>
-          <div className="text-[#545454] items-center flex gap-1 b3">
-            <Arrow small />
-            Artist:{" "}
-            <span
-              onClick={() => handleSuggestions("Bastiaan Woudt")}
-              className="cursor-pointer underline-on-hover"
-            >
-              Bastiaan Woudt
-            </span>
-          </div>
-          <div className="text-[#545454] items-center flex gap-1 b3">
-            <Arrow small />
-            Artwork:{" "}
-            <span
-              onClick={() => handleSuggestions("Pink Flower")}
-              className="cursor-pointer underline-on-hover"
-            >
-              Pink Flower
-            </span>
-          </div>
-        </div>
+        {!searching && (
+          <>
+            <p className="b3 text-[17px] mb-1">Suggestions</p>
+            <div className="space-y-[2px]">
+              <div className="text-[#545454] items-center flex gap-1 b3">
+                <Arrow small />
+                Collection:{" "}
+                <span
+                  onClick={() => handleSuggestions("Alexander Sporre")}
+                  className="cursor-pointer underline-on-hover"
+                >
+                  Alexander Sporre
+                </span>
+              </div>
+              <div className="text-[#545454] items-center flex gap-1 b3">
+                <Arrow small />
+                Artist:{" "}
+                <span
+                  onClick={() => handleSuggestions("Bastiaan Woudt")}
+                  className="cursor-pointer underline-on-hover"
+                >
+                  Bastiaan Woudt
+                </span>
+              </div>
+              <div className="text-[#545454] items-center flex gap-1 b3">
+                <Arrow small />
+                Artwork:{" "}
+                <span
+                  onClick={() => handleSuggestions("Pink Flower")}
+                  className="cursor-pointer underline-on-hover"
+                >
+                  Pink Flower
+                </span>
+              </div>
+            </div>
+          </>
+        )}
+        {searching && (
+          <>
+            {artworks && artworks.length > 0 && (
+              <div className="mb-20">
+                <div className="flex items-center gap-1 mb-1 s2">
+                  <p>Artworks</p>
+                  <div className="w-[20px] h-5 border-unveilBlack border rounded-full relative">
+                    <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[16px]">
+                      {artworks.length}
+                    </span>
+                  </div>
+                </div>
+                {artworks.map((artwork, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-5 py-5 border-b last:border-none border-bgColorHover"
+                  >
+                    <Link href={`/gallery/artwork/${artwork.id}`}>
+                      <div className="relative w-[120px] h-[140px] flex justify-center items-center p-5 bg-bgColor">
+                        <img
+                          className="object-contain frame-1"
+                          src={artwork.media_url}
+                          alt={artwork.name}
+                        />
+                      </div>
+                    </Link>
+                    <Link href={`/gallery/artwork/${artwork.id}`}>
+                      <h4 className="s1 w-[300px]">{artwork.name}</h4>
+                    </Link>
+                    <div>
+                      <p className="leading-none b4 opacity-60">Editions</p>
+                      <p className="b3">x</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {collections && collections.length > 0 && (
+              <div className="mb-20">
+                <div className="flex items-center gap-1 mb-1 s2">
+                  <p>Collections</p>
+                  <div className="w-[20px] h-5 border-unveilBlack border rounded-full relative">
+                    <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[16px]">
+                      {collections.length}
+                    </span>
+                  </div>
+                </div>
+                {collections.map((collection, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-5 py-5 border-b last:border-none border-bgColorHover"
+                  >
+                    <Link href={`/gallery/collection/${collection.id}`}>
+                      <div className="relative w-[120px] h-[140px]">
+                        <Image
+                          src={collection.media_url}
+                          alt={collection.title}
+                          fill={true}
+                          style={{ objectFit: "cover" }}
+                        />
+                      </div>
+                    </Link>
+                    <Link href={`/gallery/collection/${collection.id}`}>
+                      <h4 className="s1 w-[300px]">{collection.title}</h4>
+                    </Link>
+                    <div>
+                      <p className="leading-none b4 opacity-60">Artworks</p>
+                      <p className="b3">x</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
       </div>
     </main>
   );

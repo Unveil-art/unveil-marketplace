@@ -22,15 +22,15 @@ const AccountPage = () => {
   const { value } = useLocalStorage("token");
   const [user, setUser] = useState();
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const userData = await getUserMe(value);
-  //     setUser(userData);
-  //   };
-  //   if (value) {
-  //     fetchUser();
-  //   }
-  // }, [value]);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userData = await getUserMe(value);
+      setUser(userData);
+    };
+    if (value) {
+      fetchUser();
+    }
+  }, [value]);
 
   const handleAccountState = (e) => {
     window.scrollTo(0, 0);

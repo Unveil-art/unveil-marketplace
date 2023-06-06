@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 import Router from "next/router";
@@ -10,6 +10,10 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 const ArtworkListItem = ({ i, item }) => {
   const [list, setList] = useState(item);
   const { value } = useLocalStorage("token");
+
+  useEffect(() => {
+    setList(item);
+  }, [item]);
 
   const handleListing = async (e) => {
     e.preventDefault();
@@ -30,8 +34,12 @@ const ArtworkListItem = ({ i, item }) => {
     >
       <div className="flex items-center gap-4 md:gap-10">
         <div className="h-[136px] w-[106px] md:h-[140px] md:w-[120px] bg-bgColor my-[10px]">
-          <div className="flex items-center justify-center mx-5 my-auto shadow h-fit">
-            <img src={item.media_url} alt={`Artwork ${item.name}`} />
+          <div className="flex items-center justify-center h-full p-5">
+            <img
+              className="object-contain frame-1"
+              src={item.media_url}
+              alt={item.name}
+            />
           </div>
         </div>
         <div>

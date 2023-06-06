@@ -6,21 +6,33 @@ import Link from "next/link";
 
 const Artworks = () => {
   const { value } = useLocalStorage("token");
-  const [artworks, setArtworks] = useState([]);
+  const [artworksUnlist, setArtworksUnlist] = useState([]);
+  const [artworksList, setArtworksList] = useState([]);
+  const [filter, setFilter] = useState(0);
+
+  const fetchUser = async (listed, setState) => {
+    const artworkData = await getArtworksMe(value, listed);
+    setState(artworkData);
+  };
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const artworkData = await getArtworksMe(value);
-      setArtworks(artworkData);
-    };
     if (value) {
-      fetchUser();
+      fetchUser(false, setArtworksUnlist);
+      fetchUser(true, setArtworksList);
     }
   }, [value]);
 
   useEffect(() => {
-    console.log("artworks", artworks);
-  }, [artworks]);
+    if (value) {
+      if (filter === 0) {
+        fetchUser(false, setArtworksUnlist);
+      } else if (filter === 1) {
+        fetchUser(true, setArtworksList);
+      } else {
+        console.log(3);
+      }
+    }
+  }, [filter]);
 
   return (
     <>
@@ -36,23 +48,53 @@ const Artworks = () => {
           </button>
         </Link>
         <div className="flex gap-2 overflow-auto md:pb-4 flex-nowrap whitespace-nowrap">
-          <span className="px-2 border rounded-full border-unveilDrakGray l2">
-            Unlisted 1
+          <span
+            onClick={() => setFilter(0)}
+            className={`${
+              filter === 0 ? "border-unveilBlack" : "border-unveilDrakGray"
+            } px-2 cursor-pointer border rounded-full  l2`}
+          >
+            Unlisted {artworksUnlist.length}
           </span>
-          <span className="px-2 border rounded-full border-unveilDrakGray l2">
-            Listed for sale 0
+          <span
+            onClick={() => setFilter(1)}
+            className={`${
+              filter === 1 ? "border-unveilBlack" : "border-unveilDrakGray"
+            } px-2 cursor-pointer border rounded-full  l2`}
+          >
+            Listed for sale {artworksList.length}
           </span>
-          <span className="px-2 border rounded-full border-unveilDrakGray l2">
-            To be printed 3
+          <span
+            onClick={() => setFilter(2)}
+            className={`${
+              filter === 2 ? "border-unveilBlack" : "border-unveilDrakGray"
+            } px-2 cursor-pointer border rounded-full  l2`}
+          >
+            To be printed x
           </span>
         </div>
       </div>
       <div className="ml-[40px] md:ml-[35svw] pr-[15px] md:pr-10 mb-10">
-        {artworks.length > 0 && (
+        {filter === 0 && (
           <>
-            {artworks.map((item, i) => (
-              <ArtworkListItem key={i} item={item} />
-            ))}
+            {artworksUnlist.length > 0 && (
+              <>
+                {artworksUnlist.map((item, i) => (
+                  <ArtworkListItem key={i} item={item} />
+                ))}
+              </>
+            )}
+          </>
+        )}
+        {filter === 1 && (
+          <>
+            {artworksList.length > 0 && (
+              <>
+                {artworksList.map((item, i) => (
+                  <ArtworkListItem key={i} item={item} />
+                ))}
+              </>
+            )}
           </>
         )}
       </div>

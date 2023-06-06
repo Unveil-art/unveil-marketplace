@@ -52,12 +52,20 @@ const Sidebar = ({ accountState, setAccountState }) => {
         Membership
       </p> */}
       <p
+        onClick={() => handleAccountState(4)}
+        className={`${
+          accountState === 4 ? "text-unveilBlack" : ""
+        } cursor-pointer hover:text-unveilBlack unveilTransition whitespace-nowrap`}
+      >
+        Referrals
+      </p>
+      <p
         onClick={() => handleAccountState(5)}
         className={`${
           accountState === 5 ? "text-unveilBlack" : ""
         } cursor-pointer hover:text-unveilBlack unveilTransition whitespace-nowrap`}
       >
-        Referrals
+        Recognitions
       </p>
       <p
         onClick={() => handleAccountState(6)}
@@ -65,20 +73,12 @@ const Sidebar = ({ accountState, setAccountState }) => {
           accountState === 6 ? "text-unveilBlack" : ""
         } cursor-pointer hover:text-unveilBlack unveilTransition whitespace-nowrap`}
       >
-        Recognitions
+        Wishlist
       </p>
       <p
         onClick={() => handleAccountState(7)}
         className={`${
           accountState === 7 ? "text-unveilBlack" : ""
-        } cursor-pointer hover:text-unveilBlack unveilTransition whitespace-nowrap`}
-      >
-        Wishlist
-      </p>
-      <p
-        onClick={() => handleAccountState(8)}
-        className={`${
-          accountState === 8 ? "text-unveilBlack" : ""
         } cursor-pointer hover:text-unveilBlack unveilTransition whitespace-nowrap`}
       >
         Followed artists
