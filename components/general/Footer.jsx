@@ -37,42 +37,69 @@ const Footer = () => {
             <p className="b3">Polygon/USD</p>
           </div>
           {footers && (
-            <div className="space-y-1">
-              <p className="b3 font-[500]">
-                {footers?.data[0].attributes.footer.category}
-              </p>
-              {footers.data[0].attributes.footer.data.map((item, i) => (
-                <a key={i} target="_blank" rel="noreferrer" href={item.link}>
-                  <p className="b3">{item.heading}</p>
-                </a>
-              ))}
-            </div>
+            <>
+              {footers.data && (
+                <div className="space-y-1">
+                  <p className="b3 font-[500]">
+                    {footers.data[0].attributes.footer.category}
+                  </p>
+                  {footers.data[0].attributes.footer.data.map((item, i) => (
+                    <a
+                      key={i}
+                      target="_blank"
+                      rel="noreferrer"
+                      href={item.link}
+                    >
+                      <p className="b3">{item.heading}</p>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </div>
         <div className="space-y-6">
           {footers && (
-            <div className="space-y-1">
-              <p className="b3 font-[500]">
-                {footers.data[1].attributes.footer.category}
-              </p>
-              {footers.data[1].attributes.footer.data.map((item, i) => (
-                <a key={i} target="_blank" rel="noreferrer" href={item.link}>
-                  <p className="b3">{item.heading}</p>
-                </a>
-              ))}
-            </div>
+            <>
+              {footers.data && (
+                <div className="space-y-1">
+                  <p className="b3 font-[500]">
+                    {footers.data[1].attributes.footer.category}
+                  </p>
+                  {footers.data[1].attributes.footer.data.map((item, i) => (
+                    <a
+                      key={i}
+                      target="_blank"
+                      rel="noreferrer"
+                      href={item.link}
+                    >
+                      <p className="b3">{item.heading}</p>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </>
           )}
           {footers && (
-            <div className="space-y-1">
-              <p className="b3 font-[500]">
-                {footers.data[2].attributes.footer.category}
-              </p>
-              {footers.data[2].attributes.footer.data.map((item, i) => (
-                <a key={i} target="_blank" rel="noreferrer" href={item.link}>
-                  <p className="b3">{item.heading}</p>
-                </a>
-              ))}
-            </div>
+            <>
+              {footers.data && (
+                <div className="space-y-1">
+                  <p className="b3 font-[500]">
+                    {footers.data[2].attributes.footer.category}
+                  </p>
+                  {footers.data[2].attributes.footer.data.map((item, i) => (
+                    <a
+                      key={i}
+                      target="_blank"
+                      rel="noreferrer"
+                      href={item.link}
+                    >
+                      <p className="b3">{item.heading}</p>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

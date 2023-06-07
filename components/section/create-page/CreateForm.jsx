@@ -9,7 +9,7 @@ import {
   getUsers,
   uploadImage,
   postCollection,
-  getCollection,
+  getCollectionsMe,
   deleteArtwork,
 } from "lib/backend";
 import useLocalStorage from "../../../hooks/useLocalStorage";
@@ -155,7 +155,7 @@ const CreateForm = ({
 
   const fetchCollection = async () => {
     try {
-      const data = await getCollection();
+      const data = await getCollectionsMe(value, false);
       const extractedCollections = data.map((collection) => ({
         id: collection.id,
         title: collection.title,
@@ -174,8 +174,10 @@ const CreateForm = ({
   }, [collections]);
 
   useEffect(() => {
-    fetchCollection();
-  }, []);
+    if (value) {
+      fetchCollection();
+    }
+  }, [value]);
 
   useEffect(() => {
     if (openCollection) {

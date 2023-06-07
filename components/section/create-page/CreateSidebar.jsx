@@ -353,14 +353,12 @@ const CreateSidebar = ({
               />
             )}
             {detailImage2 && (
-              <div className="relative z-20 w-full h-full">
-                <Image
-                  src={URL.createObjectURL(detailImage2)}
-                  alt="Selected"
-                  fill={true}
-                  style={{ objectFit: "cover" }}
-                />
-              </div>
+              <Image
+                src={URL.createObjectURL(detailImage2)}
+                alt="Selected"
+                fill={true}
+                style={{ objectFit: "cover" }}
+              />
             )}
             {!detailImage2 && artwork && (
               <Image
