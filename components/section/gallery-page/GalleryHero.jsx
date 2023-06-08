@@ -58,7 +58,7 @@ const GalleryHero = ({ artwork }) => {
     <>
       <section className="relative grid grid-cols-1 md:grid-cols-5">
         <div className="h-[50svh] md:h-screen md:sticky  top-0 flex items-center justify-center md:col-span-3 bg-bgColor py-[120px]">
-          <div className="relative md:px-[20vw] h-[] w-[40%] md:h-[80%] ">
+          <div className="relative md:px-[20vw] md:w-full w-[40%] md:h-[80%] ">
             <div className="shadow1">
               <img
                 className="object-contain h-full frame-1"
