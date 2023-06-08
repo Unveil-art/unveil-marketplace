@@ -420,7 +420,7 @@ const CreateForm = ({
                               item.active
                                 ? "border-unveilBlack"
                                 : "border-unveilDrakGray"
-                            } border rounded-full px-[15px] cursor-pointer`}
+                            } border hover:bg-bgColor unveilTransition rounded-full px-[15px] cursor-pointer`}
                           >
                             {item.size}
                           </span>
@@ -499,7 +499,7 @@ const CreateForm = ({
                               item.active
                                 ? "border-unveilBlack"
                                 : "border-unveilDrakGray"
-                            } border rounded-full uppercase text-[10px] px-[15px] cursor-pointer`}
+                            } border hover:bg-bgColor unveilTransition rounded-full uppercase text-[10px] px-[15px] cursor-pointer`}
                           >
                             {item.paper}
                           </span>
@@ -557,7 +557,7 @@ const CreateForm = ({
                 <p className="mb-[15px] b3">Frame</p>
                 {!frameOpen && (
                   <div className="flex gap-2 b3 lg:b4">
-                    <span className="border uppercase text-[10px] rounded-full px-[15px] border-unveilDrakGray">
+                    <span className="border  uppercase text-[10px] rounded-full px-[15px] border-unveilDrakGray">
                       {frame.frame}, {frame.size}, {frame.colour} frame, White
                       border {frame.border}
                     </span>
@@ -585,7 +585,7 @@ const CreateForm = ({
                             item === frame.frame
                               ? "border-unveilBlack"
                               : "border-unveilDrakGray"
-                          } border uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
+                          } border hover:bg-bgColor unveilTransition uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
                         >
                           {item}
                         </span>
@@ -607,7 +607,7 @@ const CreateForm = ({
                             item === frame.size
                               ? "border-unveilBlack"
                               : "border-unveilDrakGray"
-                          } border uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
+                          } border hover:bg-bgColor unveilTransition uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
                         >
                           {item}
                         </span>
@@ -629,7 +629,7 @@ const CreateForm = ({
                             item === frame.colour
                               ? "border-unveilBlack"
                               : "border-unveilDrakGray"
-                          } border uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
+                          } border hover:bg-bgColor unveilTransition uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
                         >
                           {item}
                         </span>
@@ -651,7 +651,7 @@ const CreateForm = ({
                             item === frame.border
                               ? "border-unveilBlack"
                               : "border-unveilDrakGray"
-                          } border uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
+                          } border hover:bg-bgColor unveilTransition uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
                         >
                           {item}
                         </span>
@@ -678,7 +678,7 @@ const CreateForm = ({
                           return (
                             <span
                               key={i}
-                              className="border uppercase text-[10px] rounded-full px-[15px] border-unveilDrakGray"
+                              className="border hover:bg-bgColor uppercase text-[10px] rounded-full px-[15px] border-unveilDrakGray"
                             >
                               {item.technique}
                             </span>
@@ -693,7 +693,7 @@ const CreateForm = ({
                               item.active
                                 ? "border-unveilBlack"
                                 : "border-unveilDrakGray"
-                            } border uppercase text-[10px] rounded-full px-[15px] cursor-pointer`}
+                            } border uppercase hover:bg-bgColor unveilTransition text-[10px] rounded-full px-[15px] cursor-pointer`}
                           >
                             {item.technique}
                           </span>
@@ -1024,37 +1024,37 @@ const CreateForm = ({
               defaultValue={artwork ? item.percentage : null}
               {...register(`percentage[${i}]`)}
             >
-              <option value="1">0%</option>
-              <option value="1">0.5%</option>
-              <option value="1">1%</option>
-              <option value="1">1.5%</option>
-              <option value="2">2%</option>
-              <option value="2">2.5%</option>
-              <option value="3">3%</option>
-              <option value="3">3.5%</option>
-              <option value="4">4%</option>
-              <option value="4">4.5%</option>
-              <option value="5">5%</option>
-              <option value="5">5.5%</option>
-              <option value="6">6%</option>
-              <option value="6">6.5%</option>
-              <option value="7">7%</option>
-              <option value="7">7.5%</option>
-              <option value="8">8%</option>
-              <option value="8">8.5%</option>
-              <option value="9">9%</option>
-              <option value="9">9.5%</option>
-              <option value="10">10%</option>
-              <option value="10">10.5%</option>
-              <option value="11">11%</option>
-              <option value="11">11.5%</option>
-              <option value="12">12%</option>
-              <option value="12">12.5%</option>
-              <option value="13">13%</option>
-              <option value="13">13.5%</option>
-              <option value="14">14%</option>
-              <option value="14">14.5%</option>
-              <option value="15">15%</option>
+              <option value={0}>0%</option>
+              <option value={0.5}>0.5%</option>
+              <option value={1}>1%</option>
+              <option value={1.5}>1.5%</option>
+              <option value={2}>2%</option>
+              <option value={2.5}>2.5%</option>
+              <option value={3}>3%</option>
+              <option value={3.5}>3.5%</option>
+              <option value={4}>4%</option>
+              <option value={4.5}>4.5%</option>
+              <option value={5}>5%</option>
+              <option value={5.5}>5.5%</option>
+              <option value={6}>6%</option>
+              <option value={6.5}>6.5%</option>
+              <option value={7}>7%</option>
+              <option value={7.5}>7.5%</option>
+              <option value={8}>8%</option>
+              <option value={8.5}>8.5%</option>
+              <option value={9}>9%</option>
+              <option value={9.5}>9.5%</option>
+              <option value={10}>10%</option>
+              <option value={10.5}>10.5%</option>
+              <option value={11}>11%</option>
+              <option value={11.5}>11.5%</option>
+              <option value={12}>12%</option>
+              <option value={12.5}>12.5%</option>
+              <option value={13}>13%</option>
+              <option value={13.5}>13.5%</option>
+              <option value={14}>14%</option>
+              <option value={14.5}>14.5%</option>
+              <option value={15}>15%</option>
             </select>
             <div
               onClick={() => handleDeleteRow(i, setRoyalties)}

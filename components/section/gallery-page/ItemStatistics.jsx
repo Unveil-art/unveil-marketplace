@@ -14,57 +14,85 @@ const ItemStatistics = ({ artwork }) => {
           />
         </div>
       </div>
+
       <div className="md:col-span-3">
         <div className="md:mb-[100px] px-[15px] md:pl-10 md:pr-5">
           <p className="pb-5 s1 md:pb-0">Pricing statistics</p>
           <div className="w-[180px] md:hidden block">
-            <p className="b4">
+            <p className="leading-[16px] md:leading-[25px] b4">
               <strong>About pricing</strong>
               <br />
               We believe transparency creates wealth we gain trust by our
               collectors by being transparent.
             </p>
           </div>
+
           <div className="relative pt-5 md:pt-[80px] flex justify-between gap-5">
             <div className="md:space-y-[6px] w-full md:block grid grid-cols-2 gap-[6px]">
               <div className="rounded-[10px] hover:border-unveilBlack  border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
-                <p className="b5">Total selling volume market volume</p>
-                <p className="truncate b4">€31.120</p>
+                <p className="truncate b5">
+                  Total selling volume market volume
+                </p>
+                <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                  €31.120
+                </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
-                <p className="b5">Last purchase price</p>
-                <p className="truncate b4">€31.120</p>
+                <p className="b5 leading-[23px]">Last purchase price</p>
+                <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                  €31.120
+                </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
-                <p className="b5">Volume last 30 days</p>
-                <p className="truncate b4">€31.120</p>
+                <p className="b5 leading-[23px]">Volume last 30 days</p>
+                <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                  €31.120
+                </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
-                <p className="b5">Highest non-accepted bid</p>
-                <p className="truncate b4">€31.120</p>
+                <p className="b5 leading-[23px]">Highest non-accepted bid</p>
+                <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                  €31.120
+                </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
-                <p className="b5">Unique collectors</p>
-                <p className="truncate b4">9</p>
+                <p className="b5 leading-[23px]">Unique collectors</p>
+                <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                  9
+                </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
-                <p className="b5">Claimed physical artworks</p>
-                <p className="truncate b4">69%%</p>
+                <p className="b5 leading-[23px]">Claimed physical artworks</p>
+                <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                  69%%
+                </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
-                <p className="b5">Price increase since first sale</p>
-                <p className="truncate b4">121%</p>
+                <p className="b5 leading-[23px]">
+                  Price increase since first sale
+                </p>
+                <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                  121%
+                </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
-                <p className="b5">Distribution Primary Sale</p>
-                <p className="truncate b4">82.5% artist, 5% curator</p>
+                <p className="b5 leading-[23px]">Distribution Primary Sale</p>
+                <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                  82.5% artist, 5% curator
+                </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
-                <p className="b5">Editions left</p>
-                <p className="truncate b4">9</p>
+                <p className="b5 leading-[23px]">Editions left</p>
+                <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                  9
+                </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack col-span-2 md:col-span-1 flex overflow-hidden bg-bgColor text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
-                <Chat title="Get help" text="About this art piece" />
+                <Chat
+                  chatBtn={true}
+                  title="Get advice"
+                  text="Our art advisor is just one click away"
+                />
               </div>
             </div>
             <div className="absolute bottom-0 right-0 w-[130px] md:block hidden">

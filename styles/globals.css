@@ -256,6 +256,13 @@
     box-shadow: 0.966391px 0.966391px 0.966391px rgba(0, 0, 0, 0.17);
     @apply p-3 border-[#3F3030] border-4;
   }
+  .shadow1 {
+    filter: drop-shadow(75px 107px 52px rgba(0, 0, 0, 0.01))
+      drop-shadow(42px 60px 44px rgba(0, 0, 0, 0.05))
+      drop-shadow(19px 27px 33px rgba(0, 0, 0, 0.09))
+      drop-shadow(5px 7px 18px rgba(0, 0, 0, 0.1))
+      drop-shadow(0px 0px 0px rgba(0, 0, 0, 0.1));
+  }
   .shadow2 {
     filter: drop-shadow(8px 11px 5px rgba(0, 0, 0, 0.01))
       drop-shadow(5px 6px 5px rgba(0, 0, 0, 0.05))
@@ -266,6 +273,10 @@
   .underline-on-hover {
     position: relative;
     display: inline-block;
+  }
+
+  .underline-on-hover-white::after {
+    background-color: #f7f4ed !important;
   }
 
   .underline-on-hover::after {

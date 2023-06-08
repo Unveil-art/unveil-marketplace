@@ -32,21 +32,23 @@ const AboutCurator = ({ owner }) => {
           About
         </h3>
         <div className="w-[55%] pt-[100px] md:pt-0 pr-[15px] pb-10 ml-auto md:ml-0 md:absolute bottom-10 right-10  h-fit">
-          <p>
-            By <span className="l2">{displayName}</span>
-          </p>
+          <div className="flex items-end gap-2 flex-nowrap">
+            <p className="b3">By</p>
+            <p className="truncate l2">{displayName}</p>
+          </div>
+
           <h4 className="mt-5 mb-10 b2 md:h2">{owner.description}</h4>
           <div className="mb-5">
-            <p className="py-1 border-b cursor-pointer b4 border-unveilWhite">
+            <p className="py-1 border-b cursor-pointer b3 md:b4 border-unveilWhite">
               x Awards
             </p>
-            <p className="py-1 border-b cursor-pointer b4 border-unveilWhite">
+            <p className="py-1 border-b cursor-pointer b3 md:b4 border-unveilWhite">
               x Awards
             </p>
-            <p className="py-1 border-b cursor-pointer b4 border-unveilWhite">
+            <p className="py-1 border-b cursor-pointer b3 md:b4 border-unveilWhite">
               x Awards
             </p>
-            <p className="py-1 truncate w-[100px] cursor-pointer b4 border-unveilWhite">
+            <p className="py-1 truncate w-[100px] cursor-pointer b3 md:b4 border-unveilWhite">
               {owner.walletAddress}
             </p>
           </div>

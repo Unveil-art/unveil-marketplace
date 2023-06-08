@@ -206,7 +206,7 @@ const Edit = ({ artwork }) => {
 
       try {
         await putArtwork(value, mergedValues, artwork);
-        router.push("/account");
+        // router.push("/account");
         setLoading(false);
       } catch (err) {
         setLoading(false);
@@ -248,7 +248,7 @@ const Edit = ({ artwork }) => {
 
       try {
         await putArtwork(value, mergedValues, artwork);
-        router.push("/account");
+        // router.push("/account");
         setLoading(false);
       } catch (err) {
         setLoading(false);

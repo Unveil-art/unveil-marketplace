@@ -39,42 +39,50 @@ const Footer = () => {
           {footers && (
             <>
               {footers.data && (
-                <div className="space-y-1">
+                <div className="md:space-y-1">
                   <p className="b3 font-[500]">
                     {footers.data[0].attributes.footer.category}
                   </p>
                   {footers.data[0].attributes.footer.data.map((item, i) => (
-                    <a
-                      key={i}
-                      target="_blank"
-                      rel="noreferrer"
-                      href={item.link}
-                    >
-                      <p className="b3">{item.heading}</p>
-                    </a>
+                    <div className="block h-fit">
+                      <a
+                        key={i}
+                        target="_blank"
+                        rel="noreferrer"
+                        href={item.link}
+                      >
+                        <p className="underline-on-hover-white b3 underline-on-hover">
+                          {item.heading}
+                        </p>
+                      </a>
+                    </div>
                   ))}
                 </div>
               )}
             </>
           )}
         </div>
-        <div className="space-y-6">
+        <div className="md:space-y-6">
           {footers && (
             <>
               {footers.data && (
-                <div className="space-y-1">
+                <div className="md:space-y-1">
                   <p className="b3 font-[500]">
                     {footers.data[1].attributes.footer.category}
                   </p>
                   {footers.data[1].attributes.footer.data.map((item, i) => (
-                    <a
-                      key={i}
-                      target="_blank"
-                      rel="noreferrer"
-                      href={item.link}
-                    >
-                      <p className="b3">{item.heading}</p>
-                    </a>
+                    <div className="block h-fit">
+                      <a
+                        key={i}
+                        target="_blank"
+                        rel="noreferrer"
+                        href={item.link}
+                      >
+                        <p className="underline-on-hover-white b3 underline-on-hover">
+                          {item.heading}
+                        </p>
+                      </a>
+                    </div>
                   ))}
                 </div>
               )}
@@ -83,19 +91,23 @@ const Footer = () => {
           {footers && (
             <>
               {footers.data && (
-                <div className="space-y-1">
+                <div className="mt-5 md:space-y-1">
                   <p className="b3 font-[500]">
                     {footers.data[2].attributes.footer.category}
                   </p>
                   {footers.data[2].attributes.footer.data.map((item, i) => (
-                    <a
-                      key={i}
-                      target="_blank"
-                      rel="noreferrer"
-                      href={item.link}
-                    >
-                      <p className="b3">{item.heading}</p>
-                    </a>
+                    <div className="block h-fit">
+                      <a
+                        key={i}
+                        target="_blank"
+                        rel="noreferrer"
+                        href={item.link}
+                      >
+                        <p className="underline-on-hover-white b3 underline-on-hover">
+                          {item.heading}
+                        </p>
+                      </a>
+                    </div>
                   ))}
                 </div>
               )}
