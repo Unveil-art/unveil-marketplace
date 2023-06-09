@@ -48,15 +48,17 @@ const Create = () => {
   });
   const [editionPrice, setEditionPrice] = useState([]);
 
-  sizes.forEach((sizeObject) => {
-    useEffect(() => {
-      if (!sizeObject.active) {
-        setEditionPricing((prevEditionPrice) =>
-          prevEditionPrice.filter((price) => price !== sizeObject.size)
-        );
-      }
-    }, [sizeObject.active]);
-  });
+  useEffect(() => {
+    const inactiveSizes = sizes
+      .filter((size) => !size.active)
+      .map((size) => size.size);
+
+    if (inactiveSizes.length > 0) {
+      setEditionPricing((prevEditionPrice) =>
+        prevEditionPrice.filter((price) => !inactiveSizes.includes(price))
+      );
+    }
+  }, [sizes]);
 
   useEffect(() => {
     const getActiveSize = sizes.find((item) => item.active)?.size;

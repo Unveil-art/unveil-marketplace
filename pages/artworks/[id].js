@@ -59,19 +59,21 @@ const Edit = ({ artwork }) => {
   const [frame, setFrame] = useState({
     frame: "Oak",
     size: "2mm",
-    colour: "White",
+    colour: "Black",
     border: "5x10",
   });
 
-  sizes.forEach((sizeObject) => {
-    useEffect(() => {
-      if (!sizeObject.active) {
-        setEditionPricing((prevEditionPrice) =>
-          prevEditionPrice.filter((price) => price !== sizeObject.size)
-        );
-      }
-    }, [sizeObject.active]);
-  });
+  useEffect(() => {
+    const inactiveSizes = sizes
+      .filter((size) => !size.active)
+      .map((size) => size.size);
+
+    if (inactiveSizes.length > 0) {
+      setEditionPricing((prevEditionPrice) =>
+        prevEditionPrice.filter((price) => !inactiveSizes.includes(price))
+      );
+    }
+  }, [sizes]);
 
   useEffect(() => {
     const getActiveSize = sizes.find((item) => item.active)?.size;
@@ -223,7 +225,7 @@ const Edit = ({ artwork }) => {
 
       try {
         await putArtwork(value, mergedValues, artwork);
-        // router.push("/account");
+        router.push("/account");
         setLoading(false);
       } catch (err) {
         setLoading(false);
@@ -265,7 +267,7 @@ const Edit = ({ artwork }) => {
 
       try {
         await putArtwork(value, mergedValues, artwork);
-        // router.push("/account");
+        router.push("/account");
         setLoading(false);
       } catch (err) {
         setLoading(false);
