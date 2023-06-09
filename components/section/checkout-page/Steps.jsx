@@ -30,14 +30,14 @@ const Steps = ({ step, setStep }) => {
         className={` ${
           step === 3
             ? "py-[6px] px-[5px] md:py-[9px] md:px-[8px]"
-            : "px-[7px] md:px-[10px]"
+            : "px-[7px] md:px-[9px]"
         } ${step === 1 ? "text-unveilDrakGray border-unveilDrakGray" : ""} ${
           step === 2 ? "text-unveilBlack border-unveilBlack" : ""
         } ${
           step === 3
             ? "bg-unveilDrakGray border-unveilDrakGray"
             : "border-unveilBlack"
-        } px-[9px] border rounded-full b4 w-fit`}
+        }  border rounded-full b4 w-fit`}
       >
         {step === 3 && <Check />}
         {step !== 3 && <>2</>}

@@ -26,7 +26,7 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
       >
         <div
           data-lenis-prevent
-          className="gsap-el fixed overflow-y-scroll top-0 right-0 w-full sm:w-[540px]  bg-[#ECE8DE] px-5 py-10 z-50 rounded-bl-[20px] h-screen sm:h-fit"
+          className="gsap-el fixed overflow-y-scroll top-0 right-0 w-[330px] sm:w-[540px]  bg-[#ECE8DE] px-5 py-10 z-50 rounded-b-[20px] rounded-tl-[20px] h-fit"
         >
           <div>
             <div className="w-full h-[7px] bg-unveilBlack"></div>
@@ -36,7 +36,7 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
             <div className="grid grid-cols-2 text-center border-y border-bgColorHover">
               <div className="py-10 border-r my-[10px] border-bgColorHover">
                 <p className=" b3">Account name</p>
-                <p className="truncate px-14 l2">{wallet}</p>
+                <p className="px-5 truncate md:px-14 l2">{wallet}</p>
               </div>
               <div className="py-10 my-[10px] border-bgColorHover">
                 <p className="b3">Funds</p>

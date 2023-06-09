@@ -8,7 +8,7 @@ import Search from "../svg/Search";
 import AccessPopIn from "./AccessPopIn";
 import useLocalStorage from "@/hooks/useLocalStorage";
 
-const NavbarPopIn = ({ navOpen, setNavOpen }) => {
+const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
   const [accessOpen, setAccessOpen] = useState(false);
   const el = useRef();
   const { value } = useLocalStorage("token");
@@ -23,21 +23,21 @@ const NavbarPopIn = ({ navOpen, setNavOpen }) => {
       >
         <div
           data-lenis-prevent
-          className="gsap-el fixed overflow-y-scroll top-0 left-0 w-full sm:w-[540px]  bg-[#F6F4ED] px-5 py-8 z-50 rounded-br-[20px] h-screen sm:h-fit"
+          className="gsap-el fixed overflow-y-scroll top-0 left-0 w-[330px] sm:w-[540px]  bg-[#ECE8DE] px-5 py-10 z-50 rounded-b-[20px] rounded-tr-[20px] h-fit"
         >
           <Link href="/search" onClick={() => setNavOpen(!navOpen)}>
             <div className="absolute cursor-pointer top-8 left-5">
               <Search />
             </div>
           </Link>
-          <div
+          {/* <div
             onClick={() => setNavOpen(!navOpen)}
             className="absolute block md:hidden top-[15px] right-[15px] w-8 h-8 rounded-full bg-unveilBlack cursor-pointer"
           >
             <div className="-translate-x-[1px]">
               <Close />
             </div>
-          </div>
+          </div> */}
           <Link href="/" onClick={() => setNavOpen(!navOpen)}>
             <div className="w-[106px] scale-75  mx-auto md:w-[144px] cursor-pointer">
               <Logo />
@@ -153,9 +153,9 @@ const NavbarPopIn = ({ navOpen, setNavOpen }) => {
           >
             Request access
           </button>
-          <p className="text-center b3 mt-[15px]">
-            <strong>Warning</strong> Lorem ipsum dolor sit
-          </p>
+          {navWarning && (
+            <p className="text-center b3 mt-[15px]">{navWarning}</p>
+          )}
         </div>
         <div
           onClick={() => setNavOpen(false)}

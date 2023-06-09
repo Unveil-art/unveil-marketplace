@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
 import Close from "../svg/Close";
 import Link from "next/link";
+import EditionPopIn from "./EditionPopIn";
 
-const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork }) => {
+const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
   const [editionSizes, setEditionSizes] = useState([]);
   const [nftEditions, setNftEditions] = useState();
 
@@ -101,10 +102,11 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork }) => {
         )}
         {nftEditions && (
           <>
-            <p className="mb-2 b3">
-              <strong className="!opacity-100">NFT only</strong>Edition of{" "}
-              {nftEditions.length}
-              <span className="opacity-60">edtion</span>
+            <p className="mb-2 b3 ">
+              <strong className="!opacity-100 font-[500]">NFT only</strong>{" "}
+              <span className="opacity-60">
+                Edition of {nftEditions.length}
+              </span>
             </p>
             <div className="space-y-[10px]">
               {nftEditions.map((edition, i) => (
@@ -112,7 +114,13 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork }) => {
                   key={i}
                   className="flex border overflow-hidden rounded-[10px] border-unveilDrakGray h-[166px] "
                 >
-                  <div className="bg-[#9A8183] w-[120px]"></div>
+                  <div className="bg-[#9A8183] min-w-[100px] max-w-[100px] md:min-w-[120px] md:max-w-[120px] relative p-5 flex justify-center items-center">
+                    <img
+                      className="object-contain shadow2"
+                      src={artwork.media_url}
+                      alt={artwork.name}
+                    />
+                  </div>
                   <div className="flex flex-col justify-between w-full p-5">
                     <div>
                       <p className="b3">
@@ -120,11 +128,21 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork }) => {
                       </p>
                       <p className="b4">€{edition.price}</p>
                     </div>
-                    <Link href="/checkout">
-                      <button className="btn btn-full btn-secondary">
-                        Buy from artist
-                      </button>
-                    </Link>
+
+                    <button
+                      onClick={() =>
+                        setEdition({
+                          ...edition,
+                          edition_index: i + 1,
+                          max_editions: nftEditions.length,
+                          media_url: artwork.media_url,
+                          edition_type: artwork.edition_type,
+                        })
+                      }
+                      className="btn btn-full btn-secondary"
+                    >
+                      Buy from artist
+                    </button>
                   </div>
                 </div>
               ))}

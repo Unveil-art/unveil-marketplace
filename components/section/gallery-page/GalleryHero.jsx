@@ -3,10 +3,14 @@ import Wishlist from "../../svg/Wishlist";
 import OptionsPopIn from "@/components/pop-in/OptionsPopIn";
 import Link from "next/link";
 import Image from "next/image";
+import EditionPopIn from "@/components/pop-in/EditionPopIn";
 
 const GalleryHero = ({ artwork }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
+  const [editionOpen, setEditionOpen] = useState(false);
+  const [edition, setEdition] = useState(null);
 
+  console.log(artwork);
   // Owner name to string
   let displayName;
   if (artwork.owner.firstName && artwork.owner.lastName) {
@@ -49,9 +53,19 @@ const GalleryHero = ({ artwork }) => {
     displayRoyalties = `To ${afterPercentage}%`;
   }
 
+  let arr = artwork.frame[0].split(", ");
+
+  let frameObject = {
+    frame: arr[0],
+    size: arr[1],
+    color: arr[2].split(" ")[0], // To only get the color "White" and ignore "frame"
+    border: arr[3].split(" ")[2], // To only get "5x10" and ignore "White border"
+  };
+
+  console.log(frameObject);
+
   // Find the lowest price
   const prices = artwork.editions.map((edition) => edition.price);
-  console.log(prices);
   const lowestPrice = Math.min(...prices);
 
   return (
@@ -59,9 +73,19 @@ const GalleryHero = ({ artwork }) => {
       <section className="relative grid grid-cols-1 md:grid-cols-5">
         <div className="h-[50svh] md:h-screen md:sticky  top-0 flex items-center justify-center md:col-span-3 bg-bgColor py-[120px]">
           <div className="relative md:px-[20vw] md:w-full w-[40%] md:h-[80%] ">
-            <div className="shadow1">
+            <div
+              className={`shadow1 bg-unveilWhite
+            ${frameObject.size === "2mm" ? "border-[3px]" : ""}
+            ${frameObject.size === "3mm" ? "border-[4px]" : ""}
+            ${frameObject.size === "5mm" ? "border-[5px]" : ""}
+            ${frameObject.colour === "Black" ? "border-unveilBlack" : ""}
+            ${frameObject.colour === "White" ? "border-unveilCreme" : ""}
+            ${frameObject.border === "None" ? "p-0" : ""}
+            ${frameObject.border === "5x10" ? "p-2" : ""}
+            ${frameObject.border === "10x20" ? "p-4" : ""}`}
+            >
               <img
-                className="object-contain h-full frame-1"
+                className="object-contain h-full"
                 src={artwork.media_url}
                 alt={artwork.name}
               />
@@ -136,7 +160,7 @@ const GalleryHero = ({ artwork }) => {
                     Awards...
                   </p>
                 </div>
-                <div className="rounded-[10px] hover:bg-bgColor unveilTransition col-span-2 md:justify-start justify-center items-center flex gap-2 h-[56px] md:h-[68px] border border-unveilBlack md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
+                <div className="rounded-[10px] hover:bg-bgColor unveilTransition col-span-2 md:justify-start justify-center items-center flex gap-2 h-[38px] md:h-[68px] border border-unveilBlack md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
                   <Wishlist />
                   <p className="b4">Add to wishlist</p>
                 </div>
@@ -184,10 +208,13 @@ const GalleryHero = ({ artwork }) => {
         </div>
       </section>
       <OptionsPopIn
+        setEdition={setEdition}
+        edition={edition}
         artwork={artwork}
         optionsOpen={optionsOpen}
         setOptionsOpen={setOptionsOpen}
       />
+      <EditionPopIn edition={edition} setEdition={setEdition} />
     </>
   );
 };

@@ -6,7 +6,9 @@ const CreateSidebar = ({
   register,
   artwork,
   description,
+  editionType,
   setDescription,
+  frame,
 }) => {
   const [image, setImage] = useState(null);
   const [detailImage1, setDetailImage1] = useState(null);
@@ -40,20 +42,32 @@ const CreateSidebar = ({
       <div className="bg-[#F9F7F2] relative p-5 pb-[30px] rounded-[10px] space-y-[10px]">
         <div className="py-[50px] justify-center flex">
           <div
-            className={`${
-              image ? "mx-20" : "w-[150px] h-[200px]"
-            } relative shadow  bg-unveilWhite`}
+            className={`  ${image ? "mx-20 " : "w-[150px] h-[200px]"} ${
+              image && editionType === "NFT_Only" ? "shadow2 border-none" : ""
+            }   
+            ${frame.size === "2mm" ? "border-[3px]" : ""}
+            ${frame.size === "3mm" ? "border-[4px]" : ""}
+            ${frame.size === "5mm" ? "border-[5px]" : ""}
+            ${frame.colour === "Black" ? "border-unveilBlack" : ""}
+            ${frame.colour === "White" ? "border-unveilCreme" : ""}
+            ${frame.border === "None" ? "p-0" : ""}
+            ${frame.border === "5x10" ? "p-2" : ""}
+            ${frame.border === "10x20" ? "p-4" : ""}
+            ${
+              editionType === "NFT_Only" ? "border-none border-unveilGreen" : ""
+            }
+            bg-unveilWhite relative shadow2`}
           >
             {artwork && !image && (
               <img
-                className="object-contain h-full w-fit"
+                className={` object-contain h-full w-fit`}
                 src={artwork.media_url}
                 alt="Selected"
               />
             )}
             {image && (
               <img
-                className="object-contain h-full w-fit"
+                className={` object-contain h-full w-fit`}
                 src={URL.createObjectURL(image)}
                 alt="Selected"
               />

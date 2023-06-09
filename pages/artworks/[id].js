@@ -63,8 +63,25 @@ const Edit = ({ artwork }) => {
     border: "5x10",
   });
 
-  const getActiveSize = sizes.find((item) => item.active)?.size;
-  const [activeSize, setActiveSize] = useState(getActiveSize);
+  sizes.forEach((sizeObject) => {
+    useEffect(() => {
+      if (!sizeObject.active) {
+        setEditionPricing((prevEditionPrice) =>
+          prevEditionPrice.filter((price) => price !== sizeObject.size)
+        );
+      }
+    }, [sizeObject.active]);
+  });
+
+  useEffect(() => {
+    const getActiveSize = sizes.find((item) => item.active)?.size;
+    setActiveSize(getActiveSize);
+  }, [sizes]);
+
+  const [activeSize, setActiveSize] = useState(
+    sizes.find((item) => item.active)?.size
+  );
+
   const [editionPricing, setEditionPricing] = useState([]);
   const [editionPrice, setEditionPrice] = useState([]);
   const [editionType, setEditionType] = useState("NFT_Only");
@@ -319,6 +336,8 @@ const Edit = ({ artwork }) => {
           register={register}
           description={description}
           setDescription={setDescription}
+          editionType={editionType}
+          frame={frame}
         />
         <div className="grid grid-cols-1 mt-5 gap-[15px] lg:hidden ">
           <button
