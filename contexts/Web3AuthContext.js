@@ -24,9 +24,11 @@ export const Web3Context = createContext({
 const clientId =
   "BCFadhq6b_7lQhx_H-jr1jUDjJeIf4Oc2onszEpTU0UPVqEwV6Y-sGSbLUyOxi17FsGmiBh00KIjOmDT2LP5WYQ";
 
-export const rpcUrl = "https://rpc-mumbai.maticvigil.com";
-// "https://eth-mainnet.g.alchemy.com/v2/RO17kIgzkM0Ho40FjDYYI-ky8vnnAbKz";
-export const chainId = "0x13881"; //"0x1";
+//export const rpcUrl = "https://rpc-mumbai.maticvigil.com";
+export const rpcUrl =
+  "https://eth-mainnet.g.alchemy.com/v2/RO17kIgzkM0Ho40FjDYYI-ky8vnnAbKz";
+//export const chainId = "0x13881";
+export const chainId = "0x1";
 
 const Web3AuthProvider = ({ children }) => {
   const { doLogin, doLogout } = useAuth();
@@ -62,7 +64,7 @@ const Web3AuthProvider = ({ children }) => {
           chainId: chainId, // Please use 0x5 for Goerli Testnet
           rpcTarget: rpcUrl,
         },
-        // web3AuthNetwork: "cyan",
+        web3AuthNetwork: "cyan",
       });
 
       // adding wallet connect v1 adapter
@@ -94,7 +96,7 @@ const Web3AuthProvider = ({ children }) => {
           chainId: chainId,
           rpcTarget: rpcUrl,
         },
-        // web3AuthNetwork: "cyan",
+        web3AuthNetwork: "cyan",
       });
 
       // it will add/update  the metamask adapter in to web3auth class
@@ -131,13 +133,10 @@ const Web3AuthProvider = ({ children }) => {
         const info = await web3Auth.getUserInfo();
 
         if (info.email) {
-          console.log("YES EMAIL");
-
           const nonceData = await getNonce({
             email: info.email,
             walletAddress: accounts,
           });
-          console.log(nonceData);
 
           const signedMessage = await rpc.signMessage(nonceData.nonce);
 
