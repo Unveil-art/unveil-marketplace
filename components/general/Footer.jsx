@@ -44,13 +44,8 @@ const Footer = () => {
                     {footers.data[0].attributes.footer.category}
                   </p>
                   {footers.data[0].attributes.footer.data.map((item, i) => (
-                    <div className="block h-fit">
-                      <a
-                        key={i}
-                        target="_blank"
-                        rel="noreferrer"
-                        href={item.link}
-                      >
+                    <div key={i} className="block h-fit">
+                      <a target="_blank" rel="noreferrer" href={item.link}>
                         <p className="underline-on-hover-white b3 underline-on-hover">
                           {item.heading}
                         </p>
@@ -71,13 +66,8 @@ const Footer = () => {
                     {footers.data[1].attributes.footer.category}
                   </p>
                   {footers.data[1].attributes.footer.data.map((item, i) => (
-                    <div className="block h-fit">
-                      <a
-                        key={i}
-                        target="_blank"
-                        rel="noreferrer"
-                        href={item.link}
-                      >
+                    <div key={i} className="block h-fit">
+                      <a target="_blank" rel="noreferrer" href={item.link}>
                         <p className="underline-on-hover-white b3 underline-on-hover">
                           {item.heading}
                         </p>
@@ -96,13 +86,8 @@ const Footer = () => {
                     {footers.data[2].attributes.footer.category}
                   </p>
                   {footers.data[2].attributes.footer.data.map((item, i) => (
-                    <div className="block h-fit">
-                      <a
-                        key={i}
-                        target="_blank"
-                        rel="noreferrer"
-                        href={item.link}
-                      >
+                    <div key={i} className="block h-fit">
+                      <a target="_blank" rel="noreferrer" href={item.link}>
                         <p className="underline-on-hover-white b3 underline-on-hover">
                           {item.heading}
                         </p>
