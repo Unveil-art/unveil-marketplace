@@ -46,7 +46,9 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
             <div className="text-center py-10 my-[10px]">
               <p className="b3">Network</p>
               <p className=" l2">
-                {localProvider.replace('"', "").replace('"', "")}
+                {localProvider && (
+                  <>{localProvider.replace('"', "").replace('"', "")}</>
+                )}
               </p>
             </div>
             <Link href="/account">
