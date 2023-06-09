@@ -8,7 +8,11 @@ import CountdownTimer from "./CountdownTimer";
 const About = ({ bg, item }) => {
   return (
     <section className="relative grid grid-cols-1 my-5 md:grid-cols-2 2xl:h-screen md:my-10">
-      <div className="relative md:aspect-square aspect-[10/11] 2xl:aspect-auto bg-bgColor">
+      <div
+        data-cursor={item.name}
+        data-cursor-color="#b2b4ae"
+        className="relative md:aspect-square aspect-[10/11] 2xl:aspect-auto bg-bgColor"
+      >
         <Image
           src={item.media_url}
           alt={item.name}

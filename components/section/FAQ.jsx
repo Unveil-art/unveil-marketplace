@@ -47,7 +47,7 @@ const FAQ = ({ data }) => {
           {data.map((item, i) => (
             <div
               key={i}
-              className="border-t md:border-t-2 border-unveilBlack pt-[6px] mb-[6px]  md:pt-[15px] md:pb-[10px]"
+              className="border-t md:border-t-2 border-unveilBlack pt-[10px] mb-[10px]  md:pt-[19px] md:pb-[12px]"
             >
               <div
                 className="flex items-center justify-between"

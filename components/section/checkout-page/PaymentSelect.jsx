@@ -16,7 +16,7 @@ const PaymentSelect = ({
   return (
     <div>
       <div className="flex items-center gap-1">
-        <p className="font-bold b3">Choose your Payment Method</p>
+        <p className="font-[500] b3">Choose your Payment Method</p>
         <div
           onClick={() => setPaymentOpen(!paymentOpen)}
           className="cursor-pointer"
@@ -64,11 +64,13 @@ const PaymentSelect = ({
       </div>
       <div className="py-2 mt-5 mb-5 border-t lg:mb-20 lg:mt-10 border-bgColorHover">
         <Chat
+          chatBtn={true}
+          btnDesktop={true}
           title="Get help with payment"
           text="Explore the possibilities with NFTs and prints"
         />
       </div>
-      <p className="font-bold b3 mb-[15px] lg:mb-[30px]">
+      <p className="font-[500] b3 mb-[15px] lg:mb-[30px]">
         About Maha 3 (NFT backed by print, edition 1 of 1)
       </p>
       <div className="grid grid-cols-2 gap-y-1 gap-x-5">

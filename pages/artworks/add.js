@@ -43,14 +43,33 @@ const Create = () => {
   const [frame, setFrame] = useState({
     frame: "Oak",
     size: "2mm",
-    colour: "White",
+    colour: "Black",
     border: "5x10",
   });
-
-  const getActiveSize = sizes.find((item) => item.active)?.size;
-  const [activeSize, setActiveSize] = useState(getActiveSize);
-  const [editionPricing, setEditionPricing] = useState([activeSize]);
   const [editionPrice, setEditionPrice] = useState([]);
+
+  useEffect(() => {
+    const inactiveSizes = sizes
+      .filter((size) => !size.active)
+      .map((size) => size.size);
+
+    if (inactiveSizes.length > 0) {
+      setEditionPricing((prevEditionPrice) =>
+        prevEditionPrice.filter((price) => !inactiveSizes.includes(price))
+      );
+    }
+  }, [sizes]);
+
+  useEffect(() => {
+    const getActiveSize = sizes.find((item) => item.active)?.size;
+    setActiveSize(getActiveSize);
+  }, [sizes]);
+
+  const [activeSize, setActiveSize] = useState(
+    sizes.find((item) => item.active)?.size
+  );
+
+  const [editionPricing, setEditionPricing] = useState([activeSize]);
   const [editionType, setEditionType] = useState("NFT_Only");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -202,6 +221,8 @@ const Create = () => {
           register={register}
           description={description}
           setDescription={setDescription}
+          editionType={editionType}
+          frame={frame}
         />
         <div className="grid grid-cols-1 mt-5 gap-[15px] lg:hidden ">
           {/* <p

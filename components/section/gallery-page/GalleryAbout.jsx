@@ -58,7 +58,10 @@ const GalleryAbout = ({ artwork }) => {
       <section ref={el} className="relative w-full">
         <div className="block w-full md:h-[500vh]" ref={(node) => setRef(node)}>
           <div className="block w-full md:sticky md:top-0">
-            <AboutItem detail_shots={artwork.detail_shots} />
+            <AboutItem
+              owner={artwork.owner}
+              detail_shots={artwork.detail_shots}
+            />
             <ItemStatistics artwork={artwork} />
           </div>
         </div>

@@ -1,6 +1,7 @@
 import React, { useContext, useRef } from "react";
 import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
 import { Web3Context } from "@/contexts/Web3AuthContext";
+import Chat from "../reusable/Chat";
 
 const LoginPopIn = ({ loginOpen, setLoginOpen }) => {
   const { account, web3Auth, provider, balance, login, logout, getBalance } =
@@ -18,7 +19,7 @@ const LoginPopIn = ({ loginOpen, setLoginOpen }) => {
       >
         <div
           data-lenis-prevent
-          className="gsap-el fixed overflow-y-scroll top-0 right-0 w-full sm:w-[540px]  bg-[#ECE8DE] px-5 py-10 z-50 rounded-bl-[20px] h-screen sm:h-fit"
+          className="gsap-el fixed overflow-y-scroll top-0 right-0 w-[330px] sm:w-[540px]  bg-[#ECE8DE] px-5 py-10 z-50 rounded-b-[20px] rounded-tl-[20px] h-fit"
         >
           <div>
             <div className="w-full h-[7px] bg-unveilBlack"></div>
@@ -31,12 +32,8 @@ const LoginPopIn = ({ loginOpen, setLoginOpen }) => {
             >
               <p>Login/create account</p>
             </button>
-            <div className="rounded-[10px] hover:border-unveilBlack col-span-2 md:col-span-1 flex overflow-hidden mt-[10px] bg-bgColor text-left w-full md:w-w-fuill cursor-pointer">
-              <div className="h-[57px] md:h-[68px] bg-unveilGreen aspect-square relative overflow-hidden"></div>
-              <div className="md:py-[8px] px-[12px] py-[6px] md:px-[16px] ">
-                <p className="font-bold b4">Need help with login in?</p>
-                <p className="truncate b5">Start chatting.</p>
-              </div>
+            <div className="mt-[10px]">
+              <Chat title="Need help with login in?" text="start chatting" />
             </div>
           </div>
         </div>

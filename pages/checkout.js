@@ -23,7 +23,7 @@ const Checkout = () => {
   const [payment, setPayment] = useState("");
 
   return (
-    <main className="min-h-screen my-[120px] px-[15px] md:px-10">
+    <main className="min-h-screen my-[120px] px-[15px] md:px-10 max-w-[1440px] mx-auto">
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-[100px]">
         <div className="block lg:hidden">
           <Steps setStep={setStep} step={step} />
@@ -52,9 +52,9 @@ const Checkout = () => {
         </div>
         <div className="order-1 lg:order-2">
           <div className="h-[3px] md:h-[5px] bg-unveilBlack"></div>
-          <div className="flex items-center justify-between mt-5 mb-10">
+          <div className="flex items-center justify-between md:mt-5 py-[10px] md:mb-10">
             <div className="flex items-center gap-5">
-              <div className="w-[120px] h-[140px] bg-bgColor"></div>
+              <div className="w-[60px] h-[72px] md:w-[120px] md:h-[140px] bg-bgColor"></div>
               <div>
                 <p className="b3 text-[11px] lg:text-[17px]">Artwork Name</p>
                 <p className="b3 opacity-60">Artist Name</p>
@@ -66,7 +66,7 @@ const Checkout = () => {
               <p className="leading-[16px] lg:leading-[23px] b5">(0.05 ETH)</p>
             </div>
           </div>
-          <div className="flex justify-between border-t border-[#DBDED6] py-5">
+          <div className="flex justify-between border-t border-[#DBDED6] py-[10px] md:py-5">
             <div className="flex items-center gap-2">
               <p className="b3 lg:font-[17px]">Gas Fees</p>{" "}
               <div
@@ -81,7 +81,7 @@ const Checkout = () => {
               <p className="leading-[16px] lg:leading-[23px] b5">(0.05 ETH)</p>
             </div>
           </div>
-          <div className="flex justify-between border-t border-[#DBDED6] py-5">
+          <div className="flex justify-between border-t border-[#DBDED6] py-[10px] md:py-5">
             <div className="flex items-center gap-2">
               <p className="b3 font-[17px]">Total price</p>
             </div>

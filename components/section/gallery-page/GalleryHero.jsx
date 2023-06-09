@@ -3,10 +3,14 @@ import Wishlist from "../../svg/Wishlist";
 import OptionsPopIn from "@/components/pop-in/OptionsPopIn";
 import Link from "next/link";
 import Image from "next/image";
+import EditionPopIn from "@/components/pop-in/EditionPopIn";
 
 const GalleryHero = ({ artwork }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
+  const [editionOpen, setEditionOpen] = useState(false);
+  const [edition, setEdition] = useState(null);
 
+  console.log(artwork);
   // Owner name to string
   let displayName;
   if (artwork.owner.firstName && artwork.owner.lastName) {
@@ -49,21 +53,43 @@ const GalleryHero = ({ artwork }) => {
     displayRoyalties = `To ${afterPercentage}%`;
   }
 
+  let arr = artwork.frame[0].split(", ");
+
+  let frameObject = {
+    frame: arr[0],
+    size: arr[1],
+    color: arr[2].split(" ")[0], // To only get the color "White" and ignore "frame"
+    border: arr[3].split(" ")[2], // To only get "5x10" and ignore "White border"
+  };
+
+  console.log(frameObject);
+
   // Find the lowest price
   const prices = artwork.editions.map((edition) => edition.price);
-  console.log(prices);
   const lowestPrice = Math.min(...prices);
 
   return (
     <>
       <section className="relative grid grid-cols-1 md:grid-cols-5">
         <div className="h-[50svh] md:h-screen md:sticky  top-0 flex items-center justify-center md:col-span-3 bg-bgColor py-[120px]">
-          <div className="relative md:p-10 h-full md:h-[80%] ">
-            <img
-              className="object-contain h-full frame-1"
-              src={artwork.media_url}
-              alt={artwork.name}
-            />
+          <div className="relative md:px-[20vw] md:w-full w-[40%] md:h-[80%] ">
+            <div
+              className={`shadow1 bg-unveilWhite
+            ${frameObject.size === "2mm" ? "border-[3px]" : ""}
+            ${frameObject.size === "3mm" ? "border-[4px]" : ""}
+            ${frameObject.size === "5mm" ? "border-[5px]" : ""}
+            ${frameObject.colour === "Black" ? "border-unveilBlack" : ""}
+            ${frameObject.colour === "White" ? "border-unveilCreme" : ""}
+            ${frameObject.border === "None" ? "p-0" : ""}
+            ${frameObject.border === "5x10" ? "p-2" : ""}
+            ${frameObject.border === "10x20" ? "p-4" : ""}`}
+            >
+              <img
+                className="object-contain h-full"
+                src={artwork.media_url}
+                alt={artwork.name}
+              />
+            </div>
           </div>
         </div>
         <div className="md:col-span-2 ">
@@ -75,31 +101,37 @@ const GalleryHero = ({ artwork }) => {
               <div className="md:space-y-[6px] w-full md:block grid grid-cols-2 gap-[6px]">
                 <Link href={`/gallery/collection/${artwork.collection_id}`}>
                   <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
-                    <p className="b5">Collection</p>
-                    <p className="truncate b4">{artwork.collection.title}</p>
+                    <p className="b5 leading-[23px]">Collection</p>
+                    <p className="truncate b3 !text-[13px] leading-normal  md:b4">
+                      {artwork.collection.title}
+                    </p>
                   </div>
                 </Link>
                 {artwork.collection.curator_id && (
                   <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
-                    <p className="b5">Curator</p>
-                    <p className="truncate b4">
+                    <p className="b5 leading-[23px]">Curator</p>
+                    <p className="truncate b3 !text-[13px] leading-normal md:b4">
                       {artwork.collection.curator_id}
                     </p>
                   </div>
                 )}
 
                 <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
-                  <p className="b5">Sold as</p>
-                  <p className="truncate b4">{displaySoldAs}</p>
+                  <p className="b5 leading-[23px]">Sold as</p>
+                  <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                    {displaySoldAs}
+                  </p>
                 </div>
                 <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
-                  <p className="b5">Payment</p>
-                  <p className="truncate b4">Payment methods...</p>
+                  <p className="b5 leading-[23px]">Payment</p>
+                  <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                    Payment methods...
+                  </p>
                 </div>
                 {artwork.edition_type !== "NFT_Only" && (
                   <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
-                    <p className="b5">Available sizes</p>
-                    <p className="truncate b4">
+                    <p className="b5 leading-[23px]">Available sizes</p>
+                    <p className="truncate b3 !text-[13px] leading-normal md:b4">
                       {artwork.size.map((item, i) => (
                         <span key={i}>
                           {item}
@@ -111,28 +143,32 @@ const GalleryHero = ({ artwork }) => {
                 )}
 
                 <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
-                  <p className="b5">Creator royalty</p>
-                  <p className="truncate b4">{displayRoyalties}</p>
+                  <p className="b5 leading-[23px]">Creator royalty</p>
+                  <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                    {displayRoyalties}
+                  </p>
                 </div>
                 <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
-                  <p className="b5">Creator & royalty address</p>
-                  <p className="truncate b4 w-[100px]">
+                  <p className="b5 leading-[23px]">Creator & royalty address</p>
+                  <p className="truncate b3 !text-[13px] leading-normal md:b4 w-[100px]">
                     {artwork.owner.walletAddress}
                   </p>
                 </div>
                 <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
-                  <p className="b5">Recognitions</p>
-                  <p className="truncate b4">Awards...</p>
+                  <p className="b5 leading-[23px]">Recognitions</p>
+                  <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                    Awards...
+                  </p>
                 </div>
-                <div className="rounded-[10px] hover:bg-bgColor unveilTransition col-span-2 md:justify-start justify-center items-center flex gap-2 h-[68px] border border-unveilBlack md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
+                <div className="rounded-[10px] hover:bg-bgColor unveilTransition col-span-2 md:justify-start justify-center items-center flex gap-2 h-[38px] md:h-[68px] border border-unveilBlack md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
                   <Wishlist />
                   <p className="b4">Add to wishlist</p>
                 </div>
               </div>
-              <div className="md:block hidden w-[150px] border bg-unveilWhite border-bgColorHover rounded-[10px] overflow-hidden fixed bottom-10 right-10 z-20 h-fit">
-                <div className="aspect-[2/3] flex justify-center items-center lg:mx-8 relative my-10">
+              <div className="md:block hidden group hover:scale-105 unveilTransition w-[160px] border bg-unveilWhite border-bgColorHover rounded-[10px] overflow-hidden fixed bottom-10 right-10 z-20 h-fit">
+                <div className="aspect-[2/3] flex justify-center items-center md:mx-8 relative my-10">
                   <img
-                    className="object-contain shadow2"
+                    className="object-contain shadow2 group-hover:scale-90 unveilTransition"
                     src={artwork.media_url}
                     alt={artwork.name}
                   />
@@ -159,23 +195,26 @@ const GalleryHero = ({ artwork }) => {
           onClick={() => setOptionsOpen(!optionsOpen)}
           className="fixed bottom-0 left-0 z-20 flex w-full bg-unveilBlack md:hidden"
         >
-          <div className="w-5 aspect-[3/4] flex justify-center items-center m-1">
+          <div className="w-8 aspect-[3/4] flex justify-center items-center m-1">
             <img
-              className="object-contain shadow2"
+              className="object-cover shadow2"
               src={artwork.media_url}
               alt={artwork.name}
             />
           </div>
-          <p className="text-unveilWhite text-center w-full l1 uppercase tracking-[0.18rem] py-2">
+          <p className="text-unveilWhite  py-[15px] text-center w-full l1 uppercase tracking-[0.18rem] ">
             View options
           </p>
         </div>
       </section>
       <OptionsPopIn
+        setEdition={setEdition}
+        edition={edition}
         artwork={artwork}
         optionsOpen={optionsOpen}
         setOptionsOpen={setOptionsOpen}
       />
+      <EditionPopIn edition={edition} setEdition={setEdition} />
     </>
   );
 };

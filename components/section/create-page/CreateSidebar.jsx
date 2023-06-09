@@ -6,15 +6,19 @@ const CreateSidebar = ({
   register,
   artwork,
   description,
+  editionType,
   setDescription,
+  frame,
 }) => {
   const [image, setImage] = useState(null);
   const [detailImage1, setDetailImage1] = useState(null);
   const [detailImage2, setDetailImage2] = useState(null);
   const [soundbite, setSoundBite] = useState(null);
 
+  console.log(artwork);
+
   useEffect(() => {
-    if (artwork) {
+    if (artwork && artwork.detail_shots[0]) {
       setDescription(artwork.detail_shots[0].caption);
     }
   }, []);
@@ -38,20 +42,38 @@ const CreateSidebar = ({
       <div className="bg-[#F9F7F2] relative p-5 pb-[30px] rounded-[10px] space-y-[10px]">
         <div className="py-[50px] justify-center flex">
           <div
-            className={`${
-              image ? "mx-20" : "w-[150px] h-[200px]"
-            } relative shadow  bg-unveilWhite`}
+            className={`  ${
+              image && !artwork ? "mx-20 " : "w-[150px] h-[200px]"
+            } ${
+              image && editionType === "NFT_Only"
+                ? "shadow2 p-0 border-none"
+                : ""
+            }   
+            ${frame.size === "2mm" ? "border-[3px]" : ""}
+            ${frame.size === "3mm" ? "border-[4px]" : ""}
+            ${frame.size === "5mm" ? "border-[5px]" : ""}
+            ${frame.colour === "Black" ? "border-unveilBlack" : ""}
+            ${frame.colour === "White" ? "border-unveilCreme" : ""}
+            ${frame.border === "None" ? "p-0" : ""}
+            ${frame.border === "5x10" ? "p-2" : ""}
+            ${frame.border === "10x20" ? "p-4" : ""}
+            ${
+              editionType === "NFT_Only"
+                ? "border-none p-0 border-unveilGreen"
+                : ""
+            }
+            bg-unveilWhite relative shadow2`}
           >
             {artwork && !image && (
               <img
-                className="object-contain h-full w-fit"
+                className={` object-contain h-full w-fit`}
                 src={artwork.media_url}
                 alt="Selected"
               />
             )}
             {image && (
               <img
-                className="object-contain h-full w-fit"
+                className={` object-contain h-full w-fit`}
                 src={URL.createObjectURL(image)}
                 alt="Selected"
               />
@@ -123,7 +145,7 @@ const CreateSidebar = ({
           >
             {!detailImage1 && (
               <>
-                {!artwork && (
+                {!artwork?.detail_shots[0]?.image_url && (
                   <>
                     <div className="absolute z-10 w-5 h-px -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
                     <div className="absolute z-10 w-5 h-px rotate-90 -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
@@ -131,35 +153,18 @@ const CreateSidebar = ({
                 )}
               </>
             )}
-            {artwork && (
-              <input
-                accept="image/*"
-                type="file"
-                hidden
-                name="detailShotImage1"
-                id="detail-shot-image-1"
-                {...register("detailShotImage1", {
-                  onChange: (e) => {
-                    handleImageChange(e, setDetailImage1);
-                  },
-                })}
-              />
-            )}
-            {!artwork && (
-              <input
-                accept="image/*"
-                type="file"
-                hidden
-                name="detailShotImage1"
-                id="detail-shot-image-1"
-                {...register("detailShotImage1", {
-                  required: "Required",
-                  onChange: (e) => {
-                    handleImageChange(e, setDetailImage1);
-                  },
-                })}
-              />
-            )}
+            <input
+              accept="image/*"
+              type="file"
+              hidden
+              name="detailShotImage1"
+              id="detail-shot-image-1"
+              {...register("detailShotImage1", {
+                onChange: (e) => {
+                  handleImageChange(e, setDetailImage1);
+                },
+              })}
+            />
 
             {detailImage1 && (
               <Image
@@ -170,12 +175,16 @@ const CreateSidebar = ({
               />
             )}
             {!detailImage1 && artwork && (
-              <Image
-                src={artwork.detail_shots[0].image_url}
-                alt="Selected"
-                fill={true}
-                style={{ objectFit: "cover" }}
-              />
+              <>
+                {artwork.detail_shots[0]?.image_url && (
+                  <Image
+                    src={artwork.detail_shots[0].image_url}
+                    alt="Selected"
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                  />
+                )}
+              </>
             )}
           </label>
           <div className="w-full">
@@ -227,7 +236,6 @@ const CreateSidebar = ({
             placeholder="Add caption (max 300 char)"
             className="bg-bgColor rounded-[10px] w-full h-[120px] mt-5 p-2 focus:bg-bgColorHover focus:outline-none"
             {...register("detailShotCaption1", {
-              required: "Required",
               maxLength: 300,
               onChange: (e) => {
                 handleDescription(e);
@@ -251,11 +259,19 @@ const CreateSidebar = ({
               className="block cursor-pointer text-center my-[15px] btn btn-secondary btn-full btn-lg"
             >
               {soundbite && <p className="truncate b3">{soundbite.name}</p>}
-              {!soundbite && !artwork.detail_shots[0].audio_url && (
-                <p className="b3">Upload soundbite</p>
+              {artwork.detail_shots && (
+                <>
+                  {!soundbite && !artwork.detail_shots[0]?.audio_url && (
+                    <p className="b3">Upload soundbite</p>
+                  )}
+                </>
               )}
-              {!soundbite && artwork.detail_shots[0].audio_url && (
-                <p className="b3">Change soundbite</p>
+              {artwork.detail_shots[0] && (
+                <>
+                  {!soundbite && artwork.detail_shots[0].audio_url && (
+                    <p className="b3">Change soundbite</p>
+                  )}
+                </>
               )}
             </label>
           )}
@@ -315,7 +331,7 @@ const CreateSidebar = ({
           >
             {!detailImage2 && (
               <>
-                {!artwork && (
+                {!artwork?.detail_shots[1]?.image_url && (
                   <>
                     <div className="absolute z-10 w-5 h-px -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
                     <div className="absolute z-10 w-5 h-px rotate-90 -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
@@ -323,35 +339,20 @@ const CreateSidebar = ({
                 )}
               </>
             )}
-            {artwork && (
-              <input
-                accept="image/*"
-                type="file"
-                hidden
-                name="detailShotImage2"
-                id="detail-shot-2"
-                {...register("detailShotImage2", {
-                  onChange: (e) => {
-                    handleImageChange(e, setDetailImage2);
-                  },
-                })}
-              />
-            )}
-            {!artwork && (
-              <input
-                accept="image/*"
-                type="file"
-                hidden
-                name="detailShotImage2"
-                id="detail-shot-2"
-                {...register("detailShotImage2", {
-                  required: "required",
-                  onChange: (e) => {
-                    handleImageChange(e, setDetailImage2);
-                  },
-                })}
-              />
-            )}
+
+            <input
+              accept="image/*"
+              type="file"
+              hidden
+              name="detailShotImage2"
+              id="detail-shot-2"
+              {...register("detailShotImage2", {
+                onChange: (e) => {
+                  handleImageChange(e, setDetailImage2);
+                },
+              })}
+            />
+
             {detailImage2 && (
               <Image
                 src={URL.createObjectURL(detailImage2)}
@@ -361,12 +362,16 @@ const CreateSidebar = ({
               />
             )}
             {!detailImage2 && artwork && (
-              <Image
-                src={artwork.detail_shots[1].image_url}
-                alt="Selected"
-                fill={true}
-                style={{ objectFit: "cover" }}
-              />
+              <>
+                {artwork.detail_shots[1]?.image_url && (
+                  <Image
+                    src={artwork.detail_shots[1].image_url}
+                    alt="Selected"
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                  />
+                )}
+              </>
             )}
           </label>
           <div>
@@ -381,7 +386,7 @@ const CreateSidebar = ({
                 </p>
               </>
             )}
-            {!detailImage2 && !artwork && (
+            {!detailImage2 && (
               <>
                 <p className="b3">Add image</p>
                 <p className="b4">(minimally 2000px)</p>
@@ -394,7 +399,7 @@ const CreateSidebar = ({
                 </p>
               </>
             )}
-            {!detailImage2 && artwork && (
+            {!detailImage2 && artwork?.detail_shots[1]?.image_url && (
               <>
                 <p className="b3">Change image</p>
                 <p className="b4">(minimally 2000px)</p>
@@ -416,10 +421,13 @@ const CreateSidebar = ({
             name="detailShotCaption2"
             id="detail-shot-caption-1"
             placeholder="Add caption (max 300 char)"
-            defaultValue={artwork ? artwork.detail_shots[1].caption : null}
+            defaultValue={
+              artwork && artwork.detail_shots
+                ? artwork.detail_shots[1]?.caption
+                : null
+            }
             className="bg-bgColor rounded-[10px] w-full h-[120px] mt-5 p-2 focus:bg-bgColorHover focus:outline-none"
             {...register("detailShotCaption2", {
-              required: "Required",
               maxLength: 300,
             })}
           ></textarea>

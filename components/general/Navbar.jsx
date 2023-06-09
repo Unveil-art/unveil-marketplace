@@ -11,6 +11,7 @@ import LoggedInPopIn from "../pop-in/LoggedInPopIn";
 import Arrow from "@/components/svg/Arrow";
 import { StepContext } from "@/contexts/StepContext";
 import { Web3Context } from "@/contexts/Web3AuthContext";
+import { getHomePage } from "../../lib/strapi";
 
 const Navbar = ({ value }) => {
   const { login, logout, email } = useContext(Web3Context);
@@ -20,11 +21,23 @@ const Navbar = ({ value }) => {
   const [loginOpen, setLoginOpen] = useState(false);
   const router = useRouter();
 
+  const isArrow =
+    router.asPath === "/checkout" ||
+    router.asPath.startsWith("/gallery/artwork/") ||
+    router.asPath.startsWith("/gallery/collection/");
+
   const { step, setStep } = useContext(StepContext);
 
   const handleOpen = (setState, state) => {
     setState(!state);
   };
+  const [navWarning, setNavWarning] = useState(null);
+
+  useEffect(() => {
+    getHomePage().then((result) =>
+      setNavWarning(result.data[0].attributes.page9.navigation_footer_text)
+    );
+  }, []);
 
   useEffect(() => {
     const delay = Router.route === "/" ? 2.5 : 0.0;
@@ -48,7 +61,7 @@ const Navbar = ({ value }) => {
         ref={el}
         className="fixed top-0 left-0 z-40 flex items-center justify-between w-full px-[15px] pt-[15px] md:pt-[32px] md:px-10"
       >
-        {router.asPath !== "/checkout" && (
+        {!isArrow && (
           <div
             onClick={() => handleOpen(setNavOpen, navOpen)}
             className="relative  w-[20px] md:w-[31px] h-[12px] group cursor-pointer"
@@ -57,7 +70,7 @@ const Navbar = ({ value }) => {
             <div className="w-full h-[3px] bg-unveilBlack absolute bottom-0 unveilTransition group-hover:w-[115%]"></div>
           </div>
         )}
-        {router.asPath === "/checkout" && (
+        {isArrow && (
           <div
             className="rotate-180 cursor-pointer"
             onClick={() => {
@@ -95,7 +108,11 @@ const Navbar = ({ value }) => {
           </div>
         )}
       </nav>
-      <NavbarPopIn navOpen={navOpen} setNavOpen={setNavOpen} />
+      <NavbarPopIn
+        navWarning={navWarning}
+        navOpen={navOpen}
+        setNavOpen={setNavOpen}
+      />
       {!value && (
         <LoginPopIn loginOpen={loginOpen} setLoginOpen={setLoginOpen} />
       )}

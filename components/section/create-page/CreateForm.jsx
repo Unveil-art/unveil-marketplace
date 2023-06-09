@@ -65,7 +65,7 @@ const CreateForm = ({
   const [customTechniqueInput, setCustomTechniqueInput] = useState("");
 
   const [frameOpen, setFrameOpen] = useState(false);
-  const frameOptions = ["Oak", "option 2", "option 3"];
+  const frameOptions = ["Oak"];
   const sizeOptions = ["2mm", "3mm", "5mm"];
   const colourOptions = ["White", "Black"];
   const borderOptions = ["None", "5x10", "10x20"];
@@ -118,9 +118,14 @@ const CreateForm = ({
       });
 
       setRoyalties(artwork.royalties);
+
       setEditionType(artwork.edition_type);
     }
   }, []);
+
+  useEffect(() => {
+    console.log(royalties);
+  }, [royalties]);
 
   const {
     register: registerColl,
@@ -204,15 +209,17 @@ const CreateForm = ({
     setState(null);
   };
   const handleDeleteRow = async (index, setState, edition = false, i) => {
-    try {
-      await deleteArtwork(value, artworksEditions[i].id);
-    } catch (err) {
-      console.error(err);
-    }
+    if (artwork) {
+      try {
+        await deleteArtwork(value, artworksEditions[i].id);
+      } catch (err) {
+        console.error(err);
+      }
 
-    const updatedArtwork = [...artworksEditions];
-    updatedArtwork.splice(i, 1);
-    setArtworksEditions(updatedArtwork);
+      const updatedArtwork = [...artworksEditions];
+      updatedArtwork.splice(i, 1);
+      setArtworksEditions(updatedArtwork);
+    }
 
     setState((prev) => {
       if (edition && prev.length === 1) {
@@ -262,7 +269,13 @@ const CreateForm = ({
   const handleActive = (i, setState) => {
     setState((prevItems) => {
       const updated = [...prevItems];
-      updated[i].active = !updated[i].active;
+
+      const activeCount = updated.filter((item) => item.active).length;
+
+      if (activeCount > 1 || !updated[i].active) {
+        updated[i].active = !updated[i].active;
+      }
+
       return updated;
     });
   };
@@ -357,7 +370,9 @@ const CreateForm = ({
                 },
               })}
             />
-            <label htmlFor="NFT_Backed_by_print">NFT backed by print</label>
+            <label className="b4 dm:text-[16px]" htmlFor="NFT_Backed_by_print">
+              NFT backed by print
+            </label>
           </div>
           <div>
             <input
@@ -373,7 +388,9 @@ const CreateForm = ({
                 },
               })}
             />
-            <label htmlFor="NFT_Only">NFT Only</label>
+            <label className="b4 md:text-[16px]" htmlFor="NFT_Only">
+              NFT Only
+            </label>
           </div>
           <div>
             <input
@@ -389,7 +406,9 @@ const CreateForm = ({
                 },
               })}
             />
-            <label htmlFor="Print_Only">Print only</label>
+            <label className="b4 md:text-[16px]" htmlFor="Print_Only">
+              Print only
+            </label>
           </div>
         </div>
         {editionType !== "NFT_Only" && (
@@ -398,7 +417,7 @@ const CreateForm = ({
               <div className="flex items-start justify-between ">
                 <div>
                   <p className="mb-[15px] b3">Sizes</p>
-                  <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
+                  <div className="flex flex-wrap items-center max-w-[400px] gap-2 b3 lg:b4">
                     {sizes.map((item, i) => {
                       if (!sizeOpen) {
                         if (item.active) {
@@ -420,7 +439,7 @@ const CreateForm = ({
                               item.active
                                 ? "border-unveilBlack"
                                 : "border-unveilDrakGray"
-                            } border rounded-full px-[15px] cursor-pointer`}
+                            } border hover:bg-bgColor unveilTransition rounded-full px-[15px] cursor-pointer`}
                           >
                             {item.size}
                           </span>
@@ -430,7 +449,7 @@ const CreateForm = ({
                     {!sizeOpen && (
                       <span
                         onClick={() => setSizeOpen(!sizeOpen)}
-                        className="cursor-pointer bg-[#DBDED6] px-[10px] rounded-full"
+                        className="cursor-pointer bg-[#DBDED6] px-[7px] md:px-[10px] rounded-full"
                       >
                         +
                       </span>
@@ -477,7 +496,7 @@ const CreateForm = ({
               <div className="flex items-start justify-between ">
                 <div>
                   <p className="mb-[15px] b3">Paper</p>
-                  <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
+                  <div className="flex flex-wrap items-center max-w-[400px] gap-2 b3 lg:b4">
                     {papers.map((item, i) => {
                       if (!paperOpen) {
                         if (item.active) {
@@ -499,7 +518,7 @@ const CreateForm = ({
                               item.active
                                 ? "border-unveilBlack"
                                 : "border-unveilDrakGray"
-                            } border rounded-full uppercase text-[10px] px-[15px] cursor-pointer`}
+                            } border hover:bg-bgColor unveilTransition rounded-full uppercase text-[10px] px-[15px] cursor-pointer`}
                           >
                             {item.paper}
                           </span>
@@ -509,7 +528,7 @@ const CreateForm = ({
                     {!paperOpen && (
                       <span
                         onClick={() => setPaperOpen(!paperOpen)}
-                        className="cursor-pointer bg-[#DBDED6] px-[10px] rounded-full"
+                        className="cursor-pointer bg-[#DBDED6] px-[7px] md:px-[10px] rounded-full"
                       >
                         +
                       </span>
@@ -556,14 +575,14 @@ const CreateForm = ({
               <div>
                 <p className="mb-[15px] b3">Frame</p>
                 {!frameOpen && (
-                  <div className="flex gap-2 b3 lg:b4">
-                    <span className="border uppercase text-[10px] rounded-full px-[15px] border-unveilDrakGray">
+                  <div className="flex items-center gap-2 b3 lg:b4">
+                    <span className="border  uppercase text-[10px] rounded-full px-[15px] border-unveilDrakGray">
                       {frame.frame}, {frame.size}, {frame.colour} frame, White
                       border {frame.border}
                     </span>
                     <span
                       onClick={() => setFrameOpen(!frameOpen)}
-                      className="bg-[#DBDED6] cursor-pointer px-[10px] rounded-full"
+                      className="bg-[#DBDED6] cursor-pointer px-[7px] md:px-[10px] rounded-full"
                     >
                       +
                     </span>
@@ -585,7 +604,7 @@ const CreateForm = ({
                             item === frame.frame
                               ? "border-unveilBlack"
                               : "border-unveilDrakGray"
-                          } border uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
+                          } border hover:bg-bgColor unveilTransition uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
                         >
                           {item}
                         </span>
@@ -607,7 +626,7 @@ const CreateForm = ({
                             item === frame.size
                               ? "border-unveilBlack"
                               : "border-unveilDrakGray"
-                          } border uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
+                          } border hover:bg-bgColor unveilTransition uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
                         >
                           {item}
                         </span>
@@ -629,7 +648,7 @@ const CreateForm = ({
                             item === frame.colour
                               ? "border-unveilBlack"
                               : "border-unveilDrakGray"
-                          } border uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
+                          } border hover:bg-bgColor unveilTransition uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
                         >
                           {item}
                         </span>
@@ -651,7 +670,7 @@ const CreateForm = ({
                             item === frame.border
                               ? "border-unveilBlack"
                               : "border-unveilDrakGray"
-                          } border uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
+                          } border hover:bg-bgColor unveilTransition uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
                         >
                           {item}
                         </span>
@@ -671,14 +690,14 @@ const CreateForm = ({
               <div className="flex items-start justify-between ">
                 <div>
                   <p className="mb-[15px] b3">Technique</p>
-                  <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
+                  <div className="flex flex-wrap items-center max-w-[400px] gap-2 b3 lg:b4">
                     {techniques.map((item, i) => {
                       if (!techniqueOpen) {
                         if (item.active) {
                           return (
                             <span
                               key={i}
-                              className="border uppercase text-[10px] rounded-full px-[15px] border-unveilDrakGray"
+                              className="border hover:bg-bgColor uppercase text-[10px] rounded-full px-[15px] border-unveilDrakGray"
                             >
                               {item.technique}
                             </span>
@@ -693,7 +712,7 @@ const CreateForm = ({
                               item.active
                                 ? "border-unveilBlack"
                                 : "border-unveilDrakGray"
-                            } border uppercase text-[10px] rounded-full px-[15px] cursor-pointer`}
+                            } border uppercase hover:bg-bgColor unveilTransition text-[10px] rounded-full px-[15px] cursor-pointer`}
                           >
                             {item.technique}
                           </span>
@@ -703,7 +722,7 @@ const CreateForm = ({
                     {!techniqueOpen && (
                       <span
                         onClick={() => setTechniqueOpen(!techniqueOpen)}
-                        className="cursor-pointer bg-[#DBDED6] px-[10px] rounded-full"
+                        className="cursor-pointer bg-[#DBDED6] px-[7px] md:px-[10px] rounded-full"
                       >
                         +
                       </span>
@@ -981,17 +1000,15 @@ const CreateForm = ({
             period starts when the artwork is sold.
           </p>
         </div>
-
-        {royalties.map((item, i) => (
-          <div
-            key={i}
-            className="grid relative grid-cols-2 pr-10 gap-2 px-5 py-[15px] border-b border-[#DBDED6]"
-          >
+        {!artwork && (
+          <div className="grid relative grid-cols-2 pr-10 gap-2 px-5 py-[15px] border-b border-[#DBDED6]">
             <select
-              name={`from[${i}]`}
+              name={`from[0]`}
               className="truncate select-input"
-              defaultValue={artwork ? item.from : null}
-              {...register(`from[${i}]`)}
+              value={artwork ? royalties[0].from : null}
+              {...register(`from[0]`, {
+                onChange: (e) => {},
+              })}
             >
               <option value="First month">First month</option>
               <option value="First 2 months">First 2 months</option>
@@ -1005,63 +1022,145 @@ const CreateForm = ({
               <option value="First 10 months">First 10 months</option>
               <option value="First 11 months">First 11 months</option>
               <option value="First 12 months">First 12 months</option>
-              <option value="After 1 month">After 1 month</option>
-              <option value="After 2 months">After 2 months</option>
-              <option value="After 3 months">After 3 months</option>
-              <option value="After 4 months">After 4 months</option>
-              <option value="After 5 months">After 5 months</option>
-              <option value="After 6 months">After 6 months</option>
-              <option value="After 7 months">After 7 months</option>
-              <option value="After 8 months">After 8 months</option>
-              <option value="After 9 months">After 9 months</option>
-              <option value="After 10 months">After 10 months</option>
-              <option value="After 11 months">After 11 months</option>
-              <option value="After 12 months">After 12 months</option>
+            </select>
+            <select
+              name={`percentage[0]`}
+              className="truncate select-input"
+              defaultValue={artwork ? royalties[0].percentage : null}
+              {...register(`percentage[0]`)}
+            >
+              <option value={0}>0%</option>
+              <option value={0.5}>0.5%</option>
+              <option value={1}>1%</option>
+              <option value={1.5}>1.5%</option>
+              <option value={2}>2%</option>
+              <option value={2.5}>2.5%</option>
+              <option value={3}>3%</option>
+              <option value={3.5}>3.5%</option>
+              <option value={4}>4%</option>
+              <option value={4.5}>4.5%</option>
+              <option value={5}>5%</option>
+              <option value={5.5}>5.5%</option>
+              <option value={6}>6%</option>
+              <option value={6.5}>6.5%</option>
+              <option value={7}>7%</option>
+              <option value={7.5}>7.5%</option>
+              <option value={8}>8%</option>
+              <option value={8.5}>8.5%</option>
+              <option value={9}>9%</option>
+              <option value={9.5}>9.5%</option>
+              <option value={10}>10%</option>
+              <option value={10.5}>10.5%</option>
+              <option value={11}>11%</option>
+              <option value={11.5}>11.5%</option>
+              <option value={12}>12%</option>
+              <option value={12.5}>12.5%</option>
+              <option value={13}>13%</option>
+              <option value={13.5}>13.5%</option>
+              <option value={14}>14%</option>
+              <option value={14.5}>14.5%</option>
+              <option value={15}>15%</option>
+            </select>
+            <div className="absolute opacity-40 -translate-y-1/2 right-[15px] top-1/2">
+              <Delete big />
+            </div>
+          </div>
+        )}
+        {royalties.map((item, i) => (
+          <div
+            key={i}
+            className="grid relative grid-cols-2 pr-10 gap-2 px-5 py-[15px] border-b border-[#DBDED6]"
+          >
+            <select
+              name={`from[${i}]`}
+              className="truncate select-input"
+              defaultValue={artwork ? artwork.royalties[i].from : null}
+              {...register(`from[${i}]`)}
+            >
+              {i !== 0 && (
+                <>
+                  <option value="After 1 month">After 1 month</option>
+                  <option value="After 2 months">After 2 months</option>
+                  <option value="After 3 months">After 3 months</option>
+                  <option value="After 4 months">After 4 months</option>
+                  <option value="After 5 months">After 5 months</option>
+                  <option value="After 6 months">After 6 months</option>
+                  <option value="After 7 months">After 7 months</option>
+                  <option value="After 8 months">After 8 months</option>
+                  <option value="After 9 months">After 9 months</option>
+                  <option value="After 10 months">After 10 months</option>
+                  <option value="After 11 months">After 11 months</option>
+                  <option value="After 12 months">After 12 months</option>
+                </>
+              )}
+              {i === 0 && (
+                <>
+                  <option value="First month">First month</option>
+                  <option value="After 2 months">First 2 months</option>
+                  <option value="First 3 months">First 3 months</option>
+                  <option value="First 4 months">First 4 months</option>
+                  <option value="First 5 months">First 5 months</option>
+                  <option value="First 6 months">First 6 months</option>
+                  <option value="First 7 months">First 7 months</option>
+                  <option value="First 8 months">First 8 months</option>
+                  <option value="First 9 months">First 9 months</option>
+                  <option value="First 10 months">First 10 months</option>
+                  <option value="First 11 months">First 11 months</option>
+                  <option value="First 12 months">First 12 months</option>
+                </>
+              )}
             </select>
             <select
               name={`percentage[${i}]`}
               className="truncate select-input"
-              defaultValue={artwork ? item.percentage : null}
+              defaultValue={artwork ? artwork.royalties[i].percentage : null}
               {...register(`percentage[${i}]`)}
             >
-              <option value="1">0%</option>
-              <option value="1">0.5%</option>
-              <option value="1">1%</option>
-              <option value="1">1.5%</option>
-              <option value="2">2%</option>
-              <option value="2">2.5%</option>
-              <option value="3">3%</option>
-              <option value="3">3.5%</option>
-              <option value="4">4%</option>
-              <option value="4">4.5%</option>
-              <option value="5">5%</option>
-              <option value="5">5.5%</option>
-              <option value="6">6%</option>
-              <option value="6">6.5%</option>
-              <option value="7">7%</option>
-              <option value="7">7.5%</option>
-              <option value="8">8%</option>
-              <option value="8">8.5%</option>
-              <option value="9">9%</option>
-              <option value="9">9.5%</option>
-              <option value="10">10%</option>
-              <option value="10">10.5%</option>
-              <option value="11">11%</option>
-              <option value="11">11.5%</option>
-              <option value="12">12%</option>
-              <option value="12">12.5%</option>
-              <option value="13">13%</option>
-              <option value="13">13.5%</option>
-              <option value="14">14%</option>
-              <option value="14">14.5%</option>
-              <option value="15">15%</option>
+              <option value={0}>0%</option>
+              <option value={0.5}>0.5%</option>
+              <option value={1}>1%</option>
+              <option value={1.5}>1.5%</option>
+              <option value={2}>2%</option>
+              <option value={2.5}>2.5%</option>
+              <option value={3}>3%</option>
+              <option value={3.5}>3.5%</option>
+              <option value={4}>4%</option>
+              <option value={4.5}>4.5%</option>
+              <option value={5}>5%</option>
+              <option value={5.5}>5.5%</option>
+              <option value={6}>6%</option>
+              <option value={6.5}>6.5%</option>
+              <option value={7}>7%</option>
+              <option value={7.5}>7.5%</option>
+              <option value={8}>8%</option>
+              <option value={8.5}>8.5%</option>
+              <option value={9}>9%</option>
+              <option value={9.5}>9.5%</option>
+              <option value={10}>10%</option>
+              <option value={10.5}>10.5%</option>
+              <option value={11}>11%</option>
+              <option value={11.5}>11.5%</option>
+              <option value={12}>12%</option>
+              <option value={12.5}>12.5%</option>
+              <option value={13}>13%</option>
+              <option value={13.5}>13.5%</option>
+              <option value={14}>14%</option>
+              <option value={14.5}>14.5%</option>
+              <option value={15}>15%</option>
             </select>
-            <div
-              onClick={() => handleDeleteRow(i, setRoyalties)}
-              className="absolute cursor-pointer -translate-y-1/2 right-[15px] top-1/2"
-            >
-              <Delete big />
-            </div>
+            {i === 0 && (
+              <div className="absolute opacity-40 -translate-y-1/2 right-[15px] top-1/2">
+                <Delete big />
+              </div>
+            )}
+            {i !== 0 && (
+              <div
+                onClick={() => handleDeleteRow(i, setRoyalties)}
+                className="absolute cursor-pointer -translate-y-1/2 right-[15px] top-1/2"
+              >
+                <Delete big />
+              </div>
+            )}
           </div>
         ))}
 
