@@ -20,13 +20,12 @@ const Navbar = ({ value }) => {
   const [navOpen, setNavOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const router = useRouter();
+  const { step, setStep } = useContext(StepContext);
 
   const isArrow =
-    router.asPath === "/checkout" ||
+    (router.asPath === "/checkout" && step !== 4) ||
     router.asPath.startsWith("/gallery/artwork/") ||
     router.asPath.startsWith("/gallery/collection/");
-
-  const { step, setStep } = useContext(StepContext);
 
   const handleOpen = (setState, state) => {
     setState(!state);
@@ -55,6 +54,10 @@ const Navbar = ({ value }) => {
     );
   }, []);
 
+  useEffect(() => {
+    setStep(1);
+  }, [router.asPath]);
+
   return (
     <>
       <nav
@@ -66,8 +69,16 @@ const Navbar = ({ value }) => {
             onClick={() => handleOpen(setNavOpen, navOpen)}
             className="relative  w-[20px] md:w-[31px] h-[12px] group cursor-pointer"
           >
-            <div className="w-full h-[3px] bg-unveilBlack absolute top-0 unveilTransition group-hover:w-[85%]"></div>
-            <div className="w-full h-[3px] bg-unveilBlack absolute bottom-0 unveilTransition group-hover:w-[115%]"></div>
+            <div
+              className={`  ${
+                step === 4 ? "bg-unveilWhite" : "bg-unveilBlack"
+              } w-full h-[3px]  absolute top-0 unveilTransition group-hover:w-[85%]`}
+            ></div>
+            <div
+              className={` ${
+                step === 4 ? "bg-unveilWhite" : "bg-unveilBlack"
+              } w-full h-[3px] bg-unveilBlack absolute bottom-0 unveilTransition group-hover:w-[115%]`}
+            ></div>
           </div>
         )}
         {isArrow && (
@@ -87,7 +98,7 @@ const Navbar = ({ value }) => {
 
         <Link href="/">
           <div className="w-[106px] md:w-[144px] cursor-pointer">
-            <Logo />
+            <Logo color={step === 4 ? "#F9F7F2" : "#141414"} />
           </div>
         </Link>
         {value && (
@@ -95,7 +106,7 @@ const Navbar = ({ value }) => {
             onClick={() => handleOpen(setLoggedIn, loggedIn)}
             className="z-40 scale-75 cursor-pointer md:scale-100"
           >
-            <Account />
+            <Account color={step === 4 ? "#F9F7F2" : "#141414"} />
           </div>
         )}
 
@@ -104,7 +115,7 @@ const Navbar = ({ value }) => {
             onClick={() => handleOpen(setLoginOpen, loginOpen)}
             className="z-40 scale-75 cursor-pointer md:scale-100"
           >
-            <Account />
+            <Account color={step === 4 ? "#F9F7F2" : "#141414"} />
           </div>
         )}
       </nav>
