@@ -11,7 +11,6 @@ const GalleryHero = ({ artwork }) => {
   const [edition, setEdition] = useState(null);
 
   console.log(artwork);
-
   // Owner name to string
   let displayName;
   if (artwork.owner.firstName && artwork.owner.lastName) {
@@ -57,19 +56,12 @@ const GalleryHero = ({ artwork }) => {
   let arr = artwork.frame[0].split(", ");
 
   let frameObject = {
-    frame: "",
-    size: "",
-    color: "",
-    border: "",
+    frame: arr[0],
+    size: arr[1],
+    color: arr[2].split(" ")[0], // To only get the color "White" and ignore "frame"
+    border: arr[3].split(" ")[2], // To only get "5x10" and ignore "White border"
   };
-  if (artwork.edition_type !== "NFT_Only") {
-    frameObject = {
-      frame: arr[0],
-      size: arr[1],
-      color: arr[2].split(" ")[0],
-      border: arr[3].split(" ")[2],
-    };
-  }
+
   console.log(frameObject);
 
   // Find the lowest price
@@ -87,7 +79,6 @@ const GalleryHero = ({ artwork }) => {
             ${frameObject.size === "3mm" ? "border-[4px]" : ""}
             ${frameObject.size === "5mm" ? "border-[5px]" : ""}
             ${frameObject.colour === "Black" ? "border-unveilBlack" : ""}
-            ${frameObject.colour === "Wood" ? "border-[#D8B589]" : ""}
             ${frameObject.colour === "White" ? "border-unveilCreme" : ""}
             ${frameObject.border === "None" ? "p-0" : ""}
             ${frameObject.border === "5x10" ? "p-2" : ""}

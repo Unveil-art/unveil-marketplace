@@ -20,7 +20,7 @@ const ItemStatistics = ({ artwork }) => {
           <p className="pb-5 s1 md:pb-0">Pricing statistics</p>
           <div className="w-[180px] md:hidden block">
             <p className="leading-[16px] md:leading-[25px] b4">
-              <strong className="font-[500]">About pricing</strong>
+              <strong>About pricing</strong>
               <br />
               We believe transparency creates wealth we gain trust by our
               collectors by being transparent.
@@ -97,7 +97,7 @@ const ItemStatistics = ({ artwork }) => {
             </div>
             <div className="absolute bottom-0 right-0 w-[130px] md:block hidden">
               <p className="b4">
-                <strong className="font-[500]">About specifications</strong>
+                <strong>About specifications</strong>
                 <br />
                 We believe transparency creates wealth we gain trust by our
                 collectors by being transparent.
@@ -107,7 +107,7 @@ const ItemStatistics = ({ artwork }) => {
           <p className="pb-5 s1 md:pb-0 mt-[100px]">Specifications</p>
           <div className="w-[180px] md:hidden block">
             <p className="b4">
-              <strong className="font-[500]">About pricing</strong>
+              <strong>About pricing</strong>
               <br />
               We believe transparency creates wealth we gain trust by our
               collectors by being transparent.
@@ -154,7 +154,7 @@ const ItemStatistics = ({ artwork }) => {
             </div>
             <div className="absolute hidden md:block bottom-0 right-0 w-[130px]">
               <p className="b4">
-                <strong className="font-[500]">About specifications</strong>
+                <strong>About specifications</strong>
                 <br />
                 We believe transparency creates wealth we gain trust by our
                 collectors by being transparent.

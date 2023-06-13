@@ -176,7 +176,7 @@
     @apply w-full px-0 pt-3 pb-[13px] text-center bg-transparent border-b border-unveilDrakGray l2 text-[12px] focus:outline-none;
   }
   select.select-input {
-    @apply w-full py-3 md:py-4 text-[13px] md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:b3  b3 focus:outline-none;
+    @apply w-full py-3 md:py-4 text-[13px] md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:text-unveilBlack focus:outline-none;
   }
 
   /* Checkbox */
@@ -236,10 +236,10 @@
 
   /* input */
   input.input {
-    @apply w-full py-3 md:py-4 text-[13px] unveilTransition outline-none focus:bg-bgColorHover md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:b3 b3 focus:outline-none;
+    @apply w-full py-3 md:py-4 text-[13px] unveilTransition outline-none focus:bg-bgColorHover md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:text-unveilBlack focus:outline-none;
   }
   textarea.textarea {
-    @apply w-full py-3 md:py-4 min-h-[10rem] text-[13px] md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:b3 b3 focus:outline-none;
+    @apply w-full py-3 md:py-4 min-h-[10rem] text-[13px] md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:text-unveilBlack focus:outline-none;
   }
   input.checkbox {
     @apply bg-transparent;
