@@ -115,7 +115,13 @@ const Navbar = ({ value }) => {
             onClick={() => handleOpen(setLoginOpen, loginOpen)}
             className="z-40 scale-75 cursor-pointer md:scale-100"
           >
-            <Account color={step === 4 ? "#F9F7F2" : "#141414"} />
+            <p
+              className={`${
+                step === 4 ? "text-unveilWhite" : "text-unveilBlack"
+              } b3 font-[500] `}
+            >
+              Sign in
+            </p>
           </div>
         )}
       </nav>

@@ -7,7 +7,7 @@ const Provenance = () => {
       <div className="gap-10 md:flex">
         <div className="w-full">
           <p className="block md:hidden b4 w-[180px] mb-10">
-            <strong>About history</strong>
+            <strong className="font-[500]">About history</strong>
             <br />
             We believe transparency creates wealth we gain trust by our
             collectors by being transparent.
@@ -40,7 +40,7 @@ const Provenance = () => {
 
         <div className="w-[130px] md:flex hidden items-end">
           <p className="b4">
-            <strong>About history</strong>
+            <strong className="font-[500]">About history</strong>
             <br />
             We use blockchain technology to showcase the true history of
             artpieces
