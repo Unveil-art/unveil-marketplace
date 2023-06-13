@@ -21,14 +21,17 @@ export const Web3Context = createContext({
   convertWei: () => {},
 });
 
-const clientId =
-  "BCFadhq6b_7lQhx_H-jr1jUDjJeIf4Oc2onszEpTU0UPVqEwV6Y-sGSbLUyOxi17FsGmiBh00KIjOmDT2LP5WYQ";
+// const clientId =
+//   "BCFadhq6b_7lQhx_H-jr1jUDjJeIf4Oc2onszEpTU0UPVqEwV6Y-sGSbLUyOxi17FsGmiBh00KIjOmDT2LP5WYQ";
 
-//export const rpcUrl = "https://rpc-mumbai.maticvigil.com";
-export const rpcUrl =
-  "https://eth-mainnet.g.alchemy.com/v2/RO17kIgzkM0Ho40FjDYYI-ky8vnnAbKz";
-//export const chainId = "0x13881";
-export const chainId = "0x1";
+const clientId =
+  "BMhI9W8lHxZ_jfNxJxMDGjwsGWiLTVoNpsWejtcPCPWM8miGP9qHj_3DpN1AjidY3UOHUsZ4VC3H8lCQAcUsH6k";
+
+export const rpcUrl = "https://rpc-mumbai.maticvigil.com";
+// export const rpcUrl =
+//   "https://eth-mainnet.g.alchemy.com/v2/RO17kIgzkM0Ho40FjDYYI-ky8vnnAbKz";
+export const chainId = "0x13881";
+// export const chainId = "0x1";
 
 const Web3AuthProvider = ({ children }) => {
   const { doLogin, doLogout } = useAuth();
@@ -64,7 +67,7 @@ const Web3AuthProvider = ({ children }) => {
           chainId: chainId, // Please use 0x5 for Goerli Testnet
           rpcTarget: rpcUrl,
         },
-        web3AuthNetwork: "cyan",
+        web3AuthNetwork: chainId == "0x1" ? "cyan" : "testnet",
       });
 
       // adding wallet connect v1 adapter
@@ -86,7 +89,7 @@ const Web3AuthProvider = ({ children }) => {
           chainId: chainId,
           rpcTarget: rpcUrl,
         },
-        web3AuthNetwork: "cyan",
+        web3AuthNetwork: chainId == "0x1" ? "cyan" : "testnet",
       });
       // we can change the above settings using this function
       metamaskAdapter.setAdapterSettings({
@@ -96,7 +99,7 @@ const Web3AuthProvider = ({ children }) => {
           chainId: chainId,
           rpcTarget: rpcUrl,
         },
-        web3AuthNetwork: "cyan",
+        web3AuthNetwork: chainId == "0x1" ? "cyan" : "testnet",
       });
 
       // it will add/update  the metamask adapter in to web3auth class

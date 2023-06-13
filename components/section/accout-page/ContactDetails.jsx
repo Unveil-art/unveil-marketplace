@@ -38,8 +38,7 @@ const ContactDetails = ({ user }) => {
       firstName: values.firstName,
       lastName: values.lastName,
       email: values.email,
-      walletAddress: values.walletAddress,
-      description: values.description,
+      walletAddress: user.walletAddress,
     };
 
     try {
@@ -171,39 +170,14 @@ const ContactDetails = ({ user }) => {
                 {errors.email?.message}
               </p>
             </div>
-            <div className="flex mt-[15px] items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                name="news"
-                id="news"
-                className="checkbox"
-              />
-              <label htmlFor="news" className="b3 md:b4">
-                Keep me up to date on news and exclusive offers
-              </label>
-            </div>
           </div>
         </div>
         <div className="pt-10">
           <h3 className="b3 text-[17px] mb-5">Wallet address</h3>
           <div className="relative">
-            <input
-              defaultValue={user.walletAddress ? user.walletAddress : ""}
-              placeholder="Wallet address"
-              className="input"
-              type="text"
-              name="walletAddress"
-              {...register("walletAddress", {
-                required: "Required",
-              })}
-            />
-            <p
-              className={`text-red-500 opacity-0 b5 absolute -bottom-5 left-0 ${
-                errors.walletAddress?.message ? "opacity-100" : ""
-              }`}
-            >
-              {errors.walletAddress?.message}
-            </p>
+            <div className="input bg-bgColor md:text-[16px] text-unveilGrey rounded-[8px] md:rounded-[10px] px-5 py-3 md:py-4 text-[13px]">
+              {user.walletAddress}
+            </div>
           </div>
         </div>
         <div className="pt-10">
@@ -222,9 +196,9 @@ const ContactDetails = ({ user }) => {
             id="about"
             placeholder="Write in 300 characters about you"
             name="description"
-            {...register("description", {
-              required: "Required",
-            })}
+            // {...register("description", {
+            //   required: "Required",
+            // })}
           ></textarea>
           <p
             className={`text-red-500 opacity-0 b5 absolute -bottom-3 left-0 ${
@@ -247,6 +221,12 @@ const ContactDetails = ({ user }) => {
             type="text"
           />
           <input placeholder="Website" className="input" type="text" />
+        </div>
+        <div className="flex mt-[15px] items-center gap-2 cursor-pointer">
+          <input type="checkbox" name="news" id="news" className="checkbox" />
+          <label htmlFor="news" className="b3 md:b4">
+            Keep me up to date on news and exclusive offers
+          </label>
         </div>
         <div className="pt-10">
           <h3 className="b3 text-[17px] mb-5">

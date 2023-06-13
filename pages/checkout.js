@@ -11,9 +11,9 @@ import MoreInfo from "@/components/svg/MoreInfo";
 import Payment from "@/components/section/checkout-page/Payment";
 import ConnectWithWallet from "@/components/section/checkout-page/ConnectWithWallet";
 import { StepContext } from "@/contexts/StepContext";
+import Minting from "@/components/section/checkout-page/Minting";
 
 const Checkout = () => {
-  const router = useRouter();
   const { value } = useLocalStorage("token");
 
   const { step, setStep } = useContext(StepContext);
@@ -24,6 +24,7 @@ const Checkout = () => {
 
   return (
     <main className="min-h-screen my-[120px] px-[15px] md:px-10 max-w-[1440px] mx-auto">
+      {step === 4 && <Minting />}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-[100px]">
         <div className="block lg:hidden">
           <Steps setStep={setStep} step={step} />
@@ -48,7 +49,7 @@ const Checkout = () => {
             </>
           )}
           {step === 2 && <ConnectWithWallet setStep={setStep} />}
-          {step === 3 && <Payment payment={payment} />}
+          {step === 3 && <Payment payment={payment} setStep={setStep} />}
         </div>
         <div className="order-1 lg:order-2">
           <div className="h-[3px] md:h-[5px] bg-unveilBlack"></div>

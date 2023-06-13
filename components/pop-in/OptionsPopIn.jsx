@@ -126,7 +126,7 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
                       <p className="b3">
                         No {i + 1} of {nftEditions.length}
                       </p>
-                      <p className="b4">€{edition.price}</p>
+                      <p className="b4">${edition.price} or 0 ETH</p>
                     </div>
 
                     <button

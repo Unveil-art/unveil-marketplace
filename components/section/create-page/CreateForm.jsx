@@ -67,7 +67,7 @@ const CreateForm = ({
   const [frameOpen, setFrameOpen] = useState(false);
   const frameOptions = ["Oak"];
   const sizeOptions = ["2mm", "3mm", "5mm"];
-  const colourOptions = ["White", "Black"];
+  const colourOptions = ["White", "Black", "Wood"];
   const borderOptions = ["None", "5x10", "10x20"];
   const [loading, setLoading] = useState(false);
 
@@ -362,6 +362,7 @@ const CreateForm = ({
               type="radio"
               name="edition_type"
               id="NFT_Backed_by_print"
+              disabled
               value="NFT_Backed_by_print"
               checked={editionType === "NFT_Backed_by_print"}
               {...register("edition_type", {
@@ -370,7 +371,10 @@ const CreateForm = ({
                 },
               })}
             />
-            <label className="b4 dm:text-[16px]" htmlFor="NFT_Backed_by_print">
+            <label
+              className="b4 md:text-[16px] text-unveilGrey hover:!border-bgColorHover"
+              htmlFor="NFT_Backed_by_print"
+            >
               NFT backed by print
             </label>
           </div>
@@ -394,11 +398,12 @@ const CreateForm = ({
           </div>
           <div>
             <input
-              className="radio-block right"
+              className="radio-block right "
               type="radio"
               name="edition_type"
               id="Print_Only"
               value="Print_Only"
+              // disabled
               checked={editionType === "Print_Only"}
               {...register("edition_type", {
                 onChange: (e) => {
@@ -406,7 +411,10 @@ const CreateForm = ({
                 },
               })}
             />
-            <label className="b4 md:text-[16px]" htmlFor="Print_Only">
+            <label
+              className="b4 md:text-[16px] text-unveilGrey hover:!border-bgColorHover"
+              htmlFor="Print_Only"
+            >
               Print only
             </label>
           </div>

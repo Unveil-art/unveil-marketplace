@@ -3,7 +3,7 @@ import React from "react";
 import Chat from "@/components/reusable/Chat";
 import Ideal from "@/components/svg/Ideal";
 
-const Payment = ({ payment }) => {
+const Payment = ({ payment, setStep }) => {
   return (
     <>
       <h1 className="mt-5 h3 mb-[80px] hidden lg:block">Select {payment}</h1>
@@ -39,13 +39,19 @@ const Payment = ({ payment }) => {
               placeholder="CVC"
             />
           </div>
-          <div className="relative cursor-pointer text-center btn btn-primary btn-full btn-lg my-[10px]">
+          <div
+            onClick={() => setStep(4)}
+            className="relative cursor-pointer text-center btn btn-primary btn-full btn-lg my-[10px]"
+          >
             <p>Pay now ($2218,08)</p>
           </div>
         </>
       )}
       {payment === "iDeal" && (
-        <div className="relative cursor-pointer text-center btn btn-primary btn-full btn-lg my-[10px]">
+        <div
+          onClick={() => setStep(4)}
+          className="relative cursor-pointer text-center btn btn-primary btn-full btn-lg my-[10px]"
+        >
           <p>Pay now ($2218,08)</p>
           <div className="flex items-center gap-[10px] top-1/2 right-5 -translate-y-1/2 absolute">
             <Ideal />
@@ -53,7 +59,10 @@ const Payment = ({ payment }) => {
         </div>
       )}
       {payment === "Wallet" && (
-        <div className="relative cursor-pointer text-center btn btn-primary btn-full btn-lg my-[10px]">
+        <div
+          onClick={() => setStep(4)}
+          className="relative cursor-pointer text-center btn btn-primary btn-full btn-lg my-[10px]"
+        >
           <p>Pay now ($2218,08)</p>
         </div>
       )}
