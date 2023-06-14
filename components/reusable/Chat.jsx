@@ -12,9 +12,9 @@ const Chat = ({ title, text, chatBtn = false, btnDesktop = false }) => {
           style={{ objectFit: "cover" }}
         />
       </div>
-      <div className="md:py-[8px] px-[12px] flex flex-col justify-center py-[6px] md:px-[16px] ">
+      <div className="md:py-[8px] px-[12px] flex flex-col gap-1 justify-center py-[6px] md:px-[16px] ">
         <p className="font-[500] text-[11px] md:leading-normal b4">{title}</p>
-        <p className="truncate leading-3-tight md:leading-normal b5">{text}</p>
+        <p className="leading-tight truncate md:leading-normal b5">{text}</p>
       </div>
       {chatBtn && (
         <div

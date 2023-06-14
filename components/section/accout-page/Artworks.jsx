@@ -3,6 +3,7 @@ import ArtworkListItem from "../../reusable/ArtworkListItem";
 import { getArtworksMe } from "lib/backend";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import Link from "next/link";
+import Invite from "@/components/reusable/Invite";
 
 const Artworks = () => {
   const { value } = useLocalStorage("token");
@@ -42,6 +43,7 @@ const Artworks = () => {
         </button>
       </Link>
       <div className="ml-[40px] md:ml-[35svw] mb-6 pr-[15px]">
+        <Invite />
         <Link href="/artworks/add">
           <button className="mt-4 mb-20 md:my-20 btn btn-secondary btn-lg md:btn-fit md:btn-wide btn-full ">
             Add new artwork

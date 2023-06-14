@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "@/components/svg/Loader";
-import {
-  getUsers,
-  uploadImage,
-  postCollection,
-  getCollection,
-  deleteArtwork,
-  putUserMe,
-} from "lib/backend";
+import Image from "next/image";
+import { uploadImage, putUserMe } from "lib/backend";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 import { useForm } from "react-hook-form";
 
@@ -22,8 +16,9 @@ const ContactDetails = ({ user }) => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm();
+
+  console.log(user);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -34,11 +29,25 @@ const ContactDetails = ({ user }) => {
     e.preventDefault();
     setLoading(true);
 
+    let profileURL = "";
+    if (image) {
+      profileURL = await uploadImage(value, values.profileUrl[0]);
+      profileURL = profileURL.data;
+    } else if (user.profileUrl) {
+      profileURL = user.profileUrl;
+    }
     const data = {
       firstName: values.firstName,
       lastName: values.lastName,
       email: values.email,
       walletAddress: user.walletAddress,
+      profileUrl: profileURL,
+      description: values.description,
+      oneLiner: values.oneLiner,
+      instagram: values.instagram,
+      twitter: values.twitter,
+      website: values.website,
+      theme: values.theme,
     };
 
     try {
@@ -59,12 +68,21 @@ const ContactDetails = ({ user }) => {
         className="ml-[40px] md:ml-[35svw] pr-[15px] md:pr-10 max-w-[640px]"
       >
         <div className="pt-[60px] md:pt-[100px] pb-10 md:pb-20 flex gap-5 items-center">
-          <div className="w-[308px] md:h-[308px] overflow-hidden aspect-square  bg-bgColor rounded-full">
+          <div className="w-[308px] md:h-[308px] relative overflow-hidden aspect-square  bg-bgColor rounded-full">
             {image && (
-              <img
-                className="object-cover h-full w-fit"
+              <Image
                 src={URL.createObjectURL(image)}
                 alt="Selected"
+                fill={true}
+                style={{ objectFit: "cover" }}
+              />
+            )}
+            {!image && user.profileUrl && (
+              <Image
+                src={user.profileUrl}
+                alt="Selected"
+                fill={true}
+                style={{ objectFit: "cover" }}
               />
             )}
           </div>
@@ -183,9 +201,11 @@ const ContactDetails = ({ user }) => {
         <div className="pt-10">
           <h3 className="b3 text-[17px] mb-5">Quote or oneliner</h3>
           <input
+            defaultValue={user.oneLiner ? user.oneLiner : ""}
             placeholder="Max 75 characters"
             className="input"
             type="text"
+            {...register("oneLiner")}
           />
         </div>
         <div className="relative pt-10">
@@ -196,9 +216,9 @@ const ContactDetails = ({ user }) => {
             id="about"
             placeholder="Write in 300 characters about you"
             name="description"
-            // {...register("description", {
-            //   required: "Required",
-            // })}
+            {...register("description", {
+              required: "Required",
+            })}
           ></textarea>
           <p
             className={`text-red-500 opacity-0 b5 absolute -bottom-3 left-0 ${
@@ -212,15 +232,25 @@ const ContactDetails = ({ user }) => {
           <h3 className="b3 text-[17px] mb-5">Links</h3>
           <input
             placeholder="Instagram"
+            defaultValue={user.instagram ? user.instagram : ""}
             className="input mb-2 md:mb-[15px]"
             type="text"
+            {...register("instagram")}
           />
           <input
             placeholder="Twitter"
+            defaultValue={user.twitter ? user.twitter : ""}
             className="input mb-2 md:mb-[15px]"
             type="text"
+            {...register("twitter")}
           />
-          <input placeholder="Website" className="input" type="text" />
+          <input
+            {...register("website")}
+            defaultValue={user.website ? user.website : ""}
+            placeholder="Website"
+            className="input"
+            type="text"
+          />
         </div>
         <div className="flex mt-[15px] items-center gap-2 cursor-pointer">
           <input type="checkbox" name="news" id="news" className="checkbox" />
@@ -232,7 +262,11 @@ const ContactDetails = ({ user }) => {
           <h3 className="b3 text-[17px] mb-5">
             Background colour (for our platform)
           </h3>
-          <select className="select-input">
+          <select
+            defaultValue={user.theme ? user.theme : ""}
+            {...register("theme")}
+            className="select-input"
+          >
             <option>Black</option>
             <option>White</option>
           </select>

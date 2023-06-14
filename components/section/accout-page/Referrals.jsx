@@ -1,5 +1,6 @@
 import React from "react";
 import Oneliner from "../../reusable/Oneliner";
+import Invite from "@/components/reusable/Invite";
 
 const Referrals = () => {
   return (
@@ -7,11 +8,13 @@ const Referrals = () => {
       {/* TODO: invite label an other color based on status  */}
 
       <Oneliner
+        nmb
         gallery={true}
         text="Unveil's Curation Board has selected a collection of top art photography projects for their excellence and stunning visuals."
       />
       <div className="ml-[40px] md:ml-[35svw] pr-[15px] md:pr-10 max-w-[640px] pb-10">
-        <form>
+        <Invite />
+        <form className="mt-10">
           <div className="flex items-center gap-5 mb-5">
             <h3 className="b3 text-[17px]">Referral 1</h3>
             <span className="px-2 py-1 rounded-full small text-unveilWhite bg-unveilBlack">

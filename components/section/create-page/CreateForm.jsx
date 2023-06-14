@@ -309,8 +309,10 @@ const CreateForm = ({
   return (
     <div className="w-full lg:w-[710px] space-y-[15px] lg:space-y-5">
       {/* Basic info */}
-      <div className="bg-[#F9F7F2] relative p-5 lg:pb-[30px] rounded-[10px] space-y-[10px]">
-        <p className="mb-[15px] lg:mb-[35px] b3">Basic information</p>
+      <div className="bg-[#F9F7F2] shadow3 relative p-5 lg:pb-[30px] rounded-[10px] space-y-[10px]">
+        <p className="mb-[15px] lg:mb-[35px] text-[13px] md:text-[16px] b3">
+          Basic information
+        </p>
         <input
           type="text"
           className="input"
@@ -353,8 +355,10 @@ const CreateForm = ({
       </div>
 
       {/* Editions */}
-      <div className="bg-[#F9F7F2] rounded-[10px] space-y-[10px]">
-        <p className="mb-[15px] lg:mb-[35px] b3 pt-5 px-5">Editions</p>
+      <div className="bg-[#F9F7F2] shadow3 rounded-[10px] space-y-[10px]">
+        <p className="mb-[15px] lg:mb-[35px] b3 pt-5 text-[13px] md:text-[16px] px-5">
+          Editions
+        </p>
         <div className="grid grid-cols-3 pb-[15px] px-5">
           <div>
             <input
@@ -422,17 +426,17 @@ const CreateForm = ({
         {editionType !== "NFT_Only" && (
           <>
             <div className=" px-5 py-[15px] border-t border-[#DBDED6]">
-              <div className="flex items-start justify-between ">
+              <div className="flex items-end justify-between ">
                 <div>
                   <p className="mb-[15px] b3">Sizes</p>
-                  <div className="flex flex-wrap items-center max-w-[400px] gap-2 b3 lg:b4">
+                  <div className="flex flex-wrap items-center max-w-[400px] gap-2 b3 tracking-[0.1em] lg:b4">
                     {sizes.map((item, i) => {
                       if (!sizeOpen) {
                         if (item.active) {
                           return (
                             <span
                               key={i}
-                              className="border rounded-full px-[15px] border-unveilDrakGray"
+                              className="border rounded-full py-[2px] md:py-0 px-[15px] border-unveilDrakGray"
                             >
                               {item.size}
                             </span>
@@ -447,7 +451,7 @@ const CreateForm = ({
                               item.active
                                 ? "border-unveilBlack"
                                 : "border-unveilDrakGray"
-                            } border hover:bg-bgColor unveilTransition rounded-full px-[15px] cursor-pointer`}
+                            } border hover:bg-bgColor unveilTransition py-[2px] md:py-0 rounded-full px-[15px] cursor-pointer`}
                           >
                             {item.size}
                           </span>
@@ -457,7 +461,7 @@ const CreateForm = ({
                     {!sizeOpen && (
                       <span
                         onClick={() => setSizeOpen(!sizeOpen)}
-                        className="cursor-pointer bg-[#DBDED6] px-[7px] md:px-[10px] rounded-full"
+                        className="cursor-pointer bg-[#DBDED6] px-[7px] md:pl-[9px] md:pr-[8px] rounded-full"
                       >
                         +
                       </span>
@@ -466,7 +470,9 @@ const CreateForm = ({
                 </div>
                 <p
                   onClick={() => setSizeOpen(!sizeOpen)}
-                  className="items-center cursor-pointer btn btn-opacity flex  h-[66px] btn-lg"
+                  className={`${
+                    sizeOpen ? "btn-primary" : "btn-opacity"
+                  } items-center cursor-pointer btn  flex  h-[50px] md:h-[66px] btn-lg`}
                 >
                   {sizeOpen ? "Save" : "Edit"}
                 </p>
@@ -501,17 +507,17 @@ const CreateForm = ({
               )}
             </div>
             <div className=" px-5 py-[15px] border-t border-[#DBDED6]">
-              <div className="flex items-start justify-between ">
+              <div className="flex items-end justify-between ">
                 <div>
                   <p className="mb-[15px] b3">Paper</p>
-                  <div className="flex flex-wrap items-center max-w-[400px] gap-2 b3 lg:b4">
+                  <div className="flex flex-wrap items-center max-w-[400px] gap-2 tracking-[0.1em] b3 lg:b4">
                     {papers.map((item, i) => {
                       if (!paperOpen) {
                         if (item.active) {
                           return (
                             <span
                               key={i}
-                              className="border uppercase text-[10px] rounded-full px-[15px] border-unveilDrakGray"
+                              className="border uppercase text-[10px] py-[2px] md:py-0 rounded-full px-[15px] border-unveilDrakGray"
                             >
                               {item.paper}
                             </span>
@@ -526,7 +532,7 @@ const CreateForm = ({
                               item.active
                                 ? "border-unveilBlack"
                                 : "border-unveilDrakGray"
-                            } border hover:bg-bgColor unveilTransition rounded-full uppercase text-[10px] px-[15px] cursor-pointer`}
+                            } border hover:bg-bgColor unveilTransition py-[2px] md:py-0 rounded-full uppercase text-[10px] px-[15px] cursor-pointer`}
                           >
                             {item.paper}
                           </span>
@@ -536,7 +542,7 @@ const CreateForm = ({
                     {!paperOpen && (
                       <span
                         onClick={() => setPaperOpen(!paperOpen)}
-                        className="cursor-pointer bg-[#DBDED6] px-[7px] md:px-[10px] rounded-full"
+                        className="cursor-pointer bg-[#DBDED6] px-[7px] md:pl-[9px] md:pr-[8px] rounded-full"
                       >
                         +
                       </span>
@@ -545,7 +551,9 @@ const CreateForm = ({
                 </div>
                 <p
                   onClick={() => setPaperOpen(!paperOpen)}
-                  className="items-center cursor-pointer btn btn-opacity flex  h-[66px] btn-lg"
+                  className={`${
+                    paperOpen ? "btn-primary" : "btn-opacity"
+                  } items-center cursor-pointer btn  flex  h-[50px] md:h-[66px] btn-lg`}
                 >
                   {paperOpen ? "Save" : "Edit"}
                 </p>
@@ -579,18 +587,18 @@ const CreateForm = ({
                 </div>
               )}
             </div>
-            <div className="border-t border-[#DBDED6] px-5 py-[15px] flex justify-between">
-              <div>
-                <p className="mb-[15px] b3">Frame</p>
+            <div className="border-t border-[#DBDED6] px-5 py-[15px] items-end flex justify-between">
+              <div className="w-[70%]">
+                <p className="mb-[15px] b3 w-fit">Frame</p>
                 {!frameOpen && (
-                  <div className="flex items-center gap-2 b3 lg:b4">
-                    <span className="border  uppercase text-[10px] rounded-full px-[15px] border-unveilDrakGray">
+                  <div className="flex items-center gap-2 b3 tracking-[0.1em] lg:b4">
+                    <span className="border truncate uppercase mr-0 text-[10px] py-[2px] md:py-0 rounded-full px-[15px] border-unveilDrakGray">
                       {frame.frame}, {frame.size}, {frame.colour} frame, White
                       border {frame.border}
                     </span>
                     <span
                       onClick={() => setFrameOpen(!frameOpen)}
-                      className="bg-[#DBDED6] cursor-pointer px-[7px] md:px-[10px] rounded-full"
+                      className="bg-[#DBDED6] cursor-pointer px-[7px] md:pl-[9px] md:pr-[8px] rounded-full"
                     >
                       +
                     </span>
@@ -598,7 +606,7 @@ const CreateForm = ({
                 )}
                 {frameOpen && (
                   <>
-                    <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
+                    <div className="flex flex-wrap max-w-[400px] gap-2 b3 tracking-[0.1em] lg:b4">
                       {frameOptions.map((item, i) => (
                         <span
                           key={i}
@@ -612,7 +620,7 @@ const CreateForm = ({
                             item === frame.frame
                               ? "border-unveilBlack"
                               : "border-unveilDrakGray"
-                          } border hover:bg-bgColor unveilTransition uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
+                          } border hover:bg-bgColor unveilTransition py-[2px] md:py-0 uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
                         >
                           {item}
                         </span>
@@ -620,7 +628,7 @@ const CreateForm = ({
                     </div>
 
                     <p className="mb-[15px] mt-5 b3">Frame size</p>
-                    <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
+                    <div className="flex flex-wrap max-w-[400px] gap-2 b3 tracking-[0.1em] lg:b4">
                       {sizeOptions.map((item, i) => (
                         <span
                           key={i}
@@ -642,7 +650,7 @@ const CreateForm = ({
                     </div>
 
                     <p className="mb-[15px] mt-5 b3">Frame colour</p>
-                    <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
+                    <div className="flex flex-wrap max-w-[400px] gap-2 b3 tracking-[0.1em] lg:b4">
                       {colourOptions.map((item, i) => (
                         <span
                           key={i}
@@ -656,7 +664,7 @@ const CreateForm = ({
                             item === frame.colour
                               ? "border-unveilBlack"
                               : "border-unveilDrakGray"
-                          } border hover:bg-bgColor unveilTransition uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
+                          } border hover:bg-bgColor unveilTransition py-[2px] md:py-0 uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
                         >
                           {item}
                         </span>
@@ -664,7 +672,7 @@ const CreateForm = ({
                     </div>
 
                     <p className="mb-[15px] mt-5 b3">White border</p>
-                    <div className="flex flex-wrap max-w-[400px] gap-2 b3 lg:b4">
+                    <div className="flex flex-wrap max-w-[400px] gap-2 b3 tracking-[0.1em] lg:b4">
                       {borderOptions.map((item, i) => (
                         <span
                           key={i}
@@ -678,7 +686,7 @@ const CreateForm = ({
                             item === frame.border
                               ? "border-unveilBlack"
                               : "border-unveilDrakGray"
-                          } border hover:bg-bgColor unveilTransition uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
+                          } border hover:bg-bgColor unveilTransition py-[2px] md:py-0 uppercase cursor-pointer text-[10px] rounded-full px-[15px] `}
                         >
                           {item}
                         </span>
@@ -689,23 +697,25 @@ const CreateForm = ({
               </div>
               <p
                 onClick={() => setFrameOpen(!frameOpen)}
-                className="items-center cursor-pointer btn btn-opacity flex  h-[66px] btn-lg"
+                className={`${
+                  frameOpen ? "btn-primary" : "btn-opacity"
+                } items-center cursor-pointer btn flex h-[50px] md:h-[66px] btn-lg`}
               >
                 {frameOpen ? "Save" : "Edit"}
               </p>
             </div>
-            <div className=" px-5 py-[15px] border-t border-[#DBDED6]">
-              <div className="flex items-start justify-between ">
+            <div className=" px-5 py-[15px] border-t  border-[#DBDED6]">
+              <div className="flex items-end justify-between ">
                 <div>
                   <p className="mb-[15px] b3">Technique</p>
-                  <div className="flex flex-wrap items-center max-w-[400px] gap-2 b3 lg:b4">
+                  <div className="flex flex-wrap items-center max-w-[400px] gap-2 b3 tracking-[0.1em] lg:b4">
                     {techniques.map((item, i) => {
                       if (!techniqueOpen) {
                         if (item.active) {
                           return (
                             <span
                               key={i}
-                              className="border hover:bg-bgColor uppercase text-[10px] rounded-full px-[15px] border-unveilDrakGray"
+                              className="border hover:bg-bgColor py-[2px] md:py-0 uppercase text-[10px] rounded-full px-[15px] border-unveilDrakGray"
                             >
                               {item.technique}
                             </span>
@@ -720,7 +730,7 @@ const CreateForm = ({
                               item.active
                                 ? "border-unveilBlack"
                                 : "border-unveilDrakGray"
-                            } border uppercase hover:bg-bgColor unveilTransition text-[10px] rounded-full px-[15px] cursor-pointer`}
+                            } border uppercase hover:bg-bgColor py-[2px] md:py-0 unveilTransition text-[10px] rounded-full px-[15px] cursor-pointer`}
                           >
                             {item.technique}
                           </span>
@@ -730,7 +740,7 @@ const CreateForm = ({
                     {!techniqueOpen && (
                       <span
                         onClick={() => setTechniqueOpen(!techniqueOpen)}
-                        className="cursor-pointer bg-[#DBDED6] px-[7px] md:px-[10px] rounded-full"
+                        className="cursor-pointer bg-[#DBDED6] px-[7px] md:pl-[9px] md:pr-[8px] rounded-full"
                       >
                         +
                       </span>
@@ -739,7 +749,9 @@ const CreateForm = ({
                 </div>
                 <p
                   onClick={() => setTechniqueOpen(!techniqueOpen)}
-                  className="items-center cursor-pointer btn btn-opacity flex  h-[66px] btn-lg"
+                  className={`${
+                    techniqueOpen ? "btn-primary" : "btn-opacity"
+                  } items-center cursor-pointer btn flex  h-[50px] md:h-[66px] btn-lg`}
                 >
                   {techniqueOpen ? "Save" : "Edit"}
                 </p>
@@ -781,11 +793,13 @@ const CreateForm = ({
       </div>
 
       {/* Edition pricing */}
-      <div className="bg-[#F9F7F2] rounded-[10px]">
-        <p className="mb-[15px] lg:mb-[35px] b3 pt-5 px-5">Edition pricing</p>
+      <div className="bg-[#F9F7F2] shadow3 rounded-[10px]">
+        <p className="mb-[15px] lg:mb-[35px] b3 text-[13px] md:text-[16px] pt-5 px-5">
+          Edition pricing
+        </p>
         {editionType !== "NFT_Only" && (
           <>
-            <div className="flex gap-2 px-5 b3 lg:b4">
+            <div className="flex gap-2 px-5 b3 tracking-[0.1em] lg:b4">
               {sizes.map((item, i) => {
                 if (item.active) {
                   return (
@@ -999,9 +1013,9 @@ const CreateForm = ({
       </div>
 
       {/* Royalties */}
-      <div className="bg-[#F9F7F2] rounded-[10px]">
+      <div className="bg-[#F9F7F2] shadow3 rounded-[10px]">
         <div className="grid grid-cols-2 border-b border-[#DBDED6] pb-[15px] px-5 pt-5">
-          <p className=" b3">Royalties</p>
+          <p className="text-[13px] md:text-[16px] b3">Royalties</p>
           <p className="hidden lg:block b4 leading-[19px] mb-[20px] opacity-80">
             To speculative buyers from flipping your artwork we have a scaling
             system with high royalties for the artist in early stages. The
@@ -1011,7 +1025,7 @@ const CreateForm = ({
         {royalties.map((item, i) => (
           <div
             key={i}
-            className="grid relative grid-cols-2 pr-10 gap-2 px-5 py-[15px] border-b border-[#DBDED6]"
+            className="grid relative grid-cols-2 pr-[50px] gap-2 px-5 py-[15px] border-b border-[#DBDED6]"
           >
             <select
               name={`from[${i}]`}
@@ -1091,14 +1105,14 @@ const CreateForm = ({
               <option value={15}>15%</option>
             </select>
             {i === 0 && (
-              <div className="absolute opacity-40 -translate-y-1/2 right-[15px] top-1/2">
+              <div className="absolute opacity-40 -translate-y-1/2 right-[18px] top-1/2">
                 <Delete big />
               </div>
             )}
             {i !== 0 && (
               <div
                 onClick={() => handleDeleteRow(i, setRoyalties)}
-                className="absolute cursor-pointer -translate-y-1/2 right-[15px] top-1/2"
+                className="absolute cursor-pointer -translate-y-1/2 right-[18px] top-1/2"
               >
                 <Delete big />
               </div>
@@ -1110,16 +1124,16 @@ const CreateForm = ({
           onClick={() =>
             setRoyalties((prevItems) => [...prevItems, defaultRoyalties])
           }
-          className="px-32 inline-block text-center mx-5 mt-[15px] mb-5 lg:mb-[30px] btn btn-secondary w-[calc(100%-40px)] "
+          className="md:px-32 inline-block text-center mx-5 mt-[15px] mb-5 lg:mb-[30px] btn btn-secondary w-[calc(100%-40px)] "
         >
           Add date range
         </p>
       </div>
 
       {/* Collection */}
-      <div className="bg-[#F9F7F2]  rounded-[10px] ">
+      <div className="bg-[#F9F7F2] shadow3 rounded-[10px] ">
         <div className="mb-[15px] lg:mb-[35px] px-5 pt-5 flex justify-between">
-          <p className=" b3">Collection</p>
+          <p className="text-[13px] md:text-[16px] b3">Collection</p>
           <p className="opacity-80 b4">
             Which collection does this artwork belong to?
           </p>

@@ -23,7 +23,7 @@ const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
       >
         <div
           data-lenis-prevent
-          className="gsap-el fixed overflow-y-scroll top-0 left-0 w-[330px] sm:w-[540px]  bg-[#ECE8DE] px-5 py-10 z-50 rounded-b-[20px] rounded-tr-[20px] h-fit"
+          className="gsap-el fixed overflow-y-scroll top-0 left-0 w-[330px] sm:w-[540px]  bg-[#ECE8DE] px-5 md:px-10 py-10 z-50 max-h-screen rounded-b-[20px] rounded-tr-[20px] h-fit"
         >
           <Link href="/search" onClick={() => setNavOpen(!navOpen)}>
             <div className="absolute cursor-pointer top-8 left-5">
@@ -44,7 +44,84 @@ const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
             </div>
           </Link>
           <div className="border-t-[3px] border-t-unveilBlack mt-[60px]">
-            <div className="grid grid-cols-2 border-b border-b-bgColorHover">
+            <h4 className="b3 font-[500] mb-[10px] mt-8">Gallery</h4>
+            <div className="flex flex-col gap-2">
+              <Link href="/gallery">
+                <p
+                  onClick={() => setNavOpen(!navOpen)}
+                  className="cursor-pointer underline-on-hover s2"
+                >
+                  Gallery
+                </p>
+              </Link>
+              <Link href="/people">
+                <p
+                  onClick={() => setNavOpen(!navOpen)}
+                  className="cursor-pointer underline-on-hover s2"
+                >
+                  Artists
+                </p>
+              </Link>
+              <Link href="/gallery">
+                <p
+                  onClick={() => setNavOpen(!navOpen)}
+                  className="cursor-pointer underline-on-hover s2"
+                >
+                  Collections
+                </p>
+              </Link>
+              <Link href="/people">
+                <p
+                  onClick={() => setNavOpen(!navOpen)}
+                  className="cursor-pointer underline-on-hover s2"
+                >
+                  Curators
+                </p>
+              </Link>
+            </div>
+
+            <h4 className="b3 font-[500] mb-[10px] mt-8">Discover</h4>
+            <div className="flex flex-col gap-2">
+              <Link href="/editorial">
+                <p
+                  onClick={() => setNavOpen(!navOpen)}
+                  className="cursor-pointer underline-on-hover s2"
+                >
+                  Editorial
+                </p>
+              </Link>
+              <Link href="/">
+                <p
+                  onClick={() => setNavOpen(!navOpen)}
+                  className="cursor-pointer underline-on-hover s2"
+                >
+                  New to arto
+                </p>
+              </Link>
+              <Link href="/">
+                <p
+                  onClick={() => setNavOpen(!navOpen)}
+                  className="cursor-pointer underline-on-hover s2"
+                >
+                  New to NFTs
+                </p>
+              </Link>
+            </div>
+
+            <div className="flex flex-col gap-[2px]">
+              <h4 className="mt-8 b3 w-fit underline-on-hover">My account</h4>
+              <h4 className="b3 w-fit underline-on-hover">Wishlist</h4>
+              <h4 className="b3 w-fit underline-on-hover]">About Unveil</h4>
+            </div>
+
+            <h4 className="b3 font-[500] mb-1 mt-16">Join unveil</h4>
+            <div className="flex b3 gap-2 text-[#545454]">
+              <p className="underline-on-hover">Artist</p>
+              <p>|</p>
+              <p className="underline-on-hover">Gallery or Curator</p>
+            </div>
+
+            {/* <div className="grid grid-cols-2 border-b border-b-bgColorHover">
               <div className="w-full py-[25px] my-[15px] text-center border-r border-r-bgColorHover ">
                 <Link href="/gallery">
                   <p
@@ -145,17 +222,17 @@ const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
                   </p>
                 </Link>
               </div>
-            </div>
+            </div> */}
           </div>
-          <button
+          {/* <button
             className="mt-10 btn btn-lg btn-full btn-primary btn-big"
             onClick={() => setAccessOpen(!accessOpen)}
           >
             Request access
-          </button>
-          {navWarning && (
+          </button> */}
+          {/* {navWarning && (
             <p className="text-center b3 mt-[15px]">{navWarning}</p>
-          )}
+          )} */}
         </div>
         <div
           onClick={() => setNavOpen(false)}
