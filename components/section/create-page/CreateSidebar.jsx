@@ -39,16 +39,17 @@ const CreateSidebar = ({
   return (
     <div className="w-full lg:w-[400px] space-y-[15px] lg:space-y-5 mt-5 lg:mt-[120px]">
       {/* Image */}
-      <div className="bg-[#F9F7F2] relative p-5 pb-[30px] rounded-[10px] space-y-[10px]">
+      <div className="bg-[#F9F7F2] shadow3 relative p-5 pb-[30px] rounded-[10px] space-y-[10px]">
         <div className="py-[50px] justify-center flex">
           <div
             className={`  ${
               image && !artwork ? "mx-20 " : "w-[150px] h-[200px]"
-            } ${
-              image && editionType === "NFT_Only"
-                ? "shadow2 p-0 border-none"
-                : ""
-            }   
+            } ${!image && artwork ? "w-[unset] h-[unset] mx-20 " : ""}
+             ${
+               image && editionType === "NFT_Only"
+                 ? "shadow2 p-0 border-none"
+                 : ""
+             }   
             ${frame.size === "2mm" ? "border-[3px]" : ""}
             ${frame.size === "3mm" ? "border-[4px]" : ""}
             ${frame.size === "5mm" ? "border-[5px]" : ""}
@@ -59,7 +60,7 @@ const CreateSidebar = ({
             ${frame.border === "10x20" ? "p-4" : ""}
             ${
               editionType === "NFT_Only"
-                ? "border-none p-0 border-unveilGreen"
+                ? "border-none !p-0 border-unveilGreen"
                 : ""
             }
             bg-unveilWhite relative shadow2`}
@@ -80,14 +81,15 @@ const CreateSidebar = ({
             )}
           </div>
         </div>
-        <label
-          htmlFor="main-image"
-          className="block text-center cursor-pointer btn btn-secondary btn-full btn-lg"
-        >
-          {image && <p>{image.name}</p>}
-          {!image && !artwork && <p>Upload image</p>}
-          {!image && artwork && <p>Change image</p>}
-        </label>
+        {!artwork && (
+          <label
+            htmlFor="main-image"
+            className="block text-center cursor-pointer btn btn-secondary btn-full btn-lg"
+          >
+            {image && <p>{image.name}</p>}
+            {!image && !artwork && <p>Upload image</p>}
+          </label>
+        )}
         {artwork && (
           <input
             accept="image/*"
@@ -136,12 +138,14 @@ const CreateSidebar = ({
       </div>
 
       {/* detail shot 1 */}
-      <div className="bg-[#F9F7F2] pb-[30px] rounded-[10px]">
-        <p className="px-5 pt-5 pb-[35px]">Detail shot 1</p>
+      <div className="bg-[#F9F7F2] shadow3 pb-[30px] rounded-[10px]">
+        <p className="px-5 pt-5 pb-[35px] text-[13px] md:text-[16px]">
+          Detail shot 1
+        </p>
         <div className="flex relative items-center border-t border-[#DBDED6] py-[15px] px-5 gap-[10px]">
           <label
             htmlFor="detail-shot-image-1"
-            className="border cursor-pointer overflow-hidden relative border-unveilBlack rounded-[10px] min-w-[120px] min-h-[120px] max-w-[120px] max-h-[120px]"
+            className="border hover:bg-bgColor unveilTransition cursor-pointer overflow-hidden relative border-unveilBlack rounded-[10px] min-w-[120px] min-h-[120px] max-w-[120px] max-h-[120px]"
           >
             {!detailImage1 && (
               <>
@@ -201,7 +205,7 @@ const CreateSidebar = ({
             )}
             {!detailImage1 && !artwork && (
               <>
-                <p className="b3">Add image</p>
+                <p className="text-[13px] md:text-[16px] b3">Add image</p>
                 <p className="b4">(minimally 2000px)</p>
                 <p
                   className={`text-red-500 opacity-0 b5 ${
@@ -214,7 +218,7 @@ const CreateSidebar = ({
             )}
             {!detailImage1 && artwork && (
               <>
-                <p className="b3">Change image</p>
+                <p className="text-[13px] md:text-[16px]  b3">Change image</p>
                 <p className="b4">(minimally 2000px)</p>
                 <p
                   className={`text-red-500 opacity-0 b5 ${
@@ -234,7 +238,7 @@ const CreateSidebar = ({
             id="detail-shot-caption-1"
             value={description}
             placeholder="Add caption (max 300 char)"
-            className="bg-bgColor rounded-[10px] w-full h-[120px] mt-5 p-2 focus:bg-bgColorHover focus:outline-none"
+            className="bg-bgColor rounded-[10px] w-full h-[120px] mt-5 p-[15px] focus:bg-bgColorHover focus:outline-none"
             {...register("detailShotCaption1", {
               maxLength: 300,
               onChange: (e) => {
@@ -280,8 +284,16 @@ const CreateSidebar = ({
               htmlFor="soundbite"
               className="block cursor-pointer text-center my-[15px] btn btn-secondary btn-full btn-lg"
             >
-              {soundbite && <p className="truncate b3">{soundbite.name}</p>}
-              {!soundbite && <p className="b3">upload soundbite</p>}
+              {soundbite && (
+                <p className="text-[13px] md:text-[16px] truncate b3">
+                  {soundbite.name}
+                </p>
+              )}
+              {!soundbite && (
+                <p className="text-[13px] md:text-[16px] b3">
+                  upload soundbite
+                </p>
+              )}
             </label>
           )}
           <input
@@ -316,18 +328,20 @@ const CreateSidebar = ({
         </div>
       </div>
 
-      <p className="b4 w-[80%]">
+      <p className="b4 leading-[22px]  w-[80%]">
         To speculative buyers from flipping your artwork we have a scaling
         system with high royalties for the artist in early stages
       </p>
 
       {/* detail shot 2 */}
-      <div className="bg-[#F9F7F2] pb-[30px] rounded-[10px]">
-        <p className="px-5 pt-5 pb-[35px]">Detail shot 2</p>
+      <div className="bg-[#F9F7F2] shadow3 pb-[30px] rounded-[10px]">
+        <p className="px-5 pt-5 pb-[35px] text-[13px] md:text-[16px]">
+          Detail shot 2
+        </p>
         <div className="flex items-center border-t border-[#DBDED6] py-[15px] px-5 gap-[10px]">
           <label
             htmlFor="detail-shot-2"
-            className="border cursor-pointer overflow-hidden relative border-unveilBlack rounded-[10px] min-w-[120px] min-h-[120px] max-w-[120px] max-h-[120px]"
+            className="border hover:bg-bgColor unveilTransition cursor-pointer overflow-hidden relative border-unveilBlack rounded-[10px] min-w-[120px] min-h-[120px] max-w-[120px] max-h-[120px]"
           >
             {!detailImage2 && (
               <>
@@ -388,7 +402,7 @@ const CreateSidebar = ({
             )}
             {!detailImage2 && (
               <>
-                <p className="b3">Add image</p>
+                <p className="text-[13px] md:text-[16px] b3">Add image</p>
                 <p className="b4">(minimally 2000px)</p>
                 <p
                   className={`text-red-500 opacity-0 b5 ${
@@ -401,7 +415,7 @@ const CreateSidebar = ({
             )}
             {!detailImage2 && artwork?.detail_shots[1]?.image_url && (
               <>
-                <p className="b3">Change image</p>
+                <p className="text-[13px] md:text-[16px] b3">Change image</p>
                 <p className="b4">(minimally 2000px)</p>
                 <p
                   className={`text-red-500 opacity-0 b5 ${
@@ -426,7 +440,7 @@ const CreateSidebar = ({
                 ? artwork.detail_shots[1]?.caption
                 : null
             }
-            className="bg-bgColor rounded-[10px] w-full h-[120px] mt-5 p-2 focus:bg-bgColorHover focus:outline-none"
+            className="bg-bgColor rounded-[10px] w-full h-[120px] mt-5 p-[15px] focus:bg-bgColorHover focus:outline-none"
             {...register("detailShotCaption2", {
               maxLength: 300,
             })}

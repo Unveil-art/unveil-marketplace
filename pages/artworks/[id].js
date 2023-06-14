@@ -286,7 +286,9 @@ const Edit = ({ artwork }) => {
         className="pb-[120px] px-[15px] md:px-10 lg:flex justify-between"
       >
         <div>
-          <h1 className="lg:py-[120px] pt-[120px] pb-[60px]">Edit Artwork</h1>
+          <h1 className="lg:py-[120px] text-[90px] pt-[120px] pb-[60px]">
+            Edit Artwork
+          </h1>
           <CreateForm
             artwork={artwork}
             editionPrice={editionPrice}
