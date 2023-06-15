@@ -8,7 +8,7 @@ const ItemStatistics = ({ artwork }) => {
       <div className="relative md:col-span-2 bg-bgColor py-[120px] hidden md:block w-full">
         <div className=" mx-32 md:sticky md:top-[120px] md:left-[22%]  aspect-[3/4] ">
           <img
-            className="object-contain shadow2"
+            className="object-contain mx-auto shadow2"
             src={artwork.media_url}
             alt={artwork.name}
           />

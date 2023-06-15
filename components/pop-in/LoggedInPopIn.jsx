@@ -28,8 +28,8 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
           data-lenis-prevent
           className="gsap-el fixed overflow-y-scroll top-0 right-0 w-[330px] sm:w-[540px]  bg-[#ECE8DE] px-5 py-10 z-50 rounded-b-[20px] rounded-tl-[20px] h-fit"
         >
-          <div>
-            <div className="w-full h-[7px] bg-unveilBlack"></div>
+          <div className="mt-[80px]">
+            <div className="w-full md:h-[5px] h-[3px] bg-unveilBlack"></div>
             <h3 className="text-center h2 mb-[80px] mt-[60px] mx-auto">
               Wallet connected
             </h3>

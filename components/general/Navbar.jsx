@@ -118,7 +118,7 @@ const Navbar = ({ value }) => {
             <p
               className={`${
                 step === 4 ? "text-unveilWhite" : "text-unveilBlack"
-              } b3 font-[500] `}
+              } b3 !text-[16px] font-[500] `}
             >
               Sign in
             </p>

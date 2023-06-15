@@ -82,7 +82,7 @@ const GalleryHero = ({ artwork }) => {
         <div className="h-[50svh] md:h-screen md:sticky  top-0 flex items-center justify-center md:col-span-3 bg-bgColor py-[120px]">
           <div className="relative md:px-[20vw] md:w-full w-[40%] md:h-[80%] ">
             <div
-              className={`shadow1 bg-unveilWhite
+              className={`shadow1 mx-auto bg-unveilWhite w-fit
             ${frameObject.size === "2mm" ? "border-[3px]" : ""}
             ${frameObject.size === "3mm" ? "border-[4px]" : ""}
             ${frameObject.size === "5mm" ? "border-[5px]" : ""}
@@ -175,7 +175,7 @@ const GalleryHero = ({ artwork }) => {
                 </div>
               </div>
               <div className="md:block hidden group hover:scale-105 unveilTransition w-[180px] border bg-unveilWhite border-bgColorHover rounded-[10px] overflow-hidden fixed bottom-10 right-10 z-20 h-fit">
-                <div className="aspect-[2/3] flex justify-center items-center md:mx-[35px] relative my-10">
+                <div className="aspect-[2/3] flex justify-center items-center m-[35px] relative ">
                   <img
                     className="object-contain shadow2 group-hover:scale-90 unveilTransition"
                     src={artwork.media_url}
