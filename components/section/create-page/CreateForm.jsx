@@ -43,6 +43,7 @@ const CreateForm = ({
   const [curatorNames, setCuratorNames] = useState([]);
   const [collections, setCollections] = useState([]);
   const [collection, setCollection] = useState();
+  const [curatorOpen, setCuratorOpen] = useState(false);
   const [royalties, setRoyalties] = useState([
     { from: "First 12 months", percentage: "15%" },
   ]);
@@ -376,6 +377,8 @@ const CreateForm = ({
               })}
             />
             <label
+              data-cursor="Coming soon"
+              data-cursor-color="#b2b4ae"
               className="b4 md:text-[16px] text-unveilGrey hover:!border-bgColorHover"
               htmlFor="NFT_Backed_by_print"
             >
@@ -407,7 +410,7 @@ const CreateForm = ({
               name="edition_type"
               id="Print_Only"
               value="Print_Only"
-              // disabled
+              disabled
               checked={editionType === "Print_Only"}
               {...register("edition_type", {
                 onChange: (e) => {
@@ -416,6 +419,8 @@ const CreateForm = ({
               })}
             />
             <label
+              data-cursor="Coming soon"
+              data-cursor-color="#b2b4ae"
               className="b4 md:text-[16px] text-unveilGrey hover:!border-bgColorHover"
               htmlFor="Print_Only"
             >
@@ -1332,18 +1337,28 @@ const CreateForm = ({
                 {errorColl.description?.message}
               </p>
             </div>
-            <label
-              className="b3 px-5 block pt-[35px] pb-[15px]"
-              htmlFor="collection-curator"
-            >
-              Add curator
-            </label>
+            <div className="flex  items-center gap-2 px-5 pt-[35px] pb-[15px]">
+              <div
+                onClick={() => setCuratorOpen(!curatorOpen)}
+                className="relative h-[13px] rounded-full cursor-pointer w-[22px] bg-[#eeece6]"
+              >
+                <div
+                  className={`${
+                    curatorOpen ? "left-[9px]" : "left-[2px] "
+                  } absolute unveilTransition top-1/2 w-[11px] h-[11px] bg-unveilDrakGray -translate-y-1/2 rounded-full`}
+                ></div>
+              </div>
+              <p className="block b3">Add curator</p>
+            </div>
             <div className="relative px-5 mb-[10px]">
               <select
                 id="collection-curator"
-                className="truncate select-input"
+                className={` ${
+                  curatorOpen ? "" : "opacity-60"
+                } truncate select-input`}
                 defaultValue="Select curator"
                 name="curator"
+                disabled={curatorOpen ? false : true}
                 {...registerColl("curator")}
               >
                 <option>Select curator</option>
@@ -1365,8 +1380,11 @@ const CreateForm = ({
             <div className="grid px-5 pb-[35px] grid-cols-2 gap-[10px]">
               <div className="relative">
                 <select
+                  disabled={curatorOpen ? false : true}
                   id="collection-commission"
-                  className="truncate select-input"
+                  className={`truncate select-input ${
+                    curatorOpen ? "" : "opacity-60"
+                  }`}
                   defaultValue="Commission"
                   name="commission"
                   {...registerColl("commission")}
@@ -1392,10 +1410,13 @@ const CreateForm = ({
               </div>
               <div className="relative">
                 <input
+                  disabled={curatorOpen ? false : true}
                   id="collection-duration"
                   name="duration"
                   type="datetime-local"
-                  className="cursor-pointer input"
+                  className={`cursor-pointer input !transition-none ${
+                    curatorOpen ? "" : "opacity-60"
+                  } `}
                   min={getCurrentDateTime()}
                   {...registerColl("duration", "conditionalField", {
                     required: () => isFieldRequired(curatorValue),
@@ -1403,7 +1424,7 @@ const CreateForm = ({
                 />
                 <p
                   className={`text-red-500 opacity-0 absolute b5 -bottom-5 left-0 ${
-                    errorColl.duration?.message ? "opacity-100" : ""
+                    errorColl.duration?.message ? "" : ""
                   }`}
                 >
                   {errorColl.duration?.message}

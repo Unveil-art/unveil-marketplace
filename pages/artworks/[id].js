@@ -285,52 +285,54 @@ const Edit = ({ artwork }) => {
         onSubmit={handleArtworkSubmit(onSubmitForm)}
         className="pb-[120px] px-[15px] md:px-10 lg:flex justify-between"
       >
-        <div>
-          <h1 className="lg:py-[120px] text-[90px] pt-[120px] pb-[60px]">
-            Edit Artwork
-          </h1>
-          <CreateForm
-            artwork={artwork}
-            editionPrice={editionPrice}
-            setEditionPrice={setEditionPrice}
-            setEditionPricing={setEditionPricing}
-            editionPricing={editionPricing}
-            setActiveSize={setActiveSize}
-            activeSize={activeSize}
-            frame={frame}
-            setFrame={setFrame}
-            techniques={techniques}
-            setTechniques={setTechniques}
-            papers={papers}
-            setPapers={setPapers}
-            sizes={sizes}
-            setSizes={setSizes}
-            errors={errors}
-            register={register}
-            reset={reset}
-            editionType={editionType}
-            setEditionType={setEditionType}
-            name={name}
-            setName={setName}
-          />
-          <div className="hidden lg:grid grid-cols-2 mt-5 gap-[15px]">
-            <button
-              type="submit"
-              className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
-            >
-              {loading && (
-                <div className="flex justify-center h-[25px] items-center animate-spin">
-                  <Loader />
-                </div>
-              )}
-              {!loading && <p>Save</p>}
-            </button>
-            <p
-              onClick={() => handleCreateNFT()}
-              className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
-            >
-              Create NFTs
-            </p>
+        <div className="flex justify-center w-full">
+          <div>
+            <h1 className="lg:py-[120px] text-[90px] pt-[120px] pb-[60px]">
+              Edit Artwork
+            </h1>
+            <CreateForm
+              artwork={artwork}
+              editionPrice={editionPrice}
+              setEditionPrice={setEditionPrice}
+              setEditionPricing={setEditionPricing}
+              editionPricing={editionPricing}
+              setActiveSize={setActiveSize}
+              activeSize={activeSize}
+              frame={frame}
+              setFrame={setFrame}
+              techniques={techniques}
+              setTechniques={setTechniques}
+              papers={papers}
+              setPapers={setPapers}
+              sizes={sizes}
+              setSizes={setSizes}
+              errors={errors}
+              register={register}
+              reset={reset}
+              editionType={editionType}
+              setEditionType={setEditionType}
+              name={name}
+              setName={setName}
+            />
+            <div className="hidden lg:grid grid-cols-2 mt-5 gap-[15px]">
+              <button
+                type="submit"
+                className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
+              >
+                {loading && (
+                  <div className="flex justify-center h-[25px] items-center animate-spin">
+                    <Loader />
+                  </div>
+                )}
+                {!loading && <p>Save</p>}
+              </button>
+              <p
+                onClick={() => handleCreateNFT()}
+                className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
+              >
+                Create NFTs
+              </p>
+            </div>
           </div>
         </div>
 

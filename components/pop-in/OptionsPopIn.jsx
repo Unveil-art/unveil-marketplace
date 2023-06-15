@@ -80,11 +80,20 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
                               </p>
                               <p className="b4">€{edition.price}</p>
                             </div>
-                            <Link href="/checkout">
-                              <button className="w-full btn btn-secondary btn-full">
-                                Buy from artist
-                              </button>
-                            </Link>
+                            <button
+                              // onClick={() =>
+                              //   // setEdition({
+                              //   //   ...edition,
+                              //   //   edition_index: i + 1,
+                              //   //   max_editions: nftEditions.length,
+                              //   //   media_url: artwork.media_url,
+                              //   //   edition_type: artwork.edition_type,
+                              //   // })
+                              // }
+                              className="w-full btn btn-secondary btn-full"
+                            >
+                              Buy from artist
+                            </button>
                             {edition.token_id && (
                               <p className="absolute -bottom-1 left-5 b5">
                                 Token ID #{edition.token_id}
