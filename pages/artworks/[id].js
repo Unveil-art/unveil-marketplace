@@ -93,6 +93,7 @@ const Edit = ({ artwork }) => {
   const [creating, setCreating] = useState(false);
 
   const handleCreateNFT = async () => {
+    console.log(provider);
     if (provider) {
       setCreating(true);
       const rpc = new RPC(provider);
@@ -112,7 +113,7 @@ const Edit = ({ artwork }) => {
 
       try {
         const tx = await contract.methods
-          .create(name, name, json.data, 1685196478, [
+          .create(name, name, json.data, 1689445800, [
             "0x3ED87449591524deF3A2f9aeA247dcD3BD38687f",
             1000,
             1685099478,

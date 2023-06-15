@@ -17,7 +17,7 @@ const AboutCurator = ({ owner }) => {
 
   return (
     <section className="grid grid-cols-1 md:grid-cols-2">
-      <div className="w-full aspect-square bg-bgColor">
+      <div className="relative w-full aspect-square bg-bgColor">
         {owner.profileUrl && (
           <Image
             src={owner.profileUrl}

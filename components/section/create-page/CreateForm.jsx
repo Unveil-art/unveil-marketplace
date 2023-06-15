@@ -44,6 +44,7 @@ const CreateForm = ({
   const [collections, setCollections] = useState([]);
   const [collection, setCollection] = useState();
   const [curatorOpen, setCuratorOpen] = useState(false);
+  const [eth, setEth] = useState(false);
   const [royalties, setRoyalties] = useState([
     { from: "First 12 months", percentage: "15%" },
   ]);
@@ -366,8 +367,8 @@ const CreateForm = ({
               className="radio-block left"
               type="radio"
               name="edition_type"
-              id="NFT_Backed_by_print"
               disabled
+              id="NFT_Backed_by_print"
               value="NFT_Backed_by_print"
               checked={editionType === "NFT_Backed_by_print"}
               {...register("edition_type", {
@@ -802,6 +803,30 @@ const CreateForm = ({
         <p className="mb-[15px] lg:mb-[35px] b3 text-[13px] md:text-[16px] pt-5 px-5">
           Edition pricing
         </p>
+        {editionType === "NFT_Only" && (
+          <div className="grid grid-cols-6 gap-2 px-5 uppercase b4 my-[15px]">
+            <div></div>
+            <div className="flex justify-between w-full col-span-2 pr-[30px]">
+              <label htmlFor="pricing-select">
+                Pricing ({eth ? "ETH" : "USD"})
+              </label>
+              <div className="flex items-center gap-1">
+                <p className={`${eth ? "opacity-60" : ""}`}>USD</p>
+                <div
+                  onClick={() => setEth(!eth)}
+                  className="relative h-[13px] rounded-full cursor-pointer w-[22px] bg-[#eeece6]"
+                >
+                  <div
+                    className={`${
+                      eth ? "left-[9px]" : "left-[2px] "
+                    } absolute unveilTransition top-1/2 w-[11px] h-[11px] bg-unveilDrakGray -translate-y-1/2 rounded-full`}
+                  ></div>
+                </div>
+                <p className={`${eth ? "" : "opacity-60"}`}>ETH</p>
+              </div>
+            </div>
+          </div>
+        )}
         {editionType !== "NFT_Only" && (
           <>
             <div className="flex gap-2 px-5 b3 tracking-[0.1em] lg:b4">
@@ -830,8 +855,25 @@ const CreateForm = ({
               <label htmlFor="paper-select">Paper</label>
               <label htmlFor="frame-select">Frame</label>
               <label htmlFor="technique-select">Technique</label>
-              <label htmlFor="pricing-select">Pricing</label>
-              <div></div>
+              <div className="flex justify-between w-full col-span-2 pr-[30px]">
+                <label htmlFor="pricing-select">
+                  Pricing ({eth ? "ETH" : "USD"})
+                </label>
+                <div className="flex items-center gap-1">
+                  <p className={`${eth ? "opacity-60" : ""}`}>USD</p>
+                  <div
+                    onClick={() => setEth(!eth)}
+                    className="relative h-[13px] rounded-full cursor-pointer w-[22px] bg-[#eeece6]"
+                  >
+                    <div
+                      className={`${
+                        eth ? "left-[9px]" : "left-[2px] "
+                      } absolute unveilTransition top-1/2 w-[11px] h-[11px] bg-unveilDrakGray -translate-y-1/2 rounded-full`}
+                    ></div>
+                  </div>
+                  <p className={`${eth ? "" : "opacity-60"}`}>ETH</p>
+                </div>
+              </div>
             </div>
           </>
         )}
@@ -943,7 +985,7 @@ const CreateForm = ({
                     <input
                       type="number"
                       className="input"
-                      placeholder="Select Price (USD)"
+                      placeholder="Select Price"
                       defaultValue={editionPrice[i]}
                       name={`price[${i}]`}
                       {...register(`price[${i}]`, {

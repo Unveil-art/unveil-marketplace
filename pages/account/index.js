@@ -32,6 +32,17 @@ const AccountPage = () => {
     }
   }, [value]);
 
+  useEffect(() => {
+    if (user) {
+      if (user.role === "artist") {
+        setAccountState(0);
+      }
+      if (user.role !== "artist") {
+        setAccountState(2);
+      }
+    }
+  }, [user]);
+
   const handleAccountState = (e) => {
     window.scrollTo(0, 0);
     setAccountState(e.target.selectedIndex);
@@ -40,53 +51,73 @@ const AccountPage = () => {
     }
   };
 
-  return (
-    <div className="relative flex pb-5 md:pb-[80px]">
-      <ToastContainer />
-      <Sidebar accountState={accountState} setAccountState={setAccountState} />
-      <section className="mt-[120px] w-full">
-        {accountState === 0 && <Title title="Account" />}
-        {accountState === 1 && <Title title="Transaction overview" />}
-        {accountState === 2 && <Title title="Owned NFTs" />}
-        {accountState === 3 && (
-          <Title
-            truncate
-            title={`${user.firstName ? user.firstName : ""} ${
-              user.lastName ? user.lastName : ""
-            }${!user.firstName && !user.lastName ? user.email : ""} `}
-          />
-        )}
-        {accountState === 4 && <Title title="Referrals" />}
-        {accountState === 5 && <Title title="Recognitions" />}
-        {accountState === 6 && <Title title="Wishlist" />}
-        {accountState === 7 && <Title title="Following" />}
-        <div className="block md:hidden  mt-[80px] ml-[40px] md:ml-[35svw] border-unveilBlack border-t-2 mr-[15px]">
-          <select
-            className="uppercase select"
-            onChange={(e) => handleAccountState(e)}
-          >
-            <option>Artwork</option>
-            <option>Transactions</option>
-            <option>Owned NFTs</option>
-            <option>Contact details</option>
-            <option>Referrals</option>
-            <option>Recognitions</option>
-            <option>Wishlist</option>
-            <option>Followed artists</option>
-            <option>Logout</option>
-          </select>
-        </div>
-        {accountState === 0 && <Artworks />}
-        {accountState === 1 && <Transactions />}
-        {accountState === 2 && <OwnedNFTs />}
-        {accountState === 3 && <ContactDetails user={user} />}
-        {accountState === 4 && <Referrals />}
-        {accountState === 5 && <Recognitions />}
-        {accountState === 6 && <Wishlist />}
-        {accountState === 7 && <Following />}
-      </section>
-    </div>
-  );
+  if (user) {
+    return (
+      <div className="relative flex pb-5 md:pb-[80px]">
+        <ToastContainer />
+        <Sidebar
+          user={user}
+          accountState={accountState}
+          setAccountState={setAccountState}
+        />
+        <section className="mt-[120px] w-full">
+          {user.role === "artist" && accountState === 0 && (
+            <Title title="Account" />
+          )}
+          {accountState === 1 && <Title title="Transaction overview" />}
+          {accountState === 2 && <Title title="Owned NFTs" />}
+          {accountState === 3 && (
+            <Title
+              truncate
+              title={`${user.firstName ? user.firstName : ""} ${
+                user.lastName ? user.lastName : ""
+              }${!user.firstName && !user.lastName ? user.email : ""} `}
+            />
+          )}
+          {user.role === "artist" && accountState === 4 && (
+            <Title title="Referrals" />
+          )}
+          {user.role === "artist" && accountState === 5 && (
+            <Title title="Recognitions" />
+          )}
+          {accountState === 6 && <Title title="Wishlist" />}
+          {accountState === 7 && <Title title="Following" />}
+          <div className="block md:hidden  mt-[80px] ml-[40px] md:ml-[35svw] border-unveilBlack border-t-2 mr-[15px]">
+            <select
+              className="uppercase select"
+              onChange={(e) => handleAccountState(e)}
+            >
+              {user.role === "artist" && <option>Artwork</option>}
+
+              <option>Transactions</option>
+              <option>Owned NFTs</option>
+              <option>Contact details</option>
+              {user.role === "artist" && (
+                <>
+                  <option>Referrals</option>
+                  <option>Recognitions</option>
+                </>
+              )}
+              <option>Wishlist</option>
+              <option>Followeing</option>
+              <option>Logout</option>
+            </select>
+          </div>
+          {user.role === "artist" && accountState === 0 && <Artworks />}
+          {accountState === 1 && <Transactions />}
+          {accountState === 2 && <OwnedNFTs />}
+          {accountState === 3 && <ContactDetails user={user} />}
+          {user.role === "artist" && accountState === 4 && <Referrals />}
+          {user.role === "artist" && accountState === 5 && <Recognitions />}
+          {accountState === 6 && <Wishlist />}
+          {accountState === 7 && <Following />}
+        </section>
+      </div>
+    );
+  }
+  if (!user) {
+    return <section className="w-full h-screen"></section>;
+  }
 };
 
 export default AccountPage;
