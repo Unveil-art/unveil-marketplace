@@ -174,7 +174,11 @@ const GalleryHero = ({ artwork }) => {
                   <p className="b4">Add to wishlist</p>
                 </div>
               </div>
-              <div className="md:block hidden group hover:scale-105 unveilTransition w-[180px] border bg-unveilWhite border-bgColorHover rounded-[10px] overflow-hidden fixed bottom-10 right-10 z-20 h-fit">
+              <div
+                className={`md:block hidden group hover:scale-105 unveilTransition w-[180px] border bg-unveilWhite border-bgColorHover rounded-[10px] overflow-hidden fixed bottom-10 right-10 z-20 h-fit ${
+                  optionsOpen ? "translate-x-[200%]" : ""
+                }`}
+              >
                 <div className="aspect-[2/3] flex justify-center items-center m-[35px] relative ">
                   <img
                     className="object-contain shadow2 group-hover:scale-90 unveilTransition"

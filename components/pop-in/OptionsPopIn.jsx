@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
 import Close from "../svg/Close";
-import Link from "next/link";
-import EditionPopIn from "./EditionPopIn";
+import useDominantColor from "@/hooks/useDominantColor";
 
 const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
   const [editionSizes, setEditionSizes] = useState([]);
   const [nftEditions, setNftEditions] = useState();
+
+  const { color, loading, error } = useDominantColor(artwork.media_url);
 
   const el = useRef();
 
@@ -45,7 +46,11 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
             <Close />
           </div>
         </div>
+
         <h3 className="mb-10 s2">Select edition</h3>
+        {color}
+        {loading}
+        {error}
         {editionSizes && (
           <>
             {editionSizes.map((editionSize, i) => (
@@ -66,13 +71,15 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
                           key={i}
                           className="flex border bg-[#F9F7F2] overflow-hidden rounded-[10px] border-unveilDrakGray h-[140px] md:h-[166px] "
                         >
-                          <div className="bg-[#9A8183] min-w-[100px] max-w-[100px] md:min-w-[120px] md:max-w-[120px] relative p-5 flex justify-center items-center">
+                          {/* <ImageColor imageUrl={artwork.media_url} />; */}
+                          <div className=" min-w-[100px] max-w-[100px] md:min-w-[120px] md:max-w-[120px] relative p-5 flex justify-center items-center">
                             <img
                               className="object-contain shadow2"
                               src={artwork.media_url}
                               alt={artwork.name}
                             />
                           </div>
+
                           <div className="relative flex flex-col justify-between w-full pt-5 pb-[15px] px-5 ">
                             <div>
                               <p className="b3">

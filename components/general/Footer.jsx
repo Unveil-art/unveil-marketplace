@@ -16,7 +16,7 @@ const Footer = () => {
         <p className="hidden border md:block l2 w-fit border-unveilBlack rounded-[60px] px-2">
           About unveil
         </p>
-        <h4 className="mt-4 mb-8 md:mb-0 md:mt-8 h3">
+        <h4 className="mt-4 mb-8 mr-5 md:mb-0 md:mt-8 h3">
           A community driven curated art photography platform.
         </h4>
       </div>

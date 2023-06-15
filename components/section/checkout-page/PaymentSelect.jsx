@@ -15,8 +15,8 @@ const PaymentSelect = ({
 }) => {
   return (
     <div>
-      <div className="flex items-center gap-1">
-        <p className="font-[500] b3">Choose your Payment Method</p>
+      <div className="flex items-center gap-1 mb-[15px] lg:mb-[30px]">
+        <p className="font-[500] b3 ">Choose your Payment Method</p>
         <div
           onClick={() => setPaymentOpen(!paymentOpen)}
           className="cursor-pointer"
@@ -62,7 +62,7 @@ const PaymentSelect = ({
           <img src="/images/t.png" alt="T" />
         </div>
       </div>
-      <div className="py-2 mt-5 mb-5 border-t lg:mb-20 lg:mt-10 border-bgColorHover">
+      <div className="pt-[15px] md:pt-[30px] mt-[15px] md:mt-[30px] mb-5 border-t lg:mb-20 lg:mt-10 border-bgColorHover">
         <Chat
           chatBtn={true}
           btnDesktop={true}
@@ -74,39 +74,39 @@ const PaymentSelect = ({
         About Maha 3 (NFT backed by print, edition 1 of 1)
       </p>
       <div className="grid grid-cols-2 gap-y-1 gap-x-5">
-        <div className="rounded-[10px] hover:border-unveilBlack  border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
+        <div className="rounded-[10px] unveilTransition hover:border-unveilBlack  border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
           <p className="b5">Creator address</p>
           <p className="truncate b4">0xB365AA6973...</p>
         </div>
-        <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
+        <div className="rounded-[10px] unveilTransition hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
           <p className="b5">Royalties</p>
           <p className="truncate b4">15% first 12 months, 7,5% </p>
         </div>
-        <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
+        <div className="rounded-[10px] unveilTransition hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
           <p className="b5">Token ID</p>
           <p className="truncate b4">#2304</p>
         </div>
-        <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
+        <div className="rounded-[10px] unveilTransition hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
           <p className="b5">Dimensions</p>
           <p className="truncate b4">100x150</p>
         </div>
-        <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
+        <div className="rounded-[10px] unveilTransition hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
           <p className="b5">Blockchain</p>
           <p className="truncate b4">Polygon</p>
         </div>
-        <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
+        <div className="rounded-[10px] unveilTransition hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
           <p className="b5">Frame</p>
           <p className="truncate b4">Not included in price</p>
         </div>
-        <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
+        <div className="rounded-[10px] unveilTransition hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
           <p className="b5">Token standard</p>
           <p className="truncate b4">ERC-721</p>
         </div>
-        <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
+        <div className="rounded-[10px] unveilTransition hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
           <p className="b5">Print technique</p>
           <p className="truncate b4">Archival Pigment Print</p>
         </div>
-        <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
+        <div className="rounded-[10px] unveilTransition hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
           <p className="b5">Platform fee</p>
           <p className="truncate b4">2,5%</p>
         </div>

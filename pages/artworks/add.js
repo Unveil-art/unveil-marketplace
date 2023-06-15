@@ -205,10 +205,7 @@ const Create = () => {
               setName={setName}
             />
             <div className="hidden lg:grid grid-cols-1 mt-5 gap-[15px]">
-              <button
-                type="submit"
-                className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
-              >
+              <button type="submit" className="btn btn-primary btn-lg btn-full">
                 {loading && (
                   <div className="flex justify-center h-[25px] items-center animate-spin">
                     <Loader />
@@ -235,10 +232,7 @@ const Create = () => {
           >
             Create NFTs
           </p> */}
-          <button
-            type="submit"
-            className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
-          >
+          <button type="submit" className="btn btn-primary btn-lg btn-full">
             {loading && (
               <div className="flex justify-center h-[25px] items-center animate-spin">
                 <Loader />
