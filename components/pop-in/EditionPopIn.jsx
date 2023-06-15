@@ -11,7 +11,6 @@ import Currency from "../svg/Currency";
 const EditionPopIn = ({ edition, setEdition }) => {
   const [type, setType] = useState();
   const el = useRef();
-  console.log(edition);
 
   useAsideAnimation(el, edition);
 
@@ -90,7 +89,9 @@ const EditionPopIn = ({ edition, setEdition }) => {
                     <p className="ml-auto w-fit b5">{edition.price} ETH</p>
                   </div>
                 </div>
-                <Link href="/checkout">
+                <Link
+                  href={`/checkout/${edition.artwork_id}/${edition.edition_id}`}
+                >
                   <button className="btn btn-primary btn-full">Checkout</button>
                 </Link>
                 <div className="flex items-center justify-center gap-2 mt-[10px]">

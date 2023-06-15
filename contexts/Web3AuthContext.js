@@ -110,15 +110,34 @@ const Web3AuthProvider = ({ children }) => {
       await web3auth.initModal();
       if (web3auth.provider) {
         setProvider(web3auth.provider);
+        localStorage.setItem("provider", JSON.stringify(web3AuthProvider));
       }
     } catch (err) {
       console.log(err);
     }
   };
 
+  const getPrivateKey = async () => {
+    if (!provider) return;
+    const privateKey = await web3Auth.provider.request({
+      method: "private_key",
+    });
+    console.log(privateKey);
+  };
+
   const convertWei = (numberInString) => {
     const web3 = new Web3();
     const eth = web3.utils.fromWei(numberInString, "ether");
+    return eth;
+  };
+  const convertUSDToWei = (numberInString) => {
+    const web3 = new Web3();
+    const eth = web3.utils.toWei(numberInString, "ether");
+    return eth;
+  };
+  const convertWeiToETH = (numberInString) => {
+    const web3 = new Web3();
+    const eth = web3.utils.toWei(numberInString, "ether");
     return eth;
   };
 
@@ -131,6 +150,8 @@ const Web3AuthProvider = ({ children }) => {
         setEmail(false);
         const web3AuthProvider = await web3Auth.connect();
         setProvider(web3AuthProvider);
+        console.log("LOGIN PROVIDER", web3AuthProvider);
+        localStorage.setItem("provider", JSON.stringify(web3AuthProvider));
         const rpc = new RPC(web3AuthProvider);
         const accounts = await rpc.getAccounts();
         const info = await web3Auth.getUserInfo();
@@ -230,6 +251,9 @@ const Web3AuthProvider = ({ children }) => {
         email,
         setEmail,
         convertWei,
+        getPrivateKey,
+        convertWeiToETH,
+        convertUSDToWei,
       }}
     >
       {children}

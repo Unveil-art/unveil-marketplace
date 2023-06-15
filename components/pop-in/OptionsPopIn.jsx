@@ -9,6 +9,7 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
 
   const { color, loading, error } = useDominantColor(artwork.media_url);
 
+  console.log(artwork);
   const el = useRef();
 
   useAsideAnimation(el, optionsOpen);
@@ -48,9 +49,7 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
         </div>
 
         <h3 className="mb-10 s2">Select edition</h3>
-        {color}
-        {loading}
-        {error}
+
         {editionSizes && (
           <>
             {editionSizes.map((editionSize, i) => (
@@ -153,6 +152,7 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
                           max_editions: nftEditions.length,
                           media_url: artwork.media_url,
                           edition_type: artwork.edition_type,
+                          artwork_id: artwork.id,
                         })
                       }
                       className="btn btn-full btn-secondary"

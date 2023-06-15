@@ -3,7 +3,11 @@ import Image from "next/image";
 import useSound from "use-sound";
 
 const AboutItem = ({ detail_shots, owner }) => {
-  const [play, { stop, isPlaying }] = useSound(detail_shots[0].audio_url);
+  const [play, { stop, isPlaying }] = useSound(
+    detail_shots[0] && detail_shots[0].audio_url
+      ? detail_shots[0].audio_url
+      : ""
+  );
 
   return (
     <div className="block w-full py-10 md:py-[90px] overflow-hidden">
