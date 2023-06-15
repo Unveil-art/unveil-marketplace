@@ -12,6 +12,7 @@ import Payment from "@/components/section/checkout-page/Payment";
 import ConnectWithWallet from "@/components/section/checkout-page/ConnectWithWallet";
 import { StepContext } from "@/contexts/StepContext";
 import Minting from "@/components/section/checkout-page/Minting";
+import Animate from "@/components/reusable/Animate";
 
 const Checkout = () => {
   const { value } = useLocalStorage("token");
@@ -23,37 +24,52 @@ const Checkout = () => {
   const [payment, setPayment] = useState("");
 
   return (
-    <main className="min-h-screen my-[120px] px-[15px] md:px-10 max-w-[1440px] mx-auto">
+    <main className="min-h-screen my-[120px] px-[15px] md:px-10">
       {step === 4 && <Minting />}
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-[100px]">
-        <div className="block lg:hidden">
+      <section className="flex gap-5 justify-between lg:gap-[100px]">
+        <div className="block lg:hidden ">
           <Steps setStep={setStep} step={step} />
           {step === 1 && <h1 className="mt-5 h1 ">Purchase</h1>}
           {step === 2 && <h1 className="mt-5 h1 ">Wallet connected</h1>}
           {step === 3 && <h1 className="mt-5 h1 ">Select {payment}</h1>}
         </div>
-        <div className="order-2 lg:order-1">
-          <div className="hidden lg:block">
-            <Steps setStep={setStep} step={step} />
-          </div>
+        <div className="flex justify-center w-full">
+          <div className="order-2 lg:order-1 w-full lg:w-[700px] ">
+            <div className="hidden lg:block">
+              <Steps setStep={setStep} step={step} />
+            </div>
 
-          {step === 1 && (
-            <>
-              <h1 className="mt-5 h3 mb-[80px] hidden lg:block">Purchase</h1>
-              <PaymentSelect
-                setPayment={setPayment}
-                setStep={setStep}
-                paymentOpen={paymentOpen}
-                setPaymentOpen={setPaymentOpen}
-              />
-            </>
-          )}
-          {step === 2 && <ConnectWithWallet setStep={setStep} />}
-          {step === 3 && <Payment payment={payment} setStep={setStep} />}
+            {step === 1 && (
+              <>
+                <Animate options={{ alpha: true }}>
+                  <h1 className="mt-5 h3 mb-[80px] hidden lg:block">
+                    Purchase
+                  </h1>
+                  <PaymentSelect
+                    setPayment={setPayment}
+                    setStep={setStep}
+                    paymentOpen={paymentOpen}
+                    setPaymentOpen={setPaymentOpen}
+                  />
+                </Animate>
+              </>
+            )}
+            {step === 2 && (
+              <Animate options={{ alpha: true }}>
+                <ConnectWithWallet setStep={setStep} />
+              </Animate>
+            )}
+            {step === 3 && (
+              <Animate options={{ alpha: true }}>
+                <Payment payment={payment} setStep={setStep} />
+              </Animate>
+            )}
+          </div>
         </div>
-        <div className="order-1 lg:order-2">
+
+        <div className="order-1 lg:order-2 w-full lg:w-[700px] 2xl:min-w-[700px]">
           <div className="h-[3px] md:h-[5px] bg-unveilBlack"></div>
-          <div className="flex items-center justify-between md:mt-5 py-[10px] md:mb-10">
+          <div className="flex items-center justify-between md:my-5 my-[15px]">
             <div className="flex items-center gap-5">
               <div className="w-[60px] h-[72px] md:w-[120px] md:h-[140px] bg-bgColor"></div>
               <div>

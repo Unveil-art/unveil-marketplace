@@ -6,6 +6,7 @@ import { useHistory } from "../../contexts/History";
 import { useLenis } from "@studio-freight/react-lenis";
 import Image from "next/image";
 import AccessPopIn2 from "../pop-in/AccessPopIn2";
+import Link from "next/link";
 
 const FloatingArt = ({ data }) => {
   const [open, setOpen] = useState(false);
@@ -314,24 +315,42 @@ const FloatingArt = ({ data }) => {
           </h1>
           <div className="flex gap-[10px] mt-5">
             <div className="gsap-stagger">
-              <button
-                data-cursor={data.button_1_cursor_text}
-                data-cursor-color={data.button_1_cursor_color}
-                className="cursor-not-allowed md:hover:bg-opacity-100 bg-opacity-90 btn btn-primary"
-              >
-                {data.button_1_text}
-              </button>
+              <Link href="/gallery">
+                {data.button_1_cursor_text && (
+                  <button
+                    data-cursor={data.button_1_cursor_text}
+                    data-cursor-color={data.button_1_cursor_color}
+                    className="bg-opacity-90 btn btn-primary"
+                  >
+                    {data.button_1_text}
+                  </button>
+                )}
+                {!data.button_1_cursor_text && (
+                  <button className="bg-opacity-90 btn btn-primary">
+                    {data.button_1_text}
+                  </button>
+                )}
+              </Link>
             </div>
             {/* Going to be a link */}
             <div className="gsap-stagger">
-              <button
-                onClick={() => setOpen(true)}
-                data-cursor={data.button_2_cursor_text}
-                data-cursor-color={data.button_2_cursor_color}
-                className="btn btn-secondary"
-              >
-                {data.button_2_text}
-              </button>
+              {data.button_2_cursor_text && (
+                <button
+                  data-cursor={data.button_2_cursor_text}
+                  data-cursor-color={data.button_2_cursor_color}
+                  className="btn btn-secondary"
+                >
+                  {data.button_2_text}
+                </button>
+              )}
+              {!data.button_2_cursor_text && (
+                <button
+                  onClick={() => setOpen(true)}
+                  className="btn btn-secondary"
+                >
+                  {data.button_2_text}
+                </button>
+              )}
             </div>
           </div>
         </div>

@@ -379,7 +379,7 @@ const CreateForm = ({
             <label
               data-cursor="Coming soon"
               data-cursor-color="#b2b4ae"
-              className="b4 md:text-[16px] text-unveilGrey hover:!border-bgColorHover"
+              className="b4 md:text-[16px] text-unveilGrey opacity-60 !cursor-default hover:!border-bgColorHover"
               htmlFor="NFT_Backed_by_print"
             >
               NFT backed by print
@@ -405,7 +405,7 @@ const CreateForm = ({
           </div>
           <div>
             <input
-              className="radio-block right "
+              className="cursor-default radio-block right"
               type="radio"
               name="edition_type"
               id="Print_Only"
@@ -421,7 +421,7 @@ const CreateForm = ({
             <label
               data-cursor="Coming soon"
               data-cursor-color="#b2b4ae"
-              className="b4 md:text-[16px] text-unveilGrey hover:!border-bgColorHover"
+              className="b4 md:text-[16px] !cursor-default opacity-60 text-unveilGrey hover:!border-bgColorHover"
               htmlFor="Print_Only"
             >
               Print only
