@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import MoreInfo from "@/components/svg/MoreInfo";
 import Mastercard from "@/components/svg/Mastercard";
@@ -14,24 +14,30 @@ const PaymentSelect = ({
   setStep,
   artwork,
 }) => {
-  let firstPercentage, afterPercentage;
-  artwork.royalties.forEach((item) => {
-    if (item.from.includes("First")) {
-      firstPercentage = item.percentage;
-    }
-    if (item.from.includes("After")) {
-      afterPercentage = item.percentage;
-    }
-  });
+  // const [royalties, setRoyalties] = useState(artwork.royalties);
+  // const [first, setFirst] = useState();
+  // const [after, setAfter] = useState();
+  // const [display, setDisplay] = useState();
 
-  let displayRoyalties = "";
-  if (firstPercentage && afterPercentage) {
-    displayRoyalties = `From ${firstPercentage}% to ${afterPercentage}%`;
-  } else if (firstPercentage) {
-    displayRoyalties = `From ${firstPercentage}%`;
-  } else if (afterPercentage) {
-    displayRoyalties = `To ${afterPercentage}%`;
-  }
+  // useEffect(() => {
+  //   if (royalties) {
+  //     artwork.royalties.forEach((item) => {
+  //       if (item.from.includes("First")) {
+  //         setFirst(item.percentage);
+  //       }
+  //       if (item.from.includes("After")) {
+  //         setAfter(item.percentage);
+  //       }
+  //     });
+  //   }
+  //   if (first && after) {
+  //     setDisplay(`From ${firstPercentage}% to ${afterPercentage}%`);
+  //   } else if (first) {
+  //     setDisplay(`From ${firstPercentage}%`);
+  //   } else if (after) {
+  //     setDisplay(`To ${afterPercentage}%`);
+  //   }
+  // }, [artwork]);
 
   return (
     <div>
@@ -104,7 +110,7 @@ const PaymentSelect = ({
             </div>
             <div className="rounded-[10px] unveilTransition hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
               <p className="b5">Royalties</p>
-              <p className="truncate b4">{displayRoyalties}</p>
+              <p className="truncate b4">.</p>
             </div>
             <div className="rounded-[10px] unveilTransition hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
               <p className="b5">Token ID</p>
