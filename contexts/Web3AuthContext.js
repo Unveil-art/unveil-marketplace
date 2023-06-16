@@ -254,6 +254,7 @@ const Web3AuthProvider = ({ children }) => {
         getPrivateKey,
         convertWeiToETH,
         convertUSDToWei,
+        rpcUrl,
       }}
     >
       {children}

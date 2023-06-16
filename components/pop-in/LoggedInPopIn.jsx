@@ -56,7 +56,7 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
                 onClick={() => setLoggedIn(false)}
                 className="mt-10 btn btn-lg btn-full btn-primary"
               >
-                My NFTs
+                My account
               </button>
             </Link>
             <p

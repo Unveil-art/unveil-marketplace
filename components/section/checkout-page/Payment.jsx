@@ -3,7 +3,7 @@ import React from "react";
 import Chat from "@/components/reusable/Chat";
 import Ideal from "@/components/svg/Ideal";
 
-const Payment = ({ payment, setStep }) => {
+const Payment = ({ mint, payment, setStep, total }) => {
   return (
     <>
       <h1 className="mt-5 h3 mb-[80px] hidden lg:block">Select {payment}</h1>
@@ -40,19 +40,19 @@ const Payment = ({ payment, setStep }) => {
             />
           </div>
           <div
-            onClick={() => setStep(4)}
+            onClick={() => mint()}
             className="relative cursor-pointer text-center btn btn-primary btn-full btn-lg my-[10px]"
           >
-            <p>Pay now ($2218,08)</p>
+            <p>Pay now (${total ? total : "0"})</p>
           </div>
         </>
       )}
       {payment === "iDeal" && (
         <div
-          onClick={() => setStep(4)}
+          onClick={() => mint()}
           className="relative cursor-pointer text-center btn btn-primary btn-full btn-lg my-[10px]"
         >
-          <p>Pay now ($2218,08)</p>
+          <p>Pay now (${total ? total : "0"})</p>
           <div className="flex items-center gap-[10px] top-1/2 right-5 -translate-y-1/2 absolute">
             <Ideal />
           </div>
@@ -60,10 +60,10 @@ const Payment = ({ payment, setStep }) => {
       )}
       {payment === "Wallet" && (
         <div
-          onClick={() => setStep(4)}
+          onClick={() => mint()}
           className="relative cursor-pointer text-center btn btn-primary btn-full btn-lg my-[10px]"
         >
-          <p>Pay now ($2218,08)</p>
+          <p>Pay now (${total ? total : "0"})</p>
         </div>
       )}
 

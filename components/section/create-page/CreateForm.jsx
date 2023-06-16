@@ -11,6 +11,8 @@ import {
   postCollection,
   getCollectionsMe,
   deleteArtwork,
+  getCurrentExchangeRateUSDETH,
+  getCurrentExchangeRateETHUSD,
 } from "lib/backend";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 
@@ -111,9 +113,7 @@ const CreateForm = ({
         });
       }
 
-      artwork.editions.forEach((edition) => {
-        setEditionPricing((prevItems) => [...prevItems, edition.size]);
-      });
+      handleUSD();
 
       artwork.editions.forEach((edition) => {
         setEditionPrice((prevItems) => [...prevItems, edition.price]);
@@ -124,6 +124,20 @@ const CreateForm = ({
       setEditionType(artwork.edition_type);
     }
   }, []);
+
+  const handleUSD = async () => {
+    const res = await getCurrentExchangeRateETHUSD();
+    artwork.editions.forEach((edition) => {
+      setEditionPricing((prevItems) => [
+        ...prevItems,
+        {
+          activeSize: edition.size,
+          eth: edition.price,
+          usd: (res.USD * edition.price).toFixed(2),
+        },
+      ]);
+    });
+  };
 
   useEffect(() => {
     console.log(royalties);
@@ -142,8 +156,6 @@ const CreateForm = ({
 
   const handleEditionTypeChange = (event) => {
     setEditionType(event.target.value);
-    console.log(event.target.value);
-    console.log(editionType);
   };
 
   const fetchUsers = async () => {
@@ -177,10 +189,6 @@ const CreateForm = ({
   };
 
   useEffect(() => {
-    console.log(collections);
-  }, [collections]);
-
-  useEffect(() => {
     if (value) {
       fetchCollection();
     }
@@ -189,7 +197,6 @@ const CreateForm = ({
   useEffect(() => {
     if (openCollection) {
       fetchUsers();
-      console.log(curatorNames);
     }
   }, [openCollection]);
 
@@ -258,13 +265,16 @@ const CreateForm = ({
   };
   const handleSubmitOnClick = (e) => {
     e.preventDefault(); // If you need to prevent default behavior
-    console.log("submit");
     handleCollectionSubmit(onSubmitForm)();
   };
   const handleChangePrice = (value, index) => {
-    setEditionPrice((prevItems) => {
+    setEditionPricing((prevItems) => {
       const updatedItems = [...prevItems];
-      updatedItems[index] = value;
+      if (eth) {
+        updatedItems[index].eth = value;
+      } else {
+        updatedItems[index].usd = value;
+      }
       return updatedItems;
     });
   };
@@ -306,6 +316,24 @@ const CreateForm = ({
   };
   const handleNameNFT = (event) => {
     setName(event.target.value);
+  };
+  const handleEth = async () => {
+    if (!eth) {
+      const ethEx = await getCurrentExchangeRateUSDETH();
+      editionPricing.forEach((item) => {
+        if (item.usd !== null) {
+          item.eth = (ethEx.ETH * item.usd).toFixed(4);
+        }
+      });
+    } else {
+      const usdEx = await getCurrentExchangeRateETHUSD();
+      editionPricing.forEach((item) => {
+        if (item.eth !== null) {
+          item.usd = (usdEx.USD * item.eth).toFixed(2);
+        }
+      });
+    }
+    setEth(!eth);
   };
 
   return (
@@ -367,7 +395,7 @@ const CreateForm = ({
               className="radio-block left"
               type="radio"
               name="edition_type"
-              disabled
+              // disabled
               id="NFT_Backed_by_print"
               value="NFT_Backed_by_print"
               checked={editionType === "NFT_Backed_by_print"}
@@ -813,7 +841,7 @@ const CreateForm = ({
               <div className="flex items-center gap-1">
                 <p className={`${eth ? "opacity-60" : ""}`}>USD</p>
                 <div
-                  onClick={() => setEth(!eth)}
+                  onClick={() => handleEth()}
                   className="relative h-[13px] rounded-full cursor-pointer w-[22px] bg-[#eeece6]"
                 >
                   <div
@@ -986,8 +1014,10 @@ const CreateForm = ({
                       type="number"
                       className="input"
                       placeholder="Select Price"
-                      defaultValue={editionPrice[i]}
                       name={`price[${i}]`}
+                      value={
+                        eth ? editionPricing[i].eth : editionPricing[i].usd
+                      }
                       {...register(`price[${i}]`, {
                         required: "Required",
                         onChange: (e) => {
@@ -1043,7 +1073,10 @@ const CreateForm = ({
           <div className="hidden lg:block"></div>
           <p
             onClick={() =>
-              setEditionPricing((prevItems) => [...prevItems, activeSize])
+              setEditionPricing((prevItems) => [
+                ...prevItems,
+                { activeSize, eth: null, usd: null },
+              ])
             }
             className={`${
               editionType !== "NFT_Only" ? "lg:col-span-3" : "lg:col-span-5"
@@ -1077,7 +1110,11 @@ const CreateForm = ({
             <select
               name={`from[${i}]`}
               className="truncate select-input"
-              defaultValue={artwork ? artwork.royalties[i].from : null}
+              defaultValue={
+                artwork && i < artwork.royalties.length
+                  ? artwork.royalties[i].from
+                  : null
+              }
               {...register(`from[${i}]`)}
             >
               {i !== 0 && (
@@ -1116,7 +1153,11 @@ const CreateForm = ({
             <select
               name={`percentage[${i}]`}
               className="truncate select-input"
-              defaultValue={artwork ? artwork.royalties[i].percentage : null}
+              defaultValue={
+                artwork && i < artwork.royalties.length
+                  ? artwork.royalties[i].percentage
+                  : null
+              }
               {...register(`percentage[${i}]`)}
             >
               <option value={0}>0%</option>
@@ -1185,7 +1226,7 @@ const CreateForm = ({
             Which collection does this artwork belong to?
           </p>
         </div>
-        <div className="px-5 pb-[15px] relative ">
+        <div className="px-5 pb-[15px] relative">
           {artwork && (
             <select
               id="collection-select"
@@ -1193,6 +1234,7 @@ const CreateForm = ({
               className="truncate select-input "
               value={collection}
               {...register("collectionId", {
+                validate: (value) => value !== 0,
                 onChange: (e) => {
                   handleChangeCollection(e);
                 },
@@ -1219,7 +1261,7 @@ const CreateForm = ({
                 },
               })}
             >
-              {!artwork && <option disabled>Select collection</option>}
+              {!artwork && <option value={0}>Select collection</option>}
               {collections.map((item, i) => (
                 <option key={i} value={item.id}>
                   {item.title}
@@ -1343,7 +1385,8 @@ const CreateForm = ({
                   id="collection-release-date"
                   name="releaseDate"
                   type="datetime-local"
-                  className="cursor-pointer input"
+                  placeholder="Release date"
+                  className="cursor-pointer input min-h-[40px] w-full"
                   min={getCurrentDateTime()}
                   {...registerColl("releaseDate", { required: "Required" })}
                 />
@@ -1487,7 +1530,7 @@ const CreateForm = ({
               </div>
               <p
                 onClick={() => setOpenCollection(false)}
-                className="text-center cursor-pointer btn btn-full btn-secondary btn-lg"
+                className="flex items-center justify-center text-center cursor-pointer btn btn-full btn-secondary btn-lg"
               >
                 Cancel
               </p>

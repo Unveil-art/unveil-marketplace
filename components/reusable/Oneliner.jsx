@@ -37,12 +37,12 @@ const OneLiner = ({
           {!info && (
             <ReactMarkdown className="markdown pr-[15px]">{text}</ReactMarkdown>
           )}
-          {info && (
+          {info && !gallery && (
             <ReactMarkdown className="inline-block markdown">
               {text}
             </ReactMarkdown>
           )}
-          {info && (
+          {info && !gallery && (
             <span
               onClick={() => handleOpen()}
               className="inline ml-2 cursor-pointer w-fit"
@@ -51,6 +51,15 @@ const OneLiner = ({
               <MoreInfo />
             </span>
           )}
+          {info && gallery && (
+            <p>
+              {text}{" "}
+              <span onClick={() => handleOpen()}>
+                <MoreInfo />
+              </span>
+            </p>
+          )}
+
           {info && (
             <MoreInfoPopIn
               open={infoOpen}

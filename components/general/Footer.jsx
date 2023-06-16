@@ -34,7 +34,7 @@ const Footer = () => {
           </div>
           <div className="space-y-1 opacity-60">
             <p className="b3 font-[500]">Currency</p>
-            <p className="b3">Polygon/USD</p>
+            <p className="b3">ETH/USD</p>
           </div>
           {footers && (
             <>

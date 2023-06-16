@@ -16,6 +16,9 @@
   .btn-secondary {
     @apply bg-transparent border border-unveilBlack hover:bg-bgColor unveilTransition;
   }
+  .btn-white {
+    @apply bg-transparent border border-unveilWhite hover:bg-[rgba(255,255,255,0.1)] text-unveilWhite unveilTransition;
+  }
   .btn-opacity {
     @apply bg-transparent border border-[#DBDED6] hover:bg-bgColor unveilTransition;
   }

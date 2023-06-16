@@ -3,14 +3,26 @@ import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
 import Close from "../svg/Close";
 import useDominantColor from "@/hooks/useDominantColor";
 
+import { getCurrentExchangeRateETHUSD } from "lib/backend";
+
 const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
   const [editionSizes, setEditionSizes] = useState([]);
   const [nftEditions, setNftEditions] = useState();
+  const [udsEx, setUdsEx] = useState();
 
-  const { color, loading, error } = useDominantColor(artwork.media_url);
+  const color = useDominantColor(artwork.media_url);
 
   console.log(artwork);
   const el = useRef();
+
+  useEffect(() => {
+    getUsdEx();
+  }, []);
+
+  const getUsdEx = async () => {
+    const res = await getCurrentExchangeRateETHUSD();
+    setUdsEx(res.USD);
+  };
 
   useAsideAnimation(el, optionsOpen);
 
@@ -70,7 +82,6 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
                           key={i}
                           className="flex border bg-[#F9F7F2] overflow-hidden rounded-[10px] border-unveilDrakGray h-[140px] md:h-[166px] "
                         >
-                          {/* <ImageColor imageUrl={artwork.media_url} />; */}
                           <div className=" min-w-[100px] max-w-[100px] md:min-w-[120px] md:max-w-[120px] relative p-5 flex justify-center items-center">
                             <img
                               className="object-contain shadow2"
@@ -84,23 +95,24 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
                               <p className="b3">
                                 No {i + 1} of {editionSize.editions.length}
                               </p>
-                              <p className="b4">€{edition.price}</p>
+                              <p className="b4">${edition.price}</p>
                             </div>
                             <button
-                              // onClick={() =>
-                              //   // setEdition({
-                              //   //   ...edition,
-                              //   //   edition_index: i + 1,
-                              //   //   max_editions: nftEditions.length,
-                              //   //   media_url: artwork.media_url,
-                              //   //   edition_type: artwork.edition_type,
-                              //   // })
-                              // }
+                              onClick={() =>
+                                setEdition({
+                                  ...edition,
+                                  edition_index: i + 1,
+                                  max_editions: editionSize.editions.length,
+                                  media_url: artwork.media_url,
+                                  edition_type: artwork.edition_type,
+                                  artwork_id: artwork.id,
+                                })
+                              }
                               className="w-full btn btn-secondary btn-full"
                             >
                               Buy from artist
                             </button>
-                            {edition.token_id && (
+                            {!edition.token_id && (
                               <p className="absolute -bottom-1 left-5 b5">
                                 Token ID #{edition.token_id}
                               </p>
@@ -141,7 +153,10 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
                       <p className="b3">
                         No {i + 1} of {nftEditions.length}
                       </p>
-                      <p className="b4">${edition.price} or 0 ETH</p>
+                      <p className="b4">
+                        ${udsEx ? (udsEx * edition.price).toFixed(2) : "0"} or{" "}
+                        {edition.price} ETH
+                      </p>
                     </div>
 
                     <button

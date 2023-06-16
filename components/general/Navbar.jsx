@@ -71,12 +71,12 @@ const Navbar = ({ value }) => {
           >
             <div
               className={`  ${
-                step === 4 ? "bg-unveilWhite" : "bg-unveilBlack"
+                step === 4 || step === 5 ? "bg-unveilWhite" : "bg-unveilBlack"
               } w-full h-[3px]  absolute top-0 unveilTransition group-hover:w-[85%]`}
             ></div>
             <div
               className={` ${
-                step === 4 ? "bg-unveilWhite" : "bg-unveilBlack"
+                step === 4 || step === 5 ? "bg-unveilWhite" : "bg-unveilBlack"
               } w-full h-[3px] bg-unveilBlack absolute bottom-0 unveilTransition group-hover:w-[115%]`}
             ></div>
           </div>
@@ -97,8 +97,8 @@ const Navbar = ({ value }) => {
         )}
 
         <Link href="/">
-          <div className="w-[106px] md:w-[144px] cursor-pointer">
-            <Logo color={step === 4 ? "#F9F7F2" : "#141414"} />
+          <div className="w-[106px] md:w-[144px] position top-[28px] left-1/2 -translate-x-1/2 absolute cursor-pointer">
+            <Logo color={step === 4 || step === 5 ? "#F9F7F2" : "#141414"} />
           </div>
         </Link>
         {value && (
@@ -106,7 +106,7 @@ const Navbar = ({ value }) => {
             onClick={() => handleOpen(setLoggedIn, loggedIn)}
             className="z-40 scale-75 cursor-pointer md:scale-100"
           >
-            <Account color={step === 4 ? "#F9F7F2" : "#141414"} />
+            <Account color={step === 4 || step === 5 ? "#F9F7F2" : "#141414"} />
           </div>
         )}
 
@@ -117,7 +117,9 @@ const Navbar = ({ value }) => {
           >
             <p
               className={`${
-                step === 4 ? "text-unveilWhite" : "text-unveilBlack"
+                step === 4 || step === 5
+                  ? "text-unveilWhite"
+                  : "text-unveilBlack"
               } b3 !text-[16px] font-[500] `}
             >
               Sign in

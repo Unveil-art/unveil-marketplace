@@ -15,8 +15,6 @@ const CreateSidebar = ({
   const [detailImage2, setDetailImage2] = useState(null);
   const [soundbite, setSoundBite] = useState(null);
 
-  console.log(artwork);
-
   useEffect(() => {
     if (artwork && artwork.detail_shots[0]) {
       setDescription(artwork.detail_shots[0].caption);
@@ -37,7 +35,7 @@ const CreateSidebar = ({
   };
 
   return (
-    <div className="w-full lg:w-[400px] space-y-[15px] lg:space-y-5 mt-5 lg:mt-[120px]">
+    <div className="w-full lg:min-w-[400px lg:max-w-[400px] space-y-[15px] lg:space-y-5 mt-5 lg:mt-[120px]">
       {/* Image */}
       <div className="bg-[#F9F7F2] shadow3 relative p-5 pb-[30px] rounded-[10px] space-y-[10px]">
         <div className="py-[50px] justify-center flex">
@@ -194,7 +192,7 @@ const CreateSidebar = ({
           <div className="w-full">
             {detailImage1 && (
               <>
-                <p className="truncate b3">{detailImage1.name}</p>
+                <p className="truncate w-[200px] b3">{detailImage1.name}</p>
                 <p
                   onClick={() => handleRemoveImage(setDetailImage1)}
                   className="underline cursor-pointer underline-offset-2 b4 decoration-1"
@@ -262,7 +260,9 @@ const CreateSidebar = ({
               htmlFor="soundbite"
               className="block cursor-pointer text-center my-[15px] btn btn-secondary btn-full btn-lg"
             >
-              {soundbite && <p className="truncate b3">{soundbite.name}</p>}
+              {soundbite && (
+                <p className="truncate w-[300px] b3">{soundbite.name}</p>
+              )}
               {artwork.detail_shots && (
                 <>
                   {!soundbite && !artwork.detail_shots[0]?.audio_url && (
@@ -298,12 +298,22 @@ const CreateSidebar = ({
           )}
           <input
             onChange={(e) => handleImageChange(e, setSoundBite)}
-            accept="audio/*"
             type="file"
             hidden
+            accept="audio/*"
             name="detailShotSound1"
             id="soundbite"
             {...register("detailShotSound1", {
+              validate: (value) => {
+                if (value[0]) {
+                  const fileType = value[0].type;
+                  return (
+                    (fileType && fileType.includes("audio/")) ||
+                    "Please upload an audio file"
+                  );
+                }
+                return "Please upload a file";
+              },
               onChange: (e) => {
                 handleImageChange(e, setSoundBite);
               },
@@ -391,7 +401,7 @@ const CreateSidebar = ({
           <div>
             {detailImage2 && (
               <>
-                <p className="truncate b3">{detailImage2.name}</p>
+                <p className="truncate w-[200px] b3">{detailImage2.name}</p>
                 <p
                   onClick={() => handleRemoveImage(setDetailImage2)}
                   className="underline cursor-pointer underline-offset-2 b4 decoration-1"

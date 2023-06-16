@@ -2,7 +2,7 @@ import React from "react";
 
 const PeopleHeader = () => {
   return (
-    <section className="ml-[40px] md:ml-[35svw] pr-[15px] md:pr-[40px]">
+    <section className="ml-[40px] md:ml-[35svw] pr-[15px] md:mt-0 mt-[20px] md:pr-[40px]">
       <p className="s2 my-[60px] md:block hidden ">
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quia
         beatae. Consequuntur pariatur incidunt minima aperiam cupiditate libero
