@@ -1,12 +1,14 @@
 import React from "react";
 
-const Minting = () => {
+const Minting = ({ artwork }) => {
   return (
     <div className="z-10 fixed h-screen w-full top-0 left-0 bg-[#9A8183] flex items-center justify-center">
       <div>
-        <div className="w-10 h-10 mx-auto border rounded-full border-unveilBlack"></div>
-        <h1 className="text-center h4 mt-[10px]">Mint in progress...</h1>
-        <p className="text-center b3 mt-[10px]">
+        <div className="w-10 h-10 mx-auto border rounded-full border-unveilWhite"></div>
+        <h1 className="text-center h4 mt-[10px] text-unveilWhite">
+          Mint in progress...
+        </h1>
+        <p className="text-center b3 mt-[10px] text-unveilWhite">
           Your artwork is being minted and should complete shortly
         </p>
       </div>

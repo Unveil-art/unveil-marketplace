@@ -11,6 +11,8 @@ import {
   uploadJSON,
   createNFT,
   postTransaction,
+  getCurrentExchangeRateUSDETH,
+  getCurrentExchangeRateETHUSD,
 } from "lib/backend";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 import { FACTORY_ABI } from "lib/constants";
@@ -93,7 +95,6 @@ const Edit = ({ artwork }) => {
   const [creating, setCreating] = useState(false);
 
   const handleCreateNFT = async () => {
-    console.log(provider);
     if (provider) {
       setCreating(true);
       const rpc = new RPC(provider);
@@ -122,7 +123,6 @@ const Edit = ({ artwork }) => {
             1685196478,
           ])
           .send({ from: accounts, gasPrice: gas });
-        console.log(tx);
 
         const nft = await createNFT(
           value,
@@ -132,8 +132,6 @@ const Edit = ({ artwork }) => {
           },
           artwork.id
         );
-
-        console.log(nft);
 
         await postTransaction(value, {
           transaction_hash: tx.transactionHash,
@@ -175,9 +173,9 @@ const Edit = ({ artwork }) => {
     let activeTechniques;
 
     if (values.edition_type !== "NFT_Only") {
+      const ethEx = await getCurrentExchangeRateUSDETH();
+
       editionPricing.map((_, i) => {
-        console.log(editionPricing);
-        console.log(artwork.editions);
         if (i < artwork.editions.length) {
           editions.push({
             id: artwork.editions[i].id,
@@ -187,7 +185,13 @@ const Edit = ({ artwork }) => {
             paper: values.paper[i],
             frame: values.frame[i],
             technique: values.technique[i],
-            price: parseInt(editionPrice[i]),
+            price: editionPricing[i].eth
+              ? parseFloat(editionPricing[i].eth)
+              : parseFloat(
+                  parseFloat(
+                    parseFloat(editionPricing[i].usd) * ethEx.ETH
+                  ).toFixed(4)
+                ),
             size: editionPricing[i],
             max_copies: 1,
           });
@@ -234,6 +238,8 @@ const Edit = ({ artwork }) => {
         notify(err.message);
       }
     } else {
+      const ethEx = await getCurrentExchangeRateUSDETH();
+
       editionPricing.map((_, i) => {
         if (i < artwork.editions.length) {
           editions.push({
@@ -241,7 +247,13 @@ const Edit = ({ artwork }) => {
             edition_id: artwork.editions[i].edition_id,
             collection_id: artwork.editions[i].collection_id,
             artwork_id: artwork.editions[i].artwork_id,
-            price: parseInt(editionPrice[i]),
+            price: editionPricing[i].eth
+              ? parseFloat(editionPricing[i].eth)
+              : parseFloat(
+                  parseFloat(
+                    parseFloat(editionPricing[i].usd) * ethEx.ETH
+                  ).toFixed(4)
+                ),
             paper: null,
             frame: null,
             technique: null,

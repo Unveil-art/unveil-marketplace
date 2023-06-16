@@ -41,10 +41,9 @@ const Title = (
             {title}
           </h2>
         )}
-
         {account === "artist" && <span className="artist">Artist</span>}
         {account === "collector" && (
-          <span className="mt-[70px] collector">Collector</span>
+          <span className="mt-[32px] md:mt-[70px] collector">Collector</span>
         )}
         {account === "curator" && <span className="curator">Curator</span>}
       </div>

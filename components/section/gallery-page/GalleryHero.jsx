@@ -70,7 +70,6 @@ const GalleryHero = ({ artwork }) => {
       border: arr[3].split(" ")[2],
     };
   }
-  console.log(frameObject);
 
   // Find the lowest price
   const prices = artwork.editions.map((edition) => edition.price);

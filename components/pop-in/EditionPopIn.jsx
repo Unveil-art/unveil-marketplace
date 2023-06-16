@@ -7,10 +7,24 @@ import Link from "next/link";
 import Mastercard from "../svg/Mastercard";
 import Visa from "../svg/Visa";
 import Currency from "../svg/Currency";
+import { getCurrentExchangeRateETHUSD } from "lib/backend";
+import Min from "../svg/Min";
 
 const EditionPopIn = ({ edition, setEdition }) => {
   const [type, setType] = useState();
+  const [price, setPrice] = useState();
   const el = useRef();
+
+  const handlePrice = async () => {
+    if (price) {
+      const res = await getCurrentExchangeRateETHUSD();
+      setPrice((res.USD * edition.price).toFixed(2));
+    }
+  };
+
+  useEffect(() => {
+    handlePrice();
+  }, []);
 
   useAsideAnimation(el, edition);
 
@@ -50,7 +64,7 @@ const EditionPopIn = ({ edition, setEdition }) => {
               </div>
             </div>
             <div className="pt-5">
-              <div className="h-[300px] relative">
+              <div className="h-[200px] md:h-[300px] relative">
                 <p className="px-5 s2">100x50</p>
                 <p className="px-5 b3">
                   Edition {edition.edition_index} of {edition.max_editions}
@@ -69,23 +83,67 @@ const EditionPopIn = ({ edition, setEdition }) => {
                   YOUR CHOICE
                 </p>
                 <p className="b3 mt-[5px] mb-5">{type}</p>
-                <div className="flex items-center gap-2">
-                  <Check2 /> <p className="b4">Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check2 /> <p className="b4">Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check2 /> <p className="b4">Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check2 /> <p className="b4">Lorem ipsum dolor sit amet.</p>
-                </div>
+                {edition.edition_type === "NFT_Only" && (
+                  <>
+                    <div className="flex items-center gap-2">
+                      <Check2 />{" "}
+                      <p className="b4">Store as NFT in your wallet</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Check2 />{" "}
+                      <p className="b4">Easily receive offers ans re-sell</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Min /> <p className="b4">Not convertible to print</p>
+                    </div>
+                  </>
+                )}
+                {edition.edition_type === "Print_Only" && (
+                  <>
+                    <div className="flex items-center gap-2">
+                      <Check2 />{" "}
+                      <p className="b4">You’ll receive a printed artwork</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Check2 />{" "}
+                      <p className="b4">Artist approved, printed by Unveil</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Check2 /> <p className="b4">No wallet needed</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Min />{" "}
+                      <p className="b4">No NFT or blockchain registration</p>
+                    </div>
+                  </>
+                )}
+                {edition.edition_type === "NFT_Backed_by_print" && (
+                  <>
+                    <div className="flex items-center gap-2">
+                      <Check2 />{" "}
+                      <p className="b4">Convert NFT to print anytime</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Check2 /> <p className="b4">Printed by artist</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Check2 />{" "}
+                      <p className="b4">Easily receive offers ans re-sell</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Check2 />{" "}
+                      <p className="b4">No physical storage needed</p>
+                    </div>
+                  </>
+                )}
 
                 <div className="flex items-end justify-between mb-[10px]">
-                  <p className="b5">Token ID #{edition.token_id}</p>
+                  {edition.token_id && (
+                    <p className="b5">Token ID #{edition.token_id}</p>
+                  )}{" "}
+                  {!edition.token_id && <p></p>}
                   <div>
-                    <p className="s2">${edition.price}</p>
+                    <p className="s2">${price ? price : "0"}</p>
                     <p className="ml-auto w-fit b5">{edition.price} ETH</p>
                   </div>
                 </div>

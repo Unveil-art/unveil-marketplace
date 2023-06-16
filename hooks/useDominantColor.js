@@ -1,45 +1,47 @@
 import { useState, useEffect } from "react";
-import ColorThief from "colorthief";
 
 const useDominantColor = (imageUrl) => {
   const [color, setColor] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    setLoading(true);
-    fetch(imageUrl)
-      .then((response) => response.blob())
-      .then((blob) => {
-        setLoading(blob);
-        // const objectUrl = URL.createObjectURL(blob);
-        // const img = new Image();
-        // img.crossOrigin = "anonymous";
+    const img = document.createElement("img");
+    img.crossOrigin = "Anonymous";
+    img.src = imageUrl;
+    img.onload = function () {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0, img.width, img.height);
 
-        // img.onload = async function () {
-        //   try {
-        //     const colorThief = new ColorThief();
-        //     const dominantColor = colorThief.getColor(img);
-        //     setColor(
-        //       `rgb(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`
-        //     );
-        //     setLoading(false);
-        //     URL.revokeObjectURL(objectUrl); // Clean up object URL
-        //   } catch (err) {
-        //     setError(err);
-        //     setLoading(false);
-        //   }
-        // };
+      const imageData = ctx.getImageData(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      ).data;
+      const colorCounts = {};
+      let dominantColor = "";
+      let maxCount = 0;
 
-        // img.src = objectUrl;
-      })
-      .catch((error) => {
-        setError(error);
-        setLoading(false);
-      });
+      for (let i = 0; i < imageData.length; i += 4) {
+        const r = imageData[i];
+        const g = imageData[i + 1];
+        const b = imageData[i + 2];
+        const colorString = `${r},${g},${b}`;
+
+        colorCounts[colorString] = (colorCounts[colorString] || 0) + 1;
+        if (colorCounts[colorString] > maxCount) {
+          maxCount = colorCounts[colorString];
+          dominantColor = colorString;
+        }
+      }
+
+      setColor(`rgb(${dominantColor})`);
+    };
   }, [imageUrl]);
 
-  return { color, loading, error };
+  return color;
 };
 
 export default useDominantColor;

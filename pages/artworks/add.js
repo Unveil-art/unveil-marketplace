@@ -5,7 +5,11 @@ import { useRouter } from "next/router";
 import CreateForm from "@/components/section/create-page/CreateForm";
 import CreateSidebar from "@/components/section/create-page/CreateSidebar";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import { postArtwork, uploadImage } from "lib/backend";
+import {
+  postArtwork,
+  uploadImage,
+  getCurrentExchangeRateUSDETH,
+} from "lib/backend";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -69,7 +73,9 @@ const Create = () => {
     sizes.find((item) => item.active)?.size
   );
 
-  const [editionPricing, setEditionPricing] = useState([activeSize]);
+  const [editionPricing, setEditionPricing] = useState([
+    { activeSize, eth: null, usd: null },
+  ]);
   const [editionType, setEditionType] = useState("NFT_Only");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -86,11 +92,19 @@ const Create = () => {
     let activeTechniques;
 
     if (values.edition_type !== "NFT_Only") {
+      const ethEx = await getCurrentExchangeRateUSDETH();
+
       editions = values.price.map((_, index) => ({
         paper: values.paper[index],
         frame: values.frame[index],
         technique: values.technique[index],
-        price: parseInt(editionPrice[index]),
+        price: editionPricing[index].eth
+          ? parseFloat(editionPricing[index].eth)
+          : parseFloat(
+              parseFloat(
+                parseFloat(editionPricing[index].usd) * ethEx.ETH
+              ).toFixed(4)
+            ),
         size: editionPricing[index],
         json_uri: null,
         max_copies: 1,
@@ -133,8 +147,16 @@ const Create = () => {
         console.log("error", err.message);
       }
     } else {
-      editions = editionPrice.map((_, index) => ({
-        price: parseInt(editionPrice[index]),
+      const ethEx = await getCurrentExchangeRateUSDETH();
+
+      editions = editionPricing.map((_, index) => ({
+        price: editionPricing[index].eth
+          ? parseFloat(editionPricing[index].eth)
+          : parseFloat(
+              parseFloat(
+                parseFloat(editionPricing[index].usd) * ethEx.ETH
+              ).toFixed(4)
+            ),
         paper: null,
         frame: null,
         technique: null,
@@ -149,8 +171,6 @@ const Create = () => {
         ...values,
         editions: editions,
       };
-
-      console.log(mergedValues);
 
       try {
         const mainImage = await uploadImage(value, values.mainImage[0]);
@@ -235,7 +255,7 @@ const Create = () => {
           <button type="submit" className="btn btn-primary btn-lg btn-full">
             {loading && (
               <div className="flex justify-center h-[25px] items-center animate-spin">
-                <Loader />
+                <Loader color="F7F4ED" />
               </div>
             )}
             {!loading && <p>Save</p>}
