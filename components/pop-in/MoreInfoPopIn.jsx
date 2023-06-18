@@ -15,7 +15,7 @@ const MoreInfoPopIn = ({ open, setOpen, text, title, subtitle }) => {
       >
         <div
           data-lenis-prevent
-          className="gsap-el fixed max-h-[calc(100vh-40px)] overflow-y-scroll top-[15px] right-[15px] sm:top-5 sm:right-5 w-[280px] sm:w-[380px]  bg-unveilWhite px-5 py-10 z-50 rounded-[20px] h-fit"
+          className="gsap-el fixed max-h-[calc(100svh-40px)] overflow-y-scroll top-[15px] right-[15px] sm:top-5 sm:right-5 w-[280px] sm:w-[380px]  bg-unveilWhite px-5 py-10 z-50 rounded-[20px] h-fit"
         >
           <div
             onClick={() => setOpen(!open)}

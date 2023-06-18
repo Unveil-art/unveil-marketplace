@@ -834,7 +834,13 @@ const CreateForm = ({
         {editionType === "NFT_Only" && (
           <div className="grid grid-cols-6 gap-2 px-5 uppercase b4 my-[15px]">
             <div></div>
-            <div className="flex justify-between w-full col-span-2 pr-[30px]">
+            <div
+              className={`${
+                editionType === "NFT_Only"
+                  ? "col-span-5 md:col-span-2"
+                  : "col-span-2"
+              } flex justify-between w-full  pr-[30px]`}
+            >
               <label htmlFor="pricing-select">
                 Pricing ({eth ? "ETH" : "USD"})
               </label>
@@ -1007,9 +1013,13 @@ const CreateForm = ({
 
                 <div
                   key={i}
-                  className="flex relative items-center gap-[10px] col-span-2"
+                  className={`${
+                    editionType === "NFT_Only"
+                      ? "col-span-5 md:col-span-2"
+                      : "col-span-2"
+                  } flex relative items-center gap-[10px] `}
                 >
-                  <div className="relative">
+                  <div className="relative md:w-[unset] w-full">
                     <input
                       type="number"
                       className="input"
@@ -1279,7 +1289,7 @@ const CreateForm = ({
           </p>
         </div>
         {!openCollection && (
-          <div className="flex border-t border-[#DBDED6] gap-[30px] items-center underline-offset-2 decoration-1 px-5 pt-[15px] pb-5 lg:pb-[30px] b3">
+          <div className="flex border-t border-[#DBDED6] gap-[15px] items-center underline-offset-2 decoration-1 px-5 pt-[15px] pb-5 lg:pb-[30px] b3">
             <p onClick={() => setOpenCollection(true)}>+</p>
             <p
               onClick={() => setOpenCollection(true)}
@@ -1523,7 +1533,7 @@ const CreateForm = ({
               >
                 {loading && (
                   <div className="flex justify-center h-[25px] items-center animate-spin">
-                    <Loader />
+                    <Loader color="#F7F4ED" />
                   </div>
                 )}
                 {!loading && <p> Save new collection</p>}

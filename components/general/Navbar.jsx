@@ -97,7 +97,7 @@ const Navbar = ({ value }) => {
         )}
 
         <Link href="/">
-          <div className="w-[106px] md:w-[144px] position top-[28px] left-1/2 -translate-x-1/2 absolute cursor-pointer">
+          <div className="w-[106px] md:w-[144px] position top-[15px] md:top-[28px] left-1/2 -translate-x-1/2 absolute cursor-pointer">
             <Logo color={step === 4 || step === 5 ? "#F9F7F2" : "#141414"} />
           </div>
         </Link>
@@ -113,14 +113,14 @@ const Navbar = ({ value }) => {
         {!value && (
           <div
             onClick={() => handleOpen(setLoginOpen, loginOpen)}
-            className="z-40 scale-75 cursor-pointer md:scale-100"
+            className="z-40 cursor-pointer"
           >
             <p
               className={`${
                 step === 4 || step === 5
                   ? "text-unveilWhite"
                   : "text-unveilBlack"
-              } b3 !text-[16px] font-[500] `}
+              } b3 !text-[16px] font-[500]`}
             >
               Sign in
             </p>

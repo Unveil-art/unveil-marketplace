@@ -24,6 +24,8 @@ export default function Gallery({ artworks }) {
   const [artist, setArtist] = useState(0);
   const [medium, setMedium] = useState(0);
 
+  const router = useRouter();
+
   const getPattern = (length) => {
     switch (length) {
       case 9:
@@ -140,6 +142,14 @@ export default function Gallery({ artworks }) {
       fetchItems(pagination, setCollectionSplit, getCollections);
     }
   }, [pagination]);
+
+  useEffect(() => {
+    if ("collections" in router.query) {
+      setCategory(1);
+    } else {
+      setCategory(0);
+    }
+  }, [router.query]);
 
   return (
     <>

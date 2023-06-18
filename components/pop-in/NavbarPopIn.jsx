@@ -50,7 +50,7 @@ const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
                   Artists
                 </p>
               </Link>
-              <Link href="/gallery">
+              <Link href="/gallery?collections">
                 <p
                   onClick={() => setNavOpen(!navOpen)}
                   className="cursor-pointer underline-on-hover s2"

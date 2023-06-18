@@ -17,15 +17,7 @@ const ItemStatistics = ({ artwork }) => {
 
       <div className="md:col-span-3">
         <div className="md:mb-[100px] px-[15px] md:pl-10 md:pr-5">
-          <p className="pb-5 s1 md:pb-0">Pricing statistics</p>
-          <div className="w-[180px] md:hidden block">
-            <p className="leading-[16px] md:leading-[25px] b4">
-              <strong className="font-[500]">About pricing</strong>
-              <br />
-              We believe transparency creates wealth we gain trust by our
-              collectors by being transparent.
-            </p>
-          </div>
+          <p className="s1 md:pb-0">Pricing statistics</p>
 
           <div className="relative pt-5 md:pt-[80px] flex justify-between gap-5">
             <div className="md:space-y-[6px] w-full md:block grid grid-cols-2 gap-[6px]">
@@ -95,6 +87,7 @@ const ItemStatistics = ({ artwork }) => {
                 />
               </div>
             </div>
+
             <div className="absolute bottom-0 right-0 w-[130px] md:block hidden">
               <p className="b4">
                 <strong className="font-[500]">About specifications</strong>
@@ -103,6 +96,14 @@ const ItemStatistics = ({ artwork }) => {
                 collectors by being transparent.
               </p>
             </div>
+          </div>
+          <div className="w-[180px] mt-5 md:hidden block">
+            <p className="leading-[16px] md:leading-[25px] b4">
+              <strong className="font-[500]">About pricing</strong>
+              <br />
+              We believe transparency creates wealth we gain trust by our
+              collectors by being transparent.
+            </p>
           </div>
           <p className="pb-5 s1 md:pb-0 mt-[100px]">Specifications</p>
           <div className="w-[180px] md:hidden block">

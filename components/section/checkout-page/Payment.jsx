@@ -11,7 +11,7 @@ const Payment = ({ mint, payment, setStep, total }) => {
         <>
           <input
             type="text"
-            className="input"
+            className="mt-10 input"
             name="card-number"
             id="card-number"
             placeholder="Card number"
@@ -50,7 +50,7 @@ const Payment = ({ mint, payment, setStep, total }) => {
       {payment === "iDeal" && (
         <div
           onClick={() => mint()}
-          className="relative cursor-pointer text-center btn btn-primary btn-full btn-lg my-[10px]"
+          className="relative mt-10 cursor-pointer text-center btn btn-primary btn-full btn-lg my-[10px]"
         >
           <p>Pay now (${total ? total : "0"})</p>
           <div className="flex items-center gap-[10px] top-1/2 right-5 -translate-y-1/2 absolute">
@@ -61,7 +61,7 @@ const Payment = ({ mint, payment, setStep, total }) => {
       {payment === "Wallet" && (
         <div
           onClick={() => mint()}
-          className="relative cursor-pointer text-center btn btn-primary btn-full btn-lg my-[10px]"
+          className="relative mt-10 cursor-pointer text-center btn btn-primary btn-full btn-lg my-[10px]"
         >
           <p>Pay now (${total ? total : "0"})</p>
         </div>

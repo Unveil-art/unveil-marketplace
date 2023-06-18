@@ -14,6 +14,8 @@ const People = () => {
   const { value } = useLocalStorage("token");
   const [people, setPeople] = useState();
 
+  const router = useRouter();
+
   const fetchUsers = async () => {
     try {
       const data = await getUsers(value, filter);
@@ -33,8 +35,12 @@ const People = () => {
   }, [value, filter]);
 
   useEffect(() => {
-    console.log(people);
-  }, [people]);
+    if ("curators" in router.query) {
+      setFilter("curator");
+    } else {
+      setFilter("artist");
+    }
+  }, [router.query]);
 
   return (
     <main className="pt-[120px] min-h-screen overflow-y-hidden">

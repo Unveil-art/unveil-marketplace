@@ -7,7 +7,7 @@ const ConnectWithWallet = ({ setStep }) => {
       <h1 className="mt-5 h3 mb-[80px] lg:block hidden">Wallet connected</h1>
       <input
         type="email"
-        className="input"
+        className="mt-10 input"
         name="email"
         id="email"
         placeholder="Email"
@@ -18,7 +18,8 @@ const ConnectWithWallet = ({ setStep }) => {
       >
         Start buying
       </button>
-      <div className="mt-10 mb-20">
+      <hr />
+      <div className="pt-[15px] md:pt-[30px] mt-[15px] md:mt-[30px] mb-10 border-t lg:mb-20 lg:mt-10 border-bgColorHover">
         <Chat
           title="Get help with payment"
           text="Explore the possibilities with NFTs and prints"

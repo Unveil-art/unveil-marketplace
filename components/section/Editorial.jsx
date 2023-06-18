@@ -7,7 +7,7 @@ import Oneliner from "../reusable/Oneliner";
 
 const Editorial = ({ data, editorial }) => {
   return (
-    <section className="pt-[180px] ">
+    <section className="pt-[80px] md:pt-[120px] ">
       <Link href="/editorial">
         <Title title={data.heading} link />
       </Link>
