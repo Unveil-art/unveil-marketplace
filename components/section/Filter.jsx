@@ -23,7 +23,7 @@ const Filter = ({
               category === 0
                 ? "border-unveilBlack"
                 : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
-            } px-2 border rounded-full cursor-pointer unveilTransition md:px-4 l2`}
+            } px-2 border tracking-[0.1em] rounded-full cursor-pointer unveilTransition md:px-4 l2`}
           >
             Artworks
           </span>
@@ -33,7 +33,7 @@ const Filter = ({
               category === 1
                 ? "border-unveilBlack"
                 : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
-            } px-2 border rounded-full cursor-pointer unveilTransition md:px-4 l2 `}
+            } px-2 border tracking-[0.1em] rounded-full cursor-pointer unveilTransition md:px-4 l2 `}
           >
             Collections
           </span>

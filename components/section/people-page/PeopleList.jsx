@@ -1,7 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 const PeopleList = ({ people }) => {
+  console.log(people);
   return (
     <>
       {people && (
@@ -29,18 +31,27 @@ const PeopleList = ({ people }) => {
                     <Link href="/people/1">
                       <div className="flex items-center gap-20 ">
                         <div className="flex items-center gap-5 py-5">
-                          <div className="h-[140px] w-[120px] bg-bgColor"></div>
+                          <div className="h-[140px] w-[120px] bg-bgColor relative">
+                            {people.profileUrl && (
+                              <Image
+                                src={people.profileUrl}
+                                alt={displayName}
+                                fill={true}
+                                style={{ objectFit: "cover" }}
+                              />
+                            )}
+                          </div>
                           <div>
                             <p className="mb-[10px] s1 max-w-[180px] md:max-w-[170px] lg:max-w-[270px] lg:min-w-[270px] truncate">
                               {displayName}
                             </p>
                             <div className="block md:hidden">
                               <p className="b3 opacity-60">Artworks</p>
-                              <p>20</p>
+                              <p>0</p>
                             </div>
                             <div className="block md:hidden">
                               <p className="b3 opacity-60">Collections</p>
-                              <p>3</p>
+                              <p>0</p>
                             </div>
                           </div>
                         </div>

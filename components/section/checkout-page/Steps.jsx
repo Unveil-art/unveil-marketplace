@@ -5,10 +5,15 @@ const Steps = ({ step, setStep }) => {
   return (
     <div className="flex gap-[5px] items-center">
       <p
+        onClick={() => {
+          if (step === 2 || step === 3) {
+            setStep(1);
+          }
+        }}
         className={`
         ${
           step !== 1
-            ? "py-[6px] px-[5px] md:py-[9px] md:px-[8px]"
+            ? "py-[6px] px-[4px] md:py-[9px] md:px-[8px]"
             : "px-[8px] md:px-[10px]"
         }
         ${
@@ -27,6 +32,11 @@ const Steps = ({ step, setStep }) => {
         }  w-5 h-px`}
       ></div>
       <p
+        onClick={() => {
+          if (step === 3) {
+            setStep(2);
+          }
+        }}
         className={` ${
           step === 3
             ? "py-[6px] px-[5px] md:py-[9px] md:px-[8px]"

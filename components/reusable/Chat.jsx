@@ -20,7 +20,7 @@ const Chat = ({ title, text, chatBtn = false, btnDesktop = false }) => {
         <div
           className={`absolute ${
             !btnDesktop ? "md:hidden" : ""
-          }  top-1/2 -translate-y-1/2 right-[15px] flex items-center gap-1`}
+          }  top-1/2 -translate-y-1/2 right-[15px] flex items-center gap-[6px]`}
         >
           <div className="w-[10px] relative h-[10px]">
             <div className="w-full h-full bg-green-600 rounded-full"></div>

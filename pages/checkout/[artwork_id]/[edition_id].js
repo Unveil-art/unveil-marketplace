@@ -212,14 +212,14 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       <ToastContainer />
       {step === 4 && <Minting />}
       {step === 5 && <Minted />}
-      <section className="lg:flex gap-5 justify-between lg:gap-[100px]">
+      <section className="lg:flex block gap-5 justify-between lg:gap-[100px]">
         <div className="block lg:hidden ">
           <Steps setStep={setStep} step={step} />
           {step === 1 && <h1 className="mt-5 h1 ">Purchase</h1>}
           {step === 2 && <h1 className="mt-5 h1 ">Wallet connected</h1>}
           {step === 3 && <h1 className="mt-5 h1 ">Select {payment}</h1>}
         </div>
-        <div className="flex justify-center w-full">
+        <div className="justify-center block w-full md:flex">
           <div className="order-2 lg:order-1 w-full 2xl:w-[700px] ">
             <div className="hidden lg:block">
               <Steps setStep={setStep} step={step} />
@@ -258,7 +258,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
             )}
           </div>
         </div>
-        <div className="order-1 lg:order-2 w-full lg:min-w-[450px] 2xl:min-w-[700px] 2xl:max-w-[700px]">
+        <div className="order-1 mt-10 md:mt-0 lg:order-2 w-full lg:min-w-[450px] 2xl:min-w-[700px] 2xl:max-w-[700px]">
           <Animate options={{ alpha: true }}>
             <div className="h-[3px] md:h-[5px] bg-unveilBlack"></div>
             <div className="flex items-center justify-between md:my-5 my-[15px]">
@@ -303,7 +303,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
                   <p className="b3 text-[11px] lg:text-[17px]">${priceUSD}</p>
                 )}
                 {edition && (
-                  <p className="leading-[16px] lg:leading-[23px] b5">
+                  <p className="leading-[16px] whitespace-nowrap lg:leading-[23px] b5">
                     ({edition.price} ETH)
                   </p>
                 )}
@@ -319,7 +319,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
                   <MoreInfo />
                 </div>
               </div>
-              <div className="flex items-end gap-2">
+              <div className="flex items-center gap-2 md:items-end">
                 <p className="b3 text-[11px] lg:text-[17px]">
                   + ~${gasFeesUSD && <>{gasFeesUSD.toFixed(2)}</>}
                 </p>

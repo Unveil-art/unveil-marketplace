@@ -305,7 +305,9 @@ const CreateSidebar = ({
             id="soundbite"
             {...register("detailShotSound1", {
               validate: (value) => {
-                if (value[0]) {
+                if (value.length === 0) {
+                  return true; // Pass validation if no file is selected
+                } else if (value[0]) {
                   const fileType = value[0].type;
                   return (
                     (fileType && fileType.includes("audio/")) ||

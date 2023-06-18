@@ -82,7 +82,12 @@ const ArtworkListItem = ({ i, item }) => {
           </div>
         </div>
         <div>
-          <h4 className="mb-2 md:mb-0 s1">{item.name}</h4>
+          {item.is_draft && (
+            <Link href={`/artworks/${item.id}`}>
+              <h4 className="mb-2 md:mb-0 s1">{item.name}</h4>
+            </Link>
+          )}
+          {!item.is_draft && <h4 className="mb-2 md:mb-0 s1">{item.name}</h4>}
           {item.is_draft && (
             <Link href={`/artworks/${item.id}`}>
               <button className="block btn btn-secondary btn-lg md:hidden">

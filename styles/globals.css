@@ -69,7 +69,7 @@
     @apply font-graphik font-light text-[20px] md:text-[24px] leading-[19px] md:leading-[110.6%] tracking-[-0.03em] md:tracking-[-0.04em];
   }
   .s2 {
-    @apply font-teodor !font-light text-[21px] md:text-[26px] leading-[100%] md:leading-[26px] tracking-[-0.01em] md:tracking-[-0.03em];
+    @apply font-teodor !font-light text-[21px] md:text-[26px] leading-[24px] md:leading-[26px] tracking-[-0.01em] md:tracking-[-0.03em];
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

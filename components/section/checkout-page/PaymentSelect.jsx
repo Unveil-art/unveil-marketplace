@@ -41,7 +41,7 @@ const PaymentSelect = ({
 
   return (
     <div>
-      <div className="flex items-center gap-1 mb-[15px] lg:mb-[30px]">
+      <div className="flex items-center gap-1 mb-[15px] lg:mb-[30px] pt-10">
         <p className="font-[500] b3 ">Choose your Payment Method</p>
         <div
           onClick={() => setPaymentOpen(!paymentOpen)}
@@ -98,10 +98,10 @@ const PaymentSelect = ({
       </div>
       {artwork && (
         <>
-          <p className="font-[500] b3 mb-[15px] lg:mb-[30px]">
+          <p className="font-[500] mt-10 b3 mb-[15px] lg:mb-[30px]">
             About {artwork.name} (NFT backed by print, edition 1 of 1)
           </p>
-          <div className="grid grid-cols-2 gap-y-1 gap-x-5">
+          <div className="grid grid-cols-2 gap-y-[5px] gap-x-5">
             <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full  cursor-pointer">
               <p className="b5 leading-[23px]">Creator address</p>
               <p className="truncate b3 !text-[13px] leading-normal md:b4 w-[130px]">

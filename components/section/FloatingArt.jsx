@@ -232,7 +232,7 @@ const FloatingArt = ({ data }) => {
                 />
               )}
             </div>
-            <small className="block l2 text-[8px] md:text-[12px]">
+            <small className=" block l2 text-[8px] md:text-[12px]">
               {data.bottomleft_name}
             </small>
           </div>
@@ -294,7 +294,7 @@ const FloatingArt = ({ data }) => {
                 />
               )}
             </div>
-            <small className="block l2 text-[8px] md:text-[12px]">
+            <small className="block l2 md:ml-0 ml-1 text-[8px] md:text-[12px]">
               {data.centerright_name}
             </small>
           </div>

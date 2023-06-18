@@ -15,7 +15,7 @@ const Arrow = ({ small = false }) => {
       >
         <path
           fillRule="evenodd"
-          clip-rule="evenodd"
+          clipRule="evenodd"
           d="M12.3389 15.4542L10.8548 13.9684L16.5992 8.20788L10.7227 2.44736L12.3389 0.922603L19.5566 8.18841L12.3389 15.4542Z"
         />
       </svg>

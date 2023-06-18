@@ -53,11 +53,11 @@ const EditionPopIn = ({ edition, setEdition }) => {
         >
           <div
             data-lenis-prevent
-            className="gsap-el fixed max-h-[calc(100vh-40px)] overflow-y-scroll top-[15px] right-[15px] sm:top-5 sm:right-5 w-[280px] sm:w-[380px] bg-[#9A8183] z-50 rounded-[20px] h-fit"
+            className="gsap-el fixed max-h-[calc(100vh-40px)] overflow-y-scroll top-[15px] right-[15px] sm:top-5 sm:right-5  w-[330px] sm:w-[380px] bg-[#9A8183] z-50 rounded-[20px] h-fit"
           >
             <div
               onClick={() => setEdition(null)}
-              className="absolute top-[15px] right-[15px] w-8 h-8 rounded-full bg-unveilBlack cursor-pointer"
+              className="absolute top-[15px] z-10 right-[15px] w-8 h-8 rounded-full bg-unveilBlack cursor-pointer"
             >
               <div className="-translate-x-[1px]">
                 <Close />
@@ -79,7 +79,7 @@ const EditionPopIn = ({ edition, setEdition }) => {
             </div>
             <div className="bg-[#ECE8DE] z-10 relative px-5 py-5">
               <div className="bg-unveilWhite mb-[15px] border border-unveilGreen rounded-[10px] p-5">
-                <p className="px-2 rounded-full bg-unveilBlack text-unveilWhite w-fit l2 text-[9px] leading-[17px]">
+                <p className="px-2 rounded-full tracking-[0.2em] bg-unveilBlack text-unveilWhite w-fit l2 text-[9px]">
                   YOUR CHOICE
                 </p>
                 <p className="b3 mt-[5px] mb-5">{type}</p>
@@ -144,7 +144,9 @@ const EditionPopIn = ({ edition, setEdition }) => {
                   {!edition.token_id && <p></p>}
                   <div>
                     <p className="s2">${price ? price : "0"}</p>
-                    <p className="ml-auto w-fit b5">{edition.price} ETH</p>
+                    <p className="ml-auto w-fit leading-[24px] b5">
+                      {edition.price} ETH
+                    </p>
                   </div>
                 </div>
                 <Link

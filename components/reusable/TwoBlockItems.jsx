@@ -34,29 +34,19 @@ const TwoBlockItems = ({ items }) => {
             <>
               {item.title && (
                 <Link href={`/gallery/collection/${item.id}`}>
-                  <div
-                    className={`shadow1 mx-auto bg-unveilWhite w-fit
-            ${frameObject.size === "2mm" ? "border-[3px]" : ""}
-            ${frameObject.size === "3mm" ? "border-[4px]" : ""}
-            ${frameObject.size === "5mm" ? "border-[5px]" : ""}
-            ${frameObject.colour === "Black" ? "border-unveilBlack" : ""}
-            ${frameObject.colour === "Wood" ? "border-[#D8B589]" : ""}
-            ${frameObject.colour === "White" ? "border-unveilCreme" : ""}
-            ${frameObject.border === "None" ? "p-0" : ""}
-            ${frameObject.border === "5x10" ? "p-2" : ""}
-            ${frameObject.border === "10x20" ? "p-4" : ""}`}
-                  >
-                    <img
-                      className="object-contain h-full"
+                  <div className="relative w-full overflow-hidden bg-bgColor aspect-square">
+                    <Image
                       src={item.media_url}
                       alt={item.name}
+                      fill={true}
+                      style={{ objectFit: "cover" }}
                     />
                   </div>
                 </Link>
               )}
               {item.name && (
                 <Link href={`/gallery/artwork/${item.id}`}>
-                  <div className="relative w-full bg-bgColor aspect-square">
+                  <div className="relative w-full overflow-hidden bg-bgColor aspect-square">
                     <Image
                       src={item.media_url}
                       alt={item.name}

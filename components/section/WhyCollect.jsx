@@ -88,7 +88,7 @@ const WhyCollect = ({ data }) => {
                   {data.blocks[0].banner_heading}
                 </h4>
 
-                <p className="mt-2 text-unveilWhite b4">
+                <p className="mt-2 text-unveilWhite b4 md:leading-[25px] leading-[17px]">
                   {data.blocks[0].banner_description}
                   <span
                     className="ml-2 cursor-pointer"
@@ -153,7 +153,7 @@ const WhyCollect = ({ data }) => {
                   {" "}
                   {data.blocks[1].banner_heading}
                 </h4>
-                <p className="b4 mt-2 px-[15px]">
+                <p className="b4 mt-2 px-[15px]  md:leading-[25px] leading-[17px]">
                   {data.blocks[1].banner_description}
                   <span
                     className="ml-2 cursor-pointer"
@@ -220,7 +220,7 @@ const WhyCollect = ({ data }) => {
                 className="h-[315px] relative  overflow-hidden mr-[15px] lg:mr-0 lg:h-auto min-w-[270px] max-w-[270px] lg:max-w-[unset] lg:min-w-[unset] lg:aspect-[10/11]  rounded-[10px] text-center pt-5 md:pt-[60px] px-[15px]"
               >
                 <h4 className="s1">{data.blocks[2].banner_heading}</h4>
-                <p className="mt-2 b4">
+                <p className="mt-2 b4 md:leading-[25px] leading-[17px]">
                   {data.blocks[2].banner_description}
                   <span
                     className="ml-2 cursor-pointer"
