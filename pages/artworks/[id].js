@@ -15,7 +15,7 @@ import {
   getCurrentExchangeRateETHUSD,
 } from "lib/backend";
 import { Web3Context } from "@/contexts/Web3AuthContext";
-import { FACTORY_ABI } from "lib/constants";
+import { FACTORY_ABI, FACTORY_CONTRACT_ADDRESS } from "lib/constants";
 import RPC from "lib/RPC";
 import Loader from "@/components/svg/Loader";
 
@@ -101,7 +101,7 @@ const Edit = ({ artwork }) => {
       const accounts = await rpc.getAccounts();
       const contract = await rpc.getContract(
         FACTORY_ABI,
-        process.env.NEXT_PUBLIC_FACTORY_ADDRESS
+        FACTORY_CONTRACT_ADDRESS
       );
 
       const json = await uploadJSON(value, {
@@ -114,14 +114,20 @@ const Edit = ({ artwork }) => {
 
       try {
         const tx = await contract.methods
-          .create(name, name, json.data, 1689445800, [
-            "0x3ED87449591524deF3A2f9aeA247dcD3BD38687f",
-            1000,
-            1685099478,
-            1000,
-            2000,
-            1685196478,
-          ])
+          .create(
+            name,
+            name,
+            json.data,
+            1689445800, // endTimeStamp need to have higher value
+            [
+              "0x3ED87449591524deF3A2f9aeA247dcD3BD38687f", // replace this with curator wallet associated with artwork
+              1000, // replace this with curator percentage
+              1685099478, // replace this timestamp with curator commission date
+              1000, // first royalty percentage
+              2000, // second royalty percentage
+              1685196478, // second royalty threshold time
+            ]
+          )
           .send({ from: accounts, gasPrice: gas });
 
         const nft = await createNFT(

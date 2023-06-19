@@ -30,14 +30,17 @@ const ArtworkListItem = ({ i, item }) => {
 
     try {
       const data = await listArtwork(value, item.id, !list.listed);
-      const eth = await getCurrentExchangeRateUSDETH();
+      const eth = await getCurrentExchangeRateUSDETH();  //  comment/remove this line
 
       let uniqueEdition = [];
       item.editions.forEach(async (edition) => {
         if (uniqueEdition.includes(edition.edition_id)) {
         } else {
           uniqueEdition.push(edition.edition_id);
-          const priceETH = eth.ETH * edition.price;
+
+          // we will store only ETH Value in Edition Price
+          // No need to convert USD to ETH here
+          const priceETH = eth.ETH * edition.price; // comment/remove this conversion code
           const priceInWei = Web3.utils.toWei(priceETH.toFixed(4));
           let rpc = new RPC(provider);
           let contract = await rpc.getContract(

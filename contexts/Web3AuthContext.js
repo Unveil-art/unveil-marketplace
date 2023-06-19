@@ -6,7 +6,7 @@ import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import Web3 from "web3";
 import RPC from "lib/RPC";
 import { useAuth } from "@/hooks/useAuth";
-import { getNonce } from "lib/backend";
+import { doWalletHasEmail, getNonce } from "lib/backend";
 import useLocalStorage from "@/hooks/useLocalStorage";
 
 export const Web3Context = createContext({
@@ -21,17 +21,10 @@ export const Web3Context = createContext({
   convertWei: () => {},
 });
 
-// const clientId =
-//   "BCFadhq6b_7lQhx_H-jr1jUDjJeIf4Oc2onszEpTU0UPVqEwV6Y-sGSbLUyOxi17FsGmiBh00KIjOmDT2LP5WYQ";
+const clientId = process.env.NEXT_PUBLIC_WEB3AUTH_API_KEY;
 
-const clientId =
-  "BMhI9W8lHxZ_jfNxJxMDGjwsGWiLTVoNpsWejtcPCPWM8miGP9qHj_3DpN1AjidY3UOHUsZ4VC3H8lCQAcUsH6k";
-
-export const rpcUrl = "https://rpc-mumbai.maticvigil.com";
-// export const rpcUrl =
-//   "https://eth-mainnet.g.alchemy.com/v2/RO17kIgzkM0Ho40FjDYYI-ky8vnnAbKz";
-export const chainId = "0x13881";
-// export const chainId = "0x1";
+export const rpcUrl = process.env.NEXT_PUBLIC_CHAIN_LINK;
+export const chainId = process.env.NEXT_PUBLIC_CHAINID;
 
 const Web3AuthProvider = ({ children }) => {
   const { doLogin, doLogout } = useAuth();
@@ -64,7 +57,7 @@ const Web3AuthProvider = ({ children }) => {
         clientId: clientId, // Get your Client ID from Web3Auth Dashboard
         chainConfig: {
           chainNamespace: CHAIN_NAMESPACES.EIP155,
-          chainId: chainId, // Please use 0x5 for Goerli Testnet
+          chainId: chainId,
           rpcTarget: rpcUrl,
         },
         web3AuthNetwork: chainId == "0x1" ? "cyan" : "testnet",
@@ -110,7 +103,6 @@ const Web3AuthProvider = ({ children }) => {
       await web3auth.initModal();
       if (web3auth.provider) {
         setProvider(web3auth.provider);
-        localStorage.setItem("provider", JSON.stringify(web3AuthProvider));
       }
     } catch (err) {
       console.log(err);
@@ -150,8 +142,6 @@ const Web3AuthProvider = ({ children }) => {
         setEmail(false);
         const web3AuthProvider = await web3Auth.connect();
         setProvider(web3AuthProvider);
-        console.log("LOGIN PROVIDER", web3AuthProvider);
-        localStorage.setItem("provider", JSON.stringify(web3AuthProvider));
         const rpc = new RPC(web3AuthProvider);
         const accounts = await rpc.getAccounts();
         const info = await web3Auth.getUserInfo();
@@ -164,38 +154,39 @@ const Web3AuthProvider = ({ children }) => {
 
           const signedMessage = await rpc.signMessage(nonceData.nonce);
 
-          const token = await doLogin({
+          setWallet(accounts);
+          setAccount(accounts);
+
+          await doLogin({
             requestId: nonceData.id,
             signature: signedMessage,
           });
-
-          setWallet(accounts);
-          setValue(token.accessToken);
-          setAccount(accounts);
         } else {
-          console.log("NO EMAIL");
-          setEmail(true);
-          if (formEmail) {
+          const email = await doWalletHasEmail(accounts);
+          if (!email && !formEmail) {
+            setEmail(true);
+            return;
+          } else {
+            setEmail(false);
+          }
+          if (formEmail || email) {
             const nonceData = await getNonce({
-              email: formEmail,
+              email: formEmail ?? email,
               walletAddress: accounts,
             });
 
             const signedMessage = await rpc.signMessage(nonceData.nonce);
 
-            const token = await doLogin({
-              requestId: nonceData.id,
-              signature: signedMessage,
-            });
-            console.log("token", token);
-
             setEmail(false);
             setWallet(accounts);
             setAccount(accounts);
-            setValue(token.accessToken);
+
+            await doLogin({
+              requestId: nonceData.id,
+              signature: signedMessage,
+            });
           }
         }
-        setAccount(accounts);
       } catch (err) {
         console.log(err);
       }

@@ -9,7 +9,7 @@ export function useAuth() {
   async function doLogin(_data) {
     const { data } = await axios({
       method: "POST",
-      url: `https://marketplace-backend-dev.unveil.art/api/v1/auth/login`,
+      url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
       data: _data,
       withCredentials: true,
     });
@@ -21,7 +21,7 @@ export function useAuth() {
   const doLogout = async () => {
     await axios({
       method: "POST",
-      url: "https://marketplace-backend-dev.unveil.art/api/v1/auth/logout",
+      url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/logout`,
       withCredentials: true,
     });
     removeValue();
