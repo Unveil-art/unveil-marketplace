@@ -55,7 +55,6 @@ export async function getServerSideProps() {
   const data = await getHomePage();
   const faq = await getFAQ();
   const editorials = await getEditorials();
-
   return {
     props: {
       data,

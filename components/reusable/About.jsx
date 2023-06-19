@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import CountdownTimer from "./CountdownTimer";
 import Animate from "./Animate";
+import { getUserName } from "lib/utils";
 
 const About = ({ bg, item }) => {
   return (
@@ -28,7 +29,7 @@ const About = ({ bg, item }) => {
               </Link>
               <Link href={`/people/${item.owner_id}`}>
                 <h6 className="truncate text-[14px] md:text-[16px] b3">
-                  {item.owner_id}
+                  {getUserName(item.owner)}
                 </h6>
               </Link>
               {item.editions && (
@@ -76,7 +77,7 @@ const About = ({ bg, item }) => {
             )}
             {!item.curator_id && (
               <Link href={`/people/${item.owner_id}`}>
-                <h5 className="l2">By {item.owner_id}</h5>
+                <h5 className="l2">By {getUserName(item.owner)}</h5>
               </Link>
             )}
 

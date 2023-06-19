@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Animate from "./Animate";
+import { getUserName } from "lib/utils";
 
 const TwoBlockItems = ({ items }) => {
   const [frameObj, setFrameObj] = useState([]);
@@ -80,7 +81,7 @@ const TwoBlockItems = ({ items }) => {
                 </Link>
               )}
               <Link href={`/people/${items.owner_id}`}>
-                <p className="b3 opacity-60">{item.owner_id}</p>
+                <p className="b3 opacity-60">{getUserName(item.owner)}</p>
               </Link>
               {item.editions && (
                 <div className="flex items-center gap-1">

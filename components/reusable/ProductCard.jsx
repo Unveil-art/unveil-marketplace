@@ -3,9 +3,10 @@ import Animate from "@/components/reusable/Animate";
 import Currency from "../svg/Currency";
 import Image from "next/image";
 import Link from "next/link";
+import { getUserName } from "lib/utils";
 
 const ProductCard = ({ rounded = false, item }) => {
-  console.log(item);
+
   return (
     <Animate
       options={{
@@ -71,7 +72,7 @@ const ProductCard = ({ rounded = false, item }) => {
       )}
 
       <Link href={`/people/${item.owner_id}`}>
-        <p className="b3 opacity-60 w-fit">{item.owner_id}</p>
+        <p className="b3 opacity-60 w-fit">{getUserName(item.owner)}</p>
       </Link>
       {item.editions && (
         <div className="flex items-center gap-1">

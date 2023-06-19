@@ -23,7 +23,7 @@ import {
 } from "lib/backend";
 import RPC from "lib/RPC";
 import { Web3Context } from "@/contexts/Web3AuthContext";
-import { MARKET_ABI } from "lib/constants";
+import { MARKET_ABI, MARKET_CONTRACT_ADDRESS } from "lib/constants";
 import Web3 from "web3";
 
 const EditionCheckout = ({ artwork, edition_id }) => {
@@ -66,10 +66,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
     }
 
     let rpc = new RPC(provider);
-    let contract = await rpc.getContract(
-      MARKET_ABI,
-      "0xC0Ddf7Eb7C8Dd38B861DC117f7bE4bbb26288a3c"
-    );
+    let contract = await rpc.getContract(MARKET_ABI, MARKET_CONTRACT_ADDRESS);
 
     const ethEx = await getCurrentExchangeRateUSDETH();
     const priceInEth = ethEx.ETH * edition.price;
@@ -154,14 +151,17 @@ const EditionCheckout = ({ artwork, edition_id }) => {
     let rpc = new RPC(provider);
     let contract = await rpc.getContract(
       MARKET_ABI,
-      "0xC0Ddf7Eb7C8Dd38B861DC117f7bE4bbb26288a3c"
+      MARKET_CONTRACT_ADDRESS // this is marketplace contract address
     );
 
-    const ethEx = await getCurrentExchangeRateUSDETH();
-    const priceInEth = ethEx.ETH * edition.price;
-    const priceInWei = Web3.utils.toWei(priceInEth.toFixed(4));
+    // we will store only ETH Value in Edition Price
+    // No need to convert USD to ETH here
+    const ethEx = await getCurrentExchangeRateUSDETH(); //  comment/remove this line
+    const priceInEth = ethEx.ETH * edition.price; // comment/remove this conversion code
+    const priceInWei = Web3.utils.toWei(priceInEth.toFixed(4)); // priceInEth replace with edition.price
 
     try {
+      // @mike we need to call referral api to get referrals of seller and buyer
       const transaction = await contract.methods
         .buyMintNft(
           artwork.contract_address,
