@@ -15,10 +15,14 @@ export const Web3Context = createContext({
   provider: null,
   balance: "",
   email: true,
+  displayRamper: false,
+  ramperAmount: 100,
   login: () => {},
   logout: () => {},
   getBalance: () => {},
   convertWei: () => {},
+  showRamper: () => {},
+  hideRamper: () => {},
 });
 
 const clientId = process.env.NEXT_PUBLIC_WEB3AUTH_API_KEY;
@@ -28,9 +32,23 @@ export const chainId = process.env.NEXT_PUBLIC_CHAINID;
 
 const Web3AuthProvider = ({ children }) => {
   const { doLogin, doLogout } = useAuth();
-
+  const [ramper, setRamper] = useState({
+    display: false,
+    amount: 100,
+  });
   const [web3Auth, setWeb3Auth] = useState(null);
   const [provider, setProvider] = useState(null);
+
+  const showRamper = (amount) =>
+    setRamper({
+      display: true,
+      amount: amount ?? 100,
+    });
+  const hideRamper = () =>
+    setRamper({
+      display: false,
+      amount: 100,
+    });
 
   const {
     value: balance,
@@ -240,6 +258,10 @@ const Web3AuthProvider = ({ children }) => {
         logout,
         getBalance,
         email,
+        displayRamper: ramper.display,
+        ramperAmount: ramper.amount,
+        showRamper,
+        hideRamper,
         setEmail,
         convertWei,
         getPrivateKey,
