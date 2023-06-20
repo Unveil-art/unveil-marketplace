@@ -11,7 +11,7 @@ import { Web3Context } from "@/contexts/Web3AuthContext";
 export default function Layout({ children }) {
   const { value } = useLocalStorage("token");
   const { displayRamper, hideRamper, account,ramperAmount } = useContext(Web3Context);
-  const onramper_apiKey = 'pk_prod_01H2R4DDWSG3CBXJSN5757GC9J';
+  const onramper_apiKey = process.env.NEXT_PUBLIC_RAMPER_API_KEY;
 
   return (
     <>
