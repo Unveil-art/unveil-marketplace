@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import Image from "next/image";
 import Delete from "@/components/svg/Delete";
 import { ToastContainer, toast } from "react-toastify";
-import imageCompression from 'browser-image-compression';
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "@/components/svg/Loader";
 import {
@@ -311,12 +310,7 @@ const CreateForm = ({
     const values = getValues();
 
     try {
-      const compressedImage = await imageCompression(values.imageCollection[0],{
-        maxSizeMB: 1,
-        maxWidthOrHeight: 1920,
-        useWebWorker: true,
-      });
-      const image = await uploadImage(value, compressedImage);
+      const image = await uploadImage(value, values.imageCollection[0]);
 
       await postCollection(value, values, image.data);
 
