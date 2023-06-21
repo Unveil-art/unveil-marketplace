@@ -84,7 +84,7 @@ const Artworks = () => {
               {artworksUnlist.length > 0 && (
                 <>
                   {artworksUnlist.map((item, i) => (
-                    <ArtworkListItem key={i} item={item} />
+                    <ArtworkListItem fetchUser={() => fetchUser(false, setArtworksUnlist)} key={i} item={item} />
                   ))}
                 </>
               )}
@@ -101,7 +101,7 @@ const Artworks = () => {
               {artworksList.length > 0 && (
                 <>
                   {artworksList.map((item, i) => (
-                    <ArtworkListItem key={i} item={item} />
+                    <ArtworkListItem fetchUser={() => fetchUser(true,setArtworksList)} key={i} item={item} />
                   ))}
                 </>
               )}

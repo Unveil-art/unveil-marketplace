@@ -266,7 +266,7 @@ const CreateSidebar = ({
               {artwork.detail_shots && (
                 <>
                   {!soundbite && !artwork.detail_shots[0]?.audio_url && (
-                    <p className="b3">Upload soundbite</p>
+                    <p className="b3">Upload soundbite (*.wav, *.m4a)</p>
                   )}
                 </>
               )}
@@ -291,7 +291,7 @@ const CreateSidebar = ({
               )}
               {!soundbite && (
                 <p className="text-[13px] md:text-[16px] b3">
-                  upload soundbite
+                  Upload soundbite (*.wav, *.m4a)
                 </p>
               )}
             </label>
