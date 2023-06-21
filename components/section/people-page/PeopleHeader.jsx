@@ -1,7 +1,7 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import { getFollowerInfo } from "lib/backend";
 const PeopleHeader = ({ collection }) => {
-  console.log(collection);
+  // console.log(collection);
 
   function formatDate(inputString) {
     let date = new Date(inputString);
@@ -14,7 +14,8 @@ const PeopleHeader = ({ collection }) => {
   }
 
   let displayName;
-  if (collection) {
+  let userId;
+  if (collection && typeof collection != "string") {
     if (collection.owner.firstName && collection.owner.lastName) {
       displayName = `${collection.owner.firstName} ${collection.owner.lastName}`;
     } else if (collection.owner.firstName) {
@@ -24,11 +25,31 @@ const PeopleHeader = ({ collection }) => {
     } else {
       displayName = collection.owner.email;
     }
+  } else {
+    userId = collection;
   }
+  const [follower, setFollowers] = useState([]);
+  useEffect(() => {
+    fetchCollection(userId);
+}, []);
+  const fetchCollection = async (userId) => {
+    if(userId){
+      try {
+        const data = await getFollowerInfo(userId);
+        let response = data ? data.followers : 0;
+        setFollowers(response);
+        return data;
+      } catch (err) {
+        setFollowers(0);
+        console.error(err);
+      }
+    }
+    
+  };
 
   return (
     <section className="ml-[40px] md:ml-[35svw] pr-[15px] md:mt-0 mt-[20px] md:pr-[40px]">
-      {collection && (
+      {(collection && typeof collection != "string") && (
         <p className="s2 my-[60px] md:block hidden ">
           {collection.description}
         </p>
@@ -37,9 +58,9 @@ const PeopleHeader = ({ collection }) => {
         <div>
           <div className="flex gap-[15px] w-full justify-between md:justify-start">
             <div className="min-w-[90px]">
-              <p className="b4">{collection ? "Artworks" : "Followers"}</p>
+              <p className="b4">{(collection && typeof collection != "string") ? "Artworks" : "Followers"}</p>
               <p className="text-[27px]">
-                {collection ? collection.artworks.length : "0"}
+                {(collection && typeof collection != "string") ? collection.artworks.length : follower}
               </p>
             </div>
             <div className="w-px h-10 bg-unveilGreen"></div>
@@ -59,9 +80,9 @@ const PeopleHeader = ({ collection }) => {
         </div>
         <div className="w-full md:w-[240px] xl:w-[300px] mt-[10px]">
           <p className="py-[2px]  my-1 border-b border-unveilGreen b3 md:b4">
-            {collection ? `By: ${displayName}` : ""}
+            {(collection && typeof collection != "string") ? `By: ${displayName}` : ""}
           </p>
-          {collection && (
+          {(collection && typeof collection != "string") && (
             <>
               {collection.curator_id && (
                 <p className="py-[2px]  my-1 border-b border-unveilGreen b3 md:b4">
@@ -74,12 +95,12 @@ const PeopleHeader = ({ collection }) => {
           )}
 
           <p className="py-[2px]  my-1  b3 md:b4">
-            {collection
+            {(collection && typeof collection != "string")
               ? `Release date: ${formatDate(collection.live_time)}`
               : ``}
           </p>
           <p className="py-[2px]  my-1 b4 md:b5 truncate w-[120px]">
-            {collection ? collection.owner.walletAddress : ""}
+            {(collection && typeof collection != "string") ? collection.owner.walletAddress : ""}
           </p>
         </div>
       </div>
