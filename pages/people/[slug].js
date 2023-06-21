@@ -18,15 +18,13 @@ const PeopleDetails = ({ faq, userId }) => {
   useEffect(() => {
       fetchCollection(userId);
   }, []);
-  console.log('userId', userId);
   const [collection, setCollections] = useState([]);
   const router = useRouter();
 
   const fetchCollection = async (userId) => {
     if(userId){
       try {
-        let value = userId;
-        const data = await getUserInfo(value);
+        const data = await getUserInfo(userId);
         setCollections(data);
         return data;
       } catch (err) {
@@ -39,7 +37,7 @@ const PeopleDetails = ({ faq, userId }) => {
   return (
     <main className="mt-[120px]">
       <Title title={collection? collection.firstName+" "+collection.lastName : ''} account={collection ? collection.role : ''} />
-      <PeopleHeader />
+      <PeopleHeader collection={userId}/>
       <PageSelector setPage={setPage} page={page} />
       {page === 0 && <PeopleArtworks />}
       {page === 1 && <PeopleCollections />}
