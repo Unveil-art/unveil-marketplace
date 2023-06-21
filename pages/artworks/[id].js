@@ -189,17 +189,16 @@ const Edit = ({ artwork }) => {
         setCreating(false);
       } catch (error) {
         console.log(JSON.stringify(error));
-        notify(error.data.message);
+        notify(error?.data?.message);
         setCreating(false);
       }
     }
   };
-
   useEffect(() => {
-    if (!artwork.is_draft) {
+    if (artwork && artwork.listed) {
       router.push("/account");
     }
-  }, [artwork.is_draft]);
+  }, [artwork]);
 
   useEffect(() => {
     const getActiveSize = sizes.find((item) => item.active)?.size;
@@ -383,13 +382,15 @@ const Edit = ({ artwork }) => {
                 )}
                 {!loading && <p>Save</p>}
               </button>
-              <button
-                disabled={creating}
-                onClick={() => handleCreateNFT()}
-                className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
-              >
-                Create NFTs
-              </button>
+              {!!artwork.is_draft && (
+                <button
+                  disabled={creating}
+                  onClick={() => handleCreateNFT()}
+                  className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
+                >
+                  Create NFTs
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -415,12 +416,14 @@ const Edit = ({ artwork }) => {
             )}
             {!loading && <p>Save</p>}
           </button>
-          <p
-            onClick={() => handleCreateNFT()}
-            className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
-          >
-            Create NFTs
-          </p>
+          {artwork.is_draft && (
+            <p
+              onClick={() => handleCreateNFT()}
+              className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
+            >
+              Create NFTs
+            </p>
+          )}
         </div>
       </form>
     </main>
