@@ -8,7 +8,7 @@ import RPC from "lib/RPC";
 const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
   const { value: localProvider } = useLocalStorage("tw:provider:connectors");
   const { value: wallet } = useLocalStorage("walletAddress");
-  const { balance, logout, getBalance } = useContext(Web3Context);
+  const { balance, logout, getBalance, showRamper } = useContext(Web3Context);
 
   const el = useRef();
 
@@ -44,7 +44,7 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
               </div>
             </div>
             <div className="text-center py-10 my-[10px]">
-              <p className="b3">Network</p>
+              <button className="b3 cursor-pointer btn btn-primary btn-fit" onClick={showRamper}>Add funds</button>
               <p className=" l2">
                 {localProvider && (
                   <>{localProvider.replace('"', "").replace('"', "")}</>
