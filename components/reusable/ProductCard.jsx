@@ -16,7 +16,7 @@ const ProductCard = ({ rounded = false, item }) => {
       }}
       className="[&:nth-child(3)]:mt-[120px]"
     >
-      {item.title && (
+      {item?.title && (
         <Link href={`/gallery/collection/${item.id}`}>
           <div
             className={`${
@@ -32,7 +32,7 @@ const ProductCard = ({ rounded = false, item }) => {
           </div>
         </Link>
       )}
-      {item.name && (
+      {item?.name && (
         <Link href={`/gallery/artwork/${item.id}`}>
           <div
             className={`${

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import Image from "next/image";
 import Delete from "@/components/svg/Delete";
 import { ToastContainer, toast } from "react-toastify";
+import imageCompression from 'browser-image-compression';
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "@/components/svg/Loader";
 import {
@@ -310,7 +311,12 @@ const CreateForm = ({
     const values = getValues();
 
     try {
-      const image = await uploadImage(value, values.imageCollection[0]);
+      const compressedImage = await imageCompression(values.imageCollection[0],{
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+      });
+      const image = await uploadImage(value, compressedImage);
 
       await postCollection(value, values, image.data);
 
@@ -457,7 +463,7 @@ const CreateForm = ({
               className="radio-block left"
               type="radio"
               name="edition_type"
-              // disabled
+              disabled
               id="NFT_Backed_by_print"
               value="NFT_Backed_by_print"
               checked={editionType === "NFT_Backed_by_print"}
@@ -1514,7 +1520,7 @@ const CreateForm = ({
                 {errorColl.description?.message}
               </p>
             </div>
-            <div className="flex  items-center gap-2 px-5 pt-[35px] pb-[15px]">
+            {/* <div className="flex  items-center gap-2 px-5 pt-[35px] pb-[15px]">
               <div
                 onClick={() => setCuratorOpen(!curatorOpen)}
                 className="relative h-[13px] rounded-full cursor-pointer w-[22px] bg-[#eeece6]"
@@ -1526,8 +1532,8 @@ const CreateForm = ({
                 ></div>
               </div>
               <p className="block b3">Add curator</p>
-            </div>
-            <div className="relative px-5 mb-[10px]">
+            </div> */}
+            {/* <div className="relative px-5 mb-[10px]">
               <select
                 id="collection-curator"
                 className={` ${
@@ -1552,9 +1558,9 @@ const CreateForm = ({
               >
                 {errorColl.curator?.message}
               </p>
-            </div>
+            </div> */}
 
-            <div className="grid px-5 pb-[35px] grid-cols-2 gap-[10px]">
+            {/* <div className="grid px-5 pb-[35px] grid-cols-2 gap-[10px]">
               <div className="relative">
                 <select
                   disabled={curatorOpen ? false : true}
@@ -1607,9 +1613,10 @@ const CreateForm = ({
                   {errorColl.duration?.message}
                 </p>
               </div>
-            </div>
-            <div className="grid grid-cols-2 px-5 gap-[10px] border-t border-[#DBDED6] pt-[35px] pb-10">
-              <div
+            </div> */}
+            <div className="grid grid-cols-2 px-5 gap-[10px] border-t border-[#DBDED6] mt-5 pt-[35px] pb-10">
+              <button
+                disabled={loading}
                 onClick={handleSubmitOnClick}
                 className="text-center cursor-pointer btn btn-full btn-primary btn-lg"
               >
@@ -1619,7 +1626,7 @@ const CreateForm = ({
                   </div>
                 )}
                 {!loading && <p> Save new collection</p>}
-              </div>
+              </button>
               <p
                 onClick={() => setOpenCollection(false)}
                 className="flex items-center justify-center text-center cursor-pointer btn btn-full btn-secondary btn-lg"
