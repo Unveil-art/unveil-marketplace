@@ -19,6 +19,7 @@
     "@web3auth/base": "^5.2.0",
     "@web3auth/modal": "^5.2.0",
     "axios": "^1.4.0",
+    "browser-image-compression": "^2.0.2",
     "color-thief-react": "^2.1.0",
     "colorthief": "^2.4.0",
     "ethers": "^6.6.0",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import Delete from "@/components/svg/Delete";
@@ -51,6 +51,47 @@ const CreateForm = ({
     { from: "First 12 months", percentage: "15%" },
   ]);
 
+  const [royaltyTS, setRoyaltyTS] = useState({})
+
+  const timestampMap = useMemo(() => {
+    const _res = {}
+    const today = new Date()
+    for(let i=1; i <= 12; i++) {
+      const futureDate = new Date(today)
+      futureDate.setMonth(futureDate.getMonth() + i);
+      const key = `after_${i}_month`
+      const value = `${futureDate.getDate()}-${futureDate.getMonth() + 1}-${futureDate.getFullYear()}`
+      _res[key] = value
+    }
+
+    return _res
+  }, [])
+
+  const rendableSecondaryOptions = useMemo(() => {
+    const _rendables = [1,2,3,4,5,6,7,8,9,10,11,12];
+    const _ts = Object.keys(royaltyTS).filter(key => {
+      const fromPrams = royalties.map(value => value?.from)
+      if(key !=='' && royaltyTS[key] && fromPrams.includes(key)) {
+        return true
+      }
+      return false
+    }).sort((a, b) => new Date(b) - new Date(a))
+    
+    const maxValue = Math.max(_rendables.filter(ren => {
+      if(_ts.includes(timestampMap[`after_${ren}_month`])) {
+        return true
+      }
+      return false
+    }))
+
+    if(_rendables.slice(_rendables.indexOf(maxValue) + 1).length < 1) {
+      return [12]
+    } else {
+      return _rendables.slice(_rendables.indexOf(maxValue) + 1)
+    }
+
+  }, [royalties, royaltyTS, timestampMap])
+
   useEffect(() => {
     if (artwork) {
       setName(artwork.name);
@@ -79,7 +120,28 @@ const CreateForm = ({
 
   const { value } = useLocalStorage("token");
 
-  const defaultRoyalties = { from: "After 12 months", percentage: "15%" };
+  const defaultRoyalties = { from: timestampMap[`after_${rendableSecondaryOptions[0]}_month`], percentage: "0%" };
+
+  const handleChangeRoyalties = (index, data) => {
+    const _royalties = {
+      ...royalties[index]
+    }
+    Object.entries(data).forEach(([key, value]) => {
+      _royalties[key] = value
+    })
+
+    setRoyalties(prev => {
+      const ry = []
+      prev.forEach((element, it) => {
+        if(index === it) {
+          ry[it] = _royalties
+        } else {
+          ry[it] = element 
+        }
+      })
+      return ry
+    })
+  }
 
   useEffect(() => {
     if (artwork) {
@@ -395,7 +457,7 @@ const CreateForm = ({
               className="radio-block left"
               type="radio"
               name="edition_type"
-              // disabled
+              disabled
               id="NFT_Backed_by_print"
               value="NFT_Backed_by_print"
               checked={editionType === "NFT_Backed_by_print"}
@@ -1126,10 +1188,21 @@ const CreateForm = ({
                   : null
               }
               {...register(`from[${i}]`)}
+              onChange={(e) => {
+                handleChangeRoyalties(i, {
+                  from: e.target.value
+                })
+                setRoyaltyTS(prev => {
+                  return {
+                    ...prev,
+                    [e.target.value]: true
+                  }
+                })
+              }}
             >
               {i !== 0 && (
                 <>
-                  <option value="After 1 month">After 1 month</option>
+                  {/* <option value="After 1 month">After 1 month</option>
                   <option value="After 2 months">After 2 months</option>
                   <option value="After 3 months">After 3 months</option>
                   <option value="After 4 months">After 4 months</option>
@@ -1140,12 +1213,15 @@ const CreateForm = ({
                   <option value="After 9 months">After 9 months</option>
                   <option value="After 10 months">After 10 months</option>
                   <option value="After 11 months">After 11 months</option>
-                  <option value="After 12 months">After 12 months</option>
+                  <option value="After 12 months">After 12 months</option> */}
+                  { rendableSecondaryOptions.map((num) => (
+                    <option key={num} value={timestampMap[`after_${num}_month`]} >{`After ${num} ${num !== 1 ? 'months' : 'month'}`}</option>
+                  )) }
                 </>
               )}
               {i === 0 && (
                 <>
-                  <option value="First month">First month</option>
+                  {/* <option value="">First month</option>
                   <option value="After 2 months">First 2 months</option>
                   <option value="First 3 months">First 3 months</option>
                   <option value="First 4 months">First 4 months</option>
@@ -1156,7 +1232,10 @@ const CreateForm = ({
                   <option value="First 9 months">First 9 months</option>
                   <option value="First 10 months">First 10 months</option>
                   <option value="First 11 months">First 11 months</option>
-                  <option value="First 12 months">First 12 months</option>
+                  <option value="First 12 months">First 12 months</option> */}
+                  {[1,2,3,4,5,6,7,8,9,10,11,12].map(num => (
+                    <option key={num} value={timestampMap[`after_${num}_month`]}>First {num === 1 ? 'month': `${num} months`}</option>
+                  ))}
                 </>
               )}
             </select>
@@ -1169,6 +1248,9 @@ const CreateForm = ({
                   : null
               }
               {...register(`percentage[${i}]`)}
+              onChange={(e) => handleChangeRoyalties(i, {
+                percentage: e.target.value
+              })}
             >
               <option value={0}>0%</option>
               <option value={0.5}>0.5%</option>
@@ -1432,7 +1514,7 @@ const CreateForm = ({
                 {errorColl.description?.message}
               </p>
             </div>
-            <div className="flex  items-center gap-2 px-5 pt-[35px] pb-[15px]">
+            {/* <div className="flex  items-center gap-2 px-5 pt-[35px] pb-[15px]">
               <div
                 onClick={() => setCuratorOpen(!curatorOpen)}
                 className="relative h-[13px] rounded-full cursor-pointer w-[22px] bg-[#eeece6]"
@@ -1444,8 +1526,8 @@ const CreateForm = ({
                 ></div>
               </div>
               <p className="block b3">Add curator</p>
-            </div>
-            <div className="relative px-5 mb-[10px]">
+            </div> */}
+            {/* <div className="relative px-5 mb-[10px]">
               <select
                 id="collection-curator"
                 className={` ${
@@ -1470,9 +1552,9 @@ const CreateForm = ({
               >
                 {errorColl.curator?.message}
               </p>
-            </div>
+            </div> */}
 
-            <div className="grid px-5 pb-[35px] grid-cols-2 gap-[10px]">
+            {/* <div className="grid px-5 pb-[35px] grid-cols-2 gap-[10px]">
               <div className="relative">
                 <select
                   disabled={curatorOpen ? false : true}
@@ -1525,9 +1607,10 @@ const CreateForm = ({
                   {errorColl.duration?.message}
                 </p>
               </div>
-            </div>
-            <div className="grid grid-cols-2 px-5 gap-[10px] border-t border-[#DBDED6] pt-[35px] pb-10">
-              <div
+            </div> */}
+            <div className="grid grid-cols-2 px-5 gap-[10px] border-t border-[#DBDED6] mt-5 pt-[35px] pb-10">
+              <button
+                disabled={loading}
                 onClick={handleSubmitOnClick}
                 className="text-center cursor-pointer btn btn-full btn-primary btn-lg"
               >
@@ -1537,7 +1620,7 @@ const CreateForm = ({
                   </div>
                 )}
                 {!loading && <p> Save new collection</p>}
-              </div>
+              </button>
               <p
                 onClick={() => setOpenCollection(false)}
                 className="flex items-center justify-center text-center cursor-pointer btn btn-full btn-secondary btn-lg"
