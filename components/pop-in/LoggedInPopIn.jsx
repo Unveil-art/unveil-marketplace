@@ -36,7 +36,7 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
             <div className="grid grid-cols-2 text-center border-y border-bgColorHover">
               <div className="py-10 border-r my-[10px] border-bgColorHover">
                 <p className=" b3">Account name</p>
-                <p className="px-5 truncate md:px-14 l2">{wallet}</p>
+                <p className="px-5 truncate md:px-14 l2">{wallet.slice(0,4)}...{wallet.slice(-4)}</p>
               </div>
               <div className="py-10 my-[10px] border-bgColorHover">
                 <p className="b3">Funds</p>
@@ -44,7 +44,7 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
               </div>
             </div>
             <div className="text-center py-10 my-[10px]">
-              <button className="b3 cursor-pointer btn btn-primary btn-fit" onClick={showRamper}>Add funds</button>
+              <button className="b3 cursor-pointer border hover:border-unveilDrakGray border-bgColorHover px-3 py-2 rounded-md" onClick={showRamper}>Add funds</button>
               <p className=" l2">
                 {localProvider && (
                   <>{localProvider.replace('"', "").replace('"', "")}</>
@@ -54,7 +54,7 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
             <Link href="/account">
               <button
                 onClick={() => setLoggedIn(false)}
-                className="mt-10 btn btn-lg btn-full btn-primary"
+                className=" btn btn-lg btn-full btn-primary"
               >
                 My account
               </button>
