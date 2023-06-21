@@ -1192,7 +1192,6 @@ const CreateForm = ({
                 handleChangeRoyalties(i, {
                   from: e.target.value
                 })
-                console.log(e.target.id)
                 setRoyaltyTS(prev => {
                   return {
                     ...prev,
