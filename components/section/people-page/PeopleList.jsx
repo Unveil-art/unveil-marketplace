@@ -28,7 +28,7 @@ const PeopleList = ({ people }) => {
                     key={i}
                     className="border-b last:border-b-0 border-b-bgColorHover"
                   >
-                    <Link href="/people/1">
+                    <Link href={`/people/${item.id}`}>
                       <div className="flex items-center gap-20 ">
                         <div className="flex items-center gap-5 py-5">
                           <div className="h-[140px] w-[120px] bg-bgColor relative">
