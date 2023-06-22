@@ -340,11 +340,6 @@ const CreateSidebar = ({
         </div>
       </div>
 
-      <p className="b4 leading-[22px]  w-[80%]">
-        To speculative buyers from flipping your artwork we have a scaling
-        system with high royalties for the artist in early stages
-      </p>
-
       {/* detail shot 2 */}
       <div className="bg-[#F9F7F2] shadow3 pb-[30px] rounded-[10px]">
         <p className="px-5 pt-5 pb-[35px] text-[13px] md:text-[16px]">
