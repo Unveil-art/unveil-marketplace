@@ -31,12 +31,19 @@ const PeopleDetails = ({ faq, userId }) => {
         console.error(err);
       }
     }
-    
   };
+  let displayName = '';
+  if((collection && collection !== undefined)){
+    if (collection.firstName && collection.lastName) {
+      displayName = collection.firstName+" "+collection.lastName;
+    } else if (collection.email){
+      displayName = collection.email.split('@')[0].replace('.', ' ');
+    }
+  }
 
   return (
     <main className="mt-[120px]">
-      <Title title={collection  !== undefined ? collection.firstName+" "+collection.lastName : ''} account={collection  !== undefined ? collection.role : ''} />
+      <Title title={displayName} account={collection !== undefined ? collection.role : ''} />
       <PeopleHeader collection={userId}/>
       <PageSelector setPage={setPage} page={page} />
       {page === 0 && <PeopleArtworks />}
