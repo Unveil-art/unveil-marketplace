@@ -13,7 +13,7 @@ const Details = ({ artwork, browse }) => {
     <main>
       <GalleryHero artwork={artwork} />
       <GalleryAbout artwork={artwork} />
-      <Provenance />
+      {/* <Provenance /> */}
       <AboutCurator owner={artwork.owner} />
       <ContinueBrowsing browse={browse} />
     </main>

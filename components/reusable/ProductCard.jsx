@@ -1,12 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Animate from "@/components/reusable/Animate";
 import Currency from "../svg/Currency";
 import Image from "next/image";
 import Link from "next/link";
 import { getUserName } from "lib/utils";
+import { getCurrentExchangeRateETHUSD } from "lib/backend";
 
 const ProductCard = ({ rounded = false, item }) => {
 
+  const [exchangeRate, setExchangeRate] = useState(1900);
+
+  const init = async() => {
+    try{
+      const data = await getCurrentExchangeRateETHUSD();
+    setExchangeRate(data.USD);
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+  const getUSD = (eth) => {
+    return (eth*exchangeRate).toFixed(2)
+  }
+
+  useEffect(() => {
+    init();
+  },[])
   return (
     <Animate
       options={{
@@ -76,7 +95,7 @@ const ProductCard = ({ rounded = false, item }) => {
       </Link>
       {item.editions && (
         <div className="flex items-center gap-1">
-          <p className="b3 opacity-60">€ {item.editions[0]?.price}</p>
+          <p className="b3 opacity-60">$ {getUSD(item.editions[0]?.price)}</p>
         </div>
       )}
     </Animate>

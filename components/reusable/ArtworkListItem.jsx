@@ -13,9 +13,11 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import RPC from "lib/RPC";
 import Web3 from "web3";
 import { MARKET_ABI } from "lib/constants";
+import Loader from "../svg/Loader";
 
-const ArtworkListItem = ({ i, item }) => {
+const ArtworkListItem = ({ i, item,fetchUser}) => {
   const [list, setList] = useState(item);
+  const [loading, setLoading] = useState(false);
   const { value } = useLocalStorage("token");
   const { value: wallet } = useLocalStorage("walletAddress");
   const { provider } = useContext(Web3Context);
@@ -27,7 +29,7 @@ const ArtworkListItem = ({ i, item }) => {
 
   const handleListing = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       const data = await listArtwork(value, item.id, !list.listed);
       const eth = await getCurrentExchangeRateUSDETH();  //  comment/remove this line
@@ -45,19 +47,28 @@ const ArtworkListItem = ({ i, item }) => {
           let rpc = new RPC(provider);
           let contract = await rpc.getContract(
             MARKET_ABI,
-            "0xC0Ddf7Eb7C8Dd38B861DC117f7bE4bbb26288a3c"
+            process.env.NEXT_PUBLIC_MARKET_ADDRESS
           );
 
           try {
-            const hash = await contract.methods
-              .getHashMessage(item.contract_address, item.json_uri, priceInWei)
-              .call(function (error, result) {
-                console.log(result);
-              });
-            const signature = await rpc.signMessage(hash, wallet, "");
-            await listEdition(value, edition.id, !list.listed, signature);
+            if(list.listed){
+              await listEdition(value, edition.id, !list.listed, edition.signature);
+            }else{
+                const hash = await contract.methods
+                .getHashMessage(item.contract_address, item.json_uri, priceInWei)
+                .call(function (error, result) {
+                  console.log(result);
+                });
+              const signature = await rpc.signMessage(hash, wallet, "");
+              await listEdition(value, edition.id, !list.listed, signature);
+            }
+            if(fetchUser){
+              fetchUser()
+            }
+            setLoading(false)
           } catch (error) {
             console.error(JSON.stringify(error));
+            setLoading(false);
           }
         }
       });
@@ -66,6 +77,7 @@ const ArtworkListItem = ({ i, item }) => {
       toast.success("Successful");
     } catch (error) {
       toast.error(error.message);
+      setLoading(false);
     }
   };
 
@@ -100,20 +112,28 @@ const ArtworkListItem = ({ i, item }) => {
           )}
         </div>
       </div>
-      {item.is_draft && (
+      <div className="flex flex-row gap-3 items-center">
+      {!item.listed && (
         <Link href={`/artworks/${item.id}`}>
-          <button className="hidden btn btn-secondary md:block">View</button>
+          <button className="hidden btn btn-secondary md:block">Edit</button>
         </Link>
       )}
       {item.is_draft === false && (
         <button
+        disabled={loading}
           onClick={(e) => handleListing(e)}
-          className="hidden btn btn-secondary md:block"
+          className={`hidden btn btn-ghost bg-${list.listed ? "[#D6471A]" : 'unveilBlack'} md:block text-white`}
         >
-          {!list.listed && <p> List for sale</p>}
-          {list.listed && <p> Unlist for sale</p>}
+          {loading && (
+                  <div className="flex justify-center h-[25px] items-center animate-spin">
+                    <Loader color="#F7F4ED" />
+                  </div>
+                )}
+          {!list.listed && !loading && <p> List for Sale</p>}
+          {list.listed && !loading && <p> Unlist</p>}
         </button>
       )}
+      </div>
     </div>
   );
 };

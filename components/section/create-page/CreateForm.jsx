@@ -50,7 +50,6 @@ const CreateForm = ({
   const [royalties, setRoyalties] = useState([
     { from: "First 12 months", percentage: "15%" },
   ]);
-
   const [royaltyTS, setRoyaltyTS] = useState({})
 
   const timestampMap = useMemo(() => {

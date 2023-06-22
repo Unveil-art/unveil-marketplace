@@ -51,16 +51,18 @@ const GalleryAbout = ({ artwork }) => {
     [rect],
     1
   );
+  const _detail_shots = artwork?.detail_shots?.filter(({ image_url }) => !!image_url);
+
 
   return (
     <>
       <AboutIntro collection={artwork.collection} />
       <section ref={el} className="relative w-full">
-        <div className="block w-full md:h-[500vh]" ref={(node) => setRef(node)}>
+        <div className={`block w-full md:h-[500vh]`} ref={(node) => setRef(node)}>
           <div className="block w-full md:sticky md:top-0">
             <AboutItem
               owner={artwork.owner}
-              detail_shots={artwork.detail_shots}
+              detail_shots={_detail_shots}
             />
             <ItemStatistics artwork={artwork} />
           </div>

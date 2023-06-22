@@ -94,6 +94,12 @@ const Edit = ({ artwork }) => {
   const [loading, setLoading] = useState(false);
   const [creating, setCreating] = useState(false);
 
+  console.log(artwork.royalties, "royal");
+
+  const extractDate = (date) => {
+    const arr = date.split("-");
+    return arr[1] + "-" + arr[0] + "-" + arr[2];
+  };
   const handleCreateNFT = async () => {
     if (provider) {
       setCreating(true);
@@ -113,19 +119,50 @@ const Edit = ({ artwork }) => {
       let gas = await rpc.getGasPrice();
 
       try {
+        const royalties = artwork.royalties;
+        const firstRoyalty = royalties[0]?.percentage ?? 0;
+        const secondRoyalty = royalties[1]?.percentage ?? 0;
+        const royaltyThreshold = firstRoyalty
+          ? new Date(extractDate(royalties[0].to)).getTime()
+          : Date.now();
+        const isCurator = artwork?.collection?.curator_id ? true : false;
+        let walletAddress = "0x0000000000000000000000000000000000000000";
+        if (isCurator) {
+          const { data } = await getUserInfo(artwork?.collection?.curator_id);
+          walletAddress = data.walletAddress.toLowerCase();
+        }
+        console.log(
+          name,
+          name,
+          json.data,
+          Date.now() + 10 * 365 * 24 * 60 * 60 * 1000, // endTimeStamp need to have higher value
+          [
+            walletAddress, // replace this with curator wallet associated with artwork
+            isCurator ? artwork?.collection?.curator_commission : 0, // replace this with curator percentage
+            isCurator
+              ? Date.now(artwork?.collection?.curator_time)
+              : Date.now(), // replace this timestamp with curator commission date
+            parseInt(firstRoyalty * 100), // first royalty percentage
+            parseInt(secondRoyalty * 100), // second royalty percentage
+            royaltyThreshold, // second royalty threshold time
+          ],
+          "custom"
+        );
         const tx = await contract.methods
           .create(
             name,
             name,
             json.data,
-            1689445800, // endTimeStamp need to have higher value
+            Date.now() + 10 * 365 * 24 * 60 * 60 * 1000, // endTimeStamp need to have higher value
             [
-              "0x3ED87449591524deF3A2f9aeA247dcD3BD38687f", // replace this with curator wallet associated with artwork
-              1000, // replace this with curator percentage
-              1685099478, // replace this timestamp with curator commission date
-              1000, // first royalty percentage
-              2000, // second royalty percentage
-              1685196478, // second royalty threshold time
+              walletAddress, // replace this with curator wallet associated with artwork
+              isCurator ? artwork?.collection?.curator_commission : 0, // replace this with curator percentage
+              isCurator
+                ? Date.now(artwork?.collection?.curator_time)
+                : Date.now(), // replace this timestamp with curator commission date
+              parseInt(firstRoyalty * 100), // first royalty percentage
+              parseInt(secondRoyalty * 100), // second royalty percentage
+              royaltyThreshold, // second royalty threshold time
             ]
           )
           .send({ from: accounts, gasPrice: gas });
@@ -152,17 +189,16 @@ const Edit = ({ artwork }) => {
         setCreating(false);
       } catch (error) {
         console.log(JSON.stringify(error));
-        notify(error.message);
+        notify(error?.data?.message);
         setCreating(false);
       }
     }
   };
-
   useEffect(() => {
-    if (!artwork.is_draft) {
+    if (artwork && artwork.listed) {
       router.push("/account");
     }
-  }, [artwork.is_draft]);
+  }, [artwork]);
 
   useEffect(() => {
     const getActiveSize = sizes.find((item) => item.active)?.size;
@@ -335,6 +371,7 @@ const Edit = ({ artwork }) => {
             />
             <div className="hidden lg:grid grid-cols-2 mt-5 gap-[15px]">
               <button
+                disabled={loading}
                 type="submit"
                 className="btn btn-secondary btn-lg btn-full bg-unveilWhite"
               >
@@ -345,12 +382,15 @@ const Edit = ({ artwork }) => {
                 )}
                 {!loading && <p>Save</p>}
               </button>
-              <p
-                onClick={() => handleCreateNFT()}
-                className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
-              >
-                Create NFTs
-              </p>
+              {!!artwork.is_draft && (
+                <button
+                  disabled={creating}
+                  onClick={() => handleCreateNFT()}
+                  className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
+                >
+                  Create NFTs
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -376,12 +416,14 @@ const Edit = ({ artwork }) => {
             )}
             {!loading && <p>Save</p>}
           </button>
-          <p
-            onClick={() => handleCreateNFT()}
-            className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
-          >
-            Create NFTs
-          </p>
+          {artwork.is_draft && (
+            <p
+              onClick={() => handleCreateNFT()}
+              className="text-center cursor-pointer btn btn-primary btn-lg btn-full"
+            >
+              Create NFTs
+            </p>
+          )}
         </div>
       </form>
     </main>
