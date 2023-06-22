@@ -80,7 +80,7 @@ const ArtworkListItem = ({ i, item,fetchUser}) => {
       setLoading(false);
     }
   };
-
+  console.log(item,"items")
   return (
     <div
       key={i}
@@ -99,17 +99,17 @@ const ArtworkListItem = ({ i, item,fetchUser}) => {
         <div>
           {item.is_draft && (
             <Link href={`/artworks/${item.id}`}>
-              <h4 className="mb-2 md:mb-0 s1">{item.name}</h4>
+              <h4 className="mb-2 md:mb-0 s1">{item.name} </h4>
             </Link>
           )}
           {!item.is_draft && <h4 className="mb-2 md:mb-0 s1">{item.name}</h4>}
-          {item.is_draft && (
+          {/* {item.is_draft && (
             <Link href={`/artworks/${item.id}`}>
               <button className="block btn btn-secondary btn-lg md:hidden">
                 View
               </button>
             </Link>
-          )}
+          )} */}
         </div>
       </div>
       <div className="flex flex-row gap-3 items-center">
@@ -118,11 +118,11 @@ const ArtworkListItem = ({ i, item,fetchUser}) => {
           <button className="hidden btn btn-secondary md:block">Edit</button>
         </Link>
       )}
-      {item.is_draft === false && (
+      {item.is_draft == false && (
         <button
         disabled={loading}
           onClick={(e) => handleListing(e)}
-          className={`hidden btn btn-ghost bg-${list.listed ? "[#D6471A]" : 'unveilBlack'} md:block text-white`}
+          className={`hidden btn btn-ghost ${list.listed ? "bg-[#D6471A]" : 'bg-unveilBlack'} md:block text-white`}
         >
           {loading && (
                   <div className="flex justify-center h-[25px] items-center animate-spin">

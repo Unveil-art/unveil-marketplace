@@ -118,7 +118,7 @@ const PaymentSelect = ({
             </div>
             {artwork.edition_type !== "NFT_Only" && (
               <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px]">
-                <p className="b5 leading-[23px]">Dimentions</p>
+                <p className="b5 leading-[23px]">Dimensions</p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
                   {artwork.size.map((item, i) => (
                     <span key={i}>

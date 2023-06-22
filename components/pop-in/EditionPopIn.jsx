@@ -9,14 +9,16 @@ import Visa from "../svg/Visa";
 import Currency from "../svg/Currency";
 import { getCurrentExchangeRateETHUSD } from "lib/backend";
 import Min from "../svg/Min";
+import { useRouter } from "next/router";
 
 const EditionPopIn = ({ edition, setEdition }) => {
   const [type, setType] = useState();
   const [price, setPrice] = useState();
   const el = useRef();
+  const router = useRouter();
 
   const handlePrice = async () => {
-    if (price) {
+    if (edition?.price) {
       const res = await getCurrentExchangeRateETHUSD();
       setPrice((res.USD * edition.price).toFixed(2));
     }
@@ -24,7 +26,7 @@ const EditionPopIn = ({ edition, setEdition }) => {
 
   useEffect(() => {
     handlePrice();
-  }, []);
+  }, [edition]);
 
   useAsideAnimation(el, edition);
 
@@ -149,11 +151,8 @@ const EditionPopIn = ({ edition, setEdition }) => {
                     </p>
                   </div>
                 </div>
-                <Link
-                  href={`/checkout/${edition.artwork_id}/${edition.edition_id}`}
-                >
-                  <button className="btn btn-primary btn-full">Checkout</button>
-                </Link>
+
+                  <button disabled onClick={() => router.push(`/checkout/${edition.artwork_id}/${edition.edition_id}`) } className="btn disabled:cursor-not-allowed btn-primary btn-full">Checkout</button>
                 <div className="flex items-center justify-center gap-2 mt-[10px]">
                   <img src="/images/apple_pay.png" alt="Apple pay" />
                   <img src="/images/mastercard.png" alt="Mastercard" />

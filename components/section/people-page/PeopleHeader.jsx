@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { getFollowerInfo } from "lib/backend";
+import Link from "next/link";
 import { getFollowerInfo, postFollower } from "lib/backend";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 import { toast } from "react-toastify";
@@ -106,9 +108,11 @@ const PeopleHeader = ({ collection }) => {
           </button>
         </div>
         <div className="w-full md:w-[240px] xl:w-[300px] mt-[10px]">
+          <Link href={`/people/${collection.owner_id}`}>
           <p className="py-[2px]  my-1 border-b border-unveilGreen b3 md:b4">
             {(collection && typeof collection != "string") ? `By: ${displayName}` : ""}
           </p>
+          </Link>
           {(collection && typeof collection != "string") && (
             <>
               {collection.curator_id && (
@@ -127,7 +131,7 @@ const PeopleHeader = ({ collection }) => {
               : ``}
           </p>
           <p className="py-[2px]  my-1 b4 md:b5 truncate w-[120px]">
-            {(collection && typeof collection != "string") ? collection.owner.walletAddress : ""}
+            {(collection && typeof collection != "string") ? collection.owner.walletAddress.slice(0,4).toLowerCase()+"..."+collection.owner.walletAddress.slice(-4).toLowerCase() : ""}
           </p>
         </div>
       </div>

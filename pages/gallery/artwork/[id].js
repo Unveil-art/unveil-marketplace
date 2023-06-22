@@ -7,10 +7,12 @@ import AboutCurator from "../../../components/reusable/AboutCurator";
 import ContinueBrowsing from "../../../components/section/gallery-page/ContinueBrowsing";
 import Provenance from "../../../components/section/gallery-page/Provenance";
 import { getArtworkById, getArtworks } from "lib/backend";
+import { ToastContainer } from "react-toastify";
 
 const Details = ({ artwork, browse }) => {
   return (
     <main>
+      <ToastContainer />
       <GalleryHero artwork={artwork} />
       <GalleryAbout artwork={artwork} />
       {/* <Provenance /> */}
