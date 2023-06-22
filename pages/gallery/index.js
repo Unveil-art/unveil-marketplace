@@ -19,6 +19,7 @@ export default function Gallery({ artworks }) {
   const [pagination, setPagination] = useState(0);
   const [variant, setVariant] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [noApiCalls, setNoApiCalls] = useState(false)
   const paginationDivRef = useRef(null)
 
   const [category, setCategory] = useState(0);
@@ -111,6 +112,11 @@ export default function Gallery({ artworks }) {
     }
 
     const result = splitArrayByPattern(more, newVariant);
+    if(result[0].length === 0) {
+      setNoApiCalls(true)
+    } else {
+      setNoApiCalls(false)
+    }
     setVariant(newVariant);
     setItems((prevSplit) => prevSplit.concat(result));
     setLoading(false);
@@ -118,14 +124,15 @@ export default function Gallery({ artworks }) {
 
   useEffect(() => {
     function handleScroll () {
-      if(paginationDivRef.current) {
-        const buttonRect = paginationDivRef.current.getBoundingClientRect()
-        console.log(buttonRect.top, 'button top'); console.log(window.innerHeight, 'window inner height')
-        const isVisible = Number(buttonRect.top) < Number(window.innerHeight)
-        console.log(isVisible, 'isVisible')
+      console.log(noApiCalls)
+      if(!noApiCalls && !loading) {
+        if(paginationDivRef.current) {
+          const buttonRect = paginationDivRef.current.getBoundingClientRect()
+          const isVisible = Number(buttonRect.top) < Number(window.innerHeight)
 
-        if(isVisible) {
-          setPagination(prev => prev + 1)
+          if(isVisible) {
+            setPagination(prev => prev + 1)
+          }
         }
       }
     }
@@ -135,7 +142,7 @@ export default function Gallery({ artworks }) {
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [pagination, paginationDivRef])
+  }, [paginationDivRef, noApiCalls, loading])
 
   useEffect(() => {
     const variant = Math.floor(Math.random() * 2) + 1;
