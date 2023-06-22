@@ -37,18 +37,18 @@ const PeopleHeader = ({ collection }) => {
   const [followStatus, setFollowStatus] = useState(false);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    fetchCollection(userId);
+    fetchCollection(userId, value);
 }, []);
-  const fetchCollection = async (userId) => {
+  const fetchCollection = async (userId, token) => {
     if(userId){
       try {
         const data = await getFollowerInfo(userId);
         let response = data ? data.followers : 0;
         setFollowers(response);
-        console.log("LOCALSTORAGE VALUE ", value)
-        if(value){
+        console.log("LOCALSTORAGE VALUE ", token)
+        if(token){
           console.log("CALLING IS FOOLLLOOWEDDD ", userId)
-          const followStatus = await isFollowed(value, userId);
+          const followStatus = await isFollowed(token, userId);
           setFollowStatus(followStatus);
         }
         
