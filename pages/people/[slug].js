@@ -36,7 +36,7 @@ const PeopleDetails = ({ faq, userId }) => {
 
   return (
     <main className="mt-[120px]">
-      <Title title={collection? collection.firstName+" "+collection.lastName : ''} account={collection ? collection.role : ''} />
+      <Title title={collection !== undefined ? collection.firstName+" "+collection.lastName : ''} account={collection !== undefined ? collection.role : ''} />
       <PeopleHeader collection={userId}/>
       <PageSelector setPage={setPage} page={page} />
       {page === 0 && <PeopleArtworks />}
