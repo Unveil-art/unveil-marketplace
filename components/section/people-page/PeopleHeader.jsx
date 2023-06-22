@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { getFollowerInfo } from "lib/backend";
 import Link from "next/link";
 import { getFollowerInfo, postFollower } from "lib/backend";
 import useLocalStorage from "../../../hooks/useLocalStorage";
