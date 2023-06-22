@@ -86,6 +86,7 @@ const Edit = ({ artwork }) => {
     sizes.find((item) => item.active)?.size
   );
 
+  const { showRamper } = useContext(Web3Context);
   const [editionPricing, setEditionPricing] = useState([]);
   const [editionPrice, setEditionPrice] = useState([]);
   const [editionType, setEditionType] = useState("NFT_Only");
@@ -131,23 +132,6 @@ const Edit = ({ artwork }) => {
           const { data } = await getUserInfo(artwork?.collection?.curator_id);
           walletAddress = data.walletAddress.toLowerCase();
         }
-        console.log(
-          name,
-          name,
-          json.data,
-          Date.now() + 10 * 365 * 24 * 60 * 60 * 1000, // endTimeStamp need to have higher value
-          [
-            walletAddress, // replace this with curator wallet associated with artwork
-            isCurator ? artwork?.collection?.curator_commission : 0, // replace this with curator percentage
-            isCurator
-              ? Date.now(artwork?.collection?.curator_time)
-              : Date.now(), // replace this timestamp with curator commission date
-            parseInt(firstRoyalty * 100), // first royalty percentage
-            parseInt(secondRoyalty * 100), // second royalty percentage
-            royaltyThreshold, // second royalty threshold time
-          ],
-          "custom"
-        );
         const tx = await contract.methods
           .create(
             name,
@@ -189,6 +173,9 @@ const Edit = ({ artwork }) => {
         setCreating(false);
       } catch (error) {
         console.log(JSON.stringify(error));
+        if (error?.data?.code == -32000) {
+          showRamper(50);
+        }
         notify(error?.data?.message);
         setCreating(false);
       }

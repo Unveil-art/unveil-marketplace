@@ -7,6 +7,7 @@ import { HistoryProvider } from "../contexts/History";
 import Layout from "../components/general/Layout";
 import Web3AuthProvider from "@/contexts/Web3AuthContext";
 import { StepProvider } from "@/contexts/StepContext";
+import "react-toastify/dist/ReactToastify.css";
 
 function MyApp({ Component, pageProps }) {
   const lenis = useLenis();

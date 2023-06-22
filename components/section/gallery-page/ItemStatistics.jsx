@@ -1,9 +1,26 @@
-import React from "react";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import Chat from "@/components/reusable/Chat";
 import Link from "next/link";
 
 const ItemStatistics = ({ artwork }) => {
+
+  const [dimension, setDimension] = useState("1920 X 1080")
+
+  
+
+  useEffect(() => {
+
+    const getImageDimension = (url) => {
+      const img = new window.Image()
+      img.src=url;
+      img.onload = () => {
+        setDimension(parseInt(img.width)+" X "+parseInt(img.height))
+      }
+    }
+    if(artwork.media_url){
+      getImageDimension(artwork.media_url);
+    }
+  },[artwork]);
 
   const editions_left = artwork?.editions?.reduce((acc,emm) => acc+(emm.max_copies-emm.sold_copies),0);
   return (
@@ -133,8 +150,8 @@ const ItemStatistics = ({ artwork }) => {
                 </div>
               )}
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
-                <p className="b5">Dimentions (DAB)</p>
-                <p className="truncate b4">1920 X 1080</p>
+                <p className="b5">Dimensions (DAB)</p>
+                <p className="truncate b4">{dimension}</p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5">File size</p>

@@ -4,14 +4,24 @@ import OptionsPopIn from "@/components/pop-in/OptionsPopIn";
 import Link from "next/link";
 import Image from "next/image";
 import EditionPopIn from "@/components/pop-in/EditionPopIn";
-import { getArtistRecognitions, getCurrentExchangeRateETHUSD } from "lib/backend";
+import { addToWishlist, artworkInWishlist, getArtistRecognitions, getCurrentExchangeRateETHUSD, removeFromWishlist } from "lib/backend";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import { toast } from "react-toastify";
+import Loader from "@/components/svg/Loader";
 
 const GalleryHero = ({ artwork }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
   const [editionOpen, setEditionOpen] = useState(false);
   const [edition, setEdition] = useState(null);
+  const [inWishlist, setInWishList] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { value:token } = useLocalStorage("token");
   const [recognitions, setRecognitions] = useState([]);
   const [exchangeRate, setExchangeRate] = useState(1900);
+
+  const notifyError = (message) => toast.error(message);
+  const notifySuccess = (message) => toast.success(message);
+
 
   const init = async() => {
     try{
@@ -26,11 +36,58 @@ const GalleryHero = ({ artwork }) => {
     return (eth*exchangeRate).toFixed(2)
   }
 
+  const addWishlist = async() => {
+    try{
+      setLoading(true)
+      if(token && artwork.id){
+        await addToWishlist(token,artwork.id)
+        await checkWishlist(token, artwork.id)
+        notifySuccess("Added to Wishlist");
+      }else{
+        notifyError("User Not Logged In")
+      }
+      setLoading(false);
+    }catch(err){
+      setLoading(false)
+      console.log(err);
+      if(err?.response?.data?.message)
+      notifyError(err?.response?.data?.message);
+    }
+  }
+
+  const removeWishlist = async() => {
+    try{
+      setLoading(true)
+      if(token && artwork.id){
+        await removeFromWishlist(token,artwork.id);
+      await checkWishlist(token, artwork.id);
+      notifySuccess("Remove from Wishlist");
+      }else{
+        notifyError("User Not Logged In")
+      }
+      setLoading(false)
+    }catch(err){
+      setLoading(false)
+      console.log(err);
+      if(err?.response?.data?.message)
+      notifyError(err?.response?.data?.message);
+    }
+  }
+
+  const checkWishlist = async (token,artwork_id) => {
+    const data = await artworkInWishlist(token,artwork_id);
+    setInWishList(data);
+  }
+
   useEffect(() => {
     init();
   },[])
 
-  console.log(artwork);
+  useEffect(() => {
+    if(artwork.id && token) {
+      checkWishlist(token,artwork.id )
+    }
+  },[artwork, token])
 
   // Owner name to string
   let displayName;
@@ -199,10 +256,16 @@ const GalleryHero = ({ artwork }) => {
                   {_recognitions}
                   </p>
                 </div>
-                <div className="rounded-[10px] hover:bg-bgColor unveilTransition col-span-2 md:justify-start justify-center items-center flex gap-2 h-[38px] md:h-[68px] border border-unveilBlack md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
-                  <Wishlist />
-                  <p className="b4">Add to wishlist</p>
-                </div>
+                <button disabled={loading} onClick={() => {
+                  if(inWishlist){
+                    removeWishlist()
+                  }else{
+                    addWishlist();
+                  }
+                }} className={`rounded-[10px] ${inWishlist ? "bg-red-400 text-white font-normal" : "hover:bg-bgColor"}   unveilTransition col-span-2 md:justify-start justify-center items-center flex gap-2 h-[38px] md:h-[68px] border border-unveilBlack md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer`}>
+                  {loading ? <div className="animate-spin"><Loader color="#000000" /></div>: <Wishlist  />}
+                  <p className="b4">{inWishlist ? "Added" :"Add"} to wishlist</p>
+                </button>
               </div>
               <div
                 className={`md:block hidden group hover:scale-105 unveilTransition w-[180px] border bg-unveilWhite border-bgColorHover rounded-[10px] overflow-hidden fixed bottom-10 right-10 z-20 h-fit ${
