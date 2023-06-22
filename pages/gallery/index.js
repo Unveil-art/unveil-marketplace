@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import OneLiner from "../../components/reusable/Oneliner";
 import Title from "../../components/reusable/Title";
@@ -19,6 +19,7 @@ export default function Gallery({ artworks }) {
   const [pagination, setPagination] = useState(0);
   const [variant, setVariant] = useState(1);
   const [loading, setLoading] = useState(false);
+  const paginationDivRef = useRef(null)
 
   const [category, setCategory] = useState(0);
   const [artist, setArtist] = useState(0);
@@ -116,6 +117,27 @@ export default function Gallery({ artworks }) {
   };
 
   useEffect(() => {
+    function handleScroll () {
+      if(paginationDivRef.current) {
+        const buttonRect = paginationDivRef.current.getBoundingClientRect()
+        console.log(buttonRect.top, 'button top'); console.log(window.innerHeight, 'window inner height')
+        const isVisible = Number(buttonRect.top) < Number(window.innerHeight)
+        console.log(isVisible, 'isVisible')
+
+        if(isVisible) {
+          setPagination(prev => prev + 1)
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [pagination, paginationDivRef])
+
+  useEffect(() => {
     const variant = Math.floor(Math.random() * 2) + 1;
     setVariant(variant);
     const result = splitArrayByPattern(artworks, variant);
@@ -173,13 +195,20 @@ export default function Gallery({ artworks }) {
 
         {category === 0 && <GalleryBlockItems items={artworkSplit} />}
         {category === 1 && <GalleryBlockItems items={collectionSplit} />}
+        <div ref={paginationDivRef} className='pb-3 bg-inherit'>
+          {loading && (
+            <div className="h-[25px] animate-spin justify-center flex items-center">
+              <Loader />
+            </div>
+          )}
+        </div>
 
         {/* For searching */}
         {/* <SearchBlockItems /> */}
 
         <button
           onClick={() => setPagination(pagination + 1)}
-          className="mx-auto btn btn-secondary w-[128px] block mb-[100px] cursor-pointer"
+          className="mx-auto btn btn-secondary hidden w-[128px] mb-[100px] cursor-pointer"
         >
           {loading && (
             <div className="h-[25px] animate-spin justify-center flex items-center">
