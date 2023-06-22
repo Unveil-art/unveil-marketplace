@@ -47,11 +47,11 @@ const PeopleHeader = ({ collection }) => {
         let response = data ? data.followers : 0;
         setFollowers(response);
         
-        // if(value){
-        //   console.log("CALLING IS FOOLLLOOWEDDD ", userId)
-        //   const followStatus = await isFollowed(value, userId);
-        //   setFollowStatus(followStatus);
-        // }
+        if(value){
+          console.log("CALLING IS FOOLLLOOWEDDD ", userId)
+          const followStatus = await isFollowed(value, userId);
+          setFollowStatus(followStatus.data);
+        }
         
         return data;
       } catch (err) {
