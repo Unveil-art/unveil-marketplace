@@ -40,7 +40,6 @@ const PeopleHeader = ({ collection }) => {
       fetchCollection(userId);
   }, [value]);
   const fetchCollection = async (userId) => {
-    console.log("LOCALSTORAGE VALUE ", value)
     if(userId){
       try {
         const data = await getFollowerInfo(userId);
@@ -48,7 +47,6 @@ const PeopleHeader = ({ collection }) => {
         setFollowers(response);
         
         if(value){
-          console.log("CALLING IS FOOLLLOOWEDDD ", userId)
           const followStatus = await isFollowed(value, userId);
           setFollowStatus(followStatus.data);
         }
