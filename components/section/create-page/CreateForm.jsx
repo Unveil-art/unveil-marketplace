@@ -311,8 +311,8 @@ const CreateForm = ({
     try {
       const image = await uploadImage(value, values.imageCollection[0]);
 
-      await postCollection(value, values, image.data);
-
+      const res = await postCollection(value, values, image.data);
+      setCollection(res.data.id);
       resetColl();
       setCollectionImage(null);
       setOpenCollection(false);
@@ -1167,11 +1167,6 @@ const CreateForm = ({
       <div className="bg-[#F9F7F2] shadow3 rounded-[10px]">
         <div className="grid grid-cols-2 border-b border-[#DBDED6] pb-[15px] px-5 pt-5">
           <p className="text-[13px] md:text-[16px] b3">Royalties</p>
-          <p className="hidden lg:block b4 leading-[19px] mb-[20px] opacity-80">
-            To speculative buyers from flipping your artwork we have a scaling
-            system with high royalties for the artist in early stages. The
-            period starts when the artwork is sold.
-          </p>
         </div>
         {royalties.map((item, i) => (
           <div
