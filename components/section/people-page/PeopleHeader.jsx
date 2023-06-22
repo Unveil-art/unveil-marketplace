@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { getFollowerInfo } from "lib/backend";
+import { getFollowerInfo, postFollower } from "lib/backend";
+import useLocalStorage from "../../../hooks/useLocalStorage";
+import { toast } from "react-toastify";
 const PeopleHeader = ({ collection }) => {
   // console.log(collection);
 
@@ -12,6 +14,8 @@ const PeopleHeader = ({ collection }) => {
     // Return the formatted string
     return `${day}.${month}.${year}`;
   }
+  
+  const { value } = useLocalStorage("token");
 
   let displayName;
   let userId;
@@ -29,6 +33,7 @@ const PeopleHeader = ({ collection }) => {
     userId = collection;
   }
   const [follower, setFollowers] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     fetchCollection(userId);
 }, []);
@@ -43,6 +48,28 @@ const PeopleHeader = ({ collection }) => {
         setFollowers(0);
         console.error(err);
       }
+    }
+    
+  };
+  const followRequest = async () => {
+    if(userId && value){
+      try {
+        const data = {
+          user_id: userId,
+        };
+        
+        await postFollower(value, data);
+        // setLoading(false);
+        fetchCollection(userId);
+        toast.success("Success");
+      } catch (err) {
+        // setLoading(false);
+        console.error(err);
+        toast.error(err.message);
+      }
+    } else {
+      console.error("User not logged in")
+      toast.error("User not logged in");
     }
     
   };
@@ -74,7 +101,7 @@ const PeopleHeader = ({ collection }) => {
               <p className="text-[27px]">0</p>
             </div>
           </div>
-          <button className="mt-[10px] btn btn-full btn-secondary">
+          <button className="mt-[10px] btn btn-full btn-secondary" onClick={()=> followRequest()}>
             Follow
           </button>
         </div>
