@@ -48,7 +48,7 @@ const PeopleDetails = ({ faq, userId }) => {
       <PageSelector setPage={setPage} page={page} />
       {page === 0 && <PeopleArtworks />}
       {page === 1 && <PeopleCollections />}
-      {page === 2 && <PeopleAbout />}
+      {page === 2 && <PeopleAbout details={collection} />}
       <FAQ data={faqData.block} />
     </main>
   );
