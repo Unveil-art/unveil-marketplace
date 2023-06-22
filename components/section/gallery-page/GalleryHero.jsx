@@ -1,14 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Wishlist from "../../svg/Wishlist";
 import OptionsPopIn from "@/components/pop-in/OptionsPopIn";
 import Link from "next/link";
 import Image from "next/image";
 import EditionPopIn from "@/components/pop-in/EditionPopIn";
+import { getArtistRecognitions, getCurrentExchangeRateETHUSD } from "lib/backend";
 
 const GalleryHero = ({ artwork }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
   const [editionOpen, setEditionOpen] = useState(false);
   const [edition, setEdition] = useState(null);
+  const [recognitions, setRecognitions] = useState([]);
+  const [exchangeRate, setExchangeRate] = useState(1900);
+
+  const init = async() => {
+    try{
+      const data = await getCurrentExchangeRateETHUSD();
+    setExchangeRate(data.USD);
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+  const getUSD = (eth) => {
+    return (eth*exchangeRate).toFixed(2)
+  }
+
+  useEffect(() => {
+    init();
+  },[])
 
   console.log(artwork);
 
@@ -71,6 +91,17 @@ const GalleryHero = ({ artwork }) => {
     };
   }
 
+  const getRecognitions = async(artist_id)  => {
+    const data = await getArtistRecognitions(artist_id);
+    setRecognitions(data);
+  }
+  useEffect(() => {
+    if(artwork.owner_id){
+      getRecognitions(artwork.owner_id)
+    }
+  },[artwork]);
+
+  const _recognitions = recognitions.map(({description, recognition_type}) => description+" ("+recognition_type+")").join(", ")
   // Find the lowest price
   const prices = artwork.editions.map((edition) => edition.price);
   const lowestPrice = Math.min(...prices);
@@ -104,7 +135,7 @@ const GalleryHero = ({ artwork }) => {
           <div className="md:mb-[100px] my-10 md:mt-[180px] md:space-y-10 text-center px-[15px] md:pl-10 md:pr-5">
             <p className="pb-5 l2 md:pb-0">{displayName}</p>
             <h1>{artwork.name}</h1>
-            <p className="hidden md:block">From €{lowestPrice}</p>
+            <p className="hidden md:block">From ${getUSD(lowestPrice)}</p>
             <div className="relative pt-10 md:pt-[100px] flex justify-between gap-5">
               <div className="md:space-y-[6px] w-full md:block grid grid-cols-2 gap-[6px]">
                 <Link href={`/gallery/collection/${artwork.collection_id}`}>
@@ -133,7 +164,7 @@ const GalleryHero = ({ artwork }) => {
                 <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
                   <p className="b5 leading-[23px]">Payment</p>
                   <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                    Payment methods...
+                    ETH, Credit/Debit Card
                   </p>
                 </div>
                 {artwork.edition_type !== "NFT_Only" && (
@@ -153,19 +184,19 @@ const GalleryHero = ({ artwork }) => {
                 <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
                   <p className="b5 leading-[23px]">Creator royalty</p>
                   <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                    {displayRoyalties}
+                    {artwork.royalties[0]?.percentage}%, {artwork.royalties[1]?.percentage}%
                   </p>
                 </div>
                 <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
                   <p className="b5 leading-[23px]">Creator & royalty address</p>
                   <p className="truncate b3 !text-[13px] leading-normal md:b4 w-[100px]">
-                    {artwork.owner.walletAddress}
+                    {artwork.owner.walletAddress.slice(0,4).toLowerCase()}...{artwork.owner.walletAddress.slice(-4).toLowerCase()}
                   </p>
                 </div>
                 <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
                   <p className="b5 leading-[23px]">Recognitions</p>
                   <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                    Awards...
+                  {_recognitions}
                   </p>
                 </div>
                 <div className="rounded-[10px] hover:bg-bgColor unveilTransition col-span-2 md:justify-start justify-center items-center flex gap-2 h-[38px] md:h-[68px] border border-unveilBlack md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">

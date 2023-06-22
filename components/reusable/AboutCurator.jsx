@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { getArtistRecognitions } from "lib/backend";
 
 const AboutCurator = ({ owner }) => {
+
+  const [recognitions, setRecognitions] = useState([]);
+
   // Owner name to string
   let displayName;
   if (owner.firstName && owner.lastName) {
@@ -14,6 +18,16 @@ const AboutCurator = ({ owner }) => {
   } else {
     displayName = owner.email;
   }
+
+  const getRecognitions = async(artist_id)  => {
+    const data = await getArtistRecognitions(artist_id);
+    setRecognitions(data);
+  }
+  useEffect(() => {
+    if(owner.id){
+      getRecognitions(owner.id)
+    }
+  },[owner]);
 
   return (
     <section className="grid grid-cols-1 md:grid-cols-2">
@@ -39,17 +53,16 @@ const AboutCurator = ({ owner }) => {
 
           <h4 className="mt-5 mb-10 b2 md:h2">{owner.description}</h4>
           <div className="mb-5">
-            <p className="py-1 border-b cursor-pointer b3 md:b4 border-unveilWhite">
-              x Awards
+            {
+              recognitions.map(({id, recognition_type, description}) => (
+                <p key={id} className="py-1 border-b cursor-pointer b3 md:b4 border-unveilWhite">
+              x {description} ({recognition_type})
             </p>
-            <p className="py-1 border-b cursor-pointer b3 md:b4 border-unveilWhite">
-              x Awards
-            </p>
-            <p className="py-1 border-b cursor-pointer b3 md:b4 border-unveilWhite">
-              x Awards
-            </p>
+              ))
+            }
+            
             <p className="py-1 truncate w-[100px] cursor-pointer b3 md:b4 border-unveilWhite">
-              {owner.walletAddress}
+              {owner?.walletAddress?.slice(0,4).toLowerCase()}...{owner?.walletAddress?.slice(-4).toLowerCase()}
             </p>
           </div>
           <Link href={`/people/${owner.id}`}>

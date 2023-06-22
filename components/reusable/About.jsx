@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Currency from "../svg/Currency";
 import Image from "next/image";
@@ -6,8 +6,28 @@ import Link from "next/link";
 import CountdownTimer from "./CountdownTimer";
 import Animate from "./Animate";
 import { getUserName } from "lib/utils";
+import { getCurrentExchangeRateETHUSD } from "lib/backend";
+
 
 const About = ({ bg, item }) => {
+  const [exchangeRate, setExchangeRate] = useState(1900);
+
+  const init = async() => {
+    try{
+      const data = await getCurrentExchangeRateETHUSD();
+    setExchangeRate(data.USD);
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+  const getUSD = (eth) => {
+    return (eth*exchangeRate).toFixed(2)
+  }
+
+  useEffect(() => {
+    init();
+  },[])
   return (
     <Animate options={{ alpha: true }}>
       <section className="relative grid grid-cols-1 my-5 md:grid-cols-2 2xl:h-screen md:my-10">
@@ -35,7 +55,7 @@ const About = ({ bg, item }) => {
               {item.editions && (
                 <div className="flex items-center gap-1 mt-[2px]">
                   <p className="leading-tight b5">
-                    € {item.editions[0]?.price}
+                    $ {getUSD(item.editions[0]?.price)}
                   </p>
                 </div>
               )}
