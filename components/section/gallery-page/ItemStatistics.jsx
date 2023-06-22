@@ -1,8 +1,11 @@
 import React from "react";
 import Image from "next/image";
 import Chat from "@/components/reusable/Chat";
+import Link from "next/link";
 
 const ItemStatistics = ({ artwork }) => {
+
+  const editions_left = artwork?.editions?.reduce((acc,emm) => acc+(emm.max_copies-emm.sold_copies),0);
   return (
     <div className="relative grid grid-cols-1 mx-0 mt-10 md:grid-cols-5 md:mx-10 md:mt-[100px]">
       <div className="relative md:col-span-2 bg-bgColor py-[120px] hidden md:block w-full">
@@ -26,37 +29,37 @@ const ItemStatistics = ({ artwork }) => {
                   Total selling volume market volume
                 </p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                  €31.120
+                  $ 0.00
                 </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5 leading-[23px]">Last purchase price</p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                  €31.120
+                  $ 0.00
                 </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5 leading-[23px]">Volume last 30 days</p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                  €31.120
+                  $ 0.00
                 </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5 leading-[23px]">Highest non-accepted bid</p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                  €31.120
+                $ 0.00
                 </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5 leading-[23px]">Unique collectors</p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                  9
+                  0
                 </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5 leading-[23px]">Claimed physical artworks</p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                  69%%
+                  0%
                 </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
@@ -64,19 +67,19 @@ const ItemStatistics = ({ artwork }) => {
                   Price increase since first sale
                 </p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                  121%
+                  0%
                 </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5 leading-[23px]">Distribution Primary Sale</p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                  82.5% artist, 5% curator
+                  97.5% artist, 0% curator
                 </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5 leading-[23px]">Editions left</p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                  9
+                  {editions_left}
                 </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack col-span-2 md:col-span-1 flex overflow-hidden bg-bgColor text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
@@ -131,27 +134,29 @@ const ItemStatistics = ({ artwork }) => {
               )}
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5">Dimentions (DAB)</p>
-                <p className="truncate b4">Dimentions...</p>
+                <p className="truncate b4">1920 X 1080</p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5">File size</p>
-                <p className="truncate b4">File size...</p>
+                <p className="truncate b4">~ 1 MB</p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5">Blockchain</p>
-                <p className="truncate b4">Blockchain...</p>
+                <p className="truncate b4">Ethereum</p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5">Token standard</p>
-                <p className="truncate b4">Token..</p>
+                <p className="truncate b4">ERC721</p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5">Collection address</p>
-                <p className="truncate w-[100px] b4">adres...</p>
+                <p className="truncate w-[100px] b4">{artwork?.contract_address?.slice(0,4)}...{artwork?.contract_address?.slice(-4)}</p>
               </div>
-              <button className="btn btn-secondary w-full md:col-span-1 col-span-2 md:w-[250px] lg:w-[290px] 2xl:w-[320px]">
+              <Link href={`https://etherscan.io/address/${artwork?.contract_address}`} target="_blank">
+              <button className="btn mt-3 btn-secondary w-full md:col-span-1 col-span-2 md:w-[250px] lg:w-[290px] 2xl:w-[320px]">
                 View on Etherscan
               </button>
+              </Link>
             </div>
             <div className="absolute hidden md:block bottom-0 right-0 w-[130px]">
               <p className="b4">
