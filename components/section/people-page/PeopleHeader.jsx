@@ -3,9 +3,10 @@ import Link from "next/link";
 import { getFollowerInfo, postFollower, isFollowed } from "lib/backend";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 import { toast } from "react-toastify";
+
 const PeopleHeader = ({ collection }) => {
   // console.log(collection);
-
+  const { value } = useLocalStorage("token");
   function formatDate(inputString) {
     let date = new Date(inputString);
     let day = date.getUTCDate();
@@ -16,8 +17,8 @@ const PeopleHeader = ({ collection }) => {
     return `${day}.${month}.${year}`;
   }
   
-  const { value } = useLocalStorage("token");
-
+  
+  
   let displayName;
   let userId;
   if (collection && typeof collection != "string") {
@@ -37,18 +38,17 @@ const PeopleHeader = ({ collection }) => {
   const [followStatus, setFollowStatus] = useState(false);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    fetchCollection(userId, value);
-}, []);
-  const fetchCollection = async (userId, token) => {
+    fetchCollection(userId);
+  }, [value]);
+  const fetchCollection = async (userId) => {
     if(userId){
       try {
         const data = await getFollowerInfo(userId);
         let response = data ? data.followers : 0;
         setFollowers(response);
-        console.log("LOCALSTORAGE VALUE ", token)
-        if(token){
-          console.log("CALLING IS FOOLLLOOWEDDD ", userId)
-          const followStatus = await isFollowed(token, userId);
+        
+        if(value){
+          const followStatus = await isFollowed(value, userId);
           setFollowStatus(followStatus);
         }
         
