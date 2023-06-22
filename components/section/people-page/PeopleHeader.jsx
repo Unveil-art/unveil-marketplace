@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { getFollowerInfo, postFollower } from "lib/backend";
+import { getFollowerInfo, postFollower, isFollowed } from "lib/backend";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 import { toast } from "react-toastify";
 const PeopleHeader = ({ collection }) => {
@@ -34,6 +34,7 @@ const PeopleHeader = ({ collection }) => {
     userId = collection;
   }
   const [follower, setFollowers] = useState([]);
+  const [followStatus, setFollowStatus] = useState(false);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     fetchCollection(userId);
@@ -44,6 +45,11 @@ const PeopleHeader = ({ collection }) => {
         const data = await getFollowerInfo(userId);
         let response = data ? data.followers : 0;
         setFollowers(response);
+        if(value){
+          const followStatus = await isFollowed(value, userId);
+          setFollowStatus(followStatus);
+        }
+        
         return data;
       } catch (err) {
         setFollowers(0);
@@ -103,7 +109,7 @@ const PeopleHeader = ({ collection }) => {
             </div>
           </div>
           <button className="mt-[10px] btn btn-full btn-secondary" onClick={()=> followRequest()}>
-            Follow
+            {followStatus ? "Followed" : "Follow"} {followStatus}
           </button>
         </div>
         <div className="w-full md:w-[240px] xl:w-[300px] mt-[10px]">
