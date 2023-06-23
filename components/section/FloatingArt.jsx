@@ -6,9 +6,11 @@ import { useHistory } from "../../contexts/History";
 import { useLenis } from "@studio-freight/react-lenis";
 import Image from "next/image";
 import AccessPopIn2 from "../pop-in/AccessPopIn2";
+import AccessPopIn3 from "../pop-in/AccessPopIn3";
 
 const FloatingArt = ({ data }) => {
   const [open, setOpen] = useState(false);
+  const [accessOpen, setAccessOpen] = useState(false);
   const el = useRef();
   const once = useRef(false);
   const size = useWindowSize();
@@ -315,9 +317,10 @@ const FloatingArt = ({ data }) => {
           <div className="flex gap-[10px] mt-5">
             <div className="gsap-stagger">
               <button
+                onClick={() => setAccessOpen(true)}
                 data-cursor={data.button_1_cursor_text}
                 data-cursor-color={data.button_1_cursor_color}
-                className="cursor-not-allowed md:hover:bg-opacity-100 bg-opacity-90 btn btn-primary"
+                className=" btn btn-primary"
               >
                 {data.button_1_text}
               </button>
@@ -325,10 +328,9 @@ const FloatingArt = ({ data }) => {
             {/* Going to be a link */}
             <div className="gsap-stagger">
               <button
-                onClick={() => setOpen(true)}
                 data-cursor={data.button_2_cursor_text}
                 data-cursor-color={data.button_2_cursor_color}
-                className="btn btn-secondary"
+                className="cursor-not-allowed btn btn-secondary"
               >
                 {data.button_2_text}
               </button>
@@ -336,6 +338,7 @@ const FloatingArt = ({ data }) => {
           </div>
         </div>
       </section>
+      <AccessPopIn3 open={accessOpen} setOpen={setAccessOpen} />
       <AccessPopIn2
         accessOpen={open}
         setAccessOpen={setOpen}
