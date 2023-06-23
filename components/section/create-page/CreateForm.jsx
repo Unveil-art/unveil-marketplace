@@ -1497,7 +1497,7 @@ const CreateForm = ({
                 placeholder="300 characters max"
                 {...registerColl("description", {
                   required: "Required",
-                  maxLength: 300,
+                  maxLength: 3000,
                 })}
               />
               <p
