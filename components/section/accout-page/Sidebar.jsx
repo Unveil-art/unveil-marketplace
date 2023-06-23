@@ -18,7 +18,7 @@ const Sidebar = ({ accountState, setAccountState, user }) => {
             accountState === 0 ? "text-unveilBlack" : ""
           } cursor-pointer hover:text-unveilBlack unveilTransition whitespace-nowrap`}
         >
-          Artwork
+          Create NFT
         </p>
       )}
 
