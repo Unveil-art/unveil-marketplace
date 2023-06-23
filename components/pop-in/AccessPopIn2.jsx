@@ -32,13 +32,30 @@ const AccessPopIn2 = ({ accessOpen, setAccessOpen, data, i }) => {
             ? data.description
             : "Provide a link to your work and submitting a series of works upon selection by our curator."}
         </p>
-        <form className="mt-5 ">
-          <input type="text" placeholder="Name" className="input" />
-          <input type="email" placeholder="Email" className="my-1 input" />
+        <form className="mt-5" action="https://submit-form.com/qTCiI7uH">
           <input
+            className="input mb-[5px]"
             type="text"
+            id="name"
+            name="name"
+            placeholder="Name"
+            required=""
+          />
+          <input
+            className="input mb-[5px]"
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            required=""
+          />
+          <input
+            className="input mb-[15px]"
+            type="text"
+            id="website"
+            name="website"
             placeholder="Website (or social)"
-            className="input"
+            required=""
           />
           <p className="py-5">i&apos;m a:</p>
           <div className="grid grid-cols-2 pb-[15px]">
@@ -62,7 +79,7 @@ const AccessPopIn2 = ({ accessOpen, setAccessOpen, data, i }) => {
             </div>
           </div>
 
-          <button className="btn btn-full btn-primary btn-big" type="submit">
+          <button type="submit" className="btn btn-full btn-primary">
             Apply now
           </button>
         </form>
