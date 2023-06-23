@@ -42,7 +42,6 @@ const GalleryHero = ({ artwork }) => {
       if(token && artwork.id){
         await addToWishlist(token,artwork.id)
         await checkWishlist(token, artwork.id)
-        notifySuccess("Added to Wishlist");
       }else{
         notifyError("User Not Logged In")
       }
@@ -61,7 +60,6 @@ const GalleryHero = ({ artwork }) => {
       if(token && artwork.id){
         await removeFromWishlist(token,artwork.id);
       await checkWishlist(token, artwork.id);
-      notifySuccess("Remove from Wishlist");
       }else{
         notifyError("User Not Logged In")
       }
