@@ -15,12 +15,23 @@ import { Web3Context } from "@/contexts/Web3AuthContext";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { getArtworksMe, getUserMe } from "lib/backend";
 import { ToastContainer, toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const AccountPage = () => {
   const [accountState, setAccountState] = useState(0);
   const { logout } = useContext(Web3Context);
   const { value } = useLocalStorage("token");
   const [user, setUser] = useState();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if ("wishlist" in router.query) {
+      setAccountState(6);
+    } else {
+      setAccountState(0);
+    }
+  }, [router.query]);
 
   useEffect(() => {
     const fetchUser = async () => {

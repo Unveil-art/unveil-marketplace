@@ -8,6 +8,7 @@ import {
   listArtwork,
   listEdition,
   getCurrentExchangeRateUSDETH,
+  removeFromWishlist,
 } from "lib/backend";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import RPC from "lib/RPC";
@@ -15,12 +16,30 @@ import Web3 from "web3";
 import { MARKET_ABI } from "lib/constants";
 import Loader from "../svg/Loader";
 
-const ArtworkListItem = ({ i, item,fetchUser}) => {
+const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
   const [list, setList] = useState(item);
   const [loading, setLoading] = useState(false);
   const { value } = useLocalStorage("token");
   const { value: wallet } = useLocalStorage("walletAddress");
   const { provider } = useContext(Web3Context);
+
+  const removeWishlist = async () => {
+    try {
+      setLoading(true);
+      if (value && item.id) {
+        await removeFromWishlist(value, item.id);
+        toast.success("Remove from Wishlist");
+      } else {
+        toast.error("User Not Logged In");
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+      if (err?.response?.data?.message)
+        toast.error(err?.response?.data?.message);
+    }
+  };
 
   useEffect(() => {
     setList(item);
@@ -32,7 +51,7 @@ const ArtworkListItem = ({ i, item,fetchUser}) => {
     setLoading(true);
     try {
       const data = await listArtwork(value, item.id, !list.listed);
-      const eth = await getCurrentExchangeRateUSDETH();  //  comment/remove this line
+      const eth = await getCurrentExchangeRateUSDETH(); //  comment/remove this line
 
       let uniqueEdition = [];
       item.editions.forEach(async (edition) => {
@@ -51,21 +70,30 @@ const ArtworkListItem = ({ i, item,fetchUser}) => {
           );
 
           try {
-            if(list.listed){
-              await listEdition(value, edition.id, !list.listed, edition.signature);
-            }else{
-                const hash = await contract.methods
-                .getHashMessage(item.contract_address, item.json_uri, priceInWei)
+            if (list.listed) {
+              await listEdition(
+                value,
+                edition.id,
+                !list.listed,
+                edition.signature
+              );
+            } else {
+              const hash = await contract.methods
+                .getHashMessage(
+                  item.contract_address,
+                  item.json_uri,
+                  priceInWei
+                )
                 .call(function (error, result) {
                   console.log(result);
                 });
               const signature = await rpc.signMessage(hash, wallet, "");
               await listEdition(value, edition.id, !list.listed, signature);
             }
-            if(fetchUser){
-              fetchUser()
+            if (fetchUser) {
+              fetchUser();
             }
-            setLoading(false)
+            setLoading(false);
           } catch (error) {
             console.error(JSON.stringify(error));
             setLoading(false);
@@ -80,7 +108,7 @@ const ArtworkListItem = ({ i, item,fetchUser}) => {
       setLoading(false);
     }
   };
-  console.log(item,"items")
+  console.log(item, "items");
   return (
     <div
       key={i}
@@ -112,28 +140,40 @@ const ArtworkListItem = ({ i, item,fetchUser}) => {
           )} */}
         </div>
       </div>
-      <div className="flex flex-col md:flex-row gap-3 items-center">
-      {!item.listed && (
-        <Link href={`/artworks/${item.id}`}>
-          <button className="btn btn-secondary md:block">Edit</button>
-        </Link>
-      )}
-      {item.is_draft == false && (
-        <button
-        disabled={loading}
-          onClick={(e) => handleListing(e)}
-          className={` btn btn-ghost ${list.listed ? "bg-[#D6471A]" : 'bg-unveilBlack'} md:block text-white`}
+      {wishlist && (
+        <p
+          onClick={() => removeWishlist()}
+          className="cursor-pointer underline-on-hover b3"
         >
-          {loading && (
-                  <div className="flex justify-center h-[25px] items-center animate-spin">
-                    <Loader color="#F7F4ED" />
-                  </div>
-                )}
-          {!list.listed && !loading && <p> List for Sale</p>}
-          {list.listed && !loading && <p> Unlist</p>}
-        </button>
+          Remove
+        </p>
       )}
-      </div>
+      {!wishlist && (
+        <div className="flex flex-col items-center gap-3 md:flex-row">
+          {!item.listed && (
+            <Link href={`/artworks/${item.id}`}>
+              <button className="btn btn-secondary md:block">Edit</button>
+            </Link>
+          )}
+          {item.is_draft == false && (
+            <button
+              disabled={loading}
+              onClick={(e) => handleListing(e)}
+              className={` btn btn-ghost ${
+                list.listed ? "bg-[#D6471A]" : "bg-unveilBlack"
+              } md:block text-white`}
+            >
+              {loading && (
+                <div className="flex justify-center h-[25px] items-center animate-spin">
+                  <Loader color="#F7F4ED" />
+                </div>
+              )}
+              {!list.listed && !loading && <p> List for Sale</p>}
+              {list.listed && !loading && <p> Unlist</p>}
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };
