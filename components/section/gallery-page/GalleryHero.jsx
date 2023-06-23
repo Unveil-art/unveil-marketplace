@@ -241,7 +241,7 @@ const GalleryHero = ({ artwork }) => {
                 <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
                   <p className="b5 leading-[23px]">Creator royalty</p>
                   <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                    {artwork.royalties[0]?.percentage}%, {artwork.royalties[1]?.percentage}%
+                    {artwork.royalties[0]?.percentage}%, {artwork.royalties[1]?.percentage && `${artwork.royalties[1]?.percentage}%`}
                   </p>
                 </div>
                 <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
