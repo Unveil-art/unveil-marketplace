@@ -328,9 +328,10 @@ const FloatingArt = ({ data }) => {
             {/* Going to be a link */}
             <div className="gsap-stagger">
               <button
+                onClick={() => setOpen(true)}
                 data-cursor={data.button_2_cursor_text}
                 data-cursor-color={data.button_2_cursor_color}
-                className="cursor-not-allowed btn btn-secondary"
+                className="btn btn-secondary"
               >
                 {data.button_2_text}
               </button>
