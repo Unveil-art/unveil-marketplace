@@ -84,7 +84,8 @@ const About = ({ bg, item }) => {
             <div className="s2">
               <CountdownTimer
                 targetDate={new Date(item.live_time)}
-                owner={item.owner_id}
+                owner={getUserName(item.owner)}
+                owner_id={item.owner_id}
               />
             </div>
           )}
