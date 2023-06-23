@@ -7,25 +7,24 @@ import { getUserName } from "lib/utils";
 import { getCurrentExchangeRateETHUSD } from "lib/backend";
 
 const ProductCard = ({ rounded = false, item }) => {
-
   const [exchangeRate, setExchangeRate] = useState(1900);
 
-  const init = async() => {
-    try{
+  const init = async () => {
+    try {
       const data = await getCurrentExchangeRateETHUSD();
-    setExchangeRate(data.USD);
-    }catch(err){
-      console.log(err)
+      setExchangeRate(data.USD);
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
   const getUSD = (eth) => {
-    return (eth*exchangeRate).toFixed(2)
-  }
+    return (eth * exchangeRate).toFixed(2);
+  };
 
   useEffect(() => {
     init();
-  },[])
+  }, []);
   return (
     <Animate
       options={{
@@ -40,14 +39,22 @@ const ProductCard = ({ rounded = false, item }) => {
           <div
             className={`${
               rounded ? "rounded-t-full" : ""
-            } bg-bgColor relative overflow-hidden aspect-[3/4] mb-1`}
+            } bg-bgColor overflow-hidden aspect-[3/4] mb-1`}
           >
-            <Image
-              src={item.media_url}
-              alt={item.title}
-              fill={true}
-              style={{ objectFit: "cover" }}
-            />
+            <div
+              className={`${
+                rounded
+                  ? ""
+                  : "mx-5 md:mx-10 w-[calc(100%-40px)] md:w-[calc(100%-80px)] shadow2"
+              } relative  h-full `}
+            >
+              <Image
+                src={item.media_url}
+                alt={item.title}
+                fill={true}
+                style={{ objectFit: rounded ? "cover" : "contain" }}
+              />
+            </div>
           </div>
         </Link>
       )}
@@ -56,14 +63,22 @@ const ProductCard = ({ rounded = false, item }) => {
           <div
             className={`${
               rounded ? "rounded-t-full" : ""
-            } bg-bgColor relative overflow-hidden aspect-[3/4] mb-1`}
+            } bg-bgColor overflow-hidden aspect-[3/4] mb-1`}
           >
-            <Image
-              src={item.media_url}
-              alt={item.name}
-              fill={true}
-              style={{ objectFit: "cover" }}
-            />
+            <div
+              className={`${
+                rounded
+                  ? ""
+                  : "mx-5 md:mx-10 w-[calc(100%-40px)] md:w-[calc(100%-80px)] shadow2"
+              } relative  h-full `}
+            >
+              <Image
+                src={item.media_url}
+                alt={item.name}
+                fill={true}
+                style={{ objectFit: rounded ? "cover" : "contain" }}
+              />
+            </div>
           </div>
         </Link>
       )}

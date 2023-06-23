@@ -10,22 +10,22 @@ const TwoBlockItems = ({ items }) => {
 
   const [exchangeRate, setExchangeRate] = useState(1900);
 
-  const init = async() => {
-    try{
+  const init = async () => {
+    try {
       const data = await getCurrentExchangeRateETHUSD();
-    setExchangeRate(data.USD);
-    }catch(err){
-      console.log(err)
+      setExchangeRate(data.USD);
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
   const getUSD = (eth) => {
-    return (eth*exchangeRate).toFixed(2)
-  }
+    return (eth * exchangeRate).toFixed(2);
+  };
 
   useEffect(() => {
     init();
-  },[])
+  }, []);
 
   // useEffect(() => {
   //   items.forEach((item) => {
@@ -68,12 +68,17 @@ const TwoBlockItems = ({ items }) => {
               {item.name && (
                 <Link href={`/gallery/artwork/${item.id}`}>
                   <div className="relative w-full overflow-hidden bg-bgColor aspect-square">
-                    <Image
-                      src={item.media_url}
-                      alt={item.name}
-                      fill={true}
-                      style={{ objectFit: "cover" }}
-                    />
+                    <div
+                      className={`mx-[25%] md:mx-[30%] w-[calc(100%-50%)] md:w-[calc(100%-60%)] shadow2
+               relative  h-full `}
+                    >
+                      <Image
+                        src={item.media_url}
+                        alt={item.name}
+                        fill={true}
+                        style={{ objectFit: "contain" }}
+                      />
+                    </div>
                   </div>
                 </Link>
               )}
@@ -105,7 +110,9 @@ const TwoBlockItems = ({ items }) => {
               </Link>
               {item.editions && (
                 <div className="flex items-center gap-1">
-                  <p className="b3 opacity-60">$ {getUSD(item.editions[0]?.price)}</p>
+                  <p className="b3 opacity-60">
+                    $ {getUSD(item.editions[0]?.price)}
+                  </p>
                 </div>
               )}
             </>
