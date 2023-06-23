@@ -105,7 +105,7 @@ const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
                   My account
                 </h4>
               </Link>
-              <Link href="/account">
+              <Link href="/account?wishlist">
                 <h4
                   onClick={() => setNavOpen(!navOpen)}
                   className="b3 w-fit underline-on-hover"

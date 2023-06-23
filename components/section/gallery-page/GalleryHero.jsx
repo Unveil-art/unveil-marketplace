@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Wishlist from "../../svg/Wishlist";
 import OptionsPopIn from "@/components/pop-in/OptionsPopIn";
-import Link from "next/link";
-import Image from "next/image";
 import EditionPopIn from "@/components/pop-in/EditionPopIn";
-import { addToWishlist, artworkInWishlist, getArtistRecognitions, getCurrentExchangeRateETHUSD, removeFromWishlist } from "lib/backend";
+import {
+  addToWishlist,
+  artworkInWishlist,
+  getArtistRecognitions,
+  getCurrentExchangeRateETHUSD,
+  removeFromWishlist,
+} from "lib/backend";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { toast } from "react-toastify";
 import Loader from "@/components/svg/Loader";
+import MoreInfoPopIn from "@/components/pop-in/MoreInfoPopIn";
 
 const GalleryHero = ({ artwork }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
@@ -15,26 +20,36 @@ const GalleryHero = ({ artwork }) => {
   const [edition, setEdition] = useState(null);
   const [inWishlist, setInWishList] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { value:token } = useLocalStorage("token");
+  const { value: token } = useLocalStorage("token");
   const [recognitions, setRecognitions] = useState([]);
   const [exchangeRate, setExchangeRate] = useState(1900);
+  const [orientation, setOrientation] = useState(false);
+
+  // Popin states
+  const [collectionOpen, setCollectionOpen] = useState(false);
+  const [curatorOpen, setCuratorOpen] = useState(false);
+  const [soldAsOpen, setSoldAsOpen] = useState(false);
+  const [paymentOpen, setPaymentOpen] = useState(false);
+  const [royaltyOpen, setRoyaltyOpen] = useState(false);
+  const [sizesOpen, setSizedOpen] = useState(false);
+  const [addressOpen, setAddressOpen] = useState(false);
+  const [recognitionsOpen, setRecognitionsOpen] = useState(false);
 
   const notifyError = (message) => toast.error(message);
   const notifySuccess = (message) => toast.success(message);
 
-
-  const init = async() => {
-    try{
+  const init = async () => {
+    try {
       const data = await getCurrentExchangeRateETHUSD();
-    setExchangeRate(data.USD);
-    }catch(err){
-      console.log(err)
+      setExchangeRate(data.USD);
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
   const getUSD = (eth) => {
-    return (eth*exchangeRate).toFixed(2)
-  }
+    return (eth * exchangeRate).toFixed(2);
+  };
 
   const addWishlist = async() => {
     try{
@@ -46,13 +61,13 @@ const GalleryHero = ({ artwork }) => {
         notifyError("User Not Logged In")
       }
       setLoading(false);
-    }catch(err){
-      setLoading(false)
+    } catch (err) {
+      setLoading(false);
       console.log(err);
-      if(err?.response?.data?.message)
-      notifyError(err?.response?.data?.message);
+      if (err?.response?.data?.message)
+        notifyError(err?.response?.data?.message);
     }
-  }
+  };
 
   const removeWishlist = async() => {
     try{
@@ -62,30 +77,47 @@ const GalleryHero = ({ artwork }) => {
       await checkWishlist(token, artwork.id);
       }else{
         notifyError("User Not Logged In")
-      }
-      setLoading(false)
-    }catch(err){
-      setLoading(false)
-      console.log(err);
-      if(err?.response?.data?.message)
-      notifyError(err?.response?.data?.message);
-    }
-  }
 
-  const checkWishlist = async (token,artwork_id) => {
-    const data = await artworkInWishlist(token,artwork_id);
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+      if (err?.response?.data?.message)
+        notifyError(err?.response?.data?.message);
+    }
+  };
+
+  const checkWishlist = async (token, artwork_id) => {
+    const data = await artworkInWishlist(token, artwork_id);
     setInWishList(data);
-  }
+  };
 
   useEffect(() => {
     init();
-  },[])
+  }, []);
 
   useEffect(() => {
-    if(artwork.id && token) {
-      checkWishlist(token,artwork.id )
+    if (artwork.id && token) {
+      checkWishlist(token, artwork.id);
     }
-  },[artwork, token])
+  }, [artwork, token]);
+
+  useEffect(() => {
+    const img = document.createElement("img");
+
+    img.onload = function () {
+      if (this.width > this.height) {
+        setOrientation(true);
+      } else if (this.width < this.height) {
+        setOrientation(false);
+      } else {
+        setOrientation(false);
+      }
+    };
+
+    img.src = artwork.media_url;
+  }, [artwork.media_url]);
 
   // Owner name to string
   let displayName;
@@ -146,17 +178,22 @@ const GalleryHero = ({ artwork }) => {
     };
   }
 
-  const getRecognitions = async(artist_id)  => {
+  const getRecognitions = async (artist_id) => {
     const data = await getArtistRecognitions(artist_id);
     setRecognitions(data);
-  }
+  };
   useEffect(() => {
-    if(artwork.owner_id){
-      getRecognitions(artwork.owner_id)
+    if (artwork.owner_id) {
+      getRecognitions(artwork.owner_id);
     }
-  },[artwork]);
+  }, [artwork]);
 
-  const _recognitions = recognitions.map(({description, recognition_type}) => description+" ("+recognition_type+")").join(", ")
+  const _recognitions = recognitions
+    .map(
+      ({ description, recognition_type }) =>
+        description + " (" + recognition_type + ")"
+    )
+    .join(", ");
   // Find the lowest price
   const prices = artwork.editions.map((edition) => edition.price);
   const lowestPrice = Math.min(...prices);
@@ -165,7 +202,11 @@ const GalleryHero = ({ artwork }) => {
     <>
       <section className="relative grid grid-cols-1 md:grid-cols-5">
         <div className="h-[50svh] md:h-screen md:sticky  top-0 flex items-center justify-center md:col-span-3 bg-bgColor py-[120px]">
-          <div className="relative md:px-[20vw] md:w-full w-[40%] md:h-[80%] ">
+          <div
+            className={`${
+              orientation ? "md:px-[12vw]" : "  md:px-[20vw]"
+            } relative  md:w-full w-[40%] md:h-[80%] `}
+          >
             <div
               className={`shadow1 mx-auto bg-unveilWhite w-fit
             ${frameObject.size === "2mm" ? "border-[3px]" : ""}
@@ -193,16 +234,20 @@ const GalleryHero = ({ artwork }) => {
             <p className="hidden md:block">From ${getUSD(lowestPrice)}</p>
             <div className="relative pt-10 md:pt-[100px] flex justify-between gap-5">
               <div className="md:space-y-[6px] w-full md:block grid grid-cols-2 gap-[6px]">
-                <Link href={`/gallery/collection/${artwork.collection_id}`}>
-                  <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
-                    <p className="b5 leading-[23px]">Collection</p>
-                    <p className="truncate b3 !text-[13px] leading-normal  md:b4">
-                      {artwork.collection.title}
-                    </p>
-                  </div>
-                </Link>
+                <div
+                  onClick={() => setCollectionOpen(true)}
+                  className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
+                >
+                  <p className="b5 leading-[23px]">Collection</p>
+                  <p className="truncate b3 !text-[13px] leading-normal  md:b4">
+                    {artwork.collection.title}
+                  </p>
+                </div>
                 {artwork.collection.curator_id && (
-                  <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
+                  <div
+                    onClick={() => setCuratorOpen(true)}
+                    className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
+                  >
                     <p className="b5 leading-[23px]">Curator</p>
                     <p className="truncate b3 !text-[13px] leading-normal md:b4">
                       {artwork.collection.curator_id}
@@ -210,20 +255,29 @@ const GalleryHero = ({ artwork }) => {
                   </div>
                 )}
 
-                <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
+                <div
+                  onClick={() => setSoldAsOpen(true)}
+                  className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
+                >
                   <p className="b5 leading-[23px]">Sold as</p>
                   <p className="truncate b3 !text-[13px] leading-normal md:b4">
                     {displaySoldAs}
                   </p>
                 </div>
-                <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
+                <div
+                  onClick={() => setPaymentOpen(true)}
+                  className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
+                >
                   <p className="b5 leading-[23px]">Payment</p>
                   <p className="truncate b3 !text-[13px] leading-normal md:b4">
                     ETH, Credit/Debit Card
                   </p>
                 </div>
                 {artwork.edition_type !== "NFT_Only" && (
-                  <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
+                  <div
+                    onClick={() => setSizedOpen(true)}
+                    className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
+                  >
                     <p className="b5 leading-[23px]">Available sizes</p>
                     <p className="truncate b3 !text-[13px] leading-normal md:b4">
                       {artwork.size.map((item, i) => (
@@ -236,33 +290,59 @@ const GalleryHero = ({ artwork }) => {
                   </div>
                 )}
 
-                <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
+                <div
+                  onClick={() => setRoyaltyOpen(true)}
+                  className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
+                >
                   <p className="b5 leading-[23px]">Creator royalty</p>
                   <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                    {artwork.royalties[0]?.percentage}%{artwork.royalties[1]?.percentage && `, ${artwork.royalties[1]?.percentage}%`}
+                    {artwork.royalties[0]?.percentage}%,{" "}
+                    {artwork.royalties[1]?.percentage}%
                   </p>
                 </div>
-                <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
+                <div
+                  onClick={() => setAddressOpen(true)}
+                  className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
+                >
                   <p className="b5 leading-[23px]">Creator & royalty address</p>
                   <p className="truncate b3 !text-[13px] leading-normal md:b4 w-[100px]">
-                    {artwork.owner.walletAddress.slice(0,4).toLowerCase()}...{artwork.owner.walletAddress.slice(-4).toLowerCase()}
+                    {artwork.owner.walletAddress.slice(0, 4).toLowerCase()}...
+                    {artwork.owner.walletAddress.slice(-4).toLowerCase()}
                   </p>
                 </div>
-                <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer">
-                  <p className="b5 leading-[23px]">Recognitions</p>
-                  <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                  {_recognitions}
+                {_recognitions && (
+                  <div
+                    onClick={() => setRecognitionsOpen(true)}
+                    className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
+                  >
+                    <p className="b5 leading-[23px]">Recognitions</p>
+                    <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                      {_recognitions}
+                    </p>
+                  </div>
+                )}
+
+                <button
+                  disabled={loading}
+                  onClick={() => {
+                    if (inWishlist) {
+                      removeWishlist();
+                    } else {
+                      addWishlist();
+                    }
+                  }}
+                  className={`rounded-[10px] unveilTransition hover:bg-bgColor col-span-2 md:justify-start justify-center items-center flex gap-2 h-[38px] md:h-[68px] border border-unveilBlack md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer`}
+                >
+                  {loading ? (
+                    <div className="animate-spin">
+                      <Loader color="#141414" />
+                    </div>
+                  ) : (
+                    <Wishlist fill={inWishlist ? "#F66666" : "#141414"} />
+                  )}
+                  <p className="b4">
+                    {inWishlist ? "Added" : "Add"} to wishlist
                   </p>
-                </div>
-                <button disabled={loading} onClick={() => {
-                  if(inWishlist){
-                    removeWishlist()
-                  }else{
-                    addWishlist();
-                  }
-                }} className={`rounded-[10px] ${inWishlist ? "bg-red-400 text-white font-normal" : "hover:bg-bgColor"}   unveilTransition col-span-2 md:justify-start justify-center items-center flex gap-2 h-[38px] md:h-[68px] border border-unveilBlack md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer`}>
-                  {loading ? <div className="animate-spin"><Loader color="#000000" /></div>: <Wishlist  />}
-                  <p className="b4">{inWishlist ? "Added" :"Add"} to wishlist</p>
                 </button>
               </div>
               <div
@@ -319,6 +399,59 @@ const GalleryHero = ({ artwork }) => {
         setOptionsOpen={setOptionsOpen}
       />
       <EditionPopIn edition={edition} setEdition={setEdition} />
+
+      {/* About pop-ins */}
+      <MoreInfoPopIn
+        open={collectionOpen}
+        setOpen={setCollectionOpen}
+        title={artwork.collection.title}
+        subtitle="Collection"
+        text="Text"
+      />
+      <MoreInfoPopIn
+        open={curatorOpen}
+        setOpen={setCuratorOpen}
+        title={artwork.collection.curator_id}
+        subtitle="Curator"
+        text="Text"
+      />
+      <MoreInfoPopIn
+        open={soldAsOpen}
+        setOpen={setSoldAsOpen}
+        title={displaySoldAs}
+        subtitle="Sold As"
+        text="Text"
+      />
+      <MoreInfoPopIn
+        open={paymentOpen}
+        setOpen={setPaymentOpen}
+        title=" ETH, Credit/Debit Card"
+        subtitle="Payment"
+        text="Text"
+      />
+      <MoreInfoPopIn
+        open={royaltyOpen}
+        setOpen={setRoyaltyOpen}
+        title={`${artwork.royalties[0]?.percentage}%,${" "}
+        ${artwork.royalties[1]?.percentage}%`}
+        subtitle="Curator royalty"
+        text="Text"
+      />
+      <MoreInfoPopIn
+        open={addressOpen}
+        setOpen={setAddressOpen}
+        title={`${artwork.owner.walletAddress.slice(0, 4).toLowerCase()}...
+        ${artwork.owner.walletAddress.slice(-4).toLowerCase()}`}
+        subtitle="Creator & royalty address"
+        text="Text"
+      />
+      <MoreInfoPopIn
+        open={recognitionsOpen}
+        setOpen={setRecognitionsOpen}
+        title={_recognitions}
+        subtitle="Recognitions"
+        text="Text"
+      />
     </>
   );
 };
