@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getFollowerInfo, postFollower, isFollowed } from "lib/backend";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 import { toast } from "react-toastify";
+import { getUserName } from "lib/utils";
 const PeopleHeader = ({ collection, people }) => {
   const [follower, setFollowers] = useState([]);
   const [followStatus, setFollowStatus] = useState(false);
@@ -142,7 +143,7 @@ const PeopleHeader = ({ collection, people }) => {
               <Link href={`/people/${collection.owner_id}`}>
                 <p className="py-[2px]  my-1 border-b border-unveilGreen b3 md:b4">
                   {collection && typeof collection != "string"
-                    ? `By: ${displayName}`
+                    ? `By: ${getUserName(collection.owner)}`
                     : ""}
                 </p>
               </Link>
