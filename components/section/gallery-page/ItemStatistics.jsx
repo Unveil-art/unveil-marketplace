@@ -90,7 +90,7 @@ const ItemStatistics = ({ artwork }) => {
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                 <p className="b5 leading-[23px]">Distribution Primary Sale</p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                  97.5% artist, 0% curator
+                  87.5% artist, 0% curator
                 </p>
               </div>
               <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">

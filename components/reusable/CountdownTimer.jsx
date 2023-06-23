@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 
-const CountdownTimer = ({ targetDate, owner }) => {
+const CountdownTimer = ({ targetDate, owner, owner_id }) => {
   const [timeRemaining, setTimeRemaining] = useState(null);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const CountdownTimer = ({ targetDate, owner }) => {
     <div>
       {formatTime(timeRemaining)}{" "}
       {formatTime(timeRemaining) !== "" && owner && `-`}{" "}
-      <Link href={`/people/${owner}`}>{owner}</Link>
+      <Link href={`/people/${owner_id}`}>{owner}</Link>
     </div>
   );
 };
