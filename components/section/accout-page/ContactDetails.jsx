@@ -195,8 +195,11 @@ const ContactDetails = ({ user }) => {
           <div className="pt-10">
             <h3 className="b3 text-[17px] mb-5">Wallet address</h3>
             <div className="relative">
-              <div className="input bg-bgColor md:text-[16px] text-unveilGrey rounded-[8px] md:rounded-[10px] px-5 py-3 md:py-4 text-[13px]">
-                {user.walletAddress}
+              <div onClick={() => {
+                navigator.clipboard.writeText(user.walletAddress?.toLowerCase());
+                toast.info('WalletAddress Copied')
+              }} className="input cursor-pointer bg-bgColor md:text-[16px] text-unveilGrey rounded-[8px] md:rounded-[10px] px-5 py-3 md:py-4 text-[13px]">
+                {user.walletAddress?.toLowerCase()}
               </div>
             </div>
           </div>

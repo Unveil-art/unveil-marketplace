@@ -51,15 +51,14 @@ const GalleryHero = ({ artwork }) => {
     return (eth * exchangeRate).toFixed(2);
   };
 
-  const addWishlist = async () => {
-    try {
-      setLoading(true);
-      if (token && artwork.id) {
-        await addToWishlist(token, artwork.id);
-        await checkWishlist(token, artwork.id);
-        notifySuccess("Added to Wishlist");
-      } else {
-        notifyError("User Not Logged In");
+  const addWishlist = async() => {
+    try{
+      setLoading(true)
+      if(token && artwork.id){
+        await addToWishlist(token,artwork.id)
+        await checkWishlist(token, artwork.id)
+      }else{
+        notifyError("User Not Logged In")
       }
       setLoading(false);
     } catch (err) {
@@ -70,15 +69,15 @@ const GalleryHero = ({ artwork }) => {
     }
   };
 
-  const removeWishlist = async () => {
-    try {
-      setLoading(true);
-      if (token && artwork.id) {
-        await removeFromWishlist(token, artwork.id);
-        await checkWishlist(token, artwork.id);
-        notifySuccess("Remove from Wishlist");
-      } else {
-        notifyError("User Not Logged In");
+  const removeWishlist = async() => {
+    try{
+      setLoading(true)
+      if(token && artwork.id){
+        await removeFromWishlist(token,artwork.id);
+      await checkWishlist(token, artwork.id);
+      }else{
+        notifyError("User Not Logged In")
+
       }
       setLoading(false);
     } catch (err) {
