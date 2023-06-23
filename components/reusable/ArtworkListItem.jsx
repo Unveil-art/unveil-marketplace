@@ -112,17 +112,17 @@ const ArtworkListItem = ({ i, item,fetchUser}) => {
           )} */}
         </div>
       </div>
-      <div className="flex flex-row gap-3 items-center">
+      <div className="flex flex-col md:flex-row gap-3 items-center">
       {!item.listed && (
         <Link href={`/artworks/${item.id}`}>
-          <button className="hidden btn btn-secondary md:block">Edit</button>
+          <button className="btn btn-secondary md:block">Edit</button>
         </Link>
       )}
       {item.is_draft == false && (
         <button
         disabled={loading}
           onClick={(e) => handleListing(e)}
-          className={`hidden btn btn-ghost ${list.listed ? "bg-[#D6471A]" : 'bg-unveilBlack'} md:block text-white`}
+          className={` btn btn-ghost ${list.listed ? "bg-[#D6471A]" : 'bg-unveilBlack'} md:block text-white`}
         >
           {loading && (
                   <div className="flex justify-center h-[25px] items-center animate-spin">
