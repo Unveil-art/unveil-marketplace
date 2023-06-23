@@ -3,9 +3,27 @@ import Link from "next/link";
 import { getFollowerInfo, postFollower, isFollowed } from "lib/backend";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 import { toast } from "react-toastify";
-const PeopleHeader = ({ collection }) => {
-  // console.log(collection);
+const PeopleHeader = ({ collection, people }) => {
+  const [follower, setFollowers] = useState([]);
+  const [followStatus, setFollowStatus] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  console.log(people);
+
   const { value } = useLocalStorage("token");
+
+  function formatInstagramUrl(url) {
+    url = url.endsWith("/") ? url.slice(0, -1) : url;
+
+    var parts = url.split("/");
+
+    var handle = parts[parts.length - 1];
+
+    handle = "@" + handle;
+
+    return handle;
+  }
+
   function formatDate(inputString) {
     let date = new Date(inputString);
     let day = date.getUTCDate();
@@ -15,57 +33,54 @@ const PeopleHeader = ({ collection }) => {
     // Return the formatted string
     return `${day}.${month}.${year}`;
   }
-  
-  
-  
+
   let displayName;
   let userId;
-  if (collection && typeof collection != "string") {
-    if (collection.owner.firstName && collection.owner.lastName) {
-      displayName = `${collection.owner.firstName} ${collection.owner.lastName}`;
-    } else if (collection.owner.firstName) {
-      displayName = collection.owner.firstName;
-    } else if (collection.owner.lastName) {
-      displayName = collection.owner.lastName;
+  if (people) {
+    if (collection && typeof collection != "string") {
+      if (collection.owner.firstName && collection.owner.lastName) {
+        displayName = `${collection.owner.firstName} ${collection.owner.lastName}`;
+      } else if (collection.owner.firstName) {
+        displayName = collection.owner.firstName;
+      } else if (collection.owner.lastName) {
+        displayName = collection.owner.lastName;
+      } else {
+        displayName = collection.owner.email;
+      }
     } else {
-      displayName = collection.owner.email;
+      userId = collection;
     }
-  } else {
-    userId = collection;
   }
-  const [follower, setFollowers] = useState([]);
-  const [followStatus, setFollowStatus] = useState(false);
-  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-      fetchCollection(userId);
+    fetchCollection(userId);
   }, [value]);
   const fetchCollection = async (userId) => {
-    if(userId){
+    if (userId) {
       try {
         const data = await getFollowerInfo(userId);
         let response = data ? data.followers : 0;
         setFollowers(response);
-        
-        if(value){
+
+        if (value) {
           const followStatus = await isFollowed(value, userId);
           setFollowStatus(followStatus.data);
         }
-        
+
         return data;
       } catch (err) {
         setFollowers(0);
         console.error(err);
       }
     }
-    
   };
   const followRequest = async () => {
-    if(userId && value){
+    if (userId && value) {
       try {
         const data = {
           user_id: userId,
         };
-        
+
         await postFollower(value, data);
         // setLoading(false);
         fetchCollection(userId);
@@ -76,15 +91,14 @@ const PeopleHeader = ({ collection }) => {
         toast.error(err.message);
       }
     } else {
-      console.error("User not logged in")
+      console.error("User not logged in");
       toast.error("User not logged in");
     }
-    
   };
 
   return (
     <section className="ml-[40px] md:ml-[35svw] pr-[15px] md:mt-0 mt-[20px] md:pr-[40px]">
-      {(collection && typeof collection != "string") && (
+      {collection && typeof collection != "string" && (
         <p className="s2 my-[60px] md:block hidden ">
           {collection.description}
         </p>
@@ -93,9 +107,15 @@ const PeopleHeader = ({ collection }) => {
         <div>
           <div className="flex gap-[15px] w-full justify-between md:justify-start">
             <div className="min-w-[90px]">
-              <p className="b4">{(collection && typeof collection != "string") ? "Artworks" : "Followers"}</p>
+              <p className="b4">
+                {collection && typeof collection != "string"
+                  ? "Artworks"
+                  : "Followers"}
+              </p>
               <p className="text-[27px]">
-                {(collection && typeof collection != "string") ? collection.artworks.length : follower}
+                {collection && typeof collection != "string"
+                  ? collection.artworks.length
+                  : "0"}
               </p>
             </div>
             <div className="w-px h-10 bg-unveilGreen"></div>
@@ -109,36 +129,79 @@ const PeopleHeader = ({ collection }) => {
               <p className="text-[27px]">0</p>
             </div>
           </div>
-          <button className="mt-[10px] btn btn-full btn-secondary" onClick={()=> followRequest()}>
+          <button
+            className="mt-[10px] btn btn-full btn-secondary"
+            onClick={() => followRequest()}
+          >
             {followStatus ? "Followed" : "Follow"} {followStatus}
           </button>
         </div>
         <div className="w-full md:w-[240px] xl:w-[300px] mt-[10px]">
-          <Link href={`/people/${collection.owner_id}`}>
-          <p className="py-[2px]  my-1 border-b border-unveilGreen b3 md:b4">
-            {(collection && typeof collection != "string") ? `By: ${displayName}` : ""}
-          </p>
-          </Link>
-          {(collection && typeof collection != "string") && (
+          {collection && (
             <>
-              {collection.curator_id && (
+              <Link href={`/people/${collection.owner_id}`}>
                 <p className="py-[2px]  my-1 border-b border-unveilGreen b3 md:b4">
-                  {collection && collection.curator_id
-                    ? `Curated by: ${collection.curator_id}`
+                  {collection && typeof collection != "string"
+                    ? `By: ${displayName}`
                     : ""}
                 </p>
+              </Link>
+              {collection && typeof collection != "string" && (
+                <>
+                  {collection.curator_id && (
+                    <p className="py-[2px]  my-1 border-b border-unveilGreen b3 md:b4">
+                      {collection && collection.curator_id
+                        ? `Curated by: ${collection.curator_id}`
+                        : ""}
+                    </p>
+                  )}
+                </>
               )}
+
+              <p className="py-[2px]  my-1  b3 md:b4">
+                {collection && typeof collection != "string"
+                  ? `Release date: ${formatDate(collection.live_time)}`
+                  : ``}
+              </p>
+              <p className="py-[2px]  my-1 b4 md:b5 truncate w-[120px]">
+                {collection && typeof collection != "string"
+                  ? collection.owner.walletAddress.slice(0, 4).toLowerCase() +
+                    "..." +
+                    collection.owner.walletAddress.slice(-4).toLowerCase()
+                  : ""}
+              </p>
             </>
           )}
 
-          <p className="py-[2px]  my-1  b3 md:b4">
-            {(collection && typeof collection != "string")
-              ? `Release date: ${formatDate(collection.live_time)}`
-              : ``}
-          </p>
-          <p className="py-[2px]  my-1 b4 md:b5 truncate w-[120px]">
-            {(collection && typeof collection != "string") ? collection.owner.walletAddress.slice(0,4).toLowerCase()+"..."+collection.owner.walletAddress.slice(-4).toLowerCase() : ""}
-          </p>
+          {people && (
+            <>
+              {people.instagram && (
+                <a target="_blank" rel="noreferrer" href={people.instagram}>
+                  <p className="py-[2px] truncate my-1 border-b border-unveilGreen b3 md:b4">
+                    {formatInstagramUrl(people.instagram)}
+                  </p>
+                </a>
+              )}
+
+              {people.twitter && (
+                <a target="_blank" rel="noreferrer" href={people.twitter}>
+                  <p className="py-[2px] truncate my-1 border-b border-unveilGreen b3 md:b4">
+                    {people.twitter}
+                  </p>
+                </a>
+              )}
+              {people.website && (
+                <a target="_blank" rel="noreferrer" href={people.website}>
+                  <p className="py-[2px] truncate my-1 border-b border-unveilGreen b3 md:b4">
+                    {people.website}
+                  </p>
+                </a>
+              )}
+              <p className="py-[2px]  my-1 b4 md:b5 truncate w-[120px]">
+                {people.walletAddress}
+              </p>
+            </>
+          )}
         </div>
       </div>
     </section>

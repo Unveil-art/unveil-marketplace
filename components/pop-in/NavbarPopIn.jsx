@@ -58,7 +58,7 @@ const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
                   Collections
                 </p>
               </Link>
-              <Link href="/people">
+              <Link href="/people?curators">
                 <p
                   onClick={() => setNavOpen(!navOpen)}
                   className="cursor-pointer underline-on-hover s2"
@@ -97,9 +97,30 @@ const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
             </div>
 
             <div className="flex flex-col gap-[2px]">
-              <Link href="/account"><h4 onClick={() => setNavOpen(!navOpen)} className="mt-8 b3 w-fit underline-on-hover">My account</h4></Link>
-              <Link href="/account"><h4 onClick={() => setNavOpen(!navOpen)} className="b3 w-fit underline-on-hover">Wishlist</h4></Link>
-              <Link href="/gallery"><h4 onClick={() => setNavOpen(!navOpen)} className="b3 w-fit underline-on-hover">About Unveil</h4></Link>
+              <Link href="/account">
+                <h4
+                  onClick={() => setNavOpen(!navOpen)}
+                  className="mt-8 b3 w-fit underline-on-hover"
+                >
+                  My account
+                </h4>
+              </Link>
+              <Link href="/account">
+                <h4
+                  onClick={() => setNavOpen(!navOpen)}
+                  className="b3 w-fit underline-on-hover"
+                >
+                  Wishlist
+                </h4>
+              </Link>
+              <Link href="/gallery">
+                <h4
+                  onClick={() => setNavOpen(!navOpen)}
+                  className="b3 w-fit underline-on-hover"
+                >
+                  About Unveil
+                </h4>
+              </Link>
             </div>
 
             <h4 className="b3 font-[500] mb-1 mt-[100px]">Join unveil</h4>

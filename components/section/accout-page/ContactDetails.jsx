@@ -211,7 +211,7 @@ const ContactDetails = ({ user }) => {
             />
           </div>
           <div className="relative pt-10">
-            <h3 className="b3 text-[17px] mb-5">About artist</h3>
+            <h3 className="b3 text-[17px] mb-5">About me</h3>
             <textarea
               defaultValue={user.description ? user.description : ""}
               className="textarea"

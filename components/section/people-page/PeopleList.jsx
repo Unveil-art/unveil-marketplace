@@ -3,7 +3,6 @@ import Link from "next/link";
 import React from "react";
 
 const PeopleList = ({ people }) => {
-  console.log(people);
   return (
     <>
       {people && (
@@ -23,6 +22,13 @@ const PeopleList = ({ people }) => {
                   displayName = item.email;
                 }
 
+                console.log(item);
+                console.log(item);
+                console.log(item);
+                console.log(item);
+                console.log(item);
+                console.log(item);
+
                 return (
                   <div
                     key={i}
@@ -32,9 +38,9 @@ const PeopleList = ({ people }) => {
                       <div className="flex items-center gap-20 ">
                         <div className="flex items-center gap-5 py-5">
                           <div className="h-[140px] w-[120px] bg-bgColor relative">
-                            {people.profileUrl && (
+                            {item.profileUrl && (
                               <Image
-                                src={people.profileUrl}
+                                src={item.profileUrl}
                                 alt={displayName}
                                 fill={true}
                                 style={{ objectFit: "cover" }}
@@ -58,11 +64,11 @@ const PeopleList = ({ people }) => {
                         <div className="hidden gap-10 md:flex">
                           <div>
                             <p className="b3 opacity-60">Artworks</p>
-                            <p>20</p>
+                            <p>0</p>
                           </div>
                           <div>
                             <p className="b3 opacity-60">Collections</p>
-                            <p>2</p>
+                            <p>0</p>
                           </div>
                         </div>
                       </div>

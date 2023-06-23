@@ -14,15 +14,15 @@ import { getUserInfo } from "lib/backend";
 const PeopleDetails = ({ faq, userId }) => {
   const faqData = faq.data[0].attributes.faq;
   const [page, setPage] = useState(0);
-  
+
   useEffect(() => {
-      fetchCollection(userId);
+    fetchCollection(userId);
   }, []);
   const [collection, setCollections] = useState([]);
   const router = useRouter();
 
   const fetchCollection = async (userId) => {
-    if(userId){
+    if (userId) {
       try {
         const data = await getUserInfo(userId);
         setCollections(data);
@@ -32,19 +32,22 @@ const PeopleDetails = ({ faq, userId }) => {
       }
     }
   };
-  let displayName = '';
-  if((collection && collection !== undefined)){
+  let displayName = "";
+  if (collection && collection !== undefined) {
     if (collection.firstName && collection.lastName) {
-      displayName = collection.firstName+" "+collection.lastName;
-    } else if (collection.email){
-      displayName = collection.email.split('@')[0].replace('.', ' ');
+      displayName = collection.firstName + " " + collection.lastName;
+    } else if (collection.email) {
+      displayName = collection.email.split("@")[0].replace(".", " ");
     }
   }
 
   return (
     <main className="mt-[120px]">
-      <Title title={displayName} account={collection !== undefined ? collection.role : ''} />
-      <PeopleHeader collection={userId}/>
+      <Title
+        title={displayName}
+        account={collection !== undefined ? collection.role : ""}
+      />
+      <PeopleHeader people={collection} />
       <PageSelector setPage={setPage} page={page} />
       {page === 0 && <PeopleArtworks />}
       {page === 1 && <PeopleCollections />}
@@ -61,7 +64,7 @@ export async function getServerSideProps({ params: { slug } }) {
   return {
     props: {
       faq,
-      userId: slug
+      userId: slug,
     },
   };
 }
