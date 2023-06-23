@@ -28,8 +28,8 @@ const Wishlist = () => {
         )}
         {artworks?.length > 0 && (
           <>
-            {artworks.map((item) => (
-              <ArtworkListItem item={item.artwork} wishlist={true} />
+            {artworks.map((item, i) => (
+              <ArtworkListItem key={i} item={item.artwork} wishlist={true} />
             ))}
           </>
         )}
