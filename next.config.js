@@ -7,6 +7,7 @@ const nextConfig = {
     domains: [
       "cumbersome-furtive-fowl.media.strapiapp.com",
       "unveil-nft-images-dev.s3.eu-north-1.amazonaws.com",
+      "unveil-nft-images.s3.eu-north-1.amazonaws.com",
       "https://unveil-org.myfreshworks.com/crm/sales",
       "unveil-nft-images-dev.s3.eu-north-1.amazonaws.com",
     ],
