@@ -5,6 +5,7 @@ import Ideal from "@/components/svg/Ideal";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { toast } from "react-toastify";
 import { getClientSecret } from "lib/backend";
+import Loader from "@/components/svg/Loader";
 
 const Payment = ({ mint, payment, setStep, total, artwork_id, edition_id }) => {
 
@@ -15,23 +16,20 @@ const Payment = ({ mint, payment, setStep, total, artwork_id, edition_id }) => {
 
   const getSecret = async(token, wallet) => {
     try{
+      setLoading(true);
       const data = await getClientSecret(token,{
         wallet_address:wallet,
         artwork_id:artwork_id,
         edition_id:edition_id
       });
       setSecretSdkClient(data.sdkClientSecret);
+      setLoading(false);
     }catch(err){
       console.log(err);
         toast.error(err?.response?.data?.message);
+        setLoading(false);
     }
   }
-
-  useEffect(() => {
-    if(payment==="Creditcard"&& token && wallet){
-      
-    }
-  },[payment,token,wallet])
 
   
 
@@ -100,9 +98,11 @@ const Payment = ({ mint, payment, setStep, total, artwork_id, edition_id }) => {
                 getSecret(token, wallet);
               }
             }}
-            className="relative cursor-pointer disabled:bg-gray-500 disabled:cursor-not-allowed text-center btn btn-primary btn-full btn-lg my-[10px]"
+            className="relative cursor-pointer disabled:cursor-not-allowed text-center btn btn-primary btn-full btn-lg my-[10px]"
+            disabled={loading}
           >
-            <p>Pay now (${total ? total : "0"})</p>
+            {loading && <Loader color="#ffffff" />}
+            {!loading && <p>Pay now (${total ? total : "0"})</p>}
           </button>
         </>
       )}
