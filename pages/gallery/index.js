@@ -19,8 +19,8 @@ export default function Gallery({ artworks }) {
   const [pagination, setPagination] = useState(0);
   const [variant, setVariant] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [noApiCalls, setNoApiCalls] = useState(false)
-  const paginationDivRef = useRef(null)
+  const [noApiCalls, setNoApiCalls] = useState(false);
+  const paginationDivRef = useRef(null);
 
   const [category, setCategory] = useState(0);
   const [artist, setArtist] = useState(0);
@@ -112,10 +112,10 @@ export default function Gallery({ artworks }) {
     }
 
     const result = splitArrayByPattern(more, newVariant);
-    if(result[0].length === 0) {
-      setNoApiCalls(true)
+    if (result[0].length === 0) {
+      setNoApiCalls(true);
     } else {
-      setNoApiCalls(false)
+      setNoApiCalls(false);
     }
     setVariant(newVariant);
     setItems((prevSplit) => prevSplit.concat(result));
@@ -123,26 +123,26 @@ export default function Gallery({ artworks }) {
   };
 
   useEffect(() => {
-    function handleScroll () {
-      console.log(noApiCalls)
-      if(!noApiCalls && !loading) {
-        if(paginationDivRef.current) {
-          const buttonRect = paginationDivRef.current.getBoundingClientRect()
-          const isVisible = Number(buttonRect.top) < Number(window.innerHeight)
+    function handleScroll() {
+      console.log(noApiCalls);
+      if (!noApiCalls && !loading) {
+        if (paginationDivRef.current) {
+          const buttonRect = paginationDivRef.current.getBoundingClientRect();
+          const isVisible = Number(buttonRect.top) < Number(window.innerHeight);
 
-          if(isVisible) {
-            setPagination(prev => prev + 1)
+          if (isVisible) {
+            setPagination((prev) => prev + 1);
           }
         }
       }
     }
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [paginationDivRef, noApiCalls, loading])
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [paginationDivRef, noApiCalls, loading]);
 
   useEffect(() => {
     const variant = Math.floor(Math.random() * 2) + 1;
@@ -202,7 +202,7 @@ export default function Gallery({ artworks }) {
 
         {category === 0 && <GalleryBlockItems items={artworkSplit} />}
         {category === 1 && <GalleryBlockItems items={collectionSplit} />}
-        <div ref={paginationDivRef} className='pb-3 bg-inherit'>
+        <div ref={paginationDivRef} className="pb-3 bg-inherit">
           {loading && (
             <div className="h-[25px] animate-spin justify-center flex items-center">
               <Loader />

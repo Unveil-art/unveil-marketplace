@@ -41,11 +41,17 @@ const Title = (
             {title}
           </h2>
         )}
-        {account === "artist" && <span className="artist">Artist</span>}
-        {account === "collector" && (
-          <span className="mt-[32px] md:mt-[70px] collector">Collector</span>
+        {account === "artist" && (
+          <span className="artist tracking-[0.2em]">Artist</span>
         )}
-        {account === "curator" && <span className="curator">Curator</span>}
+        {account === "collector" && (
+          <span className="mt-[32px] md:mt-[70px] collector tracking-[0.2em]">
+            Collector
+          </span>
+        )}
+        {account === "curator" && (
+          <span className="curator tracking-[0.2em]">Curator</span>
+        )}
       </div>
     </div>
   );

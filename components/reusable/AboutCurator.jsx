@@ -15,6 +15,7 @@ const AboutCurator = ({ owner }) => {
   const [following, setFollowing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [authUser, setAuthUser] = useState({});
+  const [more, setMore] = useState(false);
 
   // Owner name to string
   let displayName;
@@ -71,7 +72,7 @@ const AboutCurator = ({ owner }) => {
 
   return (
     <section className="grid grid-cols-1 md:grid-cols-2">
-      <div className="relative w-full aspect-square bg-bgColor">
+      <div className="relative w-full h-screen bg-bgColor">
         {owner.profileUrl && (
           <Image
             src={owner.profileUrl}
@@ -85,7 +86,7 @@ const AboutCurator = ({ owner }) => {
         <h3 className="pr-10 -rotate-90 -translate-x-[25%] translate-y-full h1 w-fit ">
           About
         </h3>
-        <div className="w-[55%] pt-[100px] md:pt-0 pr-[15px] pb-10 ml-auto md:ml-0 md:absolute bottom-10 right-10  h-fit">
+        <div className="w-[55%] mt-auto md:pt-0 pr-[15px] pb-10 ml-auto md:ml-[35%] h-fit">
           <div className="flex items-end gap-2 flex-nowrap">
             <p className="b3">By</p>
             <Link href={`/people/${owner.id}`}>
@@ -93,7 +94,14 @@ const AboutCurator = ({ owner }) => {
             </Link>
           </div>
 
-          <h4 className="mt-5 mb-10 overflow-hidden b2 md:h2 line-clamp-[10] md:line-clamp-6">
+          <h4
+            data-cursor="Show more"
+            data-cursor-color="#b2b4ae"
+            onClick={() => setMore((prev) => !prev)}
+            className={`${
+              more ? "" : "line-clamp-[10] md:line-clamp-6"
+            } mt-5 mb-10 overflow-hidden b2 cursor-pointer md:h2`}
+          >
             {owner.description}
           </h4>
           <div className="mb-5">

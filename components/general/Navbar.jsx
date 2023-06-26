@@ -120,7 +120,7 @@ const Navbar = ({ value }) => {
                 step === 4 || step === 5
                   ? "text-unveilWhite"
                   : "text-unveilBlack"
-              } b3 !text-[16px] font-[500]`}
+              } b3 !text-[14px] font-[500]`}
             >
               Sign in
             </p>

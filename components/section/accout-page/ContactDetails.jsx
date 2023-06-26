@@ -195,10 +195,15 @@ const ContactDetails = ({ user }) => {
           <div className="pt-10">
             <h3 className="b3 text-[17px] mb-5">Wallet address</h3>
             <div className="relative">
-              <div onClick={() => {
-                navigator.clipboard.writeText(user.walletAddress?.toLowerCase());
-                toast.info('WalletAddress Copied')
-              }} className="input cursor-pointer bg-bgColor md:text-[16px] text-unveilGrey rounded-[8px] md:rounded-[10px] px-5 py-3 md:py-4 text-[13px]">
+              <div
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    user.walletAddress?.toLowerCase()
+                  );
+                  toast.info("WalletAddress Copied");
+                }}
+                className="input cursor-pointer bg-bgColor md:text-[16px] text-unveilGrey rounded-[8px] md:rounded-[10px] px-5 py-3 md:py-4 text-[13px]"
+              >
                 {user.walletAddress?.toLowerCase()}
               </div>
             </div>
@@ -216,6 +221,7 @@ const ContactDetails = ({ user }) => {
           <div className="relative pt-10">
             <h3 className="b3 text-[17px] mb-5">About me</h3>
             <textarea
+              data-lenis-prevent
               defaultValue={user.description ? user.description : ""}
               className="textarea"
               id="about"
