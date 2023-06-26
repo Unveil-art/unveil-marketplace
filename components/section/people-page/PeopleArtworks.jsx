@@ -27,10 +27,10 @@ const PeopleArtworks = ({ userId }) => {
       setVariant(_variant)
       const artResult = splitArrayByPattern(arts, _variant)
       setArtwork(artResult)
-      setLoading(false)
     } catch (error) {
       console.error(error)
     }
+    setLoading(false)
   }
 
   return (
