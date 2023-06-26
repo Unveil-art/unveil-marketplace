@@ -31,6 +31,7 @@ const Following = () => {
           <div className="mb-20">
             {following.map((item, i) => (
               <FollowItem
+                key={i}
                 item={item}
                 artist={true}
                 setFollowing={setFollowing}
