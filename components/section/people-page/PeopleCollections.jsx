@@ -15,12 +15,11 @@ const PeopleCollections = ({ userId }) => {
     try {
       const _collections = await getCollectionByArtistId(userId);
       const _variant = Math.floor(Math.random() * 2) + 1;
-      console.log(_variant)
       setVariant(_variant)
       const _collectionResult = splitArrayByPattern(_collections, _variant);
       setUserCollection(_collectionResult)
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
     setLoading(false)
   }
