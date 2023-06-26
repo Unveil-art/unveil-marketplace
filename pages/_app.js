@@ -40,13 +40,13 @@ function MyApp({ Component, pageProps }) {
               }}
             >
               <Component {...pageProps} />
-              <div className="fixed top-0 left-0 w-[100vw] h-[100vh] flex flex-col justify-center items-center">
+              {/* <div className="fixed top-0 left-0 w-[100vw] h-[100vh] flex flex-col justify-center items-center">
                 <div
                   id="paper-checkout-container"
                   className="w-[380px] rounded-lg "
                   width="380px"
                 />
-              </div>
+              </div> */}
               <Script
                 id="HotJarAnalytics"
                 strategy="afterInteractive"
