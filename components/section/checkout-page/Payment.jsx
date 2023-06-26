@@ -94,7 +94,7 @@ const Payment = ({ mint, payment, setStep, total, artwork_id, edition_id }) => {
           </div>
           <button
             onClick={() => {
-              if(!token && !wallet){
+              if(token && wallet){
                 getSecret(token, wallet);
               }
             }}
