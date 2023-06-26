@@ -124,7 +124,6 @@ export default function Gallery({ artworks }) {
 
   useEffect(() => {
     function handleScroll () {
-      console.log(noApiCalls)
       if(!noApiCalls && !loading) {
         if(paginationDivRef.current) {
           const buttonRect = paginationDivRef.current.getBoundingClientRect()

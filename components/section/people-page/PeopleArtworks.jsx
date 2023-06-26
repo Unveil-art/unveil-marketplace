@@ -1,4 +1,3 @@
-import ThreeBlockItems from "@/components/reusable/ThreeBlockItems";
 import React, { useEffect, useState } from "react";
 import AboutStats from "../../reusable/AboutStats";
 import { getArtworkByArtistId } from "lib/backend"
