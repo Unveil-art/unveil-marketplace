@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Animate from "./Animate";
 import { getUserName } from "lib/utils";
+import { getCurrentExchangeRateETHUSD } from "lib/backend";
 
 const TwoBlockItem = ({ item, i }) => {
   const [orientation, setOrientation] = useState(false);

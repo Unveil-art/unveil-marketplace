@@ -51,6 +51,7 @@ const AboutCurator = ({ owner }) => {
     const data = await getArtistRecognitions(artist_id);
     setRecognitions(data);
   };
+
   useEffect(() => {
     if (owner.id) {
       getRecognitions(owner.id);
@@ -99,7 +100,7 @@ const AboutCurator = ({ owner }) => {
             data-cursor-color="#b2b4ae"
             onClick={() => setMore((prev) => !prev)}
             className={`${
-              more ? "" : "line-clamp-[10] md:line-clamp-6"
+              more ? "md:line-clamp-6" : "line-clamp-[10] md:line-clamp-6"
             } mt-5 mb-10 overflow-hidden b2 cursor-pointer md:h2`}
           >
             {owner.description}

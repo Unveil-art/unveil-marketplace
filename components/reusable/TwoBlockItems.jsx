@@ -3,7 +3,7 @@ import { getCurrentExchangeRateETHUSD } from "lib/backend";
 import TwoBlockItem from "./TwoBlockItem";
 
 const TwoBlockItems = ({ items }) => {
-  const [frameObj, setFrameObj] = useState([]);
+  // const [frameObj, setFrameObj] = useState([]);
 
   // useEffect(() => {
   //   items.forEach((item) => {

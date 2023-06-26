@@ -8,26 +8,26 @@ import Animate from "./Animate";
 import { getUserName } from "lib/utils";
 import { getCurrentExchangeRateETHUSD } from "lib/backend";
 
-
 const About = ({ bg, item }) => {
   const [exchangeRate, setExchangeRate] = useState(1900);
 
-  const init = async() => {
-    try{
+  const init = async () => {
+    try {
       const data = await getCurrentExchangeRateETHUSD();
-    setExchangeRate(data.USD);
-    }catch(err){
-      console.log(err)
+      setExchangeRate(data.USD);
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
   const getUSD = (eth) => {
-    return (eth*exchangeRate).toFixed(2)
-  }
+    return (eth * exchangeRate).toFixed(2);
+  };
 
   useEffect(() => {
     init();
-  },[])
+  }, []);
+
   return (
     <Animate options={{ alpha: true }}>
       <section className="relative grid grid-cols-1 my-5 md:grid-cols-2 2xl:h-screen md:my-10">
@@ -102,7 +102,7 @@ const About = ({ bg, item }) => {
               </Link>
             )}
 
-            {item.detail_shots && (
+            {item.detail_shots && item.detail_shots[0] && (
               <p className="pt-4 md:pt-8 b3">{item.detail_shots[0]?.caption}</p>
             )}
             {item.description && (

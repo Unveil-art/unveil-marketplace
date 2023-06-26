@@ -1,12 +1,18 @@
 import Collections from "@/components/reusable/Collections";
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const PeopleCollections = () => {
+const PeopleCollections = ({ collections }) => {
   return (
     <section className="my-10">
-      <Collections />
-      <Collections color="#141414" bgColor="#91B0CC" />
-      <Collections color="#141414" bgColor="#F8D9AD" />
+      {collections && collections.length > 0 && (
+        <>
+          {collections.map((item, i) => (
+            <div key={i}>
+              <Collections item={item} />
+            </div>
+          ))}
+        </>
+      )}
     </section>
   );
 };
