@@ -41,6 +41,7 @@ const Payment = ({ mint, payment, setStep, total, artwork_id, edition_id }) => {
       setSecretSdkClient("");
       e.stopPropagation();
      }} className="fixed z-50 top-0 left-0 w-[100vw] h-[100vh] flex flex-col justify-center items-center">
+                <div className="p-4 w-[390px] mt-10 rounded-md bg-[#fefae0]">
                 <CheckoutWithCard
                 sdkClientSecret={secretSdkClient}
                 options={{
@@ -58,6 +59,7 @@ const Payment = ({ mint, payment, setStep, total, artwork_id, edition_id }) => {
                   console.error("Payment error:", error);
                 }}
               />
+                </div>
       </div>}
       <h1 className="mt-5 h3 mb-[80px] hidden lg:block">Select {payment}</h1>
       {payment === "Creditcard" && (
