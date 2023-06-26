@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { getFollowerInfo, postFollower, isFollowed } from "lib/backend";
+import { getFollowerInfo, postFollower, isFollowed, unfollowArtist, getUserMe } from "lib/backend";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 import { toast } from "react-toastify";
 import { getUserName } from "lib/utils";
+import { useRouter } from "next/router"
+import Loader from "@/components/svg/Loader";
 const PeopleHeader = ({ collection, people }) => {
   const [follower, setFollowers] = useState([]);
+  const [loggedIn, setLoggedInUser] = useState({});
   const [followStatus, setFollowStatus] = useState(false);
   const [loading, setLoading] = useState(false);
+  const router = useRouter()
 
-  console.log(people);
+  const [userId, setUserId] = useState(router.query.slug)
 
   const { value } = useLocalStorage("token");
 
@@ -36,7 +40,6 @@ const PeopleHeader = ({ collection, people }) => {
   }
 
   let displayName;
-  let userId;
   if (people) {
     if (collection && typeof collection != "string") {
       if (collection.owner.firstName && collection.owner.lastName) {
@@ -48,14 +51,27 @@ const PeopleHeader = ({ collection, people }) => {
       } else {
         displayName = collection.owner.email;
       }
+    }
+  }
+
+  const fetchLoggedInUser = async (userId) => {
+    if(userId && value) {
+      try {
+        const res = await getUserMe(value)
+        setLoggedInUser(res)
+      } catch (error) {
+        console.error(error)
+      }
     } else {
-      userId = collection;
+      toast.error("User not logged in");
     }
   }
 
   useEffect(() => {
     fetchCollection(userId);
-  }, [value]);
+    fetchLoggedInUser(userId);
+  }, [value, followStatus]);
+
   const fetchCollection = async (userId) => {
     if (userId) {
       try {
@@ -75,26 +91,30 @@ const PeopleHeader = ({ collection, people }) => {
       }
     }
   };
-  const followRequest = async () => {
-    if (userId && value) {
+  const followRequest = async (followStatus) => {
+    setLoading(true)
+    if(value && userId) {
+      const data = {
+        user_id: userId
+      }
       try {
-        const data = {
-          user_id: userId,
-        };
-
-        await postFollower(value, data);
-        // setLoading(false);
-        fetchCollection(userId);
-        toast.success("Success");
-      } catch (err) {
-        // setLoading(false);
-        console.error(err);
-        toast.error(err.message);
+        if(followStatus) {
+          // unfollow code
+          const res = await unfollowArtist(value, data)
+          setFollowStatus(false)
+        } else {
+          //follow code
+          const res = await postFollower(value, data)
+          setFollowStatus(true)
+        }
+      } catch (error) {
+        console.error(error)
       }
     } else {
       console.error("User not logged in");
       toast.error("User not logged in");
     }
+    setLoading(false)
   };
 
   return (
@@ -130,12 +150,24 @@ const PeopleHeader = ({ collection, people }) => {
               <p className="text-[27px]">0</p>
             </div>
           </div>
-          <button
-            className="mt-[10px] btn btn-full btn-secondary"
-            onClick={() => followRequest()}
-          >
-            {followStatus ? "Followed" : "Follow"} {followStatus}
-          </button>
+          {
+            userId !== loggedIn.id && (
+              <button
+                className="mt-[10px] btn btn-full btn-secondary"
+                onClick={() => followRequest(followStatus)}
+              >
+                {
+                  loading ? (
+                    <div className="animate-spin justify-center flex items-center">
+                      <Loader />
+                    </div>
+                  ) : (
+                    followStatus ? `Following` :  `Follow`
+                  )
+                }
+              </button>
+            )
+          }
         </div>
         <div className="w-full md:w-[240px] xl:w-[300px] mt-[10px]">
           {collection && (
