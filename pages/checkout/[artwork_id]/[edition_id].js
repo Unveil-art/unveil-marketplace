@@ -54,7 +54,12 @@ const EditionCheckout = ({ artwork, edition_id }) => {
 
   useEffect(() => {
     if (gasFeesUSD) {
-      setTotal(parseFloat(priceUSD) + parseFloat(gasFeesUSD.toFixed(2)));
+      setTotal(
+        (
+          parseFloat(priceUSD * (edition?.price ?? 0.02)) +
+          parseFloat(gasFeesUSD.toFixed(2))
+        ).toFixed(2)
+      );
     }
     console.log(gasFees);
   }, [gasFeesUSD]);
@@ -88,12 +93,13 @@ const EditionCheckout = ({ artwork, edition_id }) => {
 
       const fee = gasPrice * gasAmount;
       setGasFees(fee / 1e18);
-
       const usd = await getCurrentExchangeRateETHUSD();
       setGasFeesUSD(usd.USD * (fee / 1e18));
     } catch (err) {
       console.log(JSON.stringify(err), "=====");
       setGasFees(0.03);
+      const usd = await getCurrentExchangeRateETHUSD();
+      setGasFeesUSD(usd.USD * (0.03 / 1e18));
     }
   };
 
@@ -139,7 +145,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
     if (edition) {
       getGasFees(edition.price);
     }
-  }, [edition]);
+  }, [edition, provider]);
 
   const mint = async () => {
     if (!provider) {
@@ -249,6 +255,8 @@ const EditionCheckout = ({ artwork, edition_id }) => {
             {step === 3 && (
               <Animate options={{ alpha: true }}>
                 <Payment
+                  artwork_id={artwork.id}
+                  edition_id={edition.id}
                   mint={mint}
                   total={total}
                   payment={payment}
@@ -300,11 +308,13 @@ const EditionCheckout = ({ artwork, edition_id }) => {
               </div>
               <div className="flex items-end gap-2">
                 {edition && (
-                  <p className="b3 text-[11px] lg:text-[17px]">${priceUSD}</p>
+                  <p className="b3 text-[11px] lg:text-[17px]">
+                    ${(priceUSD * edition?.price ?? 0.02).toFixed(2)}
+                  </p>
                 )}
                 {edition && (
                   <p className="leading-[16px] whitespace-nowrap lg:leading-[23px] b5">
-                    ({edition.price} ETH)
+                    ({edition.price.toFixed(4)} ETH)
                   </p>
                 )}
               </div>
@@ -321,7 +331,8 @@ const EditionCheckout = ({ artwork, edition_id }) => {
               </div>
               <div className="flex items-center gap-2 md:items-end">
                 <p className="b3 text-[11px] lg:text-[17px]">
-                  + ~${gasFeesUSD && <>{gasFeesUSD.toFixed(2)}</>}
+                  + ~$
+                  {gasFeesUSD && <>{gasFeesUSD.toFixed(2)}</>}
                 </p>
                 <p className="leading-[16px] lg:leading-[23px] b5">
                   {gasFees && <>({gasFees.toFixed(4)} ETH)</>}
