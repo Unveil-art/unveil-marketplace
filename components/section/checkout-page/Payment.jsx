@@ -93,13 +93,12 @@ const Payment = ({ mint, payment, setStep, total, artwork_id, edition_id }) => {
             />
           </div>
           <button
-            disabled={secretSdkClient===""}
             onClick={() => {
               if(!token && !wallet){
                 getSecret(token, wallet);
               }
             }}
-            className="relative cursor-pointer disabled:bg-unveilCreme text-center btn btn-primary btn-full btn-lg my-[10px]"
+            className="relative cursor-pointer disabled:bg-gray-500 disabled:cursor-not-allowed text-center btn btn-primary btn-full btn-lg my-[10px]"
           >
             <p>Pay now (${total ? total : "0"})</p>
           </button>
