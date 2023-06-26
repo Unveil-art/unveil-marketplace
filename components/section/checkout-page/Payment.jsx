@@ -62,14 +62,14 @@ const Payment = ({ mint, payment, setStep, total, artwork_id, edition_id }) => {
       <h1 className="mt-5 h3 mb-[80px] hidden lg:block">Select {payment}</h1>
       {payment === "Creditcard" && (
         <>
-          <input
+          {/* <input
             type="text"
             className="mt-10 input"
             name="card-number"
             id="card-number"
             placeholder="Card number"
-          />
-          <div className="grid grid-cols-4 gap-[10px] mt-[10px]">
+          /> */}
+          {/* <div className="grid grid-cols-4 gap-[10px] mt-[10px]">
             <input
               type="text"
               className="col-span-2 input"
@@ -91,7 +91,7 @@ const Payment = ({ mint, payment, setStep, total, artwork_id, edition_id }) => {
               id="cvc"
               placeholder="CVC"
             />
-          </div>
+          </div> */}
           <button
             onClick={() => {
               if(token && wallet){
