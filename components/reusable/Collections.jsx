@@ -1,7 +1,9 @@
 import React from "react";
 import CountdownTimer from "./CountdownTimer";
+import Image from "next/image";
 
 const Collections = ({ color = "#F9F7F2", bgColor = "#141414", item }) => {
+  console.log(item);
   return (
     <section className="grid grid-cols-1 md:h-screen md:m-0 m-[15px] md:grid-cols-2">
       <div
@@ -21,7 +23,14 @@ const Collections = ({ color = "#F9F7F2", bgColor = "#141414", item }) => {
           <p className="b3">{item.description}</p>
         </div>
       </div>
-      <div className="order-1 bg-bgColor md:order-2 aspect-square md:aspect-auto"></div>
+      <div className="relative order-1 bg-bgColor md:order-2 aspect-square md:aspect-auto">
+        <Image
+          src={item.media_url}
+          alt={item.title}
+          fill={true}
+          style={{ objectFit: "cover" }}
+        />
+      </div>
     </section>
   );
 };

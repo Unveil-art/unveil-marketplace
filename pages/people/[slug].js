@@ -19,8 +19,6 @@ const PeopleDetails = ({ userId, user }) => {
   const [artworks, setArtworks] = useState(null);
   const [collections, setCollections] = useState();
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
     getArtistsArtwork(userId).then((result) => setArtworks(result.data));
     getArtistCollections(userId).then((result) => setCollections(result.data));
@@ -42,8 +40,8 @@ const PeopleDetails = ({ userId, user }) => {
         account={user !== undefined ? user.role : ""}
       />
       <PeopleHeader people={user} />
-      <PageSelector setPage={setPage} page={page} />
-      {page === 0 && <PeopleArtworks artworks={artworks} />}
+      <PageSelector setPage={setPage} page={page} role={user.role} />
+      {page === 0 && <PeopleArtworks artworks={artworks} role={user.role} />}
       {page === 1 && <PeopleCollections collections={collections} />}
       {page === 2 && <PeopleAbout details={user} />}
     </main>

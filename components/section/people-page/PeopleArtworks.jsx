@@ -6,7 +6,7 @@ import About from "@/components/reusable/About";
 import TwoBlockItems from "@/components/reusable/TwoBlockItems";
 import GalleryBlockItems from "../GalleryBlockItems";
 
-const PeopleArtworks = ({ artworks }) => {
+const PeopleArtworks = ({ artworks, role }) => {
   const [splitArtworks, setSplitArtworks] = useState(null);
   const [thisYear, setThisYear] = useState(null);
   const [splitted, setSplitted] = useState(null);
@@ -91,31 +91,38 @@ const PeopleArtworks = ({ artworks }) => {
 
   return (
     <section className="my-10">
-      {splitArtworks && splitArtworks.length > 0 && (
+      {role === "artist" && (
         <>
-          {splitArtworks[0].length === 1 ? (
-            <About item={splitArtworks[0][0]} bg="#54382F" />
-          ) : null}
-          {splitArtworks[0].length === 2 ? (
-            <TwoBlockItems items={splitArtworks[0]} />
-          ) : null}
-          {splitArtworks[0].length === 3 ? (
-            <ThreeBlockItems items={splitArtworks[0]} />
-          ) : null}
+          {splitArtworks && splitArtworks.length > 0 && (
+            <>
+              {splitArtworks[0].length === 1 ? (
+                <About item={splitArtworks[0][0]} bg="#54382F" />
+              ) : null}
+              {splitArtworks[0].length === 2 ? (
+                <TwoBlockItems items={splitArtworks[0]} />
+              ) : null}
+              {splitArtworks[0].length === 3 ? (
+                <ThreeBlockItems items={splitArtworks[0]} />
+              ) : null}
+            </>
+          )}
         </>
       )}
 
-      <AboutStats
-        bigLetters
-        h1="artworks"
-        b1={artworks ? artworks.length : "0"}
-        h2="New works this year"
-        b2={thisYear ? thisYear : "0"}
-        h3="Highest sale"
-        b3="$0"
-        h4="Average increase"
-        b4="0%"
-      />
+      {role === "artist" && (
+        <AboutStats
+          bigLetters
+          h1="artworks"
+          b1={artworks ? artworks.length : "0"}
+          h2="New works this year"
+          b2={thisYear ? thisYear : "0"}
+          h3="Highest sale"
+          b3="$0"
+          h4="Average increase"
+          b4="0%"
+        />
+      )}
+
       {splitted && splitted.length > 0 && (
         <GalleryBlockItems items={splitted} />
       )}
