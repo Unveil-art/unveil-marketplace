@@ -38,8 +38,12 @@ const Payment = ({ mint, payment, setStep, total, artwork_id, edition_id }) => {
       elementOrId: "paper-checkout-container",
       appName: "Unveil Art",
       options:{
-        colorBackground:'#f9f7f2',
-        borderRadius:40,
+          colorBackground: '#fefae0',
+          colorPrimary: '#606c38',
+          colorText: '#283618',
+          borderRadius: 6,
+          inputBackgroundColor: '#faedcd',
+          inputBorderColor: '#d4a373',
       },
       onError(error) {
         console.error("Payment error:", error);
