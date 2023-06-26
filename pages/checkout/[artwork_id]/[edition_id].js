@@ -182,7 +182,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
         "TRANSACTION",
         transaction.events.LazyMint.returnValues.tokenId
       );
-      const mint = await mintEdition(
+      const _mint = await mintEdition(
         value,
         {
           artwork_id: artwork.id,
@@ -193,7 +193,6 @@ const EditionCheckout = ({ artwork, edition_id }) => {
         },
         edition.edition_id
       );
-      console.log(mint);
       await postTransaction(value, {
         transaction_hash: transaction.transactionHash,
         amount: parseFloat(
@@ -208,7 +207,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       setStep(5);
     } catch (err) {
       console.log(JSON.stringify(err), "=====");
-      toast.error(JSON.stringify(err));
+      toast.error(err?.data?.message);
       setStep(3);
     }
   };
