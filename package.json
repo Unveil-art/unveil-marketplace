@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@magic-ext/connect": "^9.1.0",
+    "@paperxyz/js-client-sdk": "^0.2.4",
     "@paperxyz/react-client-sdk": "^1.1.1",
     "@studio-freight/react-lenis": "^0.0.14",
     "@walletconnect/client": "^1.8.0",

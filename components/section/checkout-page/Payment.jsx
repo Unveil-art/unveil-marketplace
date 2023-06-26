@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createCheckoutWithCardElement } from "@paperxyz/react-client-sdk";
+import { createCheckoutWithCardElement } from "@paperxyz/js-client-sdk";
 import Chat from "@/components/reusable/Chat";
 import Ideal from "@/components/svg/Ideal";
 import useLocalStorage from "@/hooks/useLocalStorage";
