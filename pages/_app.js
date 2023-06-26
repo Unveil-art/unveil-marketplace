@@ -39,13 +39,13 @@ function MyApp({ Component, pageProps }) {
                 smoothTouch: false,
               }}
             >
-              <div className=" fixed top-0 left-0 w-[100vw] h-[100vh] flex flex-col justify-center items-center">
+              {/* <div className=" fixed top-0 left-0 w-[100vw] h-[100vh] flex flex-col justify-center items-center">
                 <div
                   id="paper-checkout-container"
                   className="w-[380px] rounded-lg z-50"
                   width="380px"
                 />
-              </div>
+              </div> */}
               <Component {...pageProps} />
 
               <Script
