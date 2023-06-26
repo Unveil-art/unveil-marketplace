@@ -70,16 +70,16 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       return;
     }
 
-    let rpc = new RPC(provider);
-    let contract = await rpc.getContract(MARKET_ABI, MARKET_CONTRACT_ADDRESS);
-
-    const ethEx = await getCurrentExchangeRateUSDETH();
-    const priceInEth = ethEx.ETH * edition.price;
-    const priceInWei = Web3.utils.toWei(priceInEth.toFixed(4));
-
-    const gasPrice = await rpc.getGasPrice();
-
     try {
+      let rpc = new RPC(provider);
+      let contract = await rpc.getContract(MARKET_ABI, MARKET_CONTRACT_ADDRESS);
+
+      const ethEx = await getCurrentExchangeRateUSDETH();
+      const priceInEth = ethEx.ETH * edition.price;
+      const priceInWei = Web3.utils.toWei(priceInEth.toFixed(4));
+
+      const gasPrice = await rpc.getGasPrice();
+
       const gasAmount = await contract.methods
         .buyMintNft(
           artwork.contract_address,
