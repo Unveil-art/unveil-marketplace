@@ -152,7 +152,7 @@ const EditionPopIn = ({ edition, setEdition }) => {
                   </div>
                 </div>
 
-                  <button disabled onClick={() => router.push(`/checkout/${edition.artwork_id}/${edition.edition_id}`) } className="btn disabled:cursor-not-allowed btn-primary btn-full">Checkout</button>
+                  <button  onClick={() => router.push(`/checkout/${edition.artwork_id}/${edition.edition_id}`) } className="btn disabled:cursor-not-allowed btn-primary btn-full">Checkout</button>
                 <div className="flex items-center justify-center gap-2 mt-[10px]">
                   <img src="/images/apple_pay.png" alt="Apple pay" />
                   <img src="/images/mastercard.png" alt="Mastercard" />

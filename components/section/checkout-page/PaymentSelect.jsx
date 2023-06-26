@@ -105,12 +105,13 @@ const PaymentSelect = ({
             <div className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full  cursor-pointer">
               <p className="b5 leading-[23px]">Creator address</p>
               <p className="truncate b3 !text-[13px] leading-normal md:b4 w-[130px]">
-                {artwork.owner.walletAddress}
+                {artwork.owner.walletAddress.toLowerCase().slice(0,4)}...{artwork.owner.walletAddress.toLowerCase().slice(-4)}
               </p>
             </div>
             <div className="rounded-[10px] unveilTransition hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
               <p className="b5">Royalties</p>
-              <p className="truncate b4">.</p>
+              <p className="truncate b4">{artwork.royalties[0]?.percentage}%
+                    {artwork.royalties[1]?.percentage && `, ${artwork.royalties[1]?.percentage}%`}</p>
             </div>
             <div className="rounded-[10px] unveilTransition hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
               <p className="b5">Token ID</p>
@@ -132,7 +133,7 @@ const PaymentSelect = ({
 
             <div className="rounded-[10px] unveilTransition hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
               <p className="b5">Blockchain</p>
-              <p className="truncate b4">.</p>
+              <p className="truncate b4">Ethereum</p>
             </div>
             {artwork.edition_type !== "NFT_Only" && (
               <div className="rounded-[10px] unveilTransition hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
@@ -152,7 +153,7 @@ const PaymentSelect = ({
             )}
             <div className="rounded-[10px] unveilTransition hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
               <p className="b5">Platform fee</p>
-              <p className="truncate b4">.</p>
+              <p className="truncate b4">10%</p>
             </div>
           </div>
         </>
