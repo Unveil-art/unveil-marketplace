@@ -37,7 +37,6 @@ const Payment = ({ mint, payment, setStep, total, artwork_id, edition_id }) => {
       sdkClientSecret: secretSdkClient,
       elementOrId: "paper-checkout-container",
       appName: "Unveil Art",
-      options,
       onError(error) {
         console.error("Payment error:", error);
       },
