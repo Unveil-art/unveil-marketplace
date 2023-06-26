@@ -39,6 +39,7 @@ function MyApp({ Component, pageProps }) {
                 smoothTouch: false,
               }}
             >
+              <div id="paper-checkout-container" width="380px" />
               <Component {...pageProps} />
               <Script
                 id="HotJarAnalytics"
