@@ -78,11 +78,10 @@ const PeopleArtworks = ({ userId }) => {
       const _variant = Math.floor(Math.random() * 2) + 1;
       setVariant(_variant)
       const artResult = splitArrayByPattern(arts, _variant)
-      console.log(artResult)
       setArtwork(artResult)
       setLoading(false)
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
