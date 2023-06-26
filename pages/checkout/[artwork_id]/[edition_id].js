@@ -99,7 +99,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       console.log(JSON.stringify(err), "=====");
       setGasFees(0.03);
       const usd = await getCurrentExchangeRateETHUSD();
-      setGasFeesUSD(usd.USD * (0.03 / 1e18));
+      setGasFeesUSD(usd.USD * 0.03);
     }
   };
 
