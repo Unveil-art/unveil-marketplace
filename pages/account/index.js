@@ -29,7 +29,7 @@ const AccountPage = () => {
     if ("wishlist" in router.query) {
       setAccountState(6);
     } else {
-      setAccountState(0);
+      setAccountState(6);
     }
   }, [router.query]);
 

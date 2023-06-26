@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { getFollowerInfo, postFollower, isFollowed } from "lib/backend";
+import {
+  getFollowerInfo,
+  postFollower,
+  isFollowed,
+  unfollowArtist,
+} from "lib/backend";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 import { toast } from "react-toastify";
 import { getUserName } from "lib/utils";
-const PeopleHeader = ({ collection, people }) => {
-  const [follower, setFollowers] = useState([]);
-  const [followStatus, setFollowStatus] = useState(false);
-  const [loading, setLoading] = useState(false);
+import Loader from "@/components/svg/Loader";
 
-  console.log(people);
+const PeopleHeader = ({ collection, people }) => {
+  const [followers, setFollowers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [following, setFollowing] = useState(false);
 
   const { value } = useLocalStorage("token");
 
@@ -36,69 +41,54 @@ const PeopleHeader = ({ collection, people }) => {
   }
 
   let displayName;
-  let userId;
-  if (people) {
-    if (collection && typeof collection != "string") {
-      if (collection.owner.firstName && collection.owner.lastName) {
-        displayName = `${collection.owner.firstName} ${collection.owner.lastName}`;
-      } else if (collection.owner.firstName) {
-        displayName = collection.owner.firstName;
-      } else if (collection.owner.lastName) {
-        displayName = collection.owner.lastName;
-      } else {
-        displayName = collection.owner.email;
-      }
+  if (collection) {
+    if (collection.owner.firstName && collection.owner.lastName) {
+      displayName = `${collection.owner.firstName} ${collection.owner.lastName}`;
+    } else if (collection.owner.firstName) {
+      displayName = collection.owner.firstName;
+    } else if (collection.owner.lastName) {
+      displayName = collection.owner.lastName;
     } else {
-      userId = collection;
+      displayName = collection.owner.email;
     }
   }
 
-  useEffect(() => {
-    fetchCollection(userId);
-  }, [value]);
-  const fetchCollection = async (userId) => {
-    if (userId) {
-      try {
-        const data = await getFollowerInfo(userId);
-        let response = data ? data.followers : 0;
-        setFollowers(response);
-
-        if (value) {
-          const followStatus = await isFollowed(value, userId);
-          setFollowStatus(followStatus.data);
-        }
-
-        return data;
-      } catch (err) {
-        setFollowers(0);
-        console.error(err);
-      }
-    }
+  const fetchUser = async () => {
+    const data = await getFollowerInfo(people.id);
+    setFollowers(data.followers);
   };
-  const followRequest = async () => {
-    if (userId && value) {
-      try {
-        const data = {
-          user_id: userId,
-        };
 
-        await postFollower(value, data);
-        // setLoading(false);
-        fetchCollection(userId);
-        toast.success("Success");
-      } catch (err) {
-        // setLoading(false);
-        console.error(err);
-        toast.error(err.message);
-      }
+  const handleFollowUnfollow = (isFollow) => {
+    setLoading(true);
+    if (isFollow) {
+      unfollowArtist(value, { user_id: people.id })
+        .then((res) => setFollowing(false))
+        .catch((err) => console.log(err))
+        .finally(() => setLoading(false));
     } else {
-      console.error("User not logged in");
-      toast.error("User not logged in");
+      postFollower(value, { user_id: people.id })
+        .then((res) => setFollowing(true))
+        .catch((err) => console.log(err))
+        .finally(() => setLoading(false));
     }
   };
+
+  useEffect(() => {
+    if (people && value) {
+      fetchUser(people.id);
+      setLoading(true);
+      isFollowed(value, people.id)
+        .then((res) => setFollowing(res.data))
+        .catch((err) => {
+          console.log(err);
+          setFollowing(false);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [value]);
 
   return (
-    <section className="ml-[40px] md:ml-[35svw] pr-[15px] md:mt-0 mt-[20px] md:pr-[40px]">
+    <section className="ml-[40px] md:ml-[35svw] pt-20 pr-[15px] md:mt-0 md:pr-[40px]">
       {collection && typeof collection != "string" && (
         <p className="s2 my-[60px] md:block hidden ">
           {collection.description}
@@ -114,27 +104,36 @@ const PeopleHeader = ({ collection, people }) => {
                   : "Followers"}
               </p>
               <p className="text-[27px]">
-                {collection && typeof collection != "string"
-                  ? collection.artworks.length
-                  : "0"}
+                {collection && typeof collection != "string" && (
+                  <>{collection.artworks.length}</>
+                )}
+                {people && <>{followers ? followers : "0"}</>}
               </p>
             </div>
-            <div className="w-px h-10 bg-unveilGreen"></div>
+            <div className="w-px h-14 bg-unveilGreen"></div>
             <div className="min-w-[90px]">
               <p className="b4">Sold artworks</p>
               <p className="text-[27px]">0</p>
             </div>
-            <div className="w-px h-10 bg-unveilGreen"></div>
+            <div className="w-px h-14 bg-unveilGreen"></div>
             <div className="">
               <p className="b4">Unique collectors</p>
               <p className="text-[27px]">0</p>
             </div>
           </div>
           <button
-            className="mt-[10px] btn btn-full btn-secondary"
-            onClick={() => followRequest()}
+            className="mt-[15px] btn btn-secondary btn-full"
+            onClick={() => handleFollowUnfollow(following)}
           >
-            {followStatus ? "Followed" : "Follow"} {followStatus}
+            {loading ? (
+              <div className="h-[25px] animate-spin justify-center flex items-center">
+                <Loader />
+              </div>
+            ) : following ? (
+              `Followed`
+            ) : (
+              `Follow`
+            )}
           </button>
         </div>
         <div className="w-full md:w-[240px] xl:w-[300px] mt-[10px]">

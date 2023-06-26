@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 
 import SmallLogo from "../svg/SmallLogo";
 import { getFooter } from "lib/strapi";
@@ -67,11 +68,13 @@ const Footer = () => {
                   </p>
                   {footers.data[1].attributes.footer.data.map((item, i) => (
                     <div key={i} className="block h-fit">
-                      <a target="_blank" rel="noreferrer" href={item.link}>
+                      {/* <a target="_blank" rel="noreferrer" href={item.link}> */}
+                      <Link href="/account">
                         <p className="underline-on-hover-white b3 underline-on-hover">
                           {item.heading}
                         </p>
-                      </a>
+                      </Link>
+                      {/* </a> */}
                     </div>
                   ))}
                 </div>

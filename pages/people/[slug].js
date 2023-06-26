@@ -8,36 +8,30 @@ import PeopleArtworks from "@/components/section/people-page/PeopleArtworks";
 import PeopleCollections from "@/components/section/people-page/PeopleCollections";
 import PeopleAbout from "@/components/section/people-page/PeopleAbout";
 import FAQ from "@/components/section/FAQ";
-import { getFAQ } from "lib/strapi";
-import { getUserInfo } from "lib/backend";
+import {
+  getUserInfo,
+  getArtistsArtwork,
+  getArtistCollections,
+} from "lib/backend";
 
-const PeopleDetails = ({ faq, userId }) => {
-  const faqData = faq.data[0].attributes.faq;
+const PeopleDetails = ({ userId, user }) => {
   const [page, setPage] = useState(0);
+  const [artworks, setArtworks] = useState(null);
+  const [collections, setCollections] = useState();
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
-    fetchCollection(userId);
+    getArtistsArtwork(userId).then((result) => setArtworks(result.data));
+    getArtistCollections(userId).then((result) => setCollections(result.data));
   }, []);
-  const [collection, setCollections] = useState([]);
-  const router = useRouter();
 
-  const fetchCollection = async (userId) => {
-    if (userId) {
-      try {
-        const data = await getUserInfo(userId);
-        setCollections(data);
-        return data;
-      } catch (err) {
-        console.error(err);
-      }
-    }
-  };
   let displayName = "";
-  if (collection && collection !== undefined) {
-    if (collection.firstName && collection.lastName) {
-      displayName = collection.firstName + " " + collection.lastName;
-    } else if (collection.email) {
-      displayName = collection.email.split("@")[0].replace(".", " ");
+  if (user) {
+    if (user.firstName && user.lastName) {
+      displayName = user.firstName + " " + user.lastName;
+    } else if (user.email) {
+      displayName = user.email.split("@")[0].replace(".", " ");
     }
   }
 
@@ -45,14 +39,13 @@ const PeopleDetails = ({ faq, userId }) => {
     <main className="mt-[120px]">
       <Title
         title={displayName}
-        account={collection !== undefined ? collection.role : ""}
+        account={user !== undefined ? user.role : ""}
       />
-      <PeopleHeader people={collection} />
+      <PeopleHeader people={user} />
       <PageSelector setPage={setPage} page={page} />
-      {page === 0 && <PeopleArtworks />}
-      {page === 1 && <PeopleCollections />}
-      {page === 2 && <PeopleAbout details={collection} />}
-      <FAQ data={faqData.block} />
+      {page === 0 && <PeopleArtworks artworks={artworks} />}
+      {page === 1 && <PeopleCollections collections={collections} />}
+      {page === 2 && <PeopleAbout details={user} />}
     </main>
   );
 };
@@ -60,10 +53,11 @@ const PeopleDetails = ({ faq, userId }) => {
 export default PeopleDetails;
 
 export async function getServerSideProps({ params: { slug } }) {
-  const faq = await getFAQ();
+  const data = await getUserInfo(slug);
+
   return {
     props: {
-      faq,
+      user: data,
       userId: slug,
     },
   };

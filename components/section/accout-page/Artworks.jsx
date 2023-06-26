@@ -69,12 +69,14 @@ const Artworks = () => {
               Listed for sale {artworksList.length}
             </span>
             <span
-              onClick={() => setFilter(2)}
+              data-cursor="Coming soon"
+              data-cursor-color="#b2b4ae"
+              // onClick={() => setFilter(2)}
               className={`${
                 filter === 2 ? "border-unveilBlack" : "border-unveilDrakGray"
-              } px-2 cursor-pointer border rounded-full  l2`}
+              } px-2 cursor-not-allowed border rounded-full  l2`}
             >
-              To be printed x
+              To be printed
             </span>
           </div>
         </div>
@@ -84,7 +86,11 @@ const Artworks = () => {
               {artworksUnlist.length > 0 && (
                 <>
                   {artworksUnlist.map((item, i) => (
-                    <ArtworkListItem fetchUser={() => fetchUser(false, setArtworksUnlist)} key={i} item={item} />
+                    <ArtworkListItem
+                      fetchUser={() => fetchUser(false, setArtworksUnlist)}
+                      key={i}
+                      item={item}
+                    />
                   ))}
                 </>
               )}
@@ -101,7 +107,11 @@ const Artworks = () => {
               {artworksList.length > 0 && (
                 <>
                   {artworksList.map((item, i) => (
-                    <ArtworkListItem fetchUser={() => fetchUser(true,setArtworksList)} key={i} item={item} />
+                    <ArtworkListItem
+                      fetchUser={() => fetchUser(true, setArtworksList)}
+                      key={i}
+                      item={item}
+                    />
                   ))}
                 </>
               )}

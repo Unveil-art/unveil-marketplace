@@ -1,7 +1,7 @@
 import React from "react";
 import CountdownTimer from "./CountdownTimer";
 
-const Collections = ({ color = "#F9F7F2", bgColor = "#141414" }) => {
+const Collections = ({ color = "#F9F7F2", bgColor = "#141414", item }) => {
   return (
     <section className="grid grid-cols-1 md:h-screen md:m-0 m-[15px] md:grid-cols-2">
       <div
@@ -9,18 +9,16 @@ const Collections = ({ color = "#F9F7F2", bgColor = "#141414" }) => {
         style={{ backgroundColor: bgColor, color: color }}
       >
         <div>
-          <h2 className="h1">Rustle Of The Morning Stars</h2>
+          <h2 className="h1">{item.title}</h2>
           <div className="mt-5 s2">
-            <CountdownTimer targetDate={new Date(2023, 4, 30)} />
+            <CountdownTimer targetDate={new Date(item.live_time)} />
           </div>
         </div>
         <div className="max-w-[60%]   ml-auto">
-          <p className="mb-5 l2">Curated by Sephora Elders</p>
-          <p className="b3">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Necessitatibus corporis mollitia nobis labore tempora laudantium
-            libero eveniet fugit corrupti quibusdam?
-          </p>
+          {item.curator_id && (
+            <p className="mb-5 l2">Curated by {item.curator_id}</p>
+          )}
+          <p className="b3">{item.description}</p>
         </div>
       </div>
       <div className="order-1 bg-bgColor md:order-2 aspect-square md:aspect-auto"></div>

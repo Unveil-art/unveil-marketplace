@@ -38,7 +38,7 @@ const ArtistHighlights = ({ data }) => {
         {data.block.map((item, index) => (
           <SwiperSlide
             key={index}
-            className="!w-[164px] !h-[240px] md:!w-[340px] md:!h-[480px] relative bg-unveilGreen !flex justify-center items-center"
+            className="!w-[164px] cursor-pointer !h-[240px] md:!w-[340px] md:!h-[480px] relative bg-unveilGreen !flex justify-center items-center"
           >
             <div className="z-20">
               <Play />

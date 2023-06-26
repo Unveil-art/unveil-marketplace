@@ -3,7 +3,6 @@ import Animate from "@/components/reusable/Animate";
 import Image from "next/image";
 
 const PeopleAbout = (collection) => {
-  console.log("DETAILS", collection);
   const instagram = () => {
     collection.details.instagram
       ? window.open(collection.details.instagram)

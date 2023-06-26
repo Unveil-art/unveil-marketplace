@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 import Loader from "@/components/svg/Loader";
 import MoreInfoPopIn from "@/components/pop-in/MoreInfoPopIn";
 
-const GalleryHero = ({ artwork }) => {
+const GalleryHero = ({ imgRef, artwork }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
   const [editionOpen, setEditionOpen] = useState(false);
   const [edition, setEdition] = useState(null);
@@ -51,14 +51,14 @@ const GalleryHero = ({ artwork }) => {
     return (eth * exchangeRate).toFixed(2);
   };
 
-  const addWishlist = async() => {
-    try{
-      setLoading(true)
-      if(token && artwork.id){
-        await addToWishlist(token,artwork.id)
-        await checkWishlist(token, artwork.id)
-      }else{
-        notifyError("User Not Logged In")
+  const addWishlist = async () => {
+    try {
+      setLoading(true);
+      if (token && artwork.id) {
+        await addToWishlist(token, artwork.id);
+        await checkWishlist(token, artwork.id);
+      } else {
+        notifyError("User Not Logged In");
       }
       setLoading(false);
     } catch (err) {
@@ -69,15 +69,14 @@ const GalleryHero = ({ artwork }) => {
     }
   };
 
-  const removeWishlist = async() => {
-    try{
-      setLoading(true)
-      if(token && artwork.id){
-        await removeFromWishlist(token,artwork.id);
-      await checkWishlist(token, artwork.id);
-      }else{
-        notifyError("User Not Logged In")
-
+  const removeWishlist = async () => {
+    try {
+      setLoading(true);
+      if (token && artwork.id) {
+        await removeFromWishlist(token, artwork.id);
+        await checkWishlist(token, artwork.id);
+      } else {
+        notifyError("User Not Logged In");
       }
       setLoading(false);
     } catch (err) {
@@ -220,6 +219,7 @@ const GalleryHero = ({ artwork }) => {
             ${frameObject.border === "10x20" ? "p-4" : ""}`}
             >
               <img
+                ref={imgRef}
                 className="object-contain h-full"
                 src={artwork.media_url}
                 alt={artwork.name}

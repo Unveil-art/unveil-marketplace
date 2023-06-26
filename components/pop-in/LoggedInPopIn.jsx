@@ -36,7 +36,9 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
             <div className="grid grid-cols-2 text-center border-y border-bgColorHover">
               <div className="py-10 border-r my-[10px] border-bgColorHover">
                 <p className=" b3">Account name</p>
-                <p className="px-5 truncate md:px-14 l2">{wallet.slice(0,4)}...{wallet.slice(-4)}</p>
+                <p className="px-5 truncate md:px-14 l2">
+                  {wallet.slice(0, 4)}...{wallet.slice(-4)}
+                </p>
               </div>
               <div className="py-10 my-[10px] border-bgColorHover">
                 <p className="b3">Funds</p>
@@ -44,7 +46,12 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
               </div>
             </div>
             <div className="text-center py-10 my-[10px]">
-              <button className="b3 cursor-pointer border hover:border-unveilDrakGray border-bgColorHover px-3 py-2 rounded-md" onClick={showRamper}>Add funds</button>
+              <button
+                className="px-3 py-2 border rounded-md cursor-pointer b3 hover:border-unveilDrakGray border-bgColorHover"
+                onClick={showRamper}
+              >
+                Add funds
+              </button>
               <p className=" l2">
                 {localProvider && (
                   <>{localProvider.replace('"', "").replace('"', "")}</>
@@ -61,7 +68,7 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
             </Link>
             <p
               onClick={() => logout()}
-              className="mx-auto mt-5 text-center underline cursor-pointer w-fit b3"
+              className="block mx-auto mt-5 text-center cursor-pointer underline-on-hover w-fit b3"
             >
               Disconnect
             </p>
