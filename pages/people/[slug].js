@@ -49,7 +49,7 @@ const PeopleDetails = ({ faq, userId }) => {
       />
       <PeopleHeader people={collection} />
       <PageSelector setPage={setPage} page={page} />
-      {page === 0 && <PeopleArtworks />}
+      {page === 0 && <PeopleArtworks userId={userId} />}
       {page === 1 && <PeopleCollections />}
       {page === 2 && <PeopleAbout details={collection} />}
       <FAQ data={faqData.block} />
