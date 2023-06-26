@@ -15,7 +15,7 @@ const Payment = ({ mint, payment, setStep, total, artwork_id, edition_id }) => {
   const getSecret = async(token, wallet) => {
     try{
       const data = await getClientSecret(token,{
-        wallet_address:wallet_address,
+        wallet_address:wallet,
         artwork_id:artwork_id,
         edition_id:edition_id
       });
