@@ -101,7 +101,9 @@ const Payment = ({ mint, payment, setStep, total, artwork_id, edition_id }) => {
             className="relative cursor-pointer disabled:cursor-not-allowed text-center btn btn-primary btn-full btn-lg my-[10px]"
             disabled={loading}
           >
-            {loading && <Loader color="#ffffff" />}
+            {loading && <div className="h-[25px] animate-spin justify-center flex items-center">
+                  <Loader color="#F7F4ED" />
+                </div>}
             {!loading && <p>Pay now (${total ? total : "0"})</p>}
           </button>
         </>
