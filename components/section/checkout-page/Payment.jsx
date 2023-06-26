@@ -4,6 +4,7 @@ import Chat from "@/components/reusable/Chat";
 import Ideal from "@/components/svg/Ideal";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { toast } from "react-toastify";
+import { getClientSecret } from "lib/backend";
 
 const Payment = ({ mint, payment, setStep, total, artwork_id, edition_id }) => {
 
