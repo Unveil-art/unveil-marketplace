@@ -10,6 +10,7 @@ import Currency from "../svg/Currency";
 import { getCurrentExchangeRateETHUSD } from "lib/backend";
 import Min from "../svg/Min";
 import { useRouter } from "next/router";
+import ApplePay from "../svg/ApplePay";
 
 const EditionPopIn = ({ edition, setEdition }) => {
   const [type, setType] = useState();
@@ -152,11 +153,22 @@ const EditionPopIn = ({ edition, setEdition }) => {
                   </div>
                 </div>
 
-                  <button  onClick={() => router.push(`/checkout/${edition.artwork_id}/${edition.edition_id}`) } className="btn disabled:cursor-not-allowed btn-primary btn-full">Checkout</button>
-                <div className="flex items-center justify-center gap-2 mt-[10px]">
-                  <img src="/images/apple_pay.png" alt="Apple pay" />
-                  <img src="/images/mastercard.png" alt="Mastercard" />
-                  <img src="/images/visa.png" alt="Visa" />
+                <button
+                  onClick={() =>
+                    router.push(
+                      `/checkout/${edition.artwork_id}/${edition.edition_id}`
+                    )
+                  }
+                  className="btn disabled:cursor-not-allowed btn-primary btn-full"
+                >
+                  Checkout
+                </button>
+                <div className="flex items-center h-[20px] justify-center gap-2 mt-[10px]">
+                  <ApplePay />
+                  <div className="mt-1">
+                    <Mastercard />
+                  </div>
+                  <Visa color="#141414" />
                 </div>
               </div>
               <Chat

@@ -154,8 +154,8 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
                         No {i + 1} of {nftEditions.length}
                       </p>
                       <p className="b4">
-                        ${udsEx ? (udsEx * edition.price).toFixed(2) : "0"} or{" "}
-                        {edition.price} ETH
+                        ${udsEx ? (udsEx * edition.price).toFixed() : "0"} (
+                        {edition.price} ETH)
                       </p>
                     </div>
 

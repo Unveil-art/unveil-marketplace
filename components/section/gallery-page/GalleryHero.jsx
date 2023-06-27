@@ -237,10 +237,7 @@ const GalleryHero = ({ imgRef, artwork }) => {
             </p>
             <div className="relative pt-10 md:pt-[100px] flex justify-between gap-5">
               <div className="md:space-y-[6px] w-full md:block grid grid-cols-2 gap-[6px]">
-                <div
-                  onClick={() => setCollectionOpen(true)}
-                  className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
-                >
+                <div className="rounded-[10px] unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] ">
                   <p className="b5 leading-[23px]">Collection</p>
                   <p className="truncate b3 !text-[13px] leading-normal  md:b4">
                     {artwork.collection.title}
@@ -303,10 +300,7 @@ const GalleryHero = ({ imgRef, artwork }) => {
                     {artwork.royalties[1]?.percentage}%
                   </p>
                 </div>
-                <div
-                  onClick={() => setAddressOpen(true)}
-                  className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
-                >
+                <div className="rounded-[10px]  unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px]">
                   <p className="b5 leading-[23px]">Creator & royalty address</p>
                   <p className="truncate b3 !text-[13px] leading-normal md:b4 w-[100px]">
                     {artwork.owner.walletAddress.slice(0, 4).toLowerCase()}...
@@ -314,10 +308,7 @@ const GalleryHero = ({ imgRef, artwork }) => {
                   </p>
                 </div>
                 {_recognitions && (
-                  <div
-                    onClick={() => setRecognitionsOpen(true)}
-                    className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
-                  >
+                  <div className="rounded-[10px]  unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] ">
                     <p className="b5 leading-[23px]">Recognitions</p>
                     <p className="truncate b3 !text-[13px] leading-normal md:b4">
                       {_recognitions}
@@ -370,13 +361,6 @@ const GalleryHero = ({ imgRef, artwork }) => {
             </div>
           </div>
         </div>
-        {/* <div className="md:hidden relative flex items-center justify-center md:col-span-3 bg-bgColor py-[120px]">
-          <div className="w-[200px] aspect-[3/4] shadow"></div>
-          <div className="absolute rounded-[10px] bg-blur bottom-5 w-[200px] md:py-[8px] px-[12px] py-[6px] md:px-[16px] left-[15px] bg-blur">
-            <p className="b4 text-unveilWhite">Unveil AR</p>
-            <p className="b5 text-unveilWhite">View in Room</p>
-          </div>
-        </div> */}
 
         <div
           onClick={() => setOptionsOpen(!optionsOpen)}
@@ -423,28 +407,34 @@ const GalleryHero = ({ imgRef, artwork }) => {
         setOpen={setSoldAsOpen}
         title={displaySoldAs}
         subtitle="Sold As"
-        text="Text"
+        smallText
+        text="A digital NFT, or Non-Fungible Token, is a unique piece of digital artwork that exists only in a digital format. It is like a one-of-a-kind collector's item in the digital world, representing ownership and authenticity. While you can't physically print it, owning an NFT means you have exclusive rights to that specific digital artwork."
       />
       <MoreInfoPopIn
         open={paymentOpen}
         setOpen={setPaymentOpen}
-        title=" ETH, Credit/Debit Card"
-        subtitle="Payment"
-        text="Text"
+        title=" "
+        subtitle="Accepted Payments Methods"
+        payment
+        smallText
+        text="At Unveil, we strive to provide a seamless and secure payment experience for our users. In addition to accepting Ethereum (ETH) for NFT purchases, we also offer traditional payment methods such as iDeal and credit cards. We understand that not everyone may be familiar with cryptocurrency transactions, so by accepting these traditional payment methods, we aim to simplify the process and ensure a convenient and secure transaction for all. "
       />
       <MoreInfoPopIn
         open={royaltyOpen}
         setOpen={setRoyaltyOpen}
-        title={`${artwork.royalties[0]?.percentage}%,${" "}
-        ${artwork.royalties[1]?.percentage}%`}
         subtitle="Curator royalty"
-        text="Text"
+        smallText
+        text="In the world of NFTs, royalties are a way for artists to earn a percentage of the sales each time their artwork is resold to a new collector. Unlike traditional art sales, where artists typically only benefit from the initial sale, NFTs allow artists to continue receiving compensation as their work increases in value over time. This unique feature ensures ongoing recognition and rewards for artists as their creations become more popular in the digital art market. At Unveil, we go a step further by giving artists the option to set two different royalty percentages, discouraging immediate resale and fostering a more meaningful relationship between artists and collectors. This approach promotes a fair and sustainable ecosystem that values the contributions of artists and supports their creative journey."
+        title={`${artwork.royalties[0]?.percentage}% | ${artwork.royalties[1]?.percentage}% `}
       />
       <MoreInfoPopIn
         open={addressOpen}
         setOpen={setAddressOpen}
-        title={`${artwork.owner.walletAddress.slice(0, 4).toLowerCase()}...
-        ${artwork.owner.walletAddress.slice(-4).toLowerCase()}`}
+        title={`${artwork.owner.walletAddress
+          .slice(0, 4)
+          .toLowerCase()}... ${artwork.owner.walletAddress
+          .slice(-4)
+          .toLowerCase()}`}
         subtitle="Creator & royalty address"
         text="Text"
       />
