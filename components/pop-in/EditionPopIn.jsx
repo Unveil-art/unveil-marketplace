@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useContext } from "react";
 import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
 import Close from "../svg/Close";
 import Chat from "../reusable/Chat";
@@ -10,10 +10,14 @@ import Currency from "../svg/Currency";
 import { getCurrentExchangeRateETHUSD } from "lib/backend";
 import Min from "../svg/Min";
 import { useRouter } from "next/router";
+import { Web3Context } from "@/contexts/Web3AuthContext";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const EditionPopIn = ({ edition, setEdition }) => {
   const [type, setType] = useState();
   const [price, setPrice] = useState();
+  const { value:token } = useLocalStorage('token');
+  const { login } = useContext(Web3Context)
   const el = useRef();
   const router = useRouter();
 
@@ -152,7 +156,13 @@ const EditionPopIn = ({ edition, setEdition }) => {
                   </div>
                 </div>
 
-                  <button  onClick={() => router.push(`/checkout/${edition.artwork_id}/${edition.edition_id}`) } className="btn disabled:cursor-not-allowed btn-primary btn-full">Checkout</button>
+                  <button  onClick={() => {
+                    if(token){
+                      router.push(`/checkout/${edition.artwork_id}/${edition.edition_id}`)
+                    }else{
+                      login();
+                    }
+                  } } className="btn disabled:cursor-not-allowed btn-primary btn-full">Checkout</button>
                 <div className="flex items-center justify-center gap-2 mt-[10px]">
                   <img src="/images/apple_pay.png" alt="Apple pay" />
                   <img src="/images/mastercard.png" alt="Mastercard" />
