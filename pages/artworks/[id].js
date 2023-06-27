@@ -270,6 +270,15 @@ const Edit = ({ artwork }) => {
       const ethEx = await getCurrentExchangeRateUSDETH();
 
       editionPricing.map((_, i) => {
+        console.log(
+          editionPricing[i].eth
+            ? parseFloat(editionPricing[i].eth)
+            : parseFloat(
+                parseFloat(
+                  parseFloat(editionPricing[i].usd) * ethEx.ETH
+                ).toFixed(4)
+              )
+        );
         if (i < artwork.editions.length) {
           editions.push({
             id: artwork.editions[i].id,
@@ -291,7 +300,13 @@ const Edit = ({ artwork }) => {
           });
         } else {
           editions.push({
-            price: parseInt(editionPrice[i]),
+            price: editionPricing[i].eth
+              ? parseFloat(editionPricing[i].eth)
+              : parseFloat(
+                  parseFloat(
+                    parseFloat(editionPricing[i].usd) * ethEx.ETH
+                  ).toFixed(4)
+                ),
             paper: null,
             frame: null,
             technique: null,
