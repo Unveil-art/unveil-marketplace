@@ -111,6 +111,7 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
                               className="w-full btn btn-secondary btn-full"
                             >
                               Buy from artist
+                              
                             </button>
                             {!edition.token_id && (
                               <p className="absolute -bottom-1 left-5 b5">
@@ -136,7 +137,7 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
               </span>
             </p>
             <div className="space-y-[10px]">
-              {nftEditions.map((edition, i) => (
+              {nftEditions.sort((a,b) => a.price-b.price).map((edition, i) => (
                 <div
                   key={i}
                   className="flex border overflow-hidden rounded-[10px] border-unveilDrakGray h-[166px] "
@@ -160,6 +161,7 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
                     </div>
 
                     <button
+                    disabled={edition.max_copies===edition.sold_copies}
                       onClick={() =>
                         setEdition({
                           ...edition,
@@ -170,9 +172,9 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
                           artwork_id: artwork.id,
                         })
                       }
-                      className="btn btn-full btn-secondary"
+                      className="btn btn-full disabled:bg-gray-200 disabled:cursor-not-allowed btn-secondary"
                     >
-                      Buy from artist
+                      {edition.max_copies===edition.sold_copies ? "Sold Out": "Buy from artist"}
                     </button>
                   </div>
                 </div>
