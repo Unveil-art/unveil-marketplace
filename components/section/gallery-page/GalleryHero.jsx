@@ -231,7 +231,10 @@ const GalleryHero = ({ imgRef, artwork }) => {
           <div className="md:mb-[100px] my-10 md:mt-[180px] md:space-y-10 text-center px-[15px] md:pl-10 md:pr-5">
             <p className="pb-5 l2 md:pb-0">{displayName}</p>
             <h1>{artwork.name}</h1>
-            <p className="hidden md:block">From ${getUSD(lowestPrice)}</p>
+            <p className="hidden md:block">
+              From ${parseFloat(getUSD(lowestPrice)).toFixed()} ({lowestPrice}{" "}
+              ETH)
+            </p>
             <div className="relative pt-10 md:pt-[100px] flex justify-between gap-5">
               <div className="md:space-y-[6px] w-full md:block grid grid-cols-2 gap-[6px]">
                 <div

@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import Delete from "@/components/svg/Delete";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "@/components/svg/Loader";
 import {
@@ -50,46 +50,51 @@ const CreateForm = ({
   const [royalties, setRoyalties] = useState([
     { from: "First 12 months", percentage: "15%" },
   ]);
-  const [royaltyTS, setRoyaltyTS] = useState({})
+  const [royaltyTS, setRoyaltyTS] = useState({});
 
   const timestampMap = useMemo(() => {
-    const _res = {}
-    const today = new Date()
-    for(let i=1; i <= 12; i++) {
-      const futureDate = new Date(today)
+    const _res = {};
+    const today = new Date();
+    for (let i = 1; i <= 12; i++) {
+      const futureDate = new Date(today);
       futureDate.setMonth(futureDate.getMonth() + i);
-      const key = `after_${i}_month`
-      const value = `${futureDate.getDate()}-${futureDate.getMonth() + 1}-${futureDate.getFullYear()}`
-      _res[key] = value
+      const key = `after_${i}_month`;
+      const value = `${futureDate.getDate()}-${
+        futureDate.getMonth() + 1
+      }-${futureDate.getFullYear()}`;
+      _res[key] = value;
     }
 
-    return _res
-  }, [])
+    return _res;
+  }, []);
 
   const rendableSecondaryOptions = useMemo(() => {
-    const _rendables = [1,2,3,4,5,6,7,8,9,10,11,12];
-    const _ts = Object.keys(royaltyTS).filter(key => {
-      const fromPrams = royalties.map(value => value?.from)
-      if(key !=='' && royaltyTS[key] && fromPrams.includes(key)) {
-        return true
-      }
-      return false
-    }).sort((a, b) => new Date(b) - new Date(a))
-    
-    const maxValue = Math.max(_rendables.filter(ren => {
-      if(_ts.includes(timestampMap[`after_${ren}_month`])) {
-        return true
-      }
-      return false
-    }))
+    const _rendables = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    const _ts = Object.keys(royaltyTS)
+      .filter((key) => {
+        const fromPrams = royalties.map((value) => value?.from);
+        if (key !== "" && royaltyTS[key] && fromPrams.includes(key)) {
+          return true;
+        }
+        return false;
+      })
+      .sort((a, b) => new Date(b) - new Date(a));
 
-    if(_rendables.slice(_rendables.indexOf(maxValue) + 1).length < 1) {
-      return [12]
+    const maxValue = Math.max(
+      _rendables.filter((ren) => {
+        if (_ts.includes(timestampMap[`after_${ren}_month`])) {
+          return true;
+        }
+        return false;
+      })
+    );
+
+    if (_rendables.slice(_rendables.indexOf(maxValue) + 1).length < 1) {
+      return [12];
     } else {
-      return _rendables.slice(_rendables.indexOf(maxValue) + 1)
+      return _rendables.slice(_rendables.indexOf(maxValue) + 1);
     }
-
-  }, [royalties, royaltyTS, timestampMap])
+  }, [royalties, royaltyTS, timestampMap]);
 
   useEffect(() => {
     if (artwork) {
@@ -119,28 +124,31 @@ const CreateForm = ({
 
   const { value } = useLocalStorage("token");
 
-  const defaultRoyalties = { from: timestampMap[`after_${rendableSecondaryOptions[0]}_month`], percentage: "0%" };
+  const defaultRoyalties = {
+    from: timestampMap[`after_${rendableSecondaryOptions[0]}_month`],
+    percentage: "0%",
+  };
 
   const handleChangeRoyalties = (index, data) => {
     const _royalties = {
-      ...royalties[index]
-    }
+      ...royalties[index],
+    };
     Object.entries(data).forEach(([key, value]) => {
-      _royalties[key] = value
-    })
+      _royalties[key] = value;
+    });
 
-    setRoyalties(prev => {
-      const ry = []
+    setRoyalties((prev) => {
+      const ry = [];
       prev.forEach((element, it) => {
-        if(index === it) {
-          ry[it] = _royalties
+        if (index === it) {
+          ry[it] = _royalties;
         } else {
-          ry[it] = element 
+          ry[it] = element;
         }
-      })
-      return ry
-    })
-  }
+      });
+      return ry;
+    });
+  };
 
   useEffect(() => {
     if (artwork) {
@@ -1184,14 +1192,14 @@ const CreateForm = ({
               {...register(`from[${i}]`)}
               onChange={(e) => {
                 handleChangeRoyalties(i, {
-                  from: e.target.value
-                })
-                setRoyaltyTS(prev => {
+                  from: e.target.value,
+                });
+                setRoyaltyTS((prev) => {
                   return {
                     ...prev,
-                    [e.target.value]: true
-                  }
-                })
+                    [e.target.value]: true,
+                  };
+                });
               }}
             >
               {i !== 0 && (
@@ -1208,9 +1216,12 @@ const CreateForm = ({
                   <option value="After 10 months">After 10 months</option>
                   <option value="After 11 months">After 11 months</option>
                   <option value="After 12 months">After 12 months</option> */}
-                  { rendableSecondaryOptions.map((num) => (
-                    <option key={num} value={timestampMap[`after_${num}_month`]} >{`After ${num} ${num !== 1 ? 'months' : 'month'}`}</option>
-                  )) }
+                  {rendableSecondaryOptions.map((num) => (
+                    <option
+                      key={num}
+                      value={timestampMap[`after_${num}_month`]}
+                    >{`After ${num} ${num !== 1 ? "months" : "month"}`}</option>
+                  ))}
                 </>
               )}
               {i === 0 && (
@@ -1227,8 +1238,13 @@ const CreateForm = ({
                   <option value="First 10 months">First 10 months</option>
                   <option value="First 11 months">First 11 months</option>
                   <option value="First 12 months">First 12 months</option> */}
-                  {[1,2,3,4,5,6,7,8,9,10,11,12].map(num => (
-                    <option key={num} value={timestampMap[`after_${num}_month`]}>First {num === 1 ? 'month': `${num} months`}</option>
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((num) => (
+                    <option
+                      key={num}
+                      value={timestampMap[`after_${num}_month`]}
+                    >
+                      First {num === 1 ? "month" : `${num} months`}
+                    </option>
                   ))}
                 </>
               )}
@@ -1242,9 +1258,11 @@ const CreateForm = ({
                   : null
               }
               {...register(`percentage[${i}]`)}
-              onChange={(e) => handleChangeRoyalties(i, {
-                percentage: e.target.value
-              })}
+              onChange={(e) =>
+                handleChangeRoyalties(i, {
+                  percentage: e.target.value,
+                })
+              }
             >
               <option value={0}>0%</option>
               <option value={0.5}>0.5%</option>
