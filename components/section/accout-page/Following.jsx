@@ -50,9 +50,6 @@ const Following = () => {
       <div className="ml-[40px] pt-[80px] md:pt-[160px] md:ml-[35svw] pr-[15px] md:pr-10 pb-10">
         <h3 className="b3 text-[17px] mb-[10px]">Artists</h3>
         <hr className="mb-[15px] h-[2px] bg-unveilGreen" />
-        {/* {[1].map((item, i) => (
-        <ArtworkListItem key={i} />
-        ))} */console.log(following)}
         {
           following?.length <= 0 ? (
             <div className="flex items-center gap-4 mb-20 md:gap-10">
