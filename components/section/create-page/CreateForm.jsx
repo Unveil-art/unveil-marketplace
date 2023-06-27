@@ -1090,7 +1090,7 @@ const CreateForm = ({
                 >
                   <div className="relative md:w-[unset] w-full">
                     <input
-                      type="number"
+                      type="text"
                       className="input"
                       placeholder="Select Price"
                       name={`price[${i}]`}
@@ -1099,6 +1099,10 @@ const CreateForm = ({
                       }
                       {...register(`price[${i}]`, {
                         required: "Required",
+                        pattern: {
+                          value: /^[0-9]*\.?[0-9]*$/,
+                          message: "Invalid number",
+                        },
                         onChange: (e) => {
                           handleChangePrice(e.target.value, i);
                         },
