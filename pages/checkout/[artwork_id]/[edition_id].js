@@ -182,6 +182,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
         EARLY_ACCESS_CONTRACT_ADDRESS
       );
       const isMinted = await contract.methods._hasMinted(wallet).call();
+      console.log(isMinted, "has Early Access");
       if (isMinted) return true;
       return false;
     } catch (err) {
