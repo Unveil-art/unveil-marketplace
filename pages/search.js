@@ -164,6 +164,7 @@ const Search = () => {
                           alt={collection.title}
                           fill={true}
                           style={{ objectFit: "cover" }}
+                          priority
                         />
                       </div>
                     </Link>

@@ -48,6 +48,7 @@ const ArtistHighlights = ({ data }) => {
               alt={item.media.data.attributes.alt}
               fill={true}
               style={{ objectFit: "cover" }}
+              priority
             />
             <h4 className="absolute text-unveilWhite bottom-5 left-5 s2">
               {item.text}

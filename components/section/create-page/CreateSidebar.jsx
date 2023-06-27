@@ -174,6 +174,7 @@ const CreateSidebar = ({
                 alt="Selected"
                 fill={true}
                 style={{ objectFit: "cover" }}
+                priority
               />
             )}
             {!detailImage1 && artwork && (
@@ -184,6 +185,7 @@ const CreateSidebar = ({
                     alt="Selected"
                     fill={true}
                     style={{ objectFit: "cover" }}
+                    priority
                   />
                 )}
               </>
@@ -380,6 +382,7 @@ const CreateSidebar = ({
                 alt="Selected"
                 fill={true}
                 style={{ objectFit: "cover" }}
+                priority
               />
             )}
             {!detailImage2 && artwork && (
@@ -390,6 +393,7 @@ const CreateSidebar = ({
                     alt="Selected"
                     fill={true}
                     style={{ objectFit: "cover" }}
+                    priority
                   />
                 )}
               </>

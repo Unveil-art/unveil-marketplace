@@ -26,6 +26,7 @@ const PeopleAbout = (collection) => {
               fill={true}
               style={{ objectFit: "cover" }}
               className="gsap-image"
+              priority
             />
           )}
         </Animate>

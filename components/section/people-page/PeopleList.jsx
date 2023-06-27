@@ -44,6 +44,7 @@ const PeopleList = ({ people }) => {
                                 alt={displayName}
                                 fill={true}
                                 style={{ objectFit: "cover" }}
+                                priority
                               />
                             )}
                           </div>

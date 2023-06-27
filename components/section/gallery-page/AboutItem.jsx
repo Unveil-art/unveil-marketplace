@@ -28,6 +28,7 @@ const AboutItem = ({ detail_shots=[], owner }) => {
                           alt={owner.firstName + " " + owner.lastName}
                           fill={true}
                           style={{ objectFit: "cover" }}
+                          priority
                         />
                       </div>
                     )}
@@ -54,6 +55,7 @@ const AboutItem = ({ detail_shots=[], owner }) => {
                 alt={item.caption}
                 fill={true}
                 style={{ objectFit: "cover" }}
+                priority
               />
             </div>
           </div>

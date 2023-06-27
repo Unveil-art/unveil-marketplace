@@ -18,6 +18,7 @@ const UpcomingDrop = ({ data }) => {
           alt={data.media.data.attributes.alt}
           fill={true}
           style={{ objectFit: "cover" }}
+          priority
         />
       </div>
       <div className="flex flex-col justify-between p-10 pt-20 md:pt-10 pb-20 md:pb-[60px]">

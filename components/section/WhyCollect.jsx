@@ -110,6 +110,7 @@ const WhyCollect = ({ data }) => {
                         }
                         fill={true}
                         style={{ objectFit: "cover" }}
+                        priority
                       />
                     )}
                   </div>
@@ -122,6 +123,7 @@ const WhyCollect = ({ data }) => {
                         alt={data.blocks[0].main_image.data[0].attributes.alt}
                         fill={true}
                         style={{ objectFit: "cover" }}
+                        priority
                       />
                     )}
                   </div>
@@ -140,6 +142,7 @@ const WhyCollect = ({ data }) => {
                         }
                         fill={true}
                         style={{ objectFit: "cover" }}
+                        priority
                       />
                     )}
                   </div>
@@ -241,6 +244,7 @@ const WhyCollect = ({ data }) => {
                         }
                         fill={true}
                         style={{ objectFit: "cover" }}
+                        priority
                       />
                     )}
                   </div>
@@ -253,6 +257,7 @@ const WhyCollect = ({ data }) => {
                         alt={data.blocks[2].main_image.data[0].attributes.url}
                         fill={true}
                         style={{ objectFit: "cover" }}
+                        priority
                       />
                     )}
                   </div>

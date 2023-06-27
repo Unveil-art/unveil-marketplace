@@ -58,6 +58,7 @@ const TwoBlockItem = ({ item, i }) => {
                     alt={item.title}
                     fill={true}
                     style={{ objectFit: "contain" }}
+                    priority
                   />
                 </div>
               </div>
@@ -79,6 +80,7 @@ const TwoBlockItem = ({ item, i }) => {
                     alt={item.name}
                     fill={true}
                     style={{ objectFit: "contain" }}
+                    priority
                   />
                 </div>
               </div>

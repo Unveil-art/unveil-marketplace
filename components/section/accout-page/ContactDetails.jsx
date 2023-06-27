@@ -77,6 +77,7 @@ const ContactDetails = ({ user }) => {
                   alt="Selected"
                   fill={true}
                   style={{ objectFit: "cover" }}
+                  priority
                 />
               )}
               {!image && user.profileUrl && (
@@ -85,6 +86,7 @@ const ContactDetails = ({ user }) => {
                   alt="Selected"
                   fill={true}
                   style={{ objectFit: "cover" }}
+                  priority
                 />
               )}
             </div>

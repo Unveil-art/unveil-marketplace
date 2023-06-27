@@ -21,6 +21,7 @@ const RequestAccess = ({ data, request }) => {
               fill={true}
               style={{ objectFit: "cover" }}
               className="gsap-image"
+              priority
             />
           </Animate>
         )}

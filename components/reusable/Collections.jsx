@@ -29,6 +29,7 @@ const Collections = ({ color = "#F9F7F2", bgColor = "#141414", item }) => {
           alt={item.title}
           fill={true}
           style={{ objectFit: "cover" }}
+          priority
         />
       </div>
     </section>

@@ -24,6 +24,7 @@ const Link = ({ data }) => {
                 alt={data.Image.data[0].attributes.alt}
                 fill={true}
                 style={{ objectFit: "cover" }}
+                priority
               />
             </div>
             <div>

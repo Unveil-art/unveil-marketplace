@@ -53,6 +53,7 @@ const ProductCard = ({ rounded = false, item }) => {
                 alt={item.title}
                 fill={true}
                 style={{ objectFit: rounded ? "cover" : "contain" }}
+                priority
               />
             </div>
           </div>
@@ -77,6 +78,7 @@ const ProductCard = ({ rounded = false, item }) => {
                 alt={item.name}
                 fill={true}
                 style={{ objectFit: rounded ? "cover" : "contain" }}
+                priority
               />
             </div>
           </div>

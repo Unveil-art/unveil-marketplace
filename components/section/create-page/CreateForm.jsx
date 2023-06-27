@@ -1409,6 +1409,7 @@ const CreateForm = ({
                     alt="Selected"
                     fill={true}
                     style={{ objectFit: "cover" }}
+                    priority
                   />
                 )}
               </label>

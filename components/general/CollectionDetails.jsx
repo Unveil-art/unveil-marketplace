@@ -89,6 +89,7 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
                 fill={true}
                 style={{ objectFit: "cover" }}
                 className="gsap-bubblewrap"
+                priority
               />
             )}
           </Animate>
