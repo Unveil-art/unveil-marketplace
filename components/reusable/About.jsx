@@ -36,7 +36,7 @@ const About = ({ bg, item }) => {
           data-cursor-color="#b2b4ae"
           className="relative md:aspect-square aspect-[10/11] 2xl:aspect-auto bg-bgColor"
         >
-          <Link href={`/gallery/artwork/${item.id}`}>
+          <Link href={`/gallery/${item.name ? "artwork":"collection"}/${item.id}`}>
           <Image
             src={item.media_url}
             alt={item.name}
