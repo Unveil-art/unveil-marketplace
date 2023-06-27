@@ -24,14 +24,21 @@ import {
 } from "lib/backend";
 import RPC from "lib/RPC";
 import { Web3Context } from "@/contexts/Web3AuthContext";
-import { MARKET_ABI, MARKET_CONTRACT_ADDRESS } from "lib/constants";
+import {
+  EARLY_ACCESS_ABI,
+  EARLY_ACCESS_CONTRACT_ADDRESS,
+  MARKET_ABI,
+  MARKET_CONTRACT_ADDRESS,
+} from "lib/constants";
 import Web3 from "web3";
+import { useRouter } from "next/router";
 
 const EditionCheckout = ({ artwork, edition_id }) => {
   const { value } = useLocalStorage("token");
   const { value: wallet } = useLocalStorage("walletAddress");
   const { step, setStep } = useContext(StepContext);
   const { provider, rpcUrl, showRamper } = useContext(Web3Context);
+  const router = useRouter();
 
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [gasOpen, setGasOpen] = useState(false);
@@ -47,6 +54,13 @@ const EditionCheckout = ({ artwork, edition_id }) => {
     const res = await getCurrentExchangeRateETHUSD();
     setPriceUSD(res.USD.toFixed(2));
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/gallery/artwork/" + artwork.id);
+    }
+  }, [value]);
 
   useEffect(() => {
     handlePrice();
@@ -156,12 +170,39 @@ const EditionCheckout = ({ artwork, edition_id }) => {
     }
   }, [edition, provider]);
 
+  const hasEACard = async () => {
+    try {
+      if (!provider) {
+        console.log("Provider not initialized yet");
+        return false;
+      }
+      let rpc = new RPC(provider);
+      let contract = await rpc.getContract(
+        EARLY_ACCESS_ABI,
+        EARLY_ACCESS_CONTRACT_ADDRESS
+      );
+      const isMinted = await contract.methods._hasMinted(wallet).call();
+      if (isMinted) return true;
+      return false;
+    } catch (err) {
+      console.log(JSON.stringify(err), "err");
+      return false;
+    }
+  };
+
   const mint = async () => {
     if (!provider) {
       console.log("Provider not initialized yet");
       return;
     }
     setStep(4);
+
+    const hasEarlyAccess = await hasEACard();
+    if (!hasEarlyAccess) {
+      setStep(3);
+      toast.info("Only EarlyAccess Card holders can Mint!!");
+      return;
+    }
     const funds = await getGasFees(true);
     if (!funds) {
       setStep(3);
