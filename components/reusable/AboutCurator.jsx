@@ -91,7 +91,7 @@ const AboutCurator = ({ owner }) => {
           <div className="flex items-end gap-2 flex-nowrap">
             <p className="b3">By</p>
             <Link href={`/people/${owner.id}`}>
-              <p className="truncate l2">{displayName}</p>
+              <p className=" l2">{displayName}</p>
             </Link>
           </div>
 
