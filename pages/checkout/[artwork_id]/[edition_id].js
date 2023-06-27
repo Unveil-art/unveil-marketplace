@@ -20,6 +20,7 @@ import {
   getCurrentExchangeRateETHUSD,
   mintEdition,
   postTransaction,
+  canMintThisEdition,
 } from "lib/backend";
 import RPC from "lib/RPC";
 import { Web3Context } from "@/contexts/Web3AuthContext";
@@ -30,7 +31,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
   const { value } = useLocalStorage("token");
   const { value: wallet } = useLocalStorage("walletAddress");
   const { step, setStep } = useContext(StepContext);
-  const { provider, rpcUrl } = useContext(Web3Context);
+  const { provider, rpcUrl, showRamper } = useContext(Web3Context);
 
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [gasOpen, setGasOpen] = useState(false);
@@ -64,10 +65,10 @@ const EditionCheckout = ({ artwork, edition_id }) => {
     console.log(gasFees);
   }, [gasFeesUSD]);
 
-  const getGasFees = async () => {
+  const getGasFees = async (fromMint = false) => {
     if (!provider) {
       console.log("Provider not initialized yet");
-      return;
+      return false;
     }
 
     try {
@@ -95,11 +96,19 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       setGasFees(fee / 1e18);
       const usd = await getCurrentExchangeRateETHUSD();
       setGasFeesUSD(usd.USD * (fee / 1e18));
+      return true;
     } catch (err) {
       console.log(JSON.stringify(err), "=====");
+
       setGasFees(0.03);
       const usd = await getCurrentExchangeRateETHUSD();
+      const totalPriceInUSD = (edition.price + 0.03) * usd.USD;
+      if (fromMint) {
+        toast.error("Insufficient Balance in your Account.");
+        showRamper(parseInt(totalPriceInUSD));
+      }
       setGasFeesUSD(usd.USD * 0.03);
+      return false;
     }
   };
 
@@ -143,7 +152,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
 
   useEffect(() => {
     if (edition) {
-      getGasFees(edition.price);
+      getGasFees();
     }
   }, [edition, provider]);
 
@@ -153,6 +162,17 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       return;
     }
     setStep(4);
+    const funds = await getGasFees(true);
+    if (!funds) {
+      setStep(3);
+      return;
+    }
+    const canMint = await canMintThisEdition(edition_id);
+    if (!canMint) {
+      setStep(3);
+      toast.info("Edition is Already Minted");
+      return;
+    }
 
     let rpc = new RPC(provider);
     let contract = await rpc.getContract(
@@ -208,7 +228,8 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       setStep(5);
     } catch (err) {
       console.log(JSON.stringify(err), "=====");
-      toast.error(JSON.stringify(err));
+      if (err?.data?.code == -32000) showRamper(total ? parseInt(total) : 100);
+      toast.error(err?.data?.message);
       setStep(3);
     }
   };
@@ -257,6 +278,8 @@ const EditionCheckout = ({ artwork, edition_id }) => {
                 <Payment
                   artwork_id={artwork.id}
                   edition_id={edition.id}
+                  artwork={artwork}
+                  edition={edition}
                   mint={mint}
                   total={total}
                   payment={payment}
