@@ -21,6 +21,7 @@ import {
   mintEdition,
   postTransaction,
   canMintThisEdition,
+  getUserMe,
 } from "lib/backend";
 import RPC from "lib/RPC";
 import { Web3Context } from "@/contexts/Web3AuthContext";
@@ -37,9 +38,10 @@ const EditionCheckout = ({ artwork, edition_id }) => {
   const { value } = useLocalStorage("token");
   const { value: wallet } = useLocalStorage("walletAddress");
   const { step, setStep } = useContext(StepContext);
-  const { provider, rpcUrl, showRamper } = useContext(Web3Context);
+  const { provider, rpcUrl, showRamper, logout } = useContext(Web3Context);
   const router = useRouter();
 
+  const [email, setEmail] = useState("");
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [gasOpen, setGasOpen] = useState(false);
   const [payment, setPayment] = useState("");
@@ -50,6 +52,15 @@ const EditionCheckout = ({ artwork, edition_id }) => {
   const [total, setTotal] = useState();
   const [index, setIndex] = useState();
 
+  const init = async (token) => {
+    try {
+      const data = await getUserMe(token);
+      setEmail(data.email);
+    } catch (err) {
+      logout();
+    }
+  };
+
   const handlePrice = async () => {
     const res = await getCurrentExchangeRateETHUSD();
     setPriceUSD(res.USD.toFixed(2));
@@ -59,6 +70,9 @@ const EditionCheckout = ({ artwork, edition_id }) => {
     const token = localStorage.getItem("token");
     if (!token) {
       router.push("/gallery/artwork/" + artwork.id);
+    }
+    if (token) {
+      init(token);
     }
   }, [value]);
 
@@ -311,7 +325,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
             )}
             {step === 2 && (
               <Animate options={{ alpha: true }}>
-                <ConnectWithWallet setStep={setStep} />
+                <ConnectWithWallet email={email} setStep={setStep} />
               </Animate>
             )}
             {step === 3 && (

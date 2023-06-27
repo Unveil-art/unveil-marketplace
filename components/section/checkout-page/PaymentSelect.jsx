@@ -57,13 +57,14 @@ const PaymentSelect = ({
         }}
         className="relative cursor-pointer text-center btn btn-primary btn-full btn-lg my-[10px]"
       >
-        <p>Creditcard</p>
+        <p>Creditcard/iDeal</p>
         <div className="flex items-center gap-[10px] top-1/2 right-5 -translate-y-1/2 absolute">
           <Mastercard />
           <Visa />
+          <Ideal />
         </div>
       </div>
-      <div
+      {/* <div
         onClick={() => {
           setPayment("iDeal");
           setStep(2);
@@ -74,7 +75,7 @@ const PaymentSelect = ({
         <div className="flex items-center gap-[10px] top-1/2 right-5 -translate-y-1/2 absolute">
           <Ideal />
         </div>
-      </div>
+      </div> */}
       <div
         onClick={() => {
           setPayment("Wallet");
