@@ -4,7 +4,7 @@ import Chat from "@/components/reusable/Chat";
 import Ideal from "@/components/svg/Ideal";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { toast } from "react-toastify";
-import { getClientSecret } from "lib/backend";
+import { canMintThisEdition, getClientSecret } from "lib/backend";
 import Loader from "@/components/svg/Loader";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 
@@ -19,6 +19,12 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
   const getSecret = async(token, wallet) => {
     try{
       setLoading(true);
+      const canMint = await canMintThisEdition(edition.edition_id);
+      if(!canMint){
+        toast.error('Edition is already Minted');
+        setLoading(false);
+        return;
+      }
       const data = await getClientSecret(token,{
         wallet_address:wallet,
         artwork_id:artwork_id,
