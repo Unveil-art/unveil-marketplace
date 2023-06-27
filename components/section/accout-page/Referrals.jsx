@@ -1,11 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Oneliner from "../../reusable/Oneliner";
 import Invite from "@/components/reusable/Invite";
 import Animate from "@/components/reusable/Animate";
+import { toast } from "react-toastify";
+import ReferralForm from "./ReferralForm";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import { sendInvite } from "lib/backend";
+
 const Referrals = () => {
+  const [referrals, setReferrals] = useState([
+    { role: "artist", type: "GOLD", email: "" },
+  ]);
+  const { value } = useLocalStorage("token");
+
+  const notify = (message) => toast.error(message);
+
+  const handleFormSubmit = async (index, data) => {
+    try {
+      data.invitation_type = data.role === "artist" ? "SILVER" : "SILVER";
+      await sendInvite(value, data);
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message);
+    }
+  };
+
+  const handleDelete = (index) => {
+    const newReferrals = [...referrals];
+    newReferrals.splice(index, 1);
+    setReferrals(newReferrals);
+  };
   return (
     <>
-      {/* TODO: invite label an other color based on status  */}
       <Animate options={{ alpha: true }}>
         <Oneliner
           mr
@@ -15,35 +41,25 @@ const Referrals = () => {
         />
         <div className="ml-[40px] mt-10 md:ml-[35svw] pr-[15px] md:pr-10 max-w-[640px] pb-10">
           <Invite />
-          <form className="mt-10">
-            <div className="flex items-center gap-[5px] mb-5">
-              <h3 className="b3 text-[17px]">Referral 1</h3>
-              <span className="px-2 py-1 rounded-full small text-unveilWhite bg-unveilBlack">
-                Accepted
-              </span>
-            </div>
-            <hr className="mb-[15px] h-[2px] bg-unveilGreen" />
-            <select className="select-input mb-2 md:mb-[15px]">
-              <option>Black</option>
-              <option>White</option>
-            </select>
-            <div className="mb-2 md:mb-[15px] grid grid-cols-5 md:grid-cols-3 gap-2 md:gap-[15px]">
-              <input
-                placeholder="email"
-                className="col-span-3 md:col-span-2 input"
-                type="text"
-              />
-              <button className="col-span-2 btn btn-secondary btn-lg md:col-auto">
-                Invite sent
-              </button>
-            </div>
-            <button className="btn-lg btn btn-secondary btn-full">
-              Delete referral
-            </button>
-          </form>
+          {referrals.map((referral, i) => (
+            <ReferralForm
+              key={i}
+              initialData={referral}
+              onSubmit={(data) => handleFormSubmit(i, data)}
+              onDelete={() => handleDelete(i)}
+            />
+          ))}
 
           <hr className="my-10 h-[2px] bg-unveilGreen" />
-          <button className="btn-lg btn btn-secondary btn-full">
+          <button
+            onClick={() =>
+              setReferrals([
+                ...referrals,
+                { role: "artist", type: "GOLD", email: "" },
+              ])
+            }
+            className="btn-lg btn btn-secondary btn-full"
+          >
             Add more
           </button>
         </div>

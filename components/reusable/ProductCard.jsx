@@ -112,7 +112,10 @@ const ProductCard = ({ rounded = false, item }) => {
       </Link>
       {item.editions && (
         <div className="flex items-center gap-1">
-          <p className="b3 opacity-60">$ {getUSD(item.editions[0]?.price)}</p>
+          <p className="b3 opacity-60">
+            ${parseFloat(getUSD(item.editions[0]?.price)).toFixed()} (
+            {item.editions[0]?.price} ETH)
+          </p>
         </div>
       )}
     </Animate>

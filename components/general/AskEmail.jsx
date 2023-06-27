@@ -23,7 +23,7 @@ const AskEmail = () => {
       <section className="fixed top-0 left-0 z-50 w-screen h-screen bg-[rgba(0,0,0,0.4)]">
         <form
           onSubmit={handleArtworkSubmit(onSubmitForm)}
-          className="absolute p-10 w-[600px] rounded-[30px] -translate-x-1/2 top-1/2 left-1/2 -translate-y-1/2 bg-unveilWhite"
+          className="absolute p-10 w-[calc(100%-30px)] md:w-[600px] rounded-[30px] -translate-x-1/2 top-1/2 left-1/2 -translate-y-1/2 bg-unveilWhite"
         >
           <p className="b3">Enter email to continue</p>
           <div>
@@ -51,12 +51,12 @@ const AskEmail = () => {
             </p>
           </div>
 
-          <button className="w-full btn btn-primary btn-lg mt-[15px] mb-[30px]">
+          <button className="w-full btn btn-primary btn-lg mt-[5px] md:mt-[15px] mb-[30px]">
             Submit
           </button>
           <p
             onClick={() => logout()}
-            className="mx-auto underline cursor-pointer w-fit underline-offset-1 decoration-1"
+            className="mx-auto underline cursor-pointer b3 w-fit underline-offset-1 decoration-1"
           >
             Cancel
           </p>

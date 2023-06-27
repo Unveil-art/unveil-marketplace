@@ -115,7 +115,8 @@ const TwoBlockItem = ({ item, i }) => {
           {item.editions && (
             <div className="flex items-center gap-1">
               <p className="b3 opacity-60">
-                $ {getUSD(item.editions[0]?.price)}
+                ${parseFloat(getUSD(item.editions[0]?.price)).toFixed()} (
+                {item.editions[0]?.price} ETH)
               </p>
             </div>
           )}

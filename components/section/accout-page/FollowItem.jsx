@@ -34,7 +34,7 @@ const FollowItem = ({ item, artist = false, setFollowing }) => {
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4 md:gap-10">
         <div className="max-h-[136px] max-w-[106px] relative min-h-[136px] min-w-[106px] md:max-h-[140px] md:max-w-[120px] md:min-h-[140px] md:min-w-[120px] bg-bgColor my-[10px]">
-          {artist && (
+          {artist && item.user.profileUrl && (
             <Image
               className="object-cover w-full h-full"
               src={item.user.profileUrl}

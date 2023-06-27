@@ -56,7 +56,8 @@ const About = ({ bg, item }) => {
               {item.editions && (
                 <div className="flex items-center gap-1 mt-[2px]">
                   <p className="leading-tight b5">
-                    $ {getUSD(item.editions[0]?.price)}
+                    ${parseFloat(getUSD(item.editions[0]?.price)).toFixed()} (
+                    {item.editions[0]?.price} ETH)
                   </p>
                 </div>
               )}
@@ -69,14 +70,14 @@ const About = ({ bg, item }) => {
         >
           {item.title && (
             <Link href={`/gallery/collection/${item.id}`}>
-              <h2 className="h1 max-w-[75%] md:max-w-[90%] w-fit">
+              <h2 className="h1 max-w-[75%] break-words md:max-w-[90%] w-fit">
                 {item.title}
               </h2>
             </Link>
           )}
           {item.name && (
             <Link href={`/gallery/artwork/${item.id}`}>
-              <h2 className="h1 max-w-[75%] md:max-w-[90%] w-fit">
+              <h2 className="h1 max-w-[75%] break-words md:max-w-[90%] w-fit">
                 {item.name}
               </h2>
             </Link>
