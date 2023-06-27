@@ -3,6 +3,7 @@ import { Web3Auth } from "@web3auth/modal";
 import { createContext, useEffect, useState } from "react";
 import { WalletConnectV1Adapter } from "@web3auth/wallet-connect-v1-adapter";
 import { MetamaskAdapter } from "@web3auth/metamask-adapter";
+import { useWindowSize } from "react-use";
 import Web3 from "web3";
 import RPC from "lib/RPC";
 import { useAuth } from "@/hooks/useAuth";
@@ -38,6 +39,7 @@ const Web3AuthProvider = ({ children }) => {
   });
   const [web3Auth, setWeb3Auth] = useState(null);
   const [provider, setProvider] = useState(null);
+  const { width } = useWindowSize();
 
   const showRamper = (amount) =>
     setRamper({
@@ -192,7 +194,9 @@ const Web3AuthProvider = ({ children }) => {
               email: formEmail ?? email,
               walletAddress: accounts,
             });
-
+            if (window && width < 500) {
+              window.open("https://metamask.app.link/dapp/", "_blank");
+            }
             const signedMessage = await rpc.signMessage(nonceData.nonce);
 
             setEmail(false);
