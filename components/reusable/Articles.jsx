@@ -81,6 +81,7 @@ const Articles = ({ data, homePage = false }) => {
                     alt={data[0].attributes.Image.data.attributes.alt}
                     fill={true}
                     style={{ objectFit: "cover" }}
+                    priority
                   />
                 )}
               </div>
@@ -117,6 +118,7 @@ const Articles = ({ data, homePage = false }) => {
                     alt={data[1].attributes.Image.data.attributes.alt}
                     fill={true}
                     style={{ objectFit: "cover" }}
+                    priority
                   />
                 )}
               </div>
@@ -154,6 +156,7 @@ const Articles = ({ data, homePage = false }) => {
                       alt={data[2].attributes.Image.data.attributes.alt}
                       fill={true}
                       style={{ objectFit: "cover" }}
+                      priority
                     />
                   )}
                 </div>
@@ -189,6 +192,7 @@ const Articles = ({ data, homePage = false }) => {
                       alt={data[3].attributes.Image.data.attributes.alt}
                       fill={true}
                       style={{ objectFit: "cover" }}
+                      priority
                     />
                   )}
                 </div>
@@ -224,6 +228,7 @@ const Articles = ({ data, homePage = false }) => {
                       alt={data[4].attributes.Image.data.attributes.alt}
                       fill={true}
                       style={{ objectFit: "cover" }}
+                      priority
                     />
                   )}
                 </div>
@@ -260,6 +265,7 @@ const Articles = ({ data, homePage = false }) => {
                     alt={data[3].attributes.Image.data.attributes.alt}
                     fill={true}
                     style={{ objectFit: "cover" }}
+                    priority
                   />
                 )}
               </div>
@@ -295,6 +301,7 @@ const Articles = ({ data, homePage = false }) => {
                     alt={data[4].attributes.Image.data.attributes.alt}
                     fill={true}
                     style={{ objectFit: "cover" }}
+                    priority
                   />
                 )}
               </div>

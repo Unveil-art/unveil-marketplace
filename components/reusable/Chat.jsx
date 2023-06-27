@@ -10,6 +10,7 @@ const Chat = ({ title, text, chatBtn = false, btnDesktop = false }) => {
           alt="Nick Fancher"
           fill={true}
           style={{ objectFit: "cover" }}
+          priority
         />
       </div>
       <div className="md:py-[8px] px-[12px] flex flex-col gap-1 justify-center py-[6px] md:px-[16px] ">

@@ -19,6 +19,7 @@ const ArtistAnnouncement = ({ data }) => {
               alt={data.media.data.attributes.alt}
               fill={true}
               style={{ objectFit: "cover" }}
+              priority
             />
           </div>
         </div>

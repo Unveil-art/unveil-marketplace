@@ -41,6 +41,7 @@ const FollowItem = ({ item, artist = false, setFollowing }) => {
               alt={item.user.firstName}
               fill={true}
               style={{ objectFit: "cover" }}
+              priority
             />
           )}
         </div>

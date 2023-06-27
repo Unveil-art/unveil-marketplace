@@ -25,6 +25,7 @@ const Media = ({ data }) => {
                 fill={true}
                 style={{ objectFit: "cover" }}
                 className="gsap-image"
+                priority
               />
             )}
             {data.Media.data.attributes.mime.includes("video") && (

@@ -39,6 +39,7 @@ const TwoArticles = ({ data }) => {
                     alt={item.attributes.Image.data.attributes.alt}
                     fill={true}
                     style={{ objectFit: "cover" }}
+                    priority
                   />
                 )}
               </div>

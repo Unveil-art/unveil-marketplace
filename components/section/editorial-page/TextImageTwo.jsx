@@ -25,6 +25,7 @@ const TextImageTwo = ({ data }) => {
               fill={true}
               style={{ objectFit: "cover" }}
               className="gsap-image"
+              priority
             />
           )}
         </Animate>

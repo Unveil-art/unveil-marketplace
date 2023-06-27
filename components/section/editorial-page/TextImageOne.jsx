@@ -22,6 +22,7 @@ const TextImageOne = ({ data, title }) => {
               fill={true}
               style={{ objectFit: "cover" }}
               className="gsap-image"
+              priority
             />
           )}
         </Animate>
@@ -49,6 +50,7 @@ const TextImageOne = ({ data, title }) => {
                 fill={true}
                 style={{ objectFit: "cover" }}
                 className="gsap-image"
+                priority
               />
             )}
             {data.media.data.attributes.mime.includes("video") && (

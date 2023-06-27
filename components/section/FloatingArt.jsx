@@ -187,6 +187,7 @@ const FloatingArt = ({ data }) => {
                   alt={data.topleft.data.attributes.alt}
                   fill={true}
                   style={{ objectFit: "cover" }}
+                  priority
                 />
               )}
 
@@ -197,6 +198,7 @@ const FloatingArt = ({ data }) => {
                   fill={true}
                   style={{ objectFit: "cover" }}
                   className="gsap-bubblewrap"
+                  priority
                 />
               )}
             </div>
@@ -220,6 +222,7 @@ const FloatingArt = ({ data }) => {
                   alt={data.bottomleft.data.attributes.alt}
                   fill={true}
                   style={{ objectFit: "cover" }}
+                  priority
                 />
               )}
               {data.bottomleft_bubblewrap && (
@@ -229,6 +232,7 @@ const FloatingArt = ({ data }) => {
                   fill={true}
                   style={{ objectFit: "cover" }}
                   className="gsap-bubblewrap"
+                  priority
                 />
               )}
             </div>
@@ -251,6 +255,7 @@ const FloatingArt = ({ data }) => {
                   alt={data.topright.data.attributes.alt}
                   fill={true}
                   style={{ objectFit: "cover" }}
+                  priority
                 />
               )}
               {data.topright_bubblewrap && (
@@ -260,6 +265,7 @@ const FloatingArt = ({ data }) => {
                   fill={true}
                   style={{ objectFit: "cover" }}
                   className="gsap-bubblewrap"
+                  priority
                 />
               )}
             </div>
@@ -282,6 +288,7 @@ const FloatingArt = ({ data }) => {
                   alt={data.centerright.data.attributes.alt}
                   fill={true}
                   style={{ objectFit: "cover" }}
+                  priority
                 />
               )}
               {data.centerright_bubblewrap && (
@@ -291,6 +298,7 @@ const FloatingArt = ({ data }) => {
                   fill={true}
                   style={{ objectFit: "cover" }}
                   className="gsap-bubblewrap"
+                  priority
                 />
               )}
             </div>

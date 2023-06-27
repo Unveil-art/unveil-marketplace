@@ -41,6 +41,7 @@ const About = ({ bg, item }) => {
             alt={item.name}
             fill={true}
             style={{ objectFit: "cover" }}
+            priority
           />
           {item.name && (
             <div className="absolute bottom-[15px] left-[15px] w-[200px] bg-bgBlackOpacity border rounded-[10px] border-bgColorHover text-unveilWhite py-2 md:py-5 px-2 md:px-[15px] bg-blur">

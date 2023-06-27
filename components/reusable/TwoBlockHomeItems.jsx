@@ -57,6 +57,7 @@ const TwoBlockHomeItems = ({ homePage = false, data }) => {
                 fill={true}
                 style={{ objectFit: "cover" }}
                 className="gsap-bubblewrap"
+                priority
               />
             )}
           </div>
@@ -98,6 +99,7 @@ const TwoBlockHomeItems = ({ homePage = false, data }) => {
                   fill={true}
                   style={{ objectFit: "cover" }}
                   className="gsap-image"
+                  priority
                 />
               )}
               {data[1].bubblewrap && (
@@ -107,6 +109,7 @@ const TwoBlockHomeItems = ({ homePage = false, data }) => {
                   fill={true}
                   style={{ objectFit: "cover" }}
                   className="gsap-bubblewrap"
+                  priority
                 />
               )}
             </div>
