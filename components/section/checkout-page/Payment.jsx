@@ -106,7 +106,7 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
                   await postTransaction(token, {
                     transaction_hash: result.id,
                     amount: parseFloat(
-                      (edition.price).toFixed(4)
+                      (edition.price).toFixed(2)
                     ),
                     currency: "ETH",
                     transaction_type: "MINT_EDITION",

@@ -151,7 +151,7 @@ const EditionPopIn = ({ edition, setEdition }) => {
                   <div>
                     <p className="s2">${price ? price : "0"}</p>
                     <p className="ml-auto w-fit leading-[24px] b5">
-                      {edition.price} ETH
+                      {edition.price?.toFixed(2)} ETH
                     </p>
                   </div>
                 </div>

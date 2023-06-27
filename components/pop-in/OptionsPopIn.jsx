@@ -156,7 +156,7 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
                       </p>
                       <p className="b4">
                         ${udsEx ? (udsEx * edition.price).toFixed(2) : "0"} or{" "}
-                        {edition.price} ETH
+                        {edition.price?.toFixed(2)} ETH
                       </p>
                     </div>
 

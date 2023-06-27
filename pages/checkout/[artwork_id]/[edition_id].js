@@ -182,7 +182,6 @@ const EditionCheckout = ({ artwork, edition_id }) => {
         EARLY_ACCESS_CONTRACT_ADDRESS
       );
       const isMinted = await contract.methods._hasMinted(wallet).call();
-      console.log(isMinted, "has Early Access");
       if (isMinted) return true;
       return false;
     } catch (err) {
@@ -379,7 +378,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
                 )}
                 {edition && (
                   <p className="leading-[16px] whitespace-nowrap lg:leading-[23px] b5">
-                    ({edition.price.toFixed(4)} ETH)
+                    ({edition.price.toFixed(2)} ETH)
                   </p>
                 )}
               </div>
@@ -400,7 +399,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
                   {gasFeesUSD && <>{gasFeesUSD.toFixed(2)}</>}
                 </p>
                 <p className="leading-[16px] lg:leading-[23px] b5">
-                  {gasFees && <>({gasFees.toFixed(4)} ETH)</>}
+                  {gasFees && <>({gasFees.toFixed(2)} ETH)</>}
                 </p>
               </div>
             </div>
@@ -416,7 +415,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
                   (
                   {gasFees
                     ? (parseFloat(gasFees) + parseFloat(edition.price)).toFixed(
-                        4
+                        2
                       )
                     : "0"}{" "}
                   ETH)

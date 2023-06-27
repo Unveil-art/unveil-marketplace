@@ -59,7 +59,7 @@ const About = ({ bg, item }) => {
                 <div className="flex items-center gap-1 mt-[2px]">
                   <p className="leading-tight b5">
                     ${parseFloat(getUSD(item.editions[0]?.price)).toFixed()} (
-                    {item.editions[0]?.price} ETH)
+                    {item.editions[0]?.price?.toFixed(2)} ETH)
                   </p>
                 </div>
               )}

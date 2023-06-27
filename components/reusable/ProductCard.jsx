@@ -114,7 +114,7 @@ const ProductCard = ({ rounded = false, item }) => {
         <div className="flex items-center gap-1">
           <p className="b3 opacity-60">
             ${parseFloat(getUSD(item.editions[0]?.price)).toFixed()} (
-            {item.editions[0]?.price} ETH)
+            {item.editions[0]?.price?.toFixed(2)} ETH)
           </p>
         </div>
       )}
