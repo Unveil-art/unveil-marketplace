@@ -25,7 +25,9 @@ import MetaMask from "@/components/svg/MetaMask";
 import { StepContext } from "@/contexts/StepContext";
 import { useIntersection } from "@/hooks/useIntersection";
 import Image from "next/image";
+import { useWindowSize } from "@/hooks/useWindowSize";
 import Torus from "@/components/svg/Torus";
+
 
 const GalleryHero = ({ artwork, dominantColor }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
@@ -37,6 +39,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
   const [recognitions, setRecognitions] = useState([]);
   const [exchangeRate, setExchangeRate] = useState(1900);
   const [orientation, setOrientation] = useState(false);
+  const { width } = useWindowSize();
 
   // Popin states
   const [collectionOpen, setCollectionOpen] = useState(false);
@@ -237,13 +240,13 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                 orientation
                   ? " mx-5 md:mx-10 w-[calc(100%-40px)] md:w-[calc(100%-80px)] "
                   : " mx-10 md:mx-20 w-[calc(100%-80px)] md:w-[calc(100%-160px)] "
-              }
+              } ${width < 768 ? "shadow2" : "shadow1"}
                 relative h-full z-20`}
             >
               <Image
-                src={artwork.media_url}
-                alt={artwork.name}
                 fill={true}
+                alt={artwork.name}
+                src={artwork.media_url}
                 style={{ objectFit: "contain", zIndex: 20 }}
               />
             </div>

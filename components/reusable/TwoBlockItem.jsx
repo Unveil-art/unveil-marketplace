@@ -4,10 +4,12 @@ import Link from "next/link";
 import Animate from "./Animate";
 import { getUserName } from "lib/utils";
 import { getCurrentExchangeRateETHUSD } from "lib/backend";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 const TwoBlockItem = ({ item, i }) => {
   const [orientation, setOrientation] = useState(false);
   const [exchangeRate, setExchangeRate] = useState(1900);
+  const { width } = useWindowSize();
 
   const init = async () => {
     try {
@@ -50,7 +52,7 @@ const TwoBlockItem = ({ item, i }) => {
                     orientation
                       ? "mx-[10%] md:mx-[20%] w-[calc(100%-20%)] md:w-[calc(100%-40%)]"
                       : "mx-[25%] md:mx-[30%] w-[calc(100%-50%)] md:w-[calc(100%-60%)]"
-                  } shadow1
+                  } ${width < 768 ? "shadow2" : "shadow1"}
        relative  h-full `}
                 >
                   <Image
@@ -72,7 +74,7 @@ const TwoBlockItem = ({ item, i }) => {
                     orientation
                       ? "mx-[10%] md:mx-[20%] w-[calc(100%-20%)] md:w-[calc(100%-40%)]"
                       : "mx-[25%] md:mx-[30%] w-[calc(100%-50%)] md:w-[calc(100%-60%)]"
-                  } shadow1
+                  } ${width < 768 ? "shadow2" : "shadow1"}
      relative h-full `}
                 >
                   <Image
