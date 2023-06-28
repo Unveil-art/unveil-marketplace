@@ -238,14 +238,13 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                   ? " mx-5 md:mx-10 w-[calc(100%-40px)] md:w-[calc(100%-80px)] "
                   : " mx-10 md:mx-20 w-[calc(100%-80px)] md:w-[calc(100%-160px)] "
               } shadow1
-                relative h-full  z-10`}
+                relative h-full z-20`}
             >
               <Image
                 fill={true}
                 alt={artwork.name}
                 src={artwork.media_url}
-                style={{ objectFit: "contain" }}
-                priority
+                style={{ objectFit: "contain", zIndex: 20 }}
               />
             </div>
           </div>
@@ -272,7 +271,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
         <div className="md:col-span-2 ">
           <div className="md:mb-[100px] my-10 md:mt-[180px] md:space-y-10 text-center px-[15px] md:pl-10 md:pr-5">
             <p className="pb-5 l2 md:pb-0">{displayName}</p>
-            <h1>{artwork.name}</h1>
+            <h1 className="h3">{artwork.name}</h1>
             <p className="hidden md:block">
               From ${parseFloat(getUSD(lowestPrice)).toFixed()} (
               {lowestPrice.toFixed(2)} ETH)

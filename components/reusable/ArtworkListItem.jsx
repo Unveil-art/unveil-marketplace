@@ -43,7 +43,6 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
 
   useEffect(() => {
     setList(item);
-    console.log(item);
   }, [item]);
 
   const handleListing = async (e) => {
@@ -108,7 +107,6 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
       setLoading(false);
     }
   };
-  console.log(item, "items");
   return (
     <div
       key={i}

@@ -15,13 +15,6 @@ const Following = () => {
     }
   }, [value]);
 
-  useEffect(() => {
-    console.log(following);
-    console.log(following);
-    console.log(following);
-    console.log(following);
-  }, [following]);
-
   return (
     <Animate options={{ alpha: true }}>
       <div className="ml-[40px] pt-[80px] md:pt-[160px] md:ml-[35svw] pr-[15px] md:pr-10 pb-10">

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import ColorThief from "colorthief";
 
 const Minting = ({ artwork }) => {
-  console.log(artwork);
   const [dominantColor, setDominantColor] = useState("rgba(21, 17, 0, 0.05)");
 
   function isLight(rgb) {

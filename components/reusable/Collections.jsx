@@ -89,7 +89,6 @@ const Collections = ({ color = "#F9F7F2", bgColor = "#141414", item }) => {
     };
   }, []);
 
-  console.log(item);
   return (
     <section className="grid grid-cols-1 md:h-screen md:m-0 m-[15px] md:grid-cols-2">
       <div
