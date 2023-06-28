@@ -15,6 +15,7 @@ import Loader from "@/components/svg/Loader";
 import MoreInfoPopIn from "@/components/pop-in/MoreInfoPopIn";
 import { StepContext } from "@/contexts/StepContext";
 import { useIntersection } from "@/hooks/useIntersection";
+import Image from "next/image";
 
 const GalleryHero = ({ artwork, dominantColor }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
@@ -218,15 +219,28 @@ const GalleryHero = ({ artwork, dominantColor }) => {
         <div
           ref={el}
           style={{ backgroundColor: dominantColor }}
-          className={`h-[50svh] unveilTransition md:h-screen md:sticky  top-0 flex items-center justify-center md:col-span-3 bg-bgColor py-[80px]`}
+          className={`h-[50svh] unveilTransition md:h-screen overflow-hidden md:sticky  top-0 flex items-center justify-center md:col-span-3 `}
         >
-          <div
-            className={`${
-              orientation ? "px-[16vw] md:px-[12vw]" : "px-[30vw] md:px-[16vw]"
-            } relative  md:w-full w-full flex items-center md:h-[80%] `}
-          >
+          <div className={`h-full  aspect-[3/4] mb-1`}>
             <div
-              className={`shadow1  mx-auto bg-unveilWhite w-fit
+              className={`${
+                orientation
+                  ? " mx-5 md:mx-10 w-[calc(100%-40px)] md:w-[calc(100%-80px)] "
+                  : " mx-10 md:mx-20 w-[calc(100%-80px)] md:w-[calc(100%-160px)] "
+              } shadow1
+                relative h-full `}
+            >
+              <Image
+                src={artwork.media_url}
+                alt={artwork.name}
+                fill={true}
+                style={{ objectFit: "contain" }}
+                priority
+              />
+            </div>
+          </div>
+          {/* <div
+              className={`shadow1 relative h-full mx-auto bg-unveilWhite w-fit
             ${frameObject.size === "2mm" ? "border-[3px]" : ""}
             ${frameObject.size === "3mm" ? "border-[4px]" : ""}
             ${frameObject.size === "5mm" ? "border-[5px]" : ""}
@@ -238,12 +252,12 @@ const GalleryHero = ({ artwork, dominantColor }) => {
             ${frameObject.border === "10x20" ? "p-4" : ""}`}
             >
               <img
-                className="object-fill w-full h-full"
+                fill={true}
+                style={{ objectFit: "cover" }}
                 src={artwork.media_url}
                 alt={artwork.name}
               />
-            </div>
-          </div>
+            </div> */}
         </div>
         <div className="md:col-span-2 ">
           <div className="md:mb-[100px] my-10 md:mt-[180px] md:space-y-10 text-center px-[15px] md:pl-10 md:pr-5">
