@@ -237,7 +237,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                   ? " mx-5 md:mx-10 w-[calc(100%-40px)] md:w-[calc(100%-80px)] "
                   : " mx-10 md:mx-20 w-[calc(100%-80px)] md:w-[calc(100%-160px)] "
               } shadow1
-                relative h-full `}
+                relative h-full  z-10`}
             >
               <Image
                 fill={true}
@@ -366,7 +366,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                       addWishlist();
                     }
                   }}
-                  className={`rounded-[10px] unveilTransition hover:bg-bgColor col-span-2 md:justify-start justify-center items-center flex gap-2 h-[38px] md:h-[68px] border border-unveilBlack md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer`}
+                  className={`rounded-[10px]  unveilTransition hover:bg-bgColor col-span-2 md:justify-start justify-center items-center flex gap-2 h-[56px] md:h-[68px] border border-unveilBlack md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer`}
                 >
                   {loading ? (
                     <div className="animate-spin">
@@ -380,22 +380,21 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                   </p>
                 </button>
 
-
                 <div className="flex flex-col justify-start p-4 md:p-5 items-start col-span-2 unveilTransition w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] !mt-5 md:!mt-9 bg-[#1511000D] rounded-lg">
                   <p className="mb-8 md:mb-6">Buyer Guarantee</p>
 
-                  <div className="flex flex-col w-full justify-center items-start mb-5 md:mb-6">
-                    <div className="flex justify-center items-center space-x-3">
+                  <div className="flex flex-col items-start justify-center w-full mb-5 md:mb-6">
+                    <div className="flex items-center justify-center space-x-3">
                       {/* icon */}
                       <Wallet width={14} height={14} />
                       <p className="l1">Secure payments</p>
                     </div>
-                    <div className="flex justify-center items-center space-x-3">
+                    <div className="flex items-center justify-center space-x-3">
                       {/* icon */}
                       <Account width={14} height={14} />
                       <p className="l1">All artists are verified by Unveil</p>
                     </div>
-                    <div className="flex justify-center items-center space-x-3">
+                    <div className="flex items-center justify-center space-x-3">
                       {/* icon */}
                       <Search width={14} height={14} />
                       <p className="l1">Artwork history is always visible</p>
@@ -404,15 +403,12 @@ const GalleryHero = ({ artwork, dominantColor }) => {
 
                   {/* button divs */}
                   <div className="flex flex-col space-y-1.5 md:space-y-2.5 w-full justify-center items-center">
-                    <button
-                      className="btn btn-secondary btn-full !py-3 md:!py-2"
-                    >
+                    <button className="btn btn-secondary btn-full !py-3 md:!py-2">
                       Learn more
                     </button>
-                    <button
-                      className="flex justify-center items-center btn btn-secondary btn-full !py-3 md:!py-2 gap-x-1"
-                    >
-                      Chat with us <div className="w-2 h-2 bg-[#83D61A] rounded-full" />
+                    <button className="flex justify-center items-center btn btn-secondary btn-full !py-3 md:!py-2 gap-x-1">
+                      Chat with us{" "}
+                      <div className="w-2 h-2 bg-[#83D61A] rounded-full" />
                     </button>
                   </div>
                 </div>
@@ -422,7 +418,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                   className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
                 >
                   <p className="b5 leading-[23px]">Accepted Payments Methods</p>
-                  
+
                   <div className="flex justify-start items-center w-full space-x-2.5">
                     <MasterCardName />
                     <VisaBlack />
