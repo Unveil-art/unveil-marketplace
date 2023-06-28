@@ -1,12 +1,14 @@
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 const NFTsListItem = ({ edition, currentExchangeRate=0 }) => {
-
+  const router = useRouter();
   return (
     <div className="flex items-center justify-between border-b last:border-none border-bgBlackOpacity">
       <div className="flex items-center gap-4 md:gap-10">
-        <div className="relative h-[136px] w-[106px] md:h-[140px] md:w-[120px] bg-bgColor my-[10px]">
+        <Link href={`/gallery/artwork/${edition?.artwork?.id}`} className="relative h-[136px] w-[106px] md:h-[140px] md:w-[120px] bg-bgColor my-[10px]">
         <Image
                 src={edition?.artwork?.media_url}
                 alt={edition?.artwork?.name}
@@ -14,7 +16,7 @@ const NFTsListItem = ({ edition, currentExchangeRate=0 }) => {
                 style={{ objectFit: "contain" }}
                 priority
               />
-        </div>
+        </Link>
         <div className="flex justify-between gap-2 md:block">
           <div>
             <p className="b4 text-unveilGrey">Name</p>
@@ -26,10 +28,10 @@ const NFTsListItem = ({ edition, currentExchangeRate=0 }) => {
         <p className="b4 text-unveilGrey">Price</p>
         <h4 className="mb-2 md:mb-0 s1">${(edition.price*currentExchangeRate).toFixed(2)} ({edition.price.toFixed(2)} ETH)</h4>
       </div>
-      {/* <div className="flex flex-col gap-1 md:flex-row">
-        <button className=" btn btn-secondary">print</button>
-        <button className=" btn btn-secondary">Show info</button>
-      </div> */}
+      <div className="flex flex-col gap-1 md:flex-row">
+        {/* <button className=" btn btn-secondary">print</button> */}
+        <button onClick={() => router.push(`/gallery/artwork/${edition?.artwork?.id}`)} className=" btn btn-secondary">Show info</button>
+      </div>
     </div>
   );
 };

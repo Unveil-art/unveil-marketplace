@@ -37,7 +37,7 @@ const Chat = ({ title, text, chatBtn = false, btnDesktop = false }) => {
             </div>
             <p className="underline b3 text-[11px]">Chat</p>
           </div>
-        )}
+        )} 
       </div>
       {showSupport && (
         <Freshchat
