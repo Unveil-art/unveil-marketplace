@@ -25,6 +25,7 @@ import MetaMask from "@/components/svg/MetaMask";
 import { StepContext } from "@/contexts/StepContext";
 import { useIntersection } from "@/hooks/useIntersection";
 import Image from "next/image";
+import Torus from "@/components/svg/Torus";
 
 const GalleryHero = ({ artwork, dominantColor }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
@@ -440,6 +441,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
 
                   <div className="flex justify-start items-center w-full space-x-2.5">
                     <MetaMask />
+                    <Torus />
                   </div>
                 </div>
               </div>
