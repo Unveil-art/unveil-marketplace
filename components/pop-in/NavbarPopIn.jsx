@@ -23,7 +23,7 @@ const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
       >
         <div
           data-lenis-prevent
-          className="gsap-el fixed overflow-y-scroll top-0 left-0 w-[330px] sm:w-[540px]  bg-[#ECE8DE] px-5 md:px-10 py-10 z-50 max-h-screen rounded-b-[20px] rounded-tr-[20px] h-fit"
+          className="gsap-el fixed overflow-y-scroll top-0 left-0 w-[330px] sm:w-[540px]  bg-[#F9F7F2] px-5 md:px-10 py-10 z-50 max-h-screen rounded-b-[20px] rounded-tr-[20px] h-fit"
         >
           <Link href="/search" onClick={() => setNavOpen(!navOpen)}>
             <div className="absolute cursor-pointer top-8 left-10">

@@ -38,12 +38,12 @@ const ProductCard = ({ rounded = false, item }) => {
         <Link href={`/gallery/collection/${item.id}`}>
           <div
             className={`${
-              rounded ? "rounded-t-full" : ""
+              rounded && !item?.title ? "rounded-t-full" : ""
             } bg-bgColor overflow-hidden aspect-[3/4] mb-1`}
           >
             <div
               className={`${
-                rounded
+                rounded || item?.title
                   ? ""
                   : "mx-5 md:mx-10 w-[calc(100%-40px)] md:w-[calc(100%-80px)] shadow2"
               } relative  h-full `}
@@ -52,7 +52,9 @@ const ProductCard = ({ rounded = false, item }) => {
                 src={item.media_url}
                 alt={item.title}
                 fill={true}
-                style={{ objectFit: rounded ? "cover" : "contain" }}
+                style={{
+                  objectFit: rounded || item?.title ? "cover" : "contain",
+                }}
                 priority
               />
             </div>
