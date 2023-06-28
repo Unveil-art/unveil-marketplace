@@ -50,12 +50,13 @@ const PaymentSelect = ({
           <MoreInfo />
         </div>
       </div>
-      <div
+      <button
+      disabled
         onClick={() => {
           setPayment("Creditcard");
           setStep(2);
         }}
-        className="relative cursor-pointer text-center btn btn-primary btn-full btn-lg my-[10px]"
+        className="relative disabled:bg-opacity-70 disabled:cursor-not-allowed cursor-pointer text-center btn btn-primary btn-full btn-lg my-[10px]"
       >
         <p>Creditcard/iDeal</p>
         <div className="flex items-center gap-[10px] top-1/2 right-5 -translate-y-1/2 absolute">
@@ -63,7 +64,7 @@ const PaymentSelect = ({
           <Visa />
           <Ideal />
         </div>
-      </div>
+      </button>
       {/* <div
         onClick={() => {
           setPayment("iDeal");

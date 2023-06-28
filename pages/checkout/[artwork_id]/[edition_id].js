@@ -103,9 +103,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       let rpc = new RPC(provider);
       let contract = await rpc.getContract(MARKET_ABI, MARKET_CONTRACT_ADDRESS);
 
-      const ethEx = await getCurrentExchangeRateUSDETH();
-      const priceInEth = ethEx.ETH * edition.price;
-      const priceInWei = Web3.utils.toWei(priceInEth.toFixed(4));
+      const priceInWei = Web3.utils.toWei(edition.price.toFixed(4));
 
       const gasPrice = await rpc.getGasPrice();
 
@@ -210,7 +208,6 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       return;
     }
     setStep(4);
-
     const hasEarlyAccess = await hasEACard();
     if (!hasEarlyAccess) {
       setStep(3);
@@ -237,9 +234,11 @@ const EditionCheckout = ({ artwork, edition_id }) => {
 
     // we will store only ETH Value in Edition Price
     // No need to convert USD to ETH here
-    const ethEx = await getCurrentExchangeRateUSDETH(); //  comment/remove this line
-    const priceInEth = ethEx.ETH * edition.price; // comment/remove this conversion code
-    const priceInWei = Web3.utils.toWei(priceInEth.toFixed(4)); // priceInEth replace with edition.price
+    // const ethEx = await getCurrentExchangeRateUSDETH(); //  comment/remove this line
+    // const priceInEth = ethEx.ETH * edition.price; // comment/remove this conversion code
+    // const priceInWei = Web3.utils.toWei(edition.price.toFixed(4)); // priceInEth replace with edition.price
+    // console.log(edition.price, priceInWei, "priceInWei");
+    const priceInWei = Web3.utils.toWei(edition.price.toFixed(4)); // priceInEth replace with edition.price
 
     try {
       // @mike we need to call referral api to get referrals of seller and buyer
