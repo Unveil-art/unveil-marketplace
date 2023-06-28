@@ -9,10 +9,6 @@ import AccessPopIn2 from "../pop-in/AccessPopIn2";
 import Link from "next/link";
 
 const FloatingArt = ({ data }) => {
-  console.log(data);
-  console.log(data);
-  console.log(data);
-  console.log(data);
   const [open, setOpen] = useState(false);
   const el = useRef();
   const once = useRef(false);
@@ -179,7 +175,7 @@ const FloatingArt = ({ data }) => {
         className="h-[100svh] flex justify-center flex-col p-[15px] sm:p-10 relative overflow-hidden opacity-0"
       >
         <div
-          data-cursor="Coming soon"
+          data-cursor="View artist"
           data-cursor-color={data.topleft_color}
           className="gsap-thumbnail absolute block top-[5%] left-[20%] z-10 invisible"
         >
@@ -214,7 +210,7 @@ const FloatingArt = ({ data }) => {
         </div>
 
         <div
-          data-cursor="Coming soon"
+          data-cursor="View artist"
           data-cursor-color={data.bottomleft_color}
           className="gsap-thumbnail absolute block bottom-[20%] sm:bottom-[5%] right-[10%] left-auto sm:left-[40%] sm:right-auto z-10 invisible"
         >
@@ -247,7 +243,7 @@ const FloatingArt = ({ data }) => {
         </div>
 
         <div
-          data-cursor="Coming soon"
+          data-cursor="View artist"
           data-cursor-color={data.topright_color}
           className="gsap-thumbnail absolute block top-[10%] sm:top-0 right-[4%] sm:right-auto sm:left-1/2 z-10 invisible"
         >
@@ -280,7 +276,7 @@ const FloatingArt = ({ data }) => {
         </div>
 
         <div
-          data-cursor="Coming soon"
+          data-cursor="View artist"
           data-cursor-color={data.centerright_color}
           className="gsap-thumbnail absolute block bottom-[0] sm:bottom-[30%] left-0 sm:left-auto sm:right-0 sm:translate-y-1/2 translate-y-0 z-10 invisible"
         >

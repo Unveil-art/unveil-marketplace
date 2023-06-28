@@ -5,7 +5,7 @@ import { useRLsideAnimation } from "../../hooks/animations/useRLsideAnimation";
 import Logo from "../svg/Logo";
 import Close from "../svg/Close";
 import Search from "../svg/Search";
-import AccessPopIn from "./AccessPopIn";
+import AccessPopIn2 from "./AccessPopIn2";
 import useLocalStorage from "@/hooks/useLocalStorage";
 
 const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
@@ -135,14 +135,14 @@ const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
             <div className="flex b3 gap-2 text-[#545454]">
               <p
                 onClick={() => setAccessOpen(true)}
-                className="underline-on-hover"
+                className="cursor-pointer underline-on-hover"
               >
                 Artist
               </p>
               <p>|</p>
               <p
                 onClick={() => setAccessOpen(true)}
-                className="underline-on-hover"
+                className="cursor-pointer underline-on-hover"
               >
                 Gallery or Curator
               </p>
@@ -154,7 +154,7 @@ const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
           className="fixed top-0 left-0 invisible w-full h-screen gsap-layer bg-unveilGrey"
         ></div>
       </section>
-      <AccessPopIn setAccessOpen={setAccessOpen} accessOpen={accessOpen} />
+      <AccessPopIn2 setAccessOpen={setAccessOpen} accessOpen={accessOpen} />
     </>
   );
 };

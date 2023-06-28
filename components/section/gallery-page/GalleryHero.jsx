@@ -25,10 +25,12 @@ import MetaMask from "@/components/svg/MetaMask";
 import { StepContext } from "@/contexts/StepContext";
 import { useIntersection } from "@/hooks/useIntersection";
 import Image from "next/image";
+import { useWindowSize } from "@/hooks/useWindowSize";
 import Torus from "@/components/svg/Torus";
 import Link from "next/link";
 import { Freshchat } from "reactjs-freshchat";
 import "reactjs-freshchat/dist/index.css";
+
 
 const GalleryHero = ({ artwork, dominantColor }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
@@ -40,6 +42,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
   const [recognitions, setRecognitions] = useState([]);
   const [exchangeRate, setExchangeRate] = useState(1900);
   const [orientation, setOrientation] = useState(false);
+  const { width } = useWindowSize();
 
   // Popin states
   const [collectionOpen, setCollectionOpen] = useState(false);
@@ -251,15 +254,14 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                 orientation
                   ? " mx-5 md:mx-10 w-[calc(100%-40px)] md:w-[calc(100%-80px)] "
                   : " mx-10 md:mx-20 w-[calc(100%-80px)] md:w-[calc(100%-160px)] "
-              } shadow1
-                relative h-full `}
+              } ${width < 768 ? "shadow2" : "shadow1"}
+                relative h-full z-20`}
             >
               <Image
                 fill={true}
                 alt={artwork.name}
                 src={artwork.media_url}
-                style={{ objectFit: "contain" }}
-                priority
+                style={{ objectFit: "contain", zIndex: 20 }}
               />
             </div>
           </div>
@@ -286,7 +288,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
         <div className="md:col-span-2 ">
           <div className="md:mb-[100px] my-10 md:mt-[180px] md:space-y-10 text-center px-[15px] md:pl-10 md:pr-5">
             <p className="pb-5 l2 md:pb-0">{displayName}</p>
-            <h1>{artwork.name}</h1>
+            <h1 className="h3">{artwork.name}</h1>
             <p className="hidden md:block">
               From ${parseFloat(getUSD(lowestPrice)).toFixed()} (
               {lowestPrice.toFixed(2)} ETH)
@@ -381,7 +383,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                       addWishlist();
                     }
                   }}
-                  className={`rounded-[10px] unveilTransition hover:bg-bgColor col-span-2 md:justify-start justify-center items-center flex gap-2 h-[38px] md:h-[68px] border border-unveilBlack md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer`}
+                  className={`rounded-[10px]  unveilTransition hover:bg-bgColor col-span-2 md:justify-start justify-center items-center flex gap-2 h-[56px] md:h-[68px] border border-unveilBlack md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer`}
                 >
                   {loading ? (
                     <div className="animate-spin">
@@ -395,22 +397,21 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                   </p>
                 </button>
 
-
                 <div className="flex flex-col justify-start p-4 md:p-5 items-start col-span-2 unveilTransition w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] !mt-5 md:!mt-9 bg-[#1511000D] rounded-lg">
                   <p className="mb-8 md:mb-6">Buyer Guarantee</p>
 
-                  <div className="flex flex-col w-full justify-center items-start mb-5 md:mb-6">
-                    <div className="flex justify-center items-center space-x-3">
+                  <div className="flex flex-col items-start justify-center w-full mb-5 md:mb-6">
+                    <div className="flex items-center justify-center space-x-3">
                       {/* icon */}
                       <Wallet width={14} height={14} />
                       <p className="l1">Secure payments</p>
                     </div>
-                    <div className="flex justify-center items-center space-x-3">
+                    <div className="flex items-center justify-center space-x-3">
                       {/* icon */}
                       <Account width={14} height={14} />
                       <p className="l1">All artists are verified by Unveil</p>
                     </div>
-                    <div className="flex justify-center items-center space-x-3">
+                    <div className="flex items-center justify-center space-x-3">
                       {/* icon */}
                       <Search width={14} height={14} />
                       <p className="l1">Artwork history is always visible</p>
@@ -430,6 +431,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                       className="flex justify-center items-center btn btn-secondary btn-full !py-3 md:!py-2 gap-x-1"
                     >
                       Chat with us <div className="w-2 h-2 bg-[#83D61A] rounded-full" />
+
                     </button>
                   </div>
                 </div>
@@ -439,7 +441,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                   className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
                 >
                   <p className="b5 leading-[23px]">Accepted Payments Methods</p>
-                  
+
                   <div className="flex justify-start items-center w-full space-x-2.5">
                     <MasterCardName />
                     <VisaBlack />

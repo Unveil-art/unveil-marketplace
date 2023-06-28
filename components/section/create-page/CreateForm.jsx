@@ -85,10 +85,9 @@ const CreateForm = ({
         return true;
       }
       return false;
-    })
+    });
 
     const minValue = Math.min(...indexesValues);
-
 
     if (_rendables.slice(_rendables.indexOf(minValue) + 1).length < 1) {
       return [12];
@@ -208,10 +207,6 @@ const CreateForm = ({
       ]);
     });
   };
-
-  useEffect(() => {
-    console.log(royalties);
-  }, [royalties]);
 
   const {
     register: registerColl,
@@ -1317,7 +1312,7 @@ const CreateForm = ({
           </div>
         ))}
 
-        { royalties.length + 1 <= 2 && (
+        {royalties.length + 1 <= 2 && (
           <p
             onClick={() =>
               setRoyalties((prevItems) => [...prevItems, defaultRoyalties])
@@ -1326,7 +1321,7 @@ const CreateForm = ({
           >
             Add date range
           </p>
-        ) }
+        )}
       </div>
 
       {/* Collection */}
@@ -1531,7 +1526,9 @@ const CreateForm = ({
                   errorColl.description?.type ? "opacity-100" : ""
                 }`}
               >
-                {errorColl.description?.type==='maxLength' ? "Maximum 200 characters only": errorColl.description?.message}
+                {errorColl.description?.type === "maxLength"
+                  ? "Maximum 200 characters only"
+                  : errorColl.description?.message}
               </p>
             </div>
             {/* <div className="flex  items-center gap-2 px-5 pt-[35px] pb-[15px]">

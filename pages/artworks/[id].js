@@ -95,8 +95,6 @@ const Edit = ({ artwork }) => {
   const [loading, setLoading] = useState(false);
   const [creating, setCreating] = useState(false);
 
-  console.log(artwork.royalties, "royal");
-
   const extractDate = (date) => {
     const arr = date.split("-");
     return arr[1] + "-" + arr[0] + "-" + arr[2];
@@ -270,15 +268,6 @@ const Edit = ({ artwork }) => {
       const ethEx = await getCurrentExchangeRateUSDETH();
 
       editionPricing.map((_, i) => {
-        console.log(
-          editionPricing[i].eth
-            ? parseFloat(editionPricing[i].eth)
-            : parseFloat(
-                parseFloat(
-                  parseFloat(editionPricing[i].usd) * ethEx.ETH
-                ).toFixed(4)
-              )
-        );
         if (i < artwork.editions.length) {
           editions.push({
             id: artwork.editions[i].id,

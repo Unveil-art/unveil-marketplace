@@ -17,8 +17,6 @@ const OptionsPopIn = ({
 
   const el = useRef();
 
-  console.log("edtions", nftEditions);
-
   useEffect(() => {
     getUsdEx();
   }, []);
