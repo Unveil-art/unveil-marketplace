@@ -1316,14 +1316,16 @@ const CreateForm = ({
           </div>
         ))}
 
-        <p
-          onClick={() =>
-            setRoyalties((prevItems) => [...prevItems, defaultRoyalties])
-          }
-          className="md:px-32 inline-block text-center mx-5 mt-[15px] mb-5 lg:mb-[30px] btn btn-secondary w-[calc(100%-40px)] "
-        >
-          Add date range
-        </p>
+        { royalties.length + 1 <= 2 && (
+          <p
+            onClick={() =>
+              setRoyalties((prevItems) => [...prevItems, defaultRoyalties])
+            }
+            className="md:px-32 inline-block text-center mx-5 mt-[15px] mb-5 lg:mb-[30px] btn btn-secondary w-[calc(100%-40px)] "
+          >
+            Add date range
+          </p>
+        ) }
       </div>
 
       {/* Collection */}
