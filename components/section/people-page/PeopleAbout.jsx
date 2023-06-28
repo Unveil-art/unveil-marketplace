@@ -13,7 +13,7 @@ const PeopleAbout = (collection) => {
   };
 
   return (
-    <section className="relative grid grid-cols-1 mb-10 md:my-10 md:grid-cols-5">
+    <section className="relative grid grid-cols-1 md:my-10 md:grid-cols-5 mb-10 md:mb-[160px]">
       <div className="order-2 w-full md:col-span-3 md:order-1">
         <Animate
           options={{ y: 0, image: true }}

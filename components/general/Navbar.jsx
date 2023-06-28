@@ -35,6 +35,7 @@ const Navbar = ({ value }) => {
     color = "#F9F7F2";
   } else {
     color = step === 4 || step === 5 ? "#F9F7F2" : "#141414";
+    accountColor = step === 4 || step === 5 ? "#F9F7F2" : "#141414";
   }
 
   const isArrow =
@@ -79,6 +80,12 @@ const Navbar = ({ value }) => {
         ref={el}
         className="fixed top-0 left-0 z-40 flex items-center justify-between w-full px-[15px] pt-[15px] md:pt-[32px] md:px-10"
       >
+        {/* <div className="fixed top-0 left-0 w-full bg-unveilGreen">
+          <p className="text center b3">
+            28th of June we’re going live early access card holders.{" "}
+            <a>Get access</a>
+          </p>
+        </div> */}
         {!isArrow && (
           <div
             onClick={() => handleOpen(setNavOpen, navOpen)}

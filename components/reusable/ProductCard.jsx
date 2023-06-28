@@ -110,7 +110,9 @@ const ProductCard = ({ rounded = false, item }) => {
       )}
 
       <Link href={`/people/${item.owner_id}`}>
-        <p className="b3 opacity-60 w-fit">{getUserName(item.owner)}</p>
+        <p className="w-full truncate b3 opacity-60">
+          {getUserName(item.owner)}
+        </p>
       </Link>
       {item.editions && (
         <div className="flex items-center gap-1">

@@ -9,6 +9,10 @@ import AccessPopIn2 from "../pop-in/AccessPopIn2";
 import Link from "next/link";
 
 const FloatingArt = ({ data }) => {
+  console.log(data);
+  console.log(data);
+  console.log(data);
+  console.log(data);
   const [open, setOpen] = useState(false);
   const el = useRef();
   const once = useRef(false);
