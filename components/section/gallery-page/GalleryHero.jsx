@@ -236,13 +236,13 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                 orientation
                   ? " mx-5 md:mx-10 w-[calc(100%-40px)] md:w-[calc(100%-80px)] "
                   : " mx-10 md:mx-20 w-[calc(100%-80px)] md:w-[calc(100%-160px)] "
-              } shadow1
+              }
                 relative h-full z-20`}
             >
               <Image
-                fill={true}
-                alt={artwork.name}
                 src={artwork.media_url}
+                alt={artwork.name}
+                fill={true}
                 style={{ objectFit: "contain", zIndex: 20 }}
               />
             </div>
