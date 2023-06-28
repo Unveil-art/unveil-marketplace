@@ -276,7 +276,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
         currency: "ETH",
         transaction_type: "MINT_EDITION",
         chain_link: rpcUrl,
-        edition_id: edition.edition_id,
+        edition_id: edition.id,
         artwork_id: artwork.id,
       });
       setStep(5);
