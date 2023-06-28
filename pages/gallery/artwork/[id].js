@@ -98,12 +98,6 @@ const Details = ({ artwork, browse }) => {
     }
   }, []);
 
-  useEffect(() => {
-    console.log("dominantColor", dominantColor);
-    console.log("dominantColor", dominantColor);
-    console.log("dominantColor", dominantColor);
-  }, [dominantColor]);
-
   return (
     <main className="mb-[100px]">
       <ToastContainer />

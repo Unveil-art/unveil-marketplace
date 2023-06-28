@@ -43,7 +43,7 @@ const Following = () => {
         {following && following.length === 0 && (
           <div className="flex items-center gap-4 mb-20 md:gap-10">
             <div className="h-[136px] w-[106px] md:h-[140px] md:w-[120px] bg-bgColor my-[10px]"></div>
-            <h5 className="s1 opacity-60 ">No followed artists yet</h5>
+            <h5 className="s1 opacity-40 ">No followed artists yet</h5>
           </div>
         )}
 

@@ -54,7 +54,7 @@ const AboutItem = ({ detail_shots = [], owner }) => {
                     )}
 
                     <img
-                      className="bg-bgColorHover w-[80px]"
+                      className=" w-[80px]"
                       src="/images/sound.gif"
                       alt="audio gif"
                     />

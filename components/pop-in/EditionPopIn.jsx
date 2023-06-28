@@ -155,9 +155,11 @@ const EditionPopIn = ({ edition, setEdition, dominantColor }) => {
                   )}{" "}
                   {!edition.token_id && <p></p>}
                   <div>
-                    <p className="s2">${price ? price : "0"}</p>
+                    <p className="s2">
+                      ${price ? parseFloat(price).toFixed() : "0"}
+                    </p>
                     <p className="ml-auto w-fit leading-[24px] b5">
-                      {edition.price?.toFixed(2)} ETH
+                      {edition.price?.toFixed(4)} ETH
                     </p>
                   </div>
                 </div>
