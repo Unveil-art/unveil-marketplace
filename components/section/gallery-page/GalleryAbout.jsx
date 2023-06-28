@@ -14,6 +14,9 @@ const GalleryAbout = ({ artwork }) => {
   const size = useWindowSize();
   const [setRef, rect] = useRect();
 
+  const _detail_shots = artwork?.detail_shots?.filter(({ image_url }) => !!image_url);
+  const stickyEnabled = _detail_shots.length > 0
+
   useEffect(() => {
     const query = gsap.utils.selector(el);
     const ctx = gsap.matchMedia();
@@ -26,6 +29,7 @@ const GalleryAbout = ({ artwork }) => {
           })
           .to(query(".gsap-scroll"), {
             xPercent: -100,
+            x: size.width,
             ease: "power2.inOut",
           });
         return () => {
@@ -34,7 +38,7 @@ const GalleryAbout = ({ artwork }) => {
       },
       el
     );
-  }, []);
+  }, [size.width]);
 
   useLenis(
     ({ scroll }) => {
@@ -51,19 +55,19 @@ const GalleryAbout = ({ artwork }) => {
     [rect],
     1
   );
-  const _detail_shots = artwork?.detail_shots?.filter(({ image_url }) => !!image_url);
-
-
+  
   return (
     <>
       <AboutIntro collection={artwork.collection} />
       <section ref={el} className="relative w-full">
-        <div className={`block w-full md:h-[500vh]`} ref={(node) => setRef(node)}>
+        <div className={`block w-full ${stickyEnabled ? `md:h-[500vh]` : 'md:h-auto'}`} ref={(node) => setRef(node)}>
           <div className="block w-full md:sticky md:top-0">
-            <AboutItem
-              owner={artwork.owner}
-              detail_shots={_detail_shots}
-            />
+            {stickyEnabled && (
+              <AboutItem
+                owner={artwork.owner}
+                detail_shots={_detail_shots}
+              />
+            )}
             <ItemStatistics artwork={artwork} />
           </div>
         </div>
