@@ -117,10 +117,11 @@ const ItemStatistics = ({ artwork }) => {
 
             <div className="absolute bottom-0 right-0 w-[130px] md:block hidden">
               <p className="b4">
-                <strong className="font-[500]">About specifications</strong>
+                <strong className="font-[500]">Provenance</strong>
                 <br />
-                We believe transparency creates wealth we gain trust by our
-                collectors by being transparent.
+                We deeply value transparency and provenance, ensuring every
+                piece of art has a clear and traceable history, fostering trust
+                in our platform.
               </p>
             </div>
           </div>
@@ -183,10 +184,11 @@ const ItemStatistics = ({ artwork }) => {
             </div>
             <div className="absolute hidden md:block bottom-0 right-0 w-[130px]">
               <p className="b4">
-                <strong className="font-[500]">About specifications</strong>
+                <strong className="font-[500]">Provenance</strong>
                 <br />
-                We believe transparency creates wealth we gain trust by our
-                collectors by being transparent.
+                We deeply value transparency and provenance, ensuring every
+                piece of art has a clear and traceable history, fostering trust
+                in our platform.
               </p>
             </div>
           </div>

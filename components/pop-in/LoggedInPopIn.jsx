@@ -47,7 +47,7 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
             </div>
             <div className="text-center py-10 my-[10px]">
               <button
-                className="px-3 py-2 border rounded-md cursor-pointer b3 hover:border-unveilDrakGray border-bgColorHover"
+                className="mt-2 cursor-pointer b3 underline-on-hover"
                 onClick={showRamper}
               >
                 Add funds

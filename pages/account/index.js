@@ -41,6 +41,8 @@ const AccountPage = () => {
     if (value) {
       fetchUser();
     }
+    const token = localStorage.getItem("token");
+    if (!token) router.push("/");
   }, [value]);
 
   useEffect(() => {

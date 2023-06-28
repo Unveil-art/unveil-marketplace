@@ -5,7 +5,15 @@ import React from "react";
 const Minted = ({ artwork }) => {
   return (
     <div className="fixed top-0 left-0 z-10 w-full h-screen grid-cols-2 md:grid bg-unveilBlack text-unveilWhite">
-      <div className="hidden md:block"></div>
+      <div className="md:relative">
+        <div className="w-[250px] md:w-[300px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <img
+            src={artwork.media_url}
+            alt={artwork.name}
+            className="object-contain"
+          />
+        </div>
+      </div>
       <div className="flex items-center max-w-[700px] pr-10">
         <div className="flex flex-col items-center justify-between w-full h-screen p-10 pt[80px] md:h-fit md:block">
           <div>

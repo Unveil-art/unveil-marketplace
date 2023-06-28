@@ -276,7 +276,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
         currency: "ETH",
         transaction_type: "MINT_EDITION",
         chain_link: rpcUrl,
-        edition_id: edition.edition_id,
+        edition_id: edition.id,
         artwork_id: artwork.id,
       });
       setStep(5);
@@ -291,8 +291,8 @@ const EditionCheckout = ({ artwork, edition_id }) => {
   return (
     <main className="min-h-screen my-[120px] px-[15px] md:px-10">
       <ToastContainer />
-      {step === 4 && <Minting />}
-      {step === 5 && <Minted />}
+      {step === 4 && <Minting artwork={artwork} />}
+      {step === 5 && <Minted artwork={artwork} />}
       <section className="lg:flex block gap-5 justify-between lg:gap-[100px]">
         <div className="block lg:hidden ">
           <Steps setStep={setStep} step={step} />
@@ -412,7 +412,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
                   {gasFeesUSD && <>{gasFeesUSD.toFixed(2)}</>}
                 </p>
                 <p className="leading-[16px] lg:leading-[23px] b5">
-                  {gasFees && <>({gasFees.toFixed(2)} ETH)</>}
+                  {gasFees && <>({gasFees.toFixed(4)} ETH)</>}
                 </p>
               </div>
             </div>
