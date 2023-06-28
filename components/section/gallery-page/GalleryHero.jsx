@@ -223,7 +223,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
           <div
             className={`${
               orientation ? "md:px-[12vw]" : "  md:px-[16vw]"
-            } relative  md:w-full w-[40%] flex items-center  md:h-[80%] `}
+            } relative  md:w-full w-full flex items-center  md:h-[80%] `}
           >
             <div
               className={`shadow1  mx-auto bg-unveilWhite w-fit

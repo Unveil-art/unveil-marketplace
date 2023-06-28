@@ -288,10 +288,6 @@ const EditionCheckout = ({ artwork, edition_id }) => {
     }
   };
 
-  useEffect(() => {
-    setStep(4);
-  }, []);
-
   return (
     <main className="min-h-screen my-[120px] px-[15px] md:px-10">
       <ToastContainer />
