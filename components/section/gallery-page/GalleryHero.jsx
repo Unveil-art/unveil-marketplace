@@ -231,9 +231,9 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                 relative h-full `}
             >
               <Image
-                src={artwork.media_url}
-                alt={artwork.name}
                 fill={true}
+                alt={artwork.name}
+                src={artwork.media_url}
                 style={{ objectFit: "contain" }}
                 priority
               />
