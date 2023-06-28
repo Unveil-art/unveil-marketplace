@@ -1,19 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
 import Close from "../svg/Close";
-import useDominantColor from "@/hooks/useDominantColor";
 
 import { getCurrentExchangeRateETHUSD } from "lib/backend";
 
-const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
+const OptionsPopIn = ({
+  optionsOpen,
+  setOptionsOpen,
+  artwork,
+  setEdition,
+  dominantColor,
+}) => {
   const [editionSizes, setEditionSizes] = useState([]);
   const [nftEditions, setNftEditions] = useState();
   const [udsEx, setUdsEx] = useState();
 
-  const color = useDominantColor(artwork.media_url);
-
-  console.log(artwork);
   const el = useRef();
+
+  console.log("edtions", nftEditions);
 
   useEffect(() => {
     getUsdEx();
@@ -68,7 +72,7 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
               <div key={i} className="mb-10 last:mb-0">
                 {editionSize.editions.length > 0 && (
                   <>
-                    <p className="mb-2 b3">
+                    <p className="mb-[10px] b3">
                       <strong className="!opacity-100 font-[500]">
                         {editionSize.size}
                       </strong>{" "}
@@ -111,7 +115,6 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
                               className="w-full btn btn-secondary btn-full"
                             >
                               Buy from artist
-                              
                             </button>
                             {!edition.token_id && (
                               <p className="absolute -bottom-1 left-5 b5">
@@ -130,55 +133,76 @@ const OptionsPopIn = ({ optionsOpen, setOptionsOpen, artwork, setEdition }) => {
         )}
         {nftEditions && (
           <>
-            <p className="mb-2 b3 ">
+            <p className="mb-[10px] b3 ">
               <strong className="!opacity-100 font-[500]">NFT only</strong>{" "}
-              <span className="opacity-60">
+              <span className="opacity-60 ">
                 Edition of {nftEditions.length}
               </span>
             </p>
             <div className="space-y-[10px]">
-              {nftEditions.sort((a,b) => a.price-b.price).map((edition, i) => (
-                <div
-                  key={i}
-                  className="flex border overflow-hidden rounded-[10px] border-unveilDrakGray h-[166px] "
-                >
-                  <div className="bg-[#9A8183] min-w-[100px] max-w-[100px] md:min-w-[120px] md:max-w-[120px] relative p-5 flex justify-center items-center">
-                    <img
-                      className="object-contain shadow2"
-                      src={artwork.media_url}
-                      alt={artwork.name}
-                    />
-                  </div>
-                  <div className="flex flex-col justify-between w-full p-5">
-                    <div>
-                      <p className="b3">
-                        No {i + 1} of {nftEditions.length}
-                      </p>
-                      <p className="b4">
-                        ${udsEx ? (udsEx * edition.price).toFixed() : "0"} (
-                        {edition.price} ETH)
-                      </p>
-                    </div>
-
-                    <button
-                    disabled={edition.max_copies===edition.sold_copies}
-                      onClick={() =>
-                        setEdition({
-                          ...edition,
-                          edition_index: i + 1,
-                          max_editions: nftEditions.length,
-                          media_url: artwork.media_url,
-                          edition_type: artwork.edition_type,
-                          artwork_id: artwork.id,
-                        })
-                      }
-                      className="btn btn-full disabled:bg-gray-200 disabled:cursor-not-allowed btn-secondary"
+              {nftEditions
+                .sort((a, b) => a.price - b.price)
+                .map((edition, i) => (
+                  <div
+                    key={i}
+                    className="flex bg-unveilWhite border overflow-hidden rounded-[10px] border-unveilDrakGray h-[166px] "
+                  >
+                    <div
+                      style={{ backgroundColor: dominantColor }}
+                      className="bg-bgColor min-w-[100px] max-w-[100px] md:min-w-[120px] md:max-w-[120px] relative p-5 flex justify-center items-center"
                     >
-                      {edition.max_copies===edition.sold_copies ? "Sold Out": "Buy from artist"}
-                    </button>
+                      <img
+                        className="object-contain shadow2"
+                        src={artwork.media_url}
+                        alt={artwork.name}
+                      />
+                    </div>
+                    <div className="relative flex flex-col justify-between w-full px-[18px] py-[12px]">
+                      <div>
+                        <p className="b3">
+                          No {i + 1} of {nftEditions.length}
+                        </p>
+                        <p className="mb-1 leading-snug b4">
+                          ${udsEx ? (udsEx * edition.price).toFixed() : "0"} (
+                          {edition.price} ETH)
+                        </p>
+                        <div className="flex flex-wrap gap-1">
+                          {edition.max_copies === edition.sold_copies && (
+                            <span className="px-1 leading-snug rounded-full leading bg-unveilBlack text-unveilWhite l2">
+                              SOLD
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div>
+                        <button
+                          disabled={edition.max_copies === edition.sold_copies}
+                          onClick={() =>
+                            setEdition({
+                              ...edition,
+                              edition_index: i + 1,
+                              max_editions: nftEditions.length,
+                              media_url: artwork.media_url,
+                              edition_type: artwork.edition_type,
+                              artwork_id: artwork.id,
+                            })
+                          }
+                          className="btn btn-full disabled:opacity-40 disabled:cursor-not-allowed btn-secondary"
+                        >
+                          {edition.max_copies === edition.sold_copies
+                            ? "Sold Out"
+                            : "Buy from artist"}
+                        </button>
+
+                        <p className="mt-1 leading-snug b5">
+                          {edition.token_id !== null
+                            ? `Token ID #${edition.token_id}`
+                            : " "}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </>
         )}

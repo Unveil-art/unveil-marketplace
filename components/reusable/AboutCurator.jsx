@@ -96,8 +96,6 @@ const AboutCurator = ({ owner }) => {
           </div>
 
           <h4
-            data-cursor="Show more"
-            data-cursor-color="#b2b4ae"
             onClick={() => setMore((prev) => !prev)}
             className={`${
               more ? "md:line-clamp-6" : "line-clamp-[10] md:line-clamp-6"

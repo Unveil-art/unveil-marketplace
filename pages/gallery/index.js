@@ -124,7 +124,6 @@ export default function Gallery({ artworks }) {
 
   useEffect(() => {
     function handleScroll() {
-      console.log(noApiCalls);
       if (!noApiCalls && !loading) {
         if (paginationDivRef.current) {
           const buttonRect = paginationDivRef.current.getBoundingClientRect();
@@ -183,7 +182,7 @@ export default function Gallery({ artworks }) {
   return (
     <>
       <PageHead />
-      <main className="mt-24 md:mt-[130px]">
+      <main className="mt-24 md:mt-[130px] mb-20 md:mb-[100px]">
         <Title title="Gallery" />
         <OneLiner
           text="Art photographers recognized for unique vision, skill, and exhibitions."
@@ -226,7 +225,7 @@ export default function Gallery({ artworks }) {
           {!loading && <p>Load more</p>}
         </button>
 
-        <SortAndSearch />
+        {/* <SortAndSearch /> */}
       </main>
     </>
   );

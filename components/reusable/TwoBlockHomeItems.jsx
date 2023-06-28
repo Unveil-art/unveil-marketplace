@@ -43,10 +43,12 @@ const TwoBlockHomeItems = ({ homePage = false, data }) => {
         >
           <div className="relative w-full h-full overflow-hidden">
             {data[0].banner && (
-              <img
+              <Image
                 src={data[0].banner.data.attributes.url}
                 alt={data[0].banner.data.attributes.alt}
-                className="object-cover gsap-image"
+                fill={true}
+                style={{ objectFit: "cover" }}
+                className="gsap-image"
               />
             )}
 
@@ -57,7 +59,6 @@ const TwoBlockHomeItems = ({ homePage = false, data }) => {
                 fill={true}
                 style={{ objectFit: "cover" }}
                 className="gsap-bubblewrap"
-                priority
               />
             )}
           </div>

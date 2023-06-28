@@ -14,12 +14,11 @@ import ApplePay from "../svg/ApplePay";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 import useLocalStorage from "@/hooks/useLocalStorage";
 
-
-const EditionPopIn = ({ edition, setEdition }) => {
+const EditionPopIn = ({ edition, setEdition, dominantColor }) => {
   const [type, setType] = useState();
   const [price, setPrice] = useState();
-  const { value:token } = useLocalStorage('token');
-  const { login } = useContext(Web3Context)
+  const { value: token } = useLocalStorage("token");
+  const { login } = useContext(Web3Context);
   const el = useRef();
   const router = useRouter();
 
@@ -61,7 +60,8 @@ const EditionPopIn = ({ edition, setEdition }) => {
         >
           <div
             data-lenis-prevent
-            className="gsap-el fixed max-h-[calc(100vh-40px)] overflow-y-scroll top-[15px] right-[15px] sm:top-5 sm:right-5  w-[330px] sm:w-[380px] bg-[#9A8183] z-50 rounded-[20px] h-fit"
+            style={{ backgroundColor: dominantColor }}
+            className="gsap-el fixed max-h-[calc(100vh-40px)] overflow-y-scroll top-[15px] right-[15px] sm:top-5 sm:right-5  w-[330px] sm:w-[380px] bg-bgColor z-50 rounded-[20px] h-fit"
           >
             <div
               onClick={() => setEdition(null)}
@@ -73,12 +73,16 @@ const EditionPopIn = ({ edition, setEdition }) => {
             </div>
             <div className="pt-5">
               <div className="h-[200px] md:h-[300px] relative">
-                <p className="px-5 s2">100x50</p>
-                <p className="px-5 b3">
+                {/* <p className="px-5 s2">100x50</p> */}
+                <p
+                  className={`${
+                    edition.edition_type === "NFT_Only" ? "s2" : "b3"
+                  } px-5 `}
+                >
                   Edition {edition.edition_index} of {edition.max_editions}
                 </p>
                 <img
-                  className="absolute px-20 top-[100px]"
+                  className="absolute px-20 top-[100px] shadow2"
                   src={edition.media_url}
                   alt={edition.edition_id}
                 />
@@ -87,7 +91,7 @@ const EditionPopIn = ({ edition, setEdition }) => {
             </div>
             <div className="bg-[#ECE8DE] z-10 relative px-5 py-5">
               <div className="bg-unveilWhite mb-[15px] border border-unveilGreen rounded-[10px] p-5">
-                <p className="px-2 rounded-full tracking-[0.2em] bg-unveilBlack text-unveilWhite w-fit l2 text-[9px]">
+                <p className="px-3 rounded-full tracking-[0.2em] bg-unveilBlack text-unveilWhite w-fit l2 text-[9px]">
                   YOUR CHOICE
                 </p>
                 <p className="b3 mt-[5px] mb-5">{type}</p>
@@ -157,13 +161,20 @@ const EditionPopIn = ({ edition, setEdition }) => {
                     </p>
                   </div>
                 </div>
-                  <button  onClick={() => {
-                    if(token){
-                      router.push(`/checkout/${edition.artwork_id}/${edition.edition_id}`)
-                    }else{
+                <button
+                  onClick={() => {
+                    if (token) {
+                      router.push(
+                        `/checkout/${edition.artwork_id}/${edition.edition_id}`
+                      );
+                    } else {
                       login();
                     }
-                  } } className="btn disabled:cursor-not-allowed btn-primary btn-full">Checkout</button>
+                  }}
+                  className="btn disabled:cursor-not-allowed btn-primary btn-full"
+                >
+                  Checkout
+                </button>
                 <div className="flex items-center h-[20px] justify-center gap-2 mt-[10px]">
                   <ApplePay />
                   <div className="mt-1">

@@ -43,22 +43,19 @@ const Filter = ({
         <p className="md:mb-2 b3 md:b6">Artist</p>
         <div className="flex items-center gap-1">
           <span
-            onClick={() => setArtist(0)}
-            className={`${
-              artist === 0
-                ? "border-unveilBlack"
-                : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
-            } px-4 border rounded-full unveilTransition cursor-pointer l2 `}
+            // onClick={() => setArtist(0)}
+            //${
+            //medium === 0
+            //    ? "border-unveilBlack"
+            //    : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"}
+
+            className={`opacity-60 px-4 border rounded-full unveilTransition cursor-not-allowed l2 `}
           >
             Established
           </span>
           <span
-            onClick={() => setArtist(1)}
-            className={`${
-              artist === 1
-                ? "border-unveilBlack"
-                : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
-            } px-4 border rounded-full unveilTransition cursor-pointer l2 `}
+            // onClick={() => setArtist(1)}
+            className={`opacity-60 px-4 border rounded-full unveilTransition cursor-not-allowed l2 `}
           >
             Talent
           </span>
@@ -68,22 +65,14 @@ const Filter = ({
         <p className="md:mb-2 b3 md:b6">Medium</p>
         <div className="flex items-center">
           <span
-            onClick={() => setMedium(0)}
-            className={`${
-              medium === 0
-                ? "border-unveilBlack"
-                : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
-            } px-4 py-[0px] border rounded-l-[5px] unveilTransition cursor-pointer l2`}
+            // onClick={() => setMedium(0)}
+            className={`opacity-60 px-4 py-[0px] border rounded-l-[5px] unveilTransition cursor-not-allowed l2`}
           >
             Digital
           </span>
           <span
-            onClick={() => setMedium(1)}
-            className={`${
-              medium === 1
-                ? "border-unveilBlack"
-                : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
-            } px-4 py-[0px] border rounded-r-[5px] unveilTransition cursor-pointer l2`}
+            // onClick={() => setMedium(1)}
+            className={`opacity-60 px-4 py-[0px] border rounded-r-[5px] unveilTransition cursor-not-allowed l2`}
           >
             Print
           </span>

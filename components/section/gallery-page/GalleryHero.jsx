@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import Wishlist from "../../svg/Wishlist";
 import OptionsPopIn from "@/components/pop-in/OptionsPopIn";
 import EditionPopIn from "@/components/pop-in/EditionPopIn";
@@ -13,8 +13,10 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import { toast } from "react-toastify";
 import Loader from "@/components/svg/Loader";
 import MoreInfoPopIn from "@/components/pop-in/MoreInfoPopIn";
+import { StepContext } from "@/contexts/StepContext";
+import { useIntersection } from "@/hooks/useIntersection";
 
-const GalleryHero = ({ imgRef, artwork }) => {
+const GalleryHero = ({ artwork, dominantColor }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
   const [editionOpen, setEditionOpen] = useState(false);
   const [edition, setEdition] = useState(null);
@@ -35,8 +37,21 @@ const GalleryHero = ({ imgRef, artwork }) => {
   const [addressOpen, setAddressOpen] = useState(false);
   const [recognitionsOpen, setRecognitionsOpen] = useState(false);
 
+  // Handle nav color
+  const { setColor } = useContext(StepContext);
+  const el = useRef();
+  const { isIntersecting } = useIntersection(el, "-200px");
+
+  useEffect(() => {
+    if (artwork.edition_type === "NFT_Only")
+      if (isIntersecting) {
+        setColor(true);
+      } else {
+        setColor(false);
+      }
+  }, [isIntersecting]);
+
   const notifyError = (message) => toast.error(message);
-  const notifySuccess = (message) => toast.success(message);
 
   const init = async () => {
     try {
@@ -200,14 +215,18 @@ const GalleryHero = ({ imgRef, artwork }) => {
   return (
     <>
       <section className="relative grid grid-cols-1 md:grid-cols-5">
-        <div className="h-[50svh] md:h-screen md:sticky  top-0 flex items-center justify-center md:col-span-3 bg-bgColor py-[120px]">
+        <div
+          ref={el}
+          style={{ backgroundColor: dominantColor }}
+          className={`h-[50svh] unveilTransition md:h-screen md:sticky  top-0 flex items-center justify-center md:col-span-3 bg-bgColor py-[80px]`}
+        >
           <div
             className={`${
-              orientation ? "md:px-[12vw]" : "  md:px-[20vw]"
-            } relative  md:w-full w-[40%] md:h-[80%] `}
+              orientation ? "md:px-[12vw]" : "  md:px-[16vw]"
+            } relative  md:w-full w-[40%] flex items-center  md:h-[80%] `}
           >
             <div
-              className={`shadow1 mx-auto bg-unveilWhite w-fit
+              className={`shadow1  mx-auto bg-unveilWhite w-fit
             ${frameObject.size === "2mm" ? "border-[3px]" : ""}
             ${frameObject.size === "3mm" ? "border-[4px]" : ""}
             ${frameObject.size === "5mm" ? "border-[5px]" : ""}
@@ -219,8 +238,7 @@ const GalleryHero = ({ imgRef, artwork }) => {
             ${frameObject.border === "10x20" ? "p-4" : ""}`}
             >
               <img
-                ref={imgRef}
-                className="object-contain h-full"
+                className="object-fill h-full "
                 src={artwork.media_url}
                 alt={artwork.name}
               />
@@ -232,8 +250,8 @@ const GalleryHero = ({ imgRef, artwork }) => {
             <p className="pb-5 l2 md:pb-0">{displayName}</p>
             <h1>{artwork.name}</h1>
             <p className="hidden md:block">
-              From ${parseFloat(getUSD(lowestPrice)).toFixed()} ({lowestPrice.toFixed(2)}{" "}
-              ETH)
+              From ${parseFloat(getUSD(lowestPrice)).toFixed()} (
+              {lowestPrice.toFixed(2)} ETH)
             </p>
             <div className="relative pt-10 md:pt-[100px] flex justify-between gap-5">
               <div className="md:space-y-[6px] w-full md:block grid grid-cols-2 gap-[6px]">
@@ -340,7 +358,7 @@ const GalleryHero = ({ imgRef, artwork }) => {
                 </button>
               </div>
               <div
-                className={`md:block hidden group hover:scale-105 unveilTransition w-[180px] border bg-unveilWhite border-bgColorHover rounded-[10px] overflow-hidden fixed bottom-10 right-10 z-20 h-fit ${
+                className={`md:block hidden group hover:scale-105 unveilTransition w-[160px] border bg-unveilWhite border-bgColorHover rounded-[10px] overflow-hidden fixed bottom-5 right-5 z-20 h-fit ${
                   optionsOpen ? "translate-x-[200%]" : ""
                 }`}
               >
@@ -353,7 +371,7 @@ const GalleryHero = ({ imgRef, artwork }) => {
                 </div>
                 <div
                   onClick={() => setOptionsOpen(!optionsOpen)}
-                  className="py-2  uppercase cursor-pointer bg-unveilBlack text-unveilWhite l1 tracking-[0.18rem]"
+                  className="py-3 uppercase cursor-pointer bg-unveilBlack text-unveilWhite l1 tracking-[0.18rem]"
                 >
                   View options
                 </div>
@@ -384,8 +402,13 @@ const GalleryHero = ({ imgRef, artwork }) => {
         artwork={artwork}
         optionsOpen={optionsOpen}
         setOptionsOpen={setOptionsOpen}
+        dominantColor={dominantColor}
       />
-      <EditionPopIn edition={edition} setEdition={setEdition} />
+      <EditionPopIn
+        edition={edition}
+        setEdition={setEdition}
+        dominantColor={dominantColor}
+      />
 
       {/* About pop-ins */}
       <MoreInfoPopIn
