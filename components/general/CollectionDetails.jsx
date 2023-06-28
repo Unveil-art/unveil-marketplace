@@ -3,7 +3,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 
 import Animate from "../reusable/Animate";
-import Currency from "../svg/Currency";
+import Link from "next/link";
 import CountdownTimer from "../reusable/CountdownTimer";
 
 import { useIntersection } from "../../hooks/useIntersection";
@@ -125,15 +125,29 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
           </div>
         </div>
         <div className="block gsap-transform">
-          <a
-            className={`${
-              data.is_button_blocked ? "cursor-not-allowed" : ""
-            } btn btn-primary hover:!bg-[#292928] pt-3.5 pb-3.5`}
-            style={{ backgroundColor: color, color: backgroundColor }}
-            href={data.is_button_blocked ? "javascript:;" : data.link}
-          >
-            {data.button_name}
-          </a>
+          {data.link && (
+            <a
+              className={`${
+                data.is_button_blocked ? "cursor-not-allowed" : ""
+              } btn btn-primary cursor-pointer text-center hover:!bg-[#292928] pt-3.5 pb-3.5`}
+              style={{ backgroundColor: color, color: backgroundColor }}
+              href={data.is_button_blocked ? "" : data.link}
+            >
+              {data.button_name}
+            </a>
+          )}
+          {!data.link && (
+            <Link href="/gallery">
+              <p
+                className={`${
+                  data.is_button_blocked ? "cursor-not-allowed" : ""
+                } btn btn-primary cursor-pointer text-center hover:!bg-[#292928] pt-3.5 pb-3.5`}
+                style={{ backgroundColor: color, color: backgroundColor }}
+              >
+                {data.button_name}
+              </p>
+            </Link>
+          )}
         </div>
       </Animate>
     </div>

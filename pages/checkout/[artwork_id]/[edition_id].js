@@ -78,7 +78,6 @@ const EditionCheckout = ({ artwork, edition_id }) => {
 
   useEffect(() => {
     handlePrice();
-    console.log();
   }, []);
 
   useEffect(() => {
@@ -90,7 +89,6 @@ const EditionCheckout = ({ artwork, edition_id }) => {
         ).toFixed(2)
       );
     }
-    console.log(gasFees);
   }, [gasFeesUSD]);
 
   const getGasFees = async (fromMint = false) => {
@@ -237,7 +235,6 @@ const EditionCheckout = ({ artwork, edition_id }) => {
     // const ethEx = await getCurrentExchangeRateUSDETH(); //  comment/remove this line
     // const priceInEth = ethEx.ETH * edition.price; // comment/remove this conversion code
     // const priceInWei = Web3.utils.toWei(edition.price.toFixed(4)); // priceInEth replace with edition.price
-    // console.log(edition.price, priceInWei, "priceInWei");
     const priceInWei = Web3.utils.toWei(edition.price.toFixed(4)); // priceInEth replace with edition.price
 
     try {
@@ -267,7 +264,6 @@ const EditionCheckout = ({ artwork, edition_id }) => {
         },
         edition.edition_id
       );
-      console.log(mint);
       await postTransaction(value, {
         transaction_hash: transaction.transactionHash,
         amount: parseFloat(
