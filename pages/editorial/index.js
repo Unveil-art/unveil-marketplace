@@ -13,7 +13,6 @@ import ArtistHighlights from "@/components/section/editorial-page/ArtistHighligh
 export default function EditorialPage({ data, editorial }) {
   const editorialData = data.data;
   const editorialPageData = editorial.data[0].attributes;
-  console.log(editorial);
   const editorial1to5 = editorialData.slice(0, 5);
   const editorial5to9 = editorialData.slice(5, 9);
 

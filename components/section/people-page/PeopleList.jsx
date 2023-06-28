@@ -22,13 +22,6 @@ const PeopleList = ({ people }) => {
                   displayName = item.email;
                 }
 
-                console.log(item);
-                console.log(item);
-                console.log(item);
-                console.log(item);
-                console.log(item);
-                console.log(item);
-
                 return (
                   <div
                     key={i}

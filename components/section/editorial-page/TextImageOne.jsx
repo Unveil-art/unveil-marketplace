@@ -7,7 +7,6 @@ import dynamic from "next/dynamic";
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
 const TextImageOne = ({ data, title }) => {
-  console.log("TItlte", title);
   return (
     <section className="relative grid grid-cols-1 mb-10 md:my-20 md:grid-cols-5">
       <div className="w-full md:col-span-3 ">
