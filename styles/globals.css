@@ -252,7 +252,7 @@
   .drop-cap::first-letter {
     -webkit-initial-letter: 2;
     initial-letter: 2;
-    margin-right: 10px;
+    margin-right: 5px;
   }
 
   /* Frames */

@@ -26,6 +26,9 @@ import { StepContext } from "@/contexts/StepContext";
 import { useIntersection } from "@/hooks/useIntersection";
 import Image from "next/image";
 import Torus from "@/components/svg/Torus";
+import Link from "next/link";
+import { Freshchat } from "reactjs-freshchat";
+import "reactjs-freshchat/dist/index.css";
 
 const GalleryHero = ({ artwork, dominantColor }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
@@ -47,6 +50,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
   const [sizesOpen, setSizedOpen] = useState(false);
   const [addressOpen, setAddressOpen] = useState(false);
   const [recognitionsOpen, setRecognitionsOpen] = useState(false);
+  const [showSupport, setShowSupport] = useState(false);
 
   // Handle nav color
   const { setColor } = useContext(StepContext);
@@ -225,6 +229,16 @@ const GalleryHero = ({ artwork, dominantColor }) => {
 
   return (
     <>
+    {showSupport && (
+        <Freshchat
+          token="4e15aa79-e9f2-4795-b236-62a30db78e31"
+          open={true}
+          ic_styles={{
+            backgroundColor: "#F9F7F2",
+            color: "#000000",
+          }}
+        />
+      )}
       <section className="relative grid grid-cols-1 md:grid-cols-5">
         <div
           ref={el}
@@ -405,12 +419,14 @@ const GalleryHero = ({ artwork, dominantColor }) => {
 
                   {/* button divs */}
                   <div className="flex flex-col space-y-1.5 md:space-y-2.5 w-full justify-center items-center">
-                    <button
+                    <Link href="https://learn.unveil.art"  target="_blank"
                       className="btn btn-secondary btn-full !py-3 md:!py-2"
                     >
                       Learn more
-                    </button>
-                    <button
+                    </Link>
+                    <button onClick={() => {
+                      setShowSupport(true);
+                    }}
                       className="flex justify-center items-center btn btn-secondary btn-full !py-3 md:!py-2 gap-x-1"
                     >
                       Chat with us <div className="w-2 h-2 bg-[#83D61A] rounded-full" />
