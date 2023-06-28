@@ -222,8 +222,8 @@ const GalleryHero = ({ artwork, dominantColor }) => {
         >
           <div
             className={`${
-              orientation ? "md:px-[12vw]" : "  md:px-[16vw]"
-            } relative  md:w-full w-full flex items-center  md:h-[80%] `}
+              orientation ? "px-[16vw] md:px-[12vw]" : "px-[30vw] md:px-[16vw]"
+            } relative  md:w-full w-full flex items-center md:h-[80%] `}
           >
             <div
               className={`shadow1  mx-auto bg-unveilWhite w-fit
@@ -238,7 +238,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
             ${frameObject.border === "10x20" ? "p-4" : ""}`}
             >
               <img
-                className="object-fill h-full "
+                className="object-fill w-full h-full"
                 src={artwork.media_url}
                 alt={artwork.name}
               />
