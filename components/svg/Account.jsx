@@ -1,10 +1,10 @@
 import React from "react";
 
-const Account = ({ color = "#141414" }) => {
+const Account = ({ color = "#141414", width = 26, height = 26 }) => {
   return (
     <svg
-      width="26"
-      height="26"
+      width={width}
+      height={height}
       viewBox="0 0 26 26"
       fill="none"
       className="unveilTransition"
