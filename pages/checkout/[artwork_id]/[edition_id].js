@@ -20,18 +20,28 @@ import {
   getCurrentExchangeRateETHUSD,
   mintEdition,
   postTransaction,
+  canMintThisEdition,
+  getUserMe,
 } from "lib/backend";
 import RPC from "lib/RPC";
 import { Web3Context } from "@/contexts/Web3AuthContext";
-import { MARKET_ABI, MARKET_CONTRACT_ADDRESS } from "lib/constants";
+import {
+  EARLY_ACCESS_ABI,
+  EARLY_ACCESS_CONTRACT_ADDRESS,
+  MARKET_ABI,
+  MARKET_CONTRACT_ADDRESS,
+} from "lib/constants";
 import Web3 from "web3";
+import { useRouter } from "next/router";
 
 const EditionCheckout = ({ artwork, edition_id }) => {
   const { value } = useLocalStorage("token");
   const { value: wallet } = useLocalStorage("walletAddress");
   const { step, setStep } = useContext(StepContext);
-  const { provider, rpcUrl } = useContext(Web3Context);
+  const { provider, rpcUrl, showRamper, logout } = useContext(Web3Context);
+  const router = useRouter();
 
+  const [email, setEmail] = useState("");
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [gasOpen, setGasOpen] = useState(false);
   const [payment, setPayment] = useState("");
@@ -42,10 +52,29 @@ const EditionCheckout = ({ artwork, edition_id }) => {
   const [total, setTotal] = useState();
   const [index, setIndex] = useState();
 
+  const init = async (token) => {
+    try {
+      const data = await getUserMe(token);
+      setEmail(data.email);
+    } catch (err) {
+      logout();
+    }
+  };
+
   const handlePrice = async () => {
     const res = await getCurrentExchangeRateETHUSD();
     setPriceUSD(res.USD.toFixed(2));
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/gallery/artwork/" + artwork.id);
+    }
+    if (token) {
+      init(token);
+    }
+  }, [value]);
 
   useEffect(() => {
     handlePrice();
@@ -64,19 +93,17 @@ const EditionCheckout = ({ artwork, edition_id }) => {
     console.log(gasFees);
   }, [gasFeesUSD]);
 
-  const getGasFees = async () => {
+  const getGasFees = async (fromMint = false) => {
     if (!provider) {
       console.log("Provider not initialized yet");
-      return;
+      return false;
     }
 
     try {
       let rpc = new RPC(provider);
       let contract = await rpc.getContract(MARKET_ABI, MARKET_CONTRACT_ADDRESS);
 
-      const ethEx = await getCurrentExchangeRateUSDETH();
-      const priceInEth = ethEx.ETH * edition.price;
-      const priceInWei = Web3.utils.toWei(priceInEth.toFixed(4));
+      const priceInWei = Web3.utils.toWei(edition.price.toFixed(4));
 
       const gasPrice = await rpc.getGasPrice();
 
@@ -95,11 +122,19 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       setGasFees(fee / 1e18);
       const usd = await getCurrentExchangeRateETHUSD();
       setGasFeesUSD(usd.USD * (fee / 1e18));
+      return true;
     } catch (err) {
       console.log(JSON.stringify(err), "=====");
+
       setGasFees(0.03);
       const usd = await getCurrentExchangeRateETHUSD();
+      const totalPriceInUSD = (edition.price + 0.03) * usd.USD;
+      if (fromMint) {
+        toast.error("Insufficient Balance in your Account.");
+        showRamper(parseInt(totalPriceInUSD));
+      }
       setGasFeesUSD(usd.USD * 0.03);
+      return false;
     }
   };
 
@@ -143,9 +178,29 @@ const EditionCheckout = ({ artwork, edition_id }) => {
 
   useEffect(() => {
     if (edition) {
-      getGasFees(edition.price);
+      getGasFees();
     }
   }, [edition, provider]);
+
+  const hasEACard = async () => {
+    try {
+      if (!provider) {
+        console.log("Provider not initialized yet");
+        return false;
+      }
+      let rpc = new RPC(provider);
+      let contract = await rpc.getContract(
+        EARLY_ACCESS_ABI,
+        EARLY_ACCESS_CONTRACT_ADDRESS
+      );
+      const isMinted = await contract.methods._hasMinted(wallet).call();
+      if (isMinted) return true;
+      return false;
+    } catch (err) {
+      console.log(JSON.stringify(err), "err");
+      return false;
+    }
+  };
 
   const mint = async () => {
     if (!provider) {
@@ -153,6 +208,23 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       return;
     }
     setStep(4);
+    const hasEarlyAccess = await hasEACard();
+    if (!hasEarlyAccess) {
+      setStep(3);
+      toast.info("Only EarlyAccess Card holders can Mint!!");
+      return;
+    }
+    const funds = await getGasFees(true);
+    if (!funds) {
+      setStep(3);
+      return;
+    }
+    const canMint = await canMintThisEdition(edition_id);
+    if (!canMint) {
+      setStep(3);
+      toast.info("Edition is Already Minted");
+      return;
+    }
 
     let rpc = new RPC(provider);
     let contract = await rpc.getContract(
@@ -162,9 +234,11 @@ const EditionCheckout = ({ artwork, edition_id }) => {
 
     // we will store only ETH Value in Edition Price
     // No need to convert USD to ETH here
-    const ethEx = await getCurrentExchangeRateUSDETH(); //  comment/remove this line
-    const priceInEth = ethEx.ETH * edition.price; // comment/remove this conversion code
-    const priceInWei = Web3.utils.toWei(priceInEth.toFixed(4)); // priceInEth replace with edition.price
+    // const ethEx = await getCurrentExchangeRateUSDETH(); //  comment/remove this line
+    // const priceInEth = ethEx.ETH * edition.price; // comment/remove this conversion code
+    // const priceInWei = Web3.utils.toWei(edition.price.toFixed(4)); // priceInEth replace with edition.price
+    // console.log(edition.price, priceInWei, "priceInWei");
+    const priceInWei = Web3.utils.toWei(edition.price.toFixed(4)); // priceInEth replace with edition.price
 
     try {
       // @mike we need to call referral api to get referrals of seller and buyer
@@ -208,7 +282,8 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       setStep(5);
     } catch (err) {
       console.log(JSON.stringify(err), "=====");
-      toast.error(JSON.stringify(err));
+      if (err?.data?.code == -32000) showRamper(total ? parseInt(total) : 100);
+      toast.error(err?.data?.message);
       setStep(3);
     }
   };
@@ -249,7 +324,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
             )}
             {step === 2 && (
               <Animate options={{ alpha: true }}>
-                <ConnectWithWallet setStep={setStep} />
+                <ConnectWithWallet email={email} setStep={setStep} />
               </Animate>
             )}
             {step === 3 && (
@@ -257,6 +332,8 @@ const EditionCheckout = ({ artwork, edition_id }) => {
                 <Payment
                   artwork_id={artwork.id}
                   edition_id={edition.id}
+                  artwork={artwork}
+                  edition={edition}
                   mint={mint}
                   total={total}
                   payment={payment}
@@ -314,7 +391,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
                 )}
                 {edition && (
                   <p className="leading-[16px] whitespace-nowrap lg:leading-[23px] b5">
-                    ({edition.price.toFixed(4)} ETH)
+                    ({edition.price.toFixed(2)} ETH)
                   </p>
                 )}
               </div>
@@ -335,7 +412,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
                   {gasFeesUSD && <>{gasFeesUSD.toFixed(2)}</>}
                 </p>
                 <p className="leading-[16px] lg:leading-[23px] b5">
-                  {gasFees && <>({gasFees.toFixed(4)} ETH)</>}
+                  {gasFees && <>({gasFees.toFixed(2)} ETH)</>}
                 </p>
               </div>
             </div>
@@ -351,7 +428,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
                   (
                   {gasFees
                     ? (parseFloat(gasFees) + parseFloat(edition.price)).toFixed(
-                        4
+                        2
                       )
                     : "0"}{" "}
                   ETH)

@@ -1,12 +1,16 @@
 import Chat from "@/components/reusable/Chat";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import { getUserMe } from "lib/backend";
 import React from "react";
 
-const ConnectWithWallet = ({ setStep }) => {
+const ConnectWithWallet = ({ setStep, email="" }) => {
+  
   return (
     <>
       <h1 className="mt-5 h3 mb-[80px] lg:block hidden">Wallet connected</h1>
       <input
         type="email"
+        defaultValue={email}
         className="mt-10 input"
         name="email"
         id="email"

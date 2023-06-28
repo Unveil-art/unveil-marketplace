@@ -36,6 +36,7 @@ const About = ({ bg, item }) => {
           data-cursor-color="#b2b4ae"
           className="relative md:aspect-square aspect-[10/11] 2xl:aspect-auto bg-bgColor"
         >
+          <Link href={`/gallery/${item.name ? "artwork":"collection"}/${item.id}`}>
           <Image
             src={item.media_url}
             alt={item.name}
@@ -43,6 +44,7 @@ const About = ({ bg, item }) => {
             style={{ objectFit: "cover" }}
             priority
           />
+          </Link>
           {item.name && (
             <div className="absolute bottom-[15px] left-[15px] w-[200px] bg-bgBlackOpacity border rounded-[10px] border-bgColorHover text-unveilWhite py-2 md:py-5 px-2 md:px-[15px] bg-blur">
               <Link href={`/gallery/artwork/${item.id}`}>
@@ -57,7 +59,7 @@ const About = ({ bg, item }) => {
                 <div className="flex items-center gap-1 mt-[2px]">
                   <p className="leading-tight b5">
                     ${parseFloat(getUSD(item.editions[0]?.price)).toFixed()} (
-                    {item.editions[0]?.price} ETH)
+                    {item.editions[0]?.price?.toFixed(2)} ETH)
                   </p>
                 </div>
               )}

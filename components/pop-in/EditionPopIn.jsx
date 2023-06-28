@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useContext } from "react";
 import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
 import Close from "../svg/Close";
 import Chat from "../reusable/Chat";
@@ -11,10 +11,15 @@ import { getCurrentExchangeRateETHUSD } from "lib/backend";
 import Min from "../svg/Min";
 import { useRouter } from "next/router";
 import ApplePay from "../svg/ApplePay";
+import { Web3Context } from "@/contexts/Web3AuthContext";
+import useLocalStorage from "@/hooks/useLocalStorage";
+
 
 const EditionPopIn = ({ edition, setEdition }) => {
   const [type, setType] = useState();
   const [price, setPrice] = useState();
+  const { value:token } = useLocalStorage('token');
+  const { login } = useContext(Web3Context)
   const el = useRef();
   const router = useRouter();
 
@@ -148,21 +153,17 @@ const EditionPopIn = ({ edition, setEdition }) => {
                   <div>
                     <p className="s2">${price ? price : "0"}</p>
                     <p className="ml-auto w-fit leading-[24px] b5">
-                      {edition.price} ETH
+                      {edition.price?.toFixed(2)} ETH
                     </p>
                   </div>
                 </div>
-
-                <button
-                  onClick={() =>
-                    router.push(
-                      `/checkout/${edition.artwork_id}/${edition.edition_id}`
-                    )
-                  }
-                  className="btn disabled:cursor-not-allowed btn-primary btn-full"
-                >
-                  Checkout
-                </button>
+                  <button  onClick={() => {
+                    if(token){
+                      router.push(`/checkout/${edition.artwork_id}/${edition.edition_id}`)
+                    }else{
+                      login();
+                    }
+                  } } className="btn disabled:cursor-not-allowed btn-primary btn-full">Checkout</button>
                 <div className="flex items-center h-[20px] justify-center gap-2 mt-[10px]">
                   <ApplePay />
                   <div className="mt-1">

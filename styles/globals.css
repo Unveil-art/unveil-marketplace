@@ -59,7 +59,7 @@
   }
   h5,
   .h5 {
-    @apply font-teodor font-light font-light text-[11px] md:text-[19px] leading-[16px] md:leading-[25px];
+    @apply font-teodor font-light text-[11px] md:text-[19px] leading-[16px] md:leading-[25px];
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

@@ -61,8 +61,8 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
 
           // we will store only ETH Value in Edition Price
           // No need to convert USD to ETH here
-          const priceETH = eth.ETH * edition.price; // comment/remove this conversion code
-          const priceInWei = Web3.utils.toWei(priceETH.toFixed(4));
+          // const priceETH = eth.ETH * edition.price; // comment/remove this conversion code
+          const priceInWei = Web3.utils.toWei(edition?.price.toFixed(4));
           let rpc = new RPC(provider);
           let contract = await rpc.getContract(
             MARKET_ABI,
