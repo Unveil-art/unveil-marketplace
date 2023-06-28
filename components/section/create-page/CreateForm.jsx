@@ -80,19 +80,20 @@ const CreateForm = ({
       })
       .sort((a, b) => new Date(b) - new Date(a));
 
-    const maxValue = Math.max(
-      _rendables.filter((ren) => {
-        if (_ts.includes(timestampMap[`after_${ren}_month`])) {
-          return true;
-        }
-        return false;
-      })
-    );
+    const indexesValues = _rendables.filter((ren) => {
+      if (_ts.includes(timestampMap[`after_${ren}_month`])) {
+        return true;
+      }
+      return false;
+    })
 
-    if (_rendables.slice(_rendables.indexOf(maxValue) + 1).length < 1) {
+    const minValue = Math.min(...indexesValues);
+
+
+    if (_rendables.slice(_rendables.indexOf(minValue) + 1).length < 1) {
       return [12];
     } else {
-      return _rendables.slice(_rendables.indexOf(maxValue) + 1);
+      return _rendables.slice(_rendables.indexOf(minValue) + 1);
     }
   }, [royalties, royaltyTS, timestampMap]);
 
