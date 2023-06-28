@@ -13,6 +13,15 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import { toast } from "react-toastify";
 import Loader from "@/components/svg/Loader";
 import MoreInfoPopIn from "@/components/pop-in/MoreInfoPopIn";
+import Wallet from "@/components/svg/Wallet";
+import Account from "@/components/svg/Account";
+import Search from "@/components/svg/Search";
+import MasterCardName from "@/components/svg/MasterCardName";
+import VisaBlack from "@/components/svg/VisaBlack";
+import ApplePay from "@/components/svg/ApplePay";
+import GooglePay from "@/components/svg/GooglePay";
+import Ideal from "@/components/svg/Ideal";
+import MetaMask from "@/components/svg/MetaMask";
 
 const GalleryHero = ({ imgRef, artwork }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
@@ -264,7 +273,7 @@ const GalleryHero = ({ imgRef, artwork }) => {
                     {displaySoldAs}
                   </p>
                 </div>
-                <div
+                {/* <div
                   onClick={() => setPaymentOpen(true)}
                   className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
                 >
@@ -272,7 +281,7 @@ const GalleryHero = ({ imgRef, artwork }) => {
                   <p className="truncate b3 !text-[13px] leading-normal md:b4">
                     ETH, Credit/Debit Card
                   </p>
-                </div>
+                </div> */}
                 {artwork.edition_type !== "NFT_Only" && (
                   <div
                     onClick={() => setSizedOpen(true)}
@@ -338,6 +347,69 @@ const GalleryHero = ({ imgRef, artwork }) => {
                     {inWishlist ? "Added" : "Add"} to wishlist
                   </p>
                 </button>
+
+
+                <div className="flex flex-col justify-start p-4 md:p-5 items-start col-span-2 unveilTransition w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] !mt-5 md:!mt-9 bg-[#1511000D] rounded-lg">
+                  <p className="mb-8 md:mb-6">Buyer Guarantee</p>
+
+                  <div className="flex flex-col w-full justify-center items-start mb-5 md:mb-6">
+                    <div className="flex justify-center items-center space-x-3">
+                      {/* icon */}
+                      <Wallet width={14} height={14} />
+                      <p className="l1">Secure payments</p>
+                    </div>
+                    <div className="flex justify-center items-center space-x-3">
+                      {/* icon */}
+                      <Account width={14} height={14} />
+                      <p className="l1">All artists are verified by Unveil</p>
+                    </div>
+                    <div className="flex justify-center items-center space-x-3">
+                      {/* icon */}
+                      <Search width={14} height={14} />
+                      <p className="l1">Artwork history is always visible</p>
+                    </div>
+                  </div>
+
+                  {/* button divs */}
+                  <div className="flex flex-col space-y-1.5 md:space-y-2.5 w-full justify-center items-center">
+                    <button
+                      className="btn btn-secondary btn-full !py-3 md:!py-2"
+                    >
+                      Learn more
+                    </button>
+                    <button
+                      className="flex justify-center items-center btn btn-secondary btn-full !py-3 md:!py-2 gap-x-1"
+                    >
+                      Chat with us <div className="w-2 h-2 bg-[#83D61A] rounded-full" />
+                    </button>
+                  </div>
+                </div>
+
+                <div
+                  onClick={() => setPaymentOpen(true)}
+                  className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
+                >
+                  <p className="b5 leading-[23px]">Accepted Payments Methods</p>
+                  
+                  <div className="flex justify-start items-center w-full space-x-2.5">
+                    <MasterCardName />
+                    <VisaBlack />
+                    <ApplePay />
+                    <GooglePay />
+                    <Ideal />
+                  </div>
+                </div>
+
+                <div
+                  onClick={() => setPaymentOpen(true)}
+                  className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
+                >
+                  <p className="b5 leading-[23px]">Approved wallets</p>
+
+                  <div className="flex justify-start items-center w-full space-x-2.5">
+                    <MetaMask />
+                  </div>
+                </div>
               </div>
               <div
                 className={`md:block hidden group hover:scale-105 unveilTransition w-[180px] border bg-unveilWhite border-bgColorHover rounded-[10px] overflow-hidden fixed bottom-10 right-10 z-20 h-fit ${
