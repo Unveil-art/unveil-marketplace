@@ -78,22 +78,30 @@ const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
                   Editorial
                 </p>
               </Link>
-              <Link href="/">
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href="https://learn.unveil.art/new-to-collecting-art"
+              >
                 <p
                   onClick={() => setNavOpen(!navOpen)}
                   className="cursor-pointer underline-on-hover s2"
                 >
                   New to collecting art
                 </p>
-              </Link>
-              <Link href="/">
+              </a>
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href="https://learn.unveil.art/new-to-nfts"
+              >
                 <p
                   onClick={() => setNavOpen(!navOpen)}
                   className="cursor-pointer underline-on-hover s2"
                 >
                   New to NFTs
                 </p>
-              </Link>
+              </a>
             </div>
 
             <div className="flex flex-col gap-[2px]">
@@ -125,9 +133,19 @@ const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
 
             <h4 className="b3 font-[500] mb-1 mt-[100px]">Join unveil</h4>
             <div className="flex b3 gap-2 text-[#545454]">
-              <p className="underline-on-hover">Artist</p>
+              <p
+                onClick={() => setAccessOpen(true)}
+                className="underline-on-hover"
+              >
+                Artist
+              </p>
               <p>|</p>
-              <p className="underline-on-hover">Gallery or Curator</p>
+              <p
+                onClick={() => setAccessOpen(true)}
+                className="underline-on-hover"
+              >
+                Gallery or Curator
+              </p>
             </div>
           </div>
         </div>
