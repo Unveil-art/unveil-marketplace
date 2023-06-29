@@ -403,10 +403,12 @@ const CreateForm = ({
   };
 
   useEffect(() => {
-    for (let edition of artwork.editions) {
-      if (edition.sold_copies > 0) {
-        setSoldCopies(true);
-        break;
+    if (artwork) {
+      for (let edition of artwork.editions) {
+        if (edition.sold_copies > 0) {
+          setSoldCopies(true);
+          break;
+        }
       }
     }
   }, [artwork]);
