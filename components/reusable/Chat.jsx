@@ -14,7 +14,7 @@ const Chat = ({ title, text, chatBtn = false, btnDesktop = false }) => {
       >
         <div className="h-[57px] relative md:h-[68px] bg-unveilGreen aspect-square">
           <Image
-            src="/images/Nick_Fancher.png"
+            src="/images/getadvice.jpg"
             alt="Nick Fancher"
             fill={true}
             style={{ objectFit: "cover" }}
