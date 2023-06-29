@@ -30,7 +30,7 @@ const AboutItem = ({ detail_shots = [], owner }) => {
 
   return (
     <div className="block w-full py-10 md:py-[90px] overflow-hidden">
-      <div className="gsap-scroll w-max min-w-max max-w-max flex flex-col md:flex-row flex-nowrap gap-10 px-[15px] md:px-10">
+      <div className="gsap-scroll w-full md:w-max md:min-w-max md:max-w-max flex flex-col md:flex-row flex-nowrap gap-10 px-[15px] md:px-10">
         {detail_shots.map((item, i) => (
           <div
             key={i}
