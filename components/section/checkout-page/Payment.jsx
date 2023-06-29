@@ -19,6 +19,17 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
   
   const { rpcUrl, provider } = useContext(Web3Context);
 
+  const findNextTokenId = (editions=[]) => {
+    let max = -1;
+    editions.forEach((edition) => {
+      if(edition.token_id!==null && edition.token_id>max){
+        max = edition.token_id
+      }
+    });
+    return max+1;
+  }
+  const tokenId = findNextTokenId(artwork.editions)
+  console.log(tokenId,"token")
   const hasEACard = async () => {
     try {
       if (!provider) {
@@ -90,12 +101,13 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
                   inputBorderColor: '#3f3f3f',
                 }}
                 onPaymentSuccess={async(result) => {
+                  setStep(4);
                   console.log("Payment successful.", result);
                   await mintEdition(
                     token,
                     {
                       artwork_id: artwork.id,
-                      token_id: parseInt(edition?.token_id ? edition.token_id+1 : 0),
+                      token_id: parseInt(tokenId),
                       signature: edition.signature,
                       transactionHash: result.id,
                       json_uri: artwork.json_uri,
