@@ -121,14 +121,18 @@ const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
                   Wishlist
                 </h4>
               </Link>
-              <Link href="/gallery">
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href="https://learn.unveil.art/about"
+              >
                 <h4
                   onClick={() => setNavOpen(!navOpen)}
                   className="b3 w-fit underline-on-hover"
                 >
                   About Unveil
                 </h4>
-              </Link>
+              </a>
             </div>
 
             <h4 className="b3 font-[500] mb-1 mt-[100px]">Join unveil</h4>

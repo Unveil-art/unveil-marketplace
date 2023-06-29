@@ -288,7 +288,7 @@ const FloatingArt = ({ data }) => {
           className="gsap-thumbnail absolute block bottom-[0] sm:bottom-[10%] left-0 sm:left-auto sm:right-0 sm:translate-y-1/2 translate-y-0 z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="0.0">
-            <Link href={`/people/${data.centerright_id}`}>
+            <Link href={`/people/${data.bottomright_id}`}>
               <div className="relative w-[164px] aspect-[3/4] sm:w-[280px] xl:w-[320px 2xl:w-[20vw] min-[19200px]:w-[17vw] cursor-pointer">
                 {data.centerright && (
                   <Image
