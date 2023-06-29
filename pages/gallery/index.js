@@ -222,7 +222,7 @@ export default function Gallery({ artworks }) {
           {!loading && <p>Load more</p>}
         </button>
 
-        {/* Filter Popin */}
+        {/* Filter Pop-in */}
         {/* <SortAndSearch /> */}
       </main>
     </>
