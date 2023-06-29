@@ -38,7 +38,6 @@ const PaymentSelect = ({
   //     setDisplay(`To ${afterPercentage}%`);
   //   }
   // }, [artwork]);
-  const [count, setCount ] = useState(0);
 
   return (
     <div>
@@ -52,7 +51,6 @@ const PaymentSelect = ({
         </div>
       </div>
       <button
-      disabled={count!==4}
         onClick={() => {
           setPayment("Creditcard");
           setStep(2);
@@ -134,9 +132,7 @@ const PaymentSelect = ({
               </div>
             )}
 
-            <div onClick={() => {
-              setCount((c) => c+1);
-            }} className="rounded-[10px] unveilTransition hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
+            <div className="rounded-[10px] unveilTransition hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full ">
               <p className="b5">Blockchain</p>
               <p className="truncate b4">Ethereum</p>
             </div>

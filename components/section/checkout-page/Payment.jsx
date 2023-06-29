@@ -4,7 +4,7 @@ import Chat from "@/components/reusable/Chat";
 import Ideal from "@/components/svg/Ideal";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { toast } from "react-toastify";
-import { canMintThisEdition, getClientSecret } from "lib/backend";
+import { canMintThisEdition, getClientSecret, mintEdition, postTransaction } from "lib/backend";
 import Loader from "@/components/svg/Loader";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 import RPC from "lib/RPC";
@@ -19,6 +19,17 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
   
   const { rpcUrl, provider } = useContext(Web3Context);
 
+  const findNextTokenId = (editions=[]) => {
+    let max = -1;
+    editions.forEach((edition) => {
+      if(edition.token_id!==null && edition.token_id>max){
+        max = edition.token_id
+      }
+    });
+    return max+1;
+  }
+  const tokenId = findNextTokenId(artwork.editions)
+  console.log(tokenId,"token")
   const hasEACard = async () => {
     try {
       if (!provider) {
@@ -83,19 +94,20 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
                 sdkClientSecret={secretSdkClient}
                 options={{
                   colorBackground: '#ffffff',
-                  colorPrimary: '#ffffff',
+                  colorPrimary: '#807676',
                   colorText: '#283618',
                   borderRadius: 6,
                   inputBackgroundColor: '#ffffff',
                   inputBorderColor: '#3f3f3f',
                 }}
                 onPaymentSuccess={async(result) => {
-                  console.log("Payment successful.". result);
-                   await mintEdition(
+                  setStep(4);
+                  console.log("Payment successful.", result);
+                  await mintEdition(
                     token,
                     {
                       artwork_id: artwork.id,
-                      token_id: parseInt(edition?.token_id ? edition.token_id+1 : 0),
+                      token_id: parseInt(tokenId),
                       signature: edition.signature,
                       transactionHash: result.id,
                       json_uri: artwork.json_uri,

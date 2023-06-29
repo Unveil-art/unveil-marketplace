@@ -80,69 +80,71 @@ const Navbar = ({ value }) => {
         ref={el}
         className="fixed top-0 left-0 z-40 flex items-center justify-between w-full px-[15px] pt-[15px] md:pt-[32px] md:px-10"
       >
-        {/* <div className="fixed top-0 left-0 w-full bg-unveilGreen">
+        <div className="fixed flex justify-center items-center top-0 left-0  w-full bg-[#B2B4AE] unveilTransition">
           <p className="text center b3">
             28th of June we’re going live early access card holders.{" "}
-            <a>Get access</a>
+            <a href="https://earlyaccess.unveil.art/" target="_blank" className="underline-on-hover leading-4 md:leading-5">Get access</a>
           </p>
-        </div> */}
-        {!isArrow && (
-          <div
-            onClick={() => handleOpen(setNavOpen, navOpen)}
-            className="relative  w-[20px] md:w-[31px] h-[12px] group cursor-pointer"
-          >
+        </div>
+        <div className="relative flex w-full justify-between items-center">
+          {!isArrow && (
             <div
-              style={{ backgroundColor: color }}
-              className={`w-full h-[3px]  absolute top-0 unveilTransition group-hover:w-[85%]`}
-            ></div>
-            <div
-              style={{ backgroundColor: color }}
-              className={`w-full h-[3px] bg-unveilBlack absolute bottom-0 unveilTransition group-hover:w-[115%]`}
-            ></div>
-          </div>
-        )}
-        {isArrow && (
-          <div
-            className="rotate-180 cursor-pointer"
-            onClick={() => {
-              if (step === 1) {
-                router.back();
-              } else {
-                setStep(step - 1);
-              }
-            }}
-          >
-            <Arrow color={color} />
-          </div>
-        )}
-
-        <Link href="/">
-          <div className="w-[106px] md:w-[144px] position top-[15px] md:top-[28px] left-1/2 -translate-x-1/2 absolute cursor-pointer">
-            <Logo color={color} />
-          </div>
-        </Link>
-        {value && (
-          <div
-            onClick={() => handleOpen(setLoggedIn, loggedIn)}
-            className="z-40 scale-75 cursor-pointer md:scale-100"
-          >
-            <Account color={accountColor} />
-          </div>
-        )}
-
-        {!value && (
-          <div
-            onClick={() => handleOpen(setLoginOpen, loginOpen)}
-            className="z-40 cursor-pointer"
-          >
-            <p
-              style={{ color: accountColor }}
-              className={`b3 !text-[14px] font-[500]`}
+              onClick={() => handleOpen(setNavOpen, navOpen)}
+              className="relative mt-2 md:mt-0 w-[20px] md:w-[31px] h-[12px] group cursor-pointer"
             >
-              Sign in
-            </p>
-          </div>
-        )}
+              <div
+                style={{ backgroundColor: color }}
+                className={`w-full h-[3px]  absolute top-0 unveilTransition group-hover:w-[85%]`}
+              ></div>
+              <div
+                style={{ backgroundColor: color }}
+                className={`w-full h-[3px] bg-unveilBlack absolute bottom-0 unveilTransition group-hover:w-[115%]`}
+              ></div>
+            </div>
+          )}
+          {isArrow && (
+            <div
+              className="rotate-180 cursor-pointer"
+              onClick={() => {
+                if (step === 1) {
+                  router.back();
+                } else {
+                  setStep(step - 1);
+                }
+              }}
+            >
+              <Arrow color={color} />
+            </div>
+          )}
+
+          <Link href="/">
+            <div className="w-[106px] md:w-[144px] top-2 md:top-0 left-1/2 -translate-x-1/2 absolute cursor-pointer">
+              <Logo color={color} />
+            </div>
+          </Link>
+          {value && (
+            <div
+              onClick={() => handleOpen(setLoggedIn, loggedIn)}
+              className="z-40 scale-75 mt-2 md:mt-0 cursor-pointer md:scale-100"
+            >
+              <Account color={accountColor} />
+            </div>
+          )}
+
+          {!value && (
+            <div
+              onClick={() => handleOpen(setLoginOpen, loginOpen)}
+              className="z-40 mt-2 md:mt-0 cursor-pointer"
+            >
+              <p
+                style={{ color: accountColor }}
+                className={`b3 !text-[14px] font-[500]`}
+              >
+                Sign in
+              </p>
+            </div>
+          )}
+        </div>
       </nav>
       <NavbarPopIn
         navWarning={navWarning}

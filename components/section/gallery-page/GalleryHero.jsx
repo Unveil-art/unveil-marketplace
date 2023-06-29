@@ -481,7 +481,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                   onClick={() => setOptionsOpen(!optionsOpen)}
                   className="py-3 uppercase cursor-pointer bg-unveilBlack text-unveilWhite l1 tracking-[0.18rem]"
                 >
-                  View options
+                  Select edition
                 </div>
               </div>
             </div>
@@ -500,7 +500,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
             />
           </div>
           <p className="text-unveilWhite  py-[15px] text-center w-full l1 uppercase tracking-[0.18rem] ">
-            View options
+            Select edition
           </p>
         </div>
       </section>
