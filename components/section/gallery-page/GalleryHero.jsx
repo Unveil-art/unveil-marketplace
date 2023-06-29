@@ -31,7 +31,6 @@ import Link from "next/link";
 import { Freshchat } from "reactjs-freshchat";
 import "reactjs-freshchat/dist/index.css";
 
-
 const GalleryHero = ({ artwork, dominantColor }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
   const [editionOpen, setEditionOpen] = useState(false);
@@ -232,7 +231,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
 
   return (
     <>
-    {showSupport && (
+      {showSupport && (
         <Freshchat
           token="4e15aa79-e9f2-4795-b236-62a30db78e31"
           open={true}
@@ -246,7 +245,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
         <div
           ref={el}
           style={{ backgroundColor: dominantColor }}
-          className={`h-[50svh] unveilTransition md:h-screen overflow-hidden md:sticky  top-0 flex items-center justify-center md:col-span-3 `}
+          className={`h-[65svh] unveilTransition md:h-screen overflow-hidden md:sticky  top-0 flex items-center justify-center md:col-span-3 `}
         >
           <div className={`h-full  aspect-[3/4] mb-1`}>
             <div
@@ -420,18 +419,21 @@ const GalleryHero = ({ artwork, dominantColor }) => {
 
                   {/* button divs */}
                   <div className="flex flex-col space-y-1.5 md:space-y-2.5 w-full justify-center items-center">
-                    <Link href="https://learn.unveil.art"  target="_blank"
+                    <Link
+                      href="https://learn.unveil.art"
+                      target="_blank"
                       className="btn btn-secondary btn-full !py-3 md:!py-2"
                     >
                       Learn more
                     </Link>
-                    <button onClick={() => {
-                      setShowSupport(true);
-                    }}
+                    <button
+                      onClick={() => {
+                        setShowSupport(true);
+                      }}
                       className="flex justify-center items-center btn btn-secondary btn-full !py-3 md:!py-2 gap-x-1"
                     >
-                      Chat with us <div className="w-2 h-2 bg-[#83D61A] rounded-full" />
-
+                      Chat with us{" "}
+                      <div className="w-2 h-2 bg-[#83D61A] rounded-full" />
                     </button>
                   </div>
                 </div>
