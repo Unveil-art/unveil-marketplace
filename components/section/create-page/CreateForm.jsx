@@ -45,6 +45,7 @@ const CreateForm = ({
   const [curatorNames, setCuratorNames] = useState([]);
   const [collections, setCollections] = useState([]);
   const [collection, setCollection] = useState();
+  const [soldCopies, setSoldCopies] = useState(false);
   const [curatorOpen, setCuratorOpen] = useState(false);
   const [eth, setEth] = useState(false);
   const [royalties, setRoyalties] = useState([
@@ -401,6 +402,15 @@ const CreateForm = ({
     setEth(!eth);
   };
 
+  useEffect(() => {
+    for (let edition of artwork.editions) {
+      if (edition.sold_copies > 0) {
+        setSoldCopies(true);
+        break;
+      }
+    }
+  }, [artwork]);
+
   return (
     <div className="w-full lg:w-[710px] space-y-[15px] lg:space-y-5">
       {/* Basic info */}
@@ -414,6 +424,7 @@ const CreateForm = ({
           name="name"
           id="name"
           value={name}
+          disabled={soldCopies}
           placeholder="Artwork name"
           {...register("name", {
             required: "Required",
@@ -426,6 +437,7 @@ const CreateForm = ({
           className="select-input"
           name="year"
           id="year"
+          disabled={soldCopies}
           defaultValue={artwork ? artwork.year : null}
           {...register("year", {
             required: "Required",
@@ -485,6 +497,7 @@ const CreateForm = ({
               type="radio"
               name="edition_type"
               id="NFT_Only"
+              disabled={soldCopies}
               value="NFT_Only"
               checked={editionType === "NFT_Only"}
               {...register("edition_type", {
@@ -994,6 +1007,7 @@ const CreateForm = ({
                       <select
                         name={`paper[${i}]`}
                         id="paper-select"
+                        disabled={soldCopies}
                         defaultValue={artwork ? artwork.editions[0].paper : ""}
                         className="truncate select-input"
                         {...register(`paper[${i}]`, { required: "Required" })}
@@ -1019,6 +1033,7 @@ const CreateForm = ({
                       <select
                         id="frame-select"
                         className="truncate select-input"
+                        disabled={soldCopies}
                         defaultValue={
                           artwork.editions && artwork.editions <= i
                             ? artwork.editions[i].value
@@ -1048,6 +1063,7 @@ const CreateForm = ({
                         id="technique-select"
                         className="truncate select-input"
                         name={`technique[${i}]`}
+                        disabled={soldCopies}
                         defaultValue={
                           artwork.editions
                             ? artwork.editions[i].technique
@@ -1089,6 +1105,7 @@ const CreateForm = ({
                       type="text"
                       className="input"
                       placeholder="Select Price"
+                      disabled={soldCopies}
                       name={`price[${i}]`}
                       value={
                         eth ? editionPricing[i].eth : editionPricing[i].usd
@@ -1116,13 +1133,15 @@ const CreateForm = ({
                   </div>
                   <div
                     className={`${
-                      editionPricing.length === 1
+                      editionPricing.length === 1 || soldCopies
                         ? "opacity-40"
                         : "cursor-pointer"
                     }`}
-                    onClick={() =>
-                      handleDeleteRow(i, setEditionPricing, true, i, item)
-                    }
+                    onClick={() => {
+                      if (!soldCopies) {
+                        handleDeleteRow(i, setEditionPricing, true, i, item);
+                      }
+                    }}
                   >
                     <Delete big />
                   </div>
@@ -1136,6 +1155,7 @@ const CreateForm = ({
                         name="news"
                         id="news"
                         className="checkbox"
+                        disabled={soldCopies}
                       />
                       <label htmlFor="news" className="b3 md:b4">
                         Previously sold
@@ -1151,15 +1171,19 @@ const CreateForm = ({
         <div className="grid grid-cols-2 lg:grid-cols-6 gap-2 px-5 pt-[15px] pb-5 lg:pb-[30px]">
           <div className="hidden lg:block"></div>
           <p
-            onClick={() =>
-              setEditionPricing((prevItems) => [
-                ...prevItems,
-                { activeSize, eth: null, usd: null },
-              ])
-            }
+            onClick={() => {
+              if (!soldCopies) {
+                setEditionPricing((prevItems) => [
+                  ...prevItems,
+                  { activeSize, eth: null, usd: null },
+                ]);
+              }
+            }}
             className={`${
+              soldCopies ? "cursor-not-allowed opacity-40" : "cursor-pointer"
+            } ${
               editionType !== "NFT_Only" ? "lg:col-span-3" : "lg:col-span-5"
-            } btn btn-secondary cursor-pointer inline-block text-center`}
+            } btn btn-secondary inline-block text-center`}
           >
             Add edition
           </p>
@@ -1184,6 +1208,7 @@ const CreateForm = ({
             <select
               name={`from[${i}]`}
               className="truncate select-input"
+              disabled={soldCopies}
               defaultValue={
                 artwork && i < artwork.royalties.length
                   ? artwork.royalties[i].from
@@ -1204,18 +1229,6 @@ const CreateForm = ({
             >
               {i !== 0 && (
                 <>
-                  {/* <option value="After 1 month">After 1 month</option>
-                  <option value="After 2 months">After 2 months</option>
-                  <option value="After 3 months">After 3 months</option>
-                  <option value="After 4 months">After 4 months</option>
-                  <option value="After 5 months">After 5 months</option>
-                  <option value="After 6 months">After 6 months</option>
-                  <option value="After 7 months">After 7 months</option>
-                  <option value="After 8 months">After 8 months</option>
-                  <option value="After 9 months">After 9 months</option>
-                  <option value="After 10 months">After 10 months</option>
-                  <option value="After 11 months">After 11 months</option>
-                  <option value="After 12 months">After 12 months</option> */}
                   {rendableSecondaryOptions.map((num) => (
                     <option
                       key={num}
@@ -1226,18 +1239,6 @@ const CreateForm = ({
               )}
               {i === 0 && (
                 <>
-                  {/* <option value="">First month</option>
-                  <option value="After 2 months">First 2 months</option>
-                  <option value="First 3 months">First 3 months</option>
-                  <option value="First 4 months">First 4 months</option>
-                  <option value="First 5 months">First 5 months</option>
-                  <option value="First 6 months">First 6 months</option>
-                  <option value="First 7 months">First 7 months</option>
-                  <option value="First 8 months">First 8 months</option>
-                  <option value="First 9 months">First 9 months</option>
-                  <option value="First 10 months">First 10 months</option>
-                  <option value="First 11 months">First 11 months</option>
-                  <option value="First 12 months">First 12 months</option> */}
                   {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((num) => (
                     <option
                       key={num}
@@ -1252,6 +1253,7 @@ const CreateForm = ({
             <select
               name={`percentage[${i}]`}
               className="truncate select-input"
+              disabled={soldCopies}
               defaultValue={
                 artwork && i < artwork.royalties.length
                   ? artwork.royalties[i].percentage
@@ -1302,22 +1304,35 @@ const CreateForm = ({
               </div>
             )}
             {i !== 0 && (
-              <div
-                onClick={() => handleDeleteRow(i, setRoyalties)}
-                className="absolute cursor-pointer -translate-y-1/2 right-[18px] top-1/2"
-              >
-                <Delete big />
-              </div>
+              <>
+                {soldCopies && (
+                  <div className="absolute opacity-40 -translate-y-1/2 right-[18px] top-1/2">
+                    <Delete big />
+                  </div>
+                )}
+                {!soldCopies && (
+                  <div
+                    onClick={() => handleDeleteRow(i, setRoyalties)}
+                    className="absolute cursor-pointer -translate-y-1/2 right-[18px] top-1/2"
+                  >
+                    <Delete big />
+                  </div>
+                )}
+              </>
             )}
           </div>
         ))}
 
         {royalties.length + 1 <= 2 && (
           <p
-            onClick={() =>
-              setRoyalties((prevItems) => [...prevItems, defaultRoyalties])
-            }
-            className="md:px-32 inline-block text-center mx-5 mt-[15px] mb-5 lg:mb-[30px] btn btn-secondary w-[calc(100%-40px)] "
+            onClick={() => {
+              if (!soldCopies) {
+                setRoyalties((prevItems) => [...prevItems, defaultRoyalties]);
+              }
+            }}
+            className={`${
+              soldCopies ? "cursor-not-allowed opacity-40" : "cursor-pointer"
+            } md:px-32 inline-block text-center mx-5 mt-[15px] mb-5 lg:mb-[30px] btn btn-secondary w-[calc(100%-40px)] `}
           >
             Add date range
           </p>
@@ -1337,6 +1352,7 @@ const CreateForm = ({
             <select
               id="collection-select"
               name="collectionId"
+              disabled={soldCopies}
               className="truncate select-input "
               value={collection}
               {...register("collectionId", {
