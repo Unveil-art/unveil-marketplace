@@ -83,7 +83,7 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
                 sdkClientSecret={secretSdkClient}
                 options={{
                   colorBackground: '#ffffff',
-                  colorPrimary: '#ffffff',
+                  colorPrimary: '#807676',
                   colorText: '#283618',
                   borderRadius: 6,
                   inputBackgroundColor: '#ffffff',
