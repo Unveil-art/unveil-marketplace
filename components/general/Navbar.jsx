@@ -80,12 +80,12 @@ const Navbar = ({ value }) => {
         ref={el}
         className="fixed top-0 left-0 z-40 flex items-center justify-between w-full px-[15px] pt-[15px] md:pt-[32px] md:px-10"
       >
-        <div className="fixed flex justify-center items-center top-0 left-0  w-full bg-[#B2B4AE] unveilTransition">
+        {/* <div className="fixed flex justify-center items-center top-0 left-0  w-full bg-[#B2B4AE] unveilTransition">
           <p className="text center b3">
             28th of June we’re going live early access card holders.{" "}
             <a href="https://earlyaccess.unveil.art/" target="_blank" className="underline-on-hover leading-4 md:leading-5">Get access</a>
           </p>
-        </div>
+        </div> */}
         <div className="relative flex w-full justify-between items-center">
           {!isArrow && (
             <div
