@@ -18,7 +18,7 @@ const People = () => {
 
   const fetchUsers = async () => {
     try {
-      const data = await getUsers(value, filter);
+      const data = await getUsers(filter);
 
       setPeople(data);
 
@@ -29,10 +29,8 @@ const People = () => {
   };
 
   useEffect(() => {
-    if (value) {
-      fetchUsers();
-    }
-  }, [value, filter]);
+    fetchUsers();
+  }, [filter]);
 
   useEffect(() => {
     if ("curators" in router.query) {

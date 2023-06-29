@@ -51,7 +51,7 @@ const PaymentSelect = ({
         </div>
       </div>
       <button
-      disabled
+      // disabled
         onClick={() => {
           setPayment("Creditcard");
           setStep(2);
