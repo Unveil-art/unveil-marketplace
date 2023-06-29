@@ -54,13 +54,13 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
     try{
       setLoading(true);
 
-      const hasEarlyAccess = await hasEACard();
-    if (!hasEarlyAccess) {
-      setLoading(false);
-      setStep(3);
-      toast.info("Only EarlyAccess Card holders can Mint!!");
-      return;
-    }
+    //   const hasEarlyAccess = await hasEACard();
+    // if (!hasEarlyAccess) {
+    //   setLoading(false);
+    //   setStep(3);
+    //   toast.info("Only EarlyAccess Card holders can Mint!!");
+    //   return;
+    // }
       const canMint = await canMintThisEdition(edition.edition_id);
       if(!canMint){
         toast.error('Edition is already Minted');

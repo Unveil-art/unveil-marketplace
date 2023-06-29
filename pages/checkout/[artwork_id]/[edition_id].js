@@ -206,12 +206,12 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       return;
     }
     setStep(4);
-    const hasEarlyAccess = await hasEACard();
-    if (!hasEarlyAccess) {
-      setStep(3);
-      toast.info("Only EarlyAccess Card holders can Mint!!");
-      return;
-    }
+    // const hasEarlyAccess = await hasEACard();
+    // if (!hasEarlyAccess) {
+    //   setStep(3);
+    //   toast.info("Only EarlyAccess Card holders can Mint!!");
+    //   return;
+    // }
     const funds = await getGasFees(true);
     if (!funds) {
       setStep(3);
