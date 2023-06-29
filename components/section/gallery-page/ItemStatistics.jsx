@@ -37,7 +37,7 @@ const ItemStatistics = ({ artwork }) => {
       <div className="md:col-span-3">
         <div className="md:mb-[100px] px-[15px] md:pl-10 md:pr-5">
           <p className="s1 md:pb-0">Pricing statistics</p>
-          <div className="w-[180px] my-5 md:hidden block">
+          <div className="w-[180px] mt-5 md:hidden block">
             <p className="leading-[16px] md:leading-[25px] b4">
               <strong className="font-[500]">About pricing</strong>
               <br />

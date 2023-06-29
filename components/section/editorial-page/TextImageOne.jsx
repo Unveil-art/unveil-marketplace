@@ -3,13 +3,14 @@ import Image from "next/image";
 import Title from "@/components/reusable/Title";
 import Animate from "@/components/reusable/Animate";
 import dynamic from "next/dynamic";
+import ReactMarkdown from "react-markdown";
 
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
 const TextImageOne = ({ data, title }) => {
   return (
     <section className="relative grid grid-cols-1 mb-10 md:my-20 md:grid-cols-5">
-      <div className="w-full md:col-span-3 ">
+      <div className="relative w-full md:col-span-3">
         <Animate
           options={{ y: 0, image: true }}
           className="w-full sticky top-0 overflow-hidden h-fit bg-bgColor aspect-[10/11]"
@@ -25,6 +26,15 @@ const TextImageOne = ({ data, title }) => {
             />
           )}
         </Animate>
+
+        {data.caption && (
+          <Animate
+            className="absolute ml-10 -bottom-10"
+            options={{ alpha: true }}
+          >
+            <p className="b3">{data.caption}</p>
+          </Animate>
+        )}
       </div>
       <Animate
         options={{ alpha: true }}
@@ -33,11 +43,11 @@ const TextImageOne = ({ data, title }) => {
         <div className="block mt-10 mb-20 md:hidden">
           <Title title={title} />
         </div>
-        <p
-          className={`md:max-w-[350px] sticky top-[32px] h-fit leading-[110%] px-[15px] ml-[100px] md:ml-10 2xl:ml-[60px] s2 drop-cap`}
+        <ReactMarkdown
+          className={`md:max-w-[350px] space-y-5 sticky top-[32px] h-fit leading-[110%] px-[15px] ml-[100px] md:ml-10 2xl:ml-[60px] s2 drop-cap`}
         >
           {data.Text}
-        </p>
+        </ReactMarkdown>
       </Animate>
       {data.link && data.button_text && (
         <div className="block bg-unveilWhite border border-bgColorHover rounded-[10px] overflow-hidden z-30 fixed bottom-10 right-[15px] md:right-10 h-fit">

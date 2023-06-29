@@ -209,9 +209,6 @@ export default function Gallery({ artworks }) {
           )}
         </div>
 
-        {/* For searching */}
-        {/* <SearchBlockItems /> */}
-
         <button
           onClick={() => setPagination(pagination + 1)}
           className="mx-auto btn btn-secondary hidden w-[128px] mb-[100px] cursor-pointer"
@@ -225,6 +222,7 @@ export default function Gallery({ artworks }) {
           {!loading && <p>Load more</p>}
         </button>
 
+        {/* Filter Popin */}
         {/* <SortAndSearch /> */}
       </main>
     </>

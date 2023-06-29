@@ -23,7 +23,7 @@ const LoginPopIn = ({ loginOpen, setLoginOpen }) => {
         >
           <div>
             <div className="w-full h-[3px] md:h-[5px] mt-[40px] bg-unveilBlack"></div>
-            <h3 className="text-center h4 mb-[80px] mt-[60px] md:max-w-[80%] mx-auto">
+            <h3 className="text-center h4 mb-[60px] md:max-w-[80%] mx-auto">
               Login to your account with Wallet connect
             </h3>
             <button
