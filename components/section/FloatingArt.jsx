@@ -182,7 +182,7 @@ const FloatingArt = ({ data }) => {
         >
           <div className="gsap-parallax " data-speed="0.1">
             <Link href={`/people/${data.topleft_id}`}>
-              <div className="w-[85px] bubble-wrap overflow-hidden aspect-[3/4] sm:w-[140px] 2xl:w-[7vw] relative cursor-pointer">
+              <div className="w-[85px] bubble-wrap overflow-hidden aspect-[3/4] sm:-w[140px] 2xl:w-[7vw] relative cursor-pointer">
                 {data.topleft && (
                   <Image
                     src={data.topleft.data.attributes.url}
@@ -215,7 +215,7 @@ const FloatingArt = ({ data }) => {
         <div
           data-cursor="View artist"
           data-cursor-color={data.bottomleft_color}
-          className="gsap-thumbnail absolute block bottom-[20%] sm:bottom-[5%] right-[10%] 2xl:left-[500px] left-auto sm:left-[40%] sm:right-auto z-10 invisible"
+          className="gsap-thumbnail absolute block bottom-[20%] sm:bottom-[5%] right-[10%] 2xl:left-[500px] left-auto sm:left-[30%] sm:right-auto z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="-0.075">
             <Link href={`/people/${data.bottomleft_id}`}>
@@ -250,11 +250,11 @@ const FloatingArt = ({ data }) => {
         <div
           data-cursor="View artist"
           data-cursor-color={data.topright_color}
-          className="gsap-thumbnail absolute block top-[10%] sm:top-0 right-[4%] sm:right-auto sm:left-1/2 2xl:left-[40%] z-10 invisible"
+          className="gsap-thumbnail absolute block top-[10%] sm:top-0 right-[4%] sm:right-auto sm:left-[40%] lg:left-1/2 2xl:left-[40%] z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="0.1">
             <Link href={`/people/${data.topright_id}`}>
-              <div className="relative w-[136px] aspect-[3/4] sm:w-[410px] 2xl:w-[23vw] cursor-pointer">
+              <div className="relative w-[136px] aspect-[3/4] sm:w-[360px] xl:w-[410px] 2xl:w-[23vw] cursor-pointer">
                 {data.topright && (
                   <Image
                     src={data.topright.data.attributes.url}
@@ -289,7 +289,7 @@ const FloatingArt = ({ data }) => {
         >
           <div className="gsap-parallax" data-speed="0.0">
             <Link href={`/people/${data.centerright_id}`}>
-              <div className="relative w-[164px] aspect-[3/4] sm:w-[320px] 2xl:w-[18vw] cursor-pointer">
+              <div className="relative w-[164px] aspect-[3/4] sm:w-[280px] xl:w-[320px] 2xl:w-[18vw] cursor-pointer">
                 {data.centerright && (
                   <Image
                     src={data.centerright.data.attributes.url}
