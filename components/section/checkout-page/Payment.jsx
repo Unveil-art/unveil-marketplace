@@ -78,16 +78,16 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
       setSecretSdkClient("");
       e.stopPropagation();
      }} className="fixed z-50 top-0 left-0 w-[100vw] h-[100vh] flex flex-col justify-center items-center">
-                <div className="p-4 w-[390px] border border-gray-700 shadow-lg mt-10 rounded-lg bg-[#fefae0]">
+                <div className="p-4 w-[390px] border border-gray-700 shadow-lg mt-10 rounded-lg bg-[#ffffff]">
                 <CheckoutWithCard
                 sdkClientSecret={secretSdkClient}
                 options={{
-                  colorBackground: '#fefae0',
-                  colorPrimary: '#606c38',
+                  colorBackground: '#ffffff',
+                  colorPrimary: '#ffffff',
                   colorText: '#283618',
                   borderRadius: 6,
-                  inputBackgroundColor: '#faedcd',
-                  inputBorderColor: '#d4a373',
+                  inputBackgroundColor: '#ffffff',
+                  inputBorderColor: '#3f3f3f',
                 }}
                 onPaymentSuccess={async(result) => {
                   console.log("Payment successful.". result);
