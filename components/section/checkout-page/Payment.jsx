@@ -4,7 +4,7 @@ import Chat from "@/components/reusable/Chat";
 import Ideal from "@/components/svg/Ideal";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { toast } from "react-toastify";
-import { canMintThisEdition, getClientSecret } from "lib/backend";
+import { canMintThisEdition, getClientSecret, mintEdition, postTransaction } from "lib/backend";
 import Loader from "@/components/svg/Loader";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 import RPC from "lib/RPC";
@@ -89,9 +89,9 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
                   inputBackgroundColor: '#ffffff',
                   inputBorderColor: '#3f3f3f',
                 }}
-                onPaymentSuccess={(result) => {
-                  console.log("Payment successful.". result);
-                  mintEdition(
+                onPaymentSuccess={async(result) => {
+                  console.log("Payment successful.", result);
+                  await mintEdition(
                     token,
                     {
                       artwork_id: artwork.id,
@@ -103,7 +103,7 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
                     edition.edition_id
                   );
                   
-                  postTransaction(token, {
+                  await postTransaction(token, {
                     transaction_hash: result.id,
                     amount: parseFloat(
                       (edition.price).toFixed(2)
