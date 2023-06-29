@@ -113,7 +113,7 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
       className="flex items-center justify-between gap-4 border-b last:border-none border-bgBlackOpacity"
     >
       <div className="flex items-center gap-4 md:gap-10">
-        <div className="max-h-[136px] max-w-[106px] min-h-[136px] min-w-[106px] md:max-h-[140px] md:max-w-[120px] md:min-h-[140px] md:min-w-[120px] bg-bgColor my-[10px]">
+        <Link href={wishlist ? `/gallery/artwork/${item.id}` : `/artworks/${item.id}`} className="max-h-[136px] max-w-[106px] min-h-[136px] min-w-[106px] md:max-h-[140px] md:max-w-[120px] md:min-h-[140px] md:min-w-[120px] bg-bgColor my-[10px]">
           <div className="flex items-center justify-center h-full p-5">
             <img
               className="object-contain shadow2"
@@ -121,7 +121,7 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
               alt={item.name}
             />
           </div>
-        </div>
+        </Link>
         <div>
           {item.is_draft && (
             <Link href={`/artworks/${item.id}`}>
