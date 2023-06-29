@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import CountdownTimer from "./CountdownTimer";
 import { default as NextImage } from "next/image";
 import ColorThief from "colorthief";
+import Link from "next/link";
 
 const Collections = ({ color = "#F9F7F2", bgColor = "#141414", item }) => {
   const [dominantColor, setDominantColor] = useState("rgba(21, 17, 0, 0.05)");
@@ -90,13 +91,15 @@ const Collections = ({ color = "#F9F7F2", bgColor = "#141414", item }) => {
   }, []);
 
   return (
-    <section className="grid grid-cols-1 md:h-screen md:m-0 m-[15px] md:grid-cols-2">
+    <section className="grid grid-cols-1 md:h-screen md:m-0 mx-[15px] md:grid-cols-2">
       <div
         className="flex flex-col justify-between order-2 p-10 aspect-square md:aspect-auto md:order-1"
         style={{ backgroundColor: dominantColor, color: color }}
       >
         <div>
-          <h2 className="h1">{item.title}</h2>
+          <Link href={`/gallery/collection/${item.id}`}>
+            <h2 className="break-words h3 lg:h1">{item.title}</h2>
+          </Link>
           <div className="mt-5 s2">
             <CountdownTimer targetDate={new Date(item.live_time)} />
           </div>
@@ -105,17 +108,19 @@ const Collections = ({ color = "#F9F7F2", bgColor = "#141414", item }) => {
           {item.curator_id && (
             <p className="mb-5 l2">Curated by {item.curator_id}</p>
           )}
-          <p className="b3">{item.description}</p>
+          <p className="b3 line-clamp-6">{item.description}</p>
         </div>
       </div>
       <div className="relative order-1 bg-bgColor md:order-2 aspect-square md:aspect-auto">
-        <NextImage
-          src={item.media_url}
-          alt={item.title}
-          fill={true}
-          style={{ objectFit: "cover" }}
-          priority
-        />
+        <Link href={`/gallery/collection/${item.id}`}>
+          <NextImage
+            src={item.media_url}
+            alt={item.title}
+            fill={true}
+            style={{ objectFit: "cover" }}
+            priority
+          />
+        </Link>
       </div>
     </section>
   );

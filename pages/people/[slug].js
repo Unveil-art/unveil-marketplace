@@ -34,7 +34,7 @@ const PeopleDetails = ({ userId, user }) => {
   }
 
   return (
-    <main className="mt-[120px]">
+    <main className="mt-[120px] ">
       <Title
         title={displayName}
         account={user !== undefined ? user.role : ""}
