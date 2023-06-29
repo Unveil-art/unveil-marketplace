@@ -89,9 +89,9 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
                   inputBackgroundColor: '#ffffff',
                   inputBorderColor: '#3f3f3f',
                 }}
-                onPaymentSuccess={async(result) => {
+                onPaymentSuccess={(result) => {
                   console.log("Payment successful.". result);
-                   await mintEdition(
+                  mintEdition(
                     token,
                     {
                       artwork_id: artwork.id,
@@ -103,7 +103,7 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
                     edition.edition_id
                   );
                   
-                  await postTransaction(token, {
+                  postTransaction(token, {
                     transaction_hash: result.id,
                     amount: parseFloat(
                       (edition.price).toFixed(2)
