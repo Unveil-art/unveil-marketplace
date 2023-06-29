@@ -178,11 +178,11 @@ const FloatingArt = ({ data }) => {
         <div
           data-cursor="View artist"
           data-cursor-color={data.topleft_color}
-          className="gsap-thumbnail absolute block top-[5%] left-[20%] z-10 invisible"
+          className="gsap-thumbnail absolute block top-[5%] left-[20%] 2xl:left-[200px] z-10 invisible"
         >
           <div className="gsap-parallax " data-speed="0.1">
             <Link href={`/people/${data.topleft_id}`}>
-              <div className="w-[85px] bubble-wrap overflow-hidden h-[108px] sm:w-[140px] sm:h-[180px] relative cursor-pointer">
+              <div className="w-[85px] bubble-wrap overflow-hidden aspect-[3/4] sm:w-[140px] 2xl:w-[7vw] relative cursor-pointer">
                 {data.topleft && (
                   <Image
                     src={data.topleft.data.attributes.url}
@@ -215,11 +215,11 @@ const FloatingArt = ({ data }) => {
         <div
           data-cursor="View artist"
           data-cursor-color={data.bottomleft_color}
-          className="gsap-thumbnail absolute block bottom-[20%] sm:bottom-[5%] right-[10%] left-auto sm:left-[40%] sm:right-auto z-10 invisible"
+          className="gsap-thumbnail absolute block bottom-[20%] sm:bottom-[5%] right-[10%] 2xl:left-[500px] left-auto sm:left-[40%] sm:right-auto z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="-0.075">
             <Link href={`/people/${data.bottomleft_id}`}>
-              <div className="relative w-[81px] h-[96px] sm:w-[140px] sm:h-[180px] cursor-pointer">
+              <div className="relative w-[81px] aspect-[3/4] sm:w-[140px] 2xl:w-[9vw] cursor-pointer">
                 {data.bottomleft && (
                   <Image
                     src={data.bottomleft.data.attributes.url}
@@ -250,11 +250,11 @@ const FloatingArt = ({ data }) => {
         <div
           data-cursor="View artist"
           data-cursor-color={data.topright_color}
-          className="gsap-thumbnail absolute block top-[10%] sm:top-0 right-[4%] sm:right-auto sm:left-1/2 z-10 invisible"
+          className="gsap-thumbnail absolute block top-[10%] sm:top-0 right-[4%] sm:right-auto sm:left-1/2 2xl:left-[40%] z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="0.1">
             <Link href={`/people/${data.topright_id}`}>
-              <div className="relative w-[136px] h-[184px] sm:w-[410px] sm:h-[500px] cursor-pointer">
+              <div className="relative w-[136px] aspect-[3/4] sm:w-[410px] 2xl:w-[23vw] cursor-pointer">
                 {data.topright && (
                   <Image
                     src={data.topright.data.attributes.url}
@@ -285,11 +285,11 @@ const FloatingArt = ({ data }) => {
         <div
           data-cursor="View artist"
           data-cursor-color={data.centerright_color}
-          className="gsap-thumbnail absolute block bottom-[0] sm:bottom-[30%] left-0 sm:left-auto sm:right-0 sm:translate-y-1/2 translate-y-0 z-10 invisible"
+          className="gsap-thumbnail absolute block bottom-[0] sm:bottom-[10%] left-0 sm:left-auto sm:right-0 sm:translate-y-1/2 translate-y-0 z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="0.0">
             <Link href={`/people/${data.centerright_id}`}>
-              <div className="relative w-[164px] h-[229px] sm:w-[320px] sm:h-[422px] cursor-pointer">
+              <div className="relative w-[164px] aspect-[3/4] sm:w-[320px] 2xl:w-[18vw] cursor-pointer">
                 {data.centerright && (
                   <Image
                     src={data.centerright.data.attributes.url}
