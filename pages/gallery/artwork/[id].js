@@ -96,7 +96,7 @@ const Details = ({ artwork, browse }) => {
         setDominantColor(`rgb(${color[0]}, ${color[1]}, ${color[2]})`);
       };
     }
-  }, []);
+  }, [artwork]);
 
   return (
     <main className="mb-[100px]">

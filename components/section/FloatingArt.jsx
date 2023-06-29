@@ -9,6 +9,7 @@ import AccessPopIn2 from "../pop-in/AccessPopIn2";
 import Link from "next/link";
 
 const FloatingArt = ({ data }) => {
+  console.log(data);
   const [open, setOpen] = useState(false);
   const el = useRef();
   const once = useRef(false);
@@ -180,28 +181,30 @@ const FloatingArt = ({ data }) => {
           className="gsap-thumbnail absolute block top-[5%] left-[20%] z-10 invisible"
         >
           <div className="gsap-parallax " data-speed="0.1">
-            <div className="w-[85px] bubble-wrap overflow-hidden h-[108px] sm:w-[140px] sm:h-[180px] relative">
-              {data.topleft && (
-                <Image
-                  src={data.topleft.data.attributes.url}
-                  alt={data.topleft.data.attributes.alt}
-                  fill={true}
-                  style={{ objectFit: "cover" }}
-                  priority
-                />
-              )}
+            <Link href={`/people/${data.topleft_id}`}>
+              <div className="w-[85px] bubble-wrap overflow-hidden h-[108px] sm:w-[140px] sm:h-[180px] relative cursor-pointer">
+                {data.topleft && (
+                  <Image
+                    src={data.topleft.data.attributes.url}
+                    alt={data.topleft.data.attributes.alt}
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    priority
+                  />
+                )}
 
-              {data.topleft_bubblewrap && (
-                <Image
-                  src="/images/bubble-wrap.png"
-                  alt="Bubble wrap - coming soon"
-                  fill={true}
-                  style={{ objectFit: "cover" }}
-                  className="gsap-bubblewrap"
-                  priority
-                />
-              )}
-            </div>
+                {data.topleft_bubblewrap && (
+                  <Image
+                    src="/images/bubble-wrap.png"
+                    alt="Bubble wrap - coming soon"
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    className="gsap-bubblewrap"
+                    priority
+                  />
+                )}
+              </div>
+            </Link>
 
             <small className="block l2 text-[8px] md:text-[12px]">
               {data.topleft_name}
@@ -215,27 +218,29 @@ const FloatingArt = ({ data }) => {
           className="gsap-thumbnail absolute block bottom-[20%] sm:bottom-[5%] right-[10%] left-auto sm:left-[40%] sm:right-auto z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="-0.075">
-            <div className="relative w-[81px] h-[96px] sm:w-[140px] sm:h-[180px]">
-              {data.bottomleft && (
-                <Image
-                  src={data.bottomleft.data.attributes.url}
-                  alt={data.bottomleft.data.attributes.alt}
-                  fill={true}
-                  style={{ objectFit: "cover" }}
-                  priority
-                />
-              )}
-              {data.bottomleft_bubblewrap && (
-                <Image
-                  src="/images/bubble-wrap.png"
-                  alt="Bubble wrap - coming soon"
-                  fill={true}
-                  style={{ objectFit: "cover" }}
-                  className="gsap-bubblewrap"
-                  priority
-                />
-              )}
-            </div>
+            <Link href={`/people/${data.bottomleft_id}`}>
+              <div className="relative w-[81px] h-[96px] sm:w-[140px] sm:h-[180px] cursor-pointer">
+                {data.bottomleft && (
+                  <Image
+                    src={data.bottomleft.data.attributes.url}
+                    alt={data.bottomleft.data.attributes.alt}
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    priority
+                  />
+                )}
+                {data.bottomleft_bubblewrap && (
+                  <Image
+                    src="/images/bubble-wrap.png"
+                    alt="Bubble wrap - coming soon"
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    className="gsap-bubblewrap"
+                    priority
+                  />
+                )}
+              </div>
+            </Link>
             <small className=" block l2 text-[8px] md:text-[12px]">
               {data.bottomleft_name}
             </small>
@@ -248,27 +253,29 @@ const FloatingArt = ({ data }) => {
           className="gsap-thumbnail absolute block top-[10%] sm:top-0 right-[4%] sm:right-auto sm:left-1/2 z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="0.1">
-            <div className="relative w-[136px] h-[184px] sm:w-[410px] sm:h-[500px]">
-              {data.topright && (
-                <Image
-                  src={data.topright.data.attributes.url}
-                  alt={data.topright.data.attributes.alt}
-                  fill={true}
-                  style={{ objectFit: "cover" }}
-                  priority
-                />
-              )}
-              {data.topright_bubblewrap && (
-                <Image
-                  src="/images/bubble-wrap.png"
-                  alt="Bubble wrap - coming soon"
-                  fill={true}
-                  style={{ objectFit: "cover" }}
-                  className="gsap-bubblewrap"
-                  priority
-                />
-              )}
-            </div>
+            <Link href={`/people/${data.topright_id}`}>
+              <div className="relative w-[136px] h-[184px] sm:w-[410px] sm:h-[500px] cursor-pointer">
+                {data.topright && (
+                  <Image
+                    src={data.topright.data.attributes.url}
+                    alt={data.topright.data.attributes.alt}
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    priority
+                  />
+                )}
+                {data.topright_bubblewrap && (
+                  <Image
+                    src="/images/bubble-wrap.png"
+                    alt="Bubble wrap - coming soon"
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    className="gsap-bubblewrap"
+                    priority
+                  />
+                )}
+              </div>
+            </Link>
             <small className="block l2 text-[8px] md:text-[12px]">
               {data.topright_name}
             </small>
@@ -281,27 +288,29 @@ const FloatingArt = ({ data }) => {
           className="gsap-thumbnail absolute block bottom-[0] sm:bottom-[30%] left-0 sm:left-auto sm:right-0 sm:translate-y-1/2 translate-y-0 z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="0.0">
-            <div className="relative w-[164px] h-[229px] sm:w-[320px] sm:h-[422px]">
-              {data.centerright && (
-                <Image
-                  src={data.centerright.data.attributes.url}
-                  alt={data.centerright.data.attributes.alt}
-                  fill={true}
-                  style={{ objectFit: "cover" }}
-                  priority
-                />
-              )}
-              {data.centerright_bubblewrap && (
-                <Image
-                  src="/images/bubble-wrap.png"
-                  alt="Bubble wrap - coming soon"
-                  fill={true}
-                  style={{ objectFit: "cover" }}
-                  className="gsap-bubblewrap"
-                  priority
-                />
-              )}
-            </div>
+            <Link href={`/people/${data.centerright_id}`}>
+              <div className="relative w-[164px] h-[229px] sm:w-[320px] sm:h-[422px] cursor-pointer">
+                {data.centerright && (
+                  <Image
+                    src={data.centerright.data.attributes.url}
+                    alt={data.centerright.data.attributes.alt}
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    priority
+                  />
+                )}
+                {data.centerright_bubblewrap && (
+                  <Image
+                    src="/images/bubble-wrap.png"
+                    alt="Bubble wrap - coming soon"
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    className="gsap-bubblewrap"
+                    priority
+                  />
+                )}
+              </div>
+            </Link>
             <small className="block l2 md:ml-0 ml-1 text-[8px] md:text-[12px]">
               {data.centerright_name}
             </small>

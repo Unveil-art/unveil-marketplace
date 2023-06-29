@@ -23,17 +23,23 @@ const Footer = () => {
       </div>
       <div className="grid grid-cols-2 md:pl-[8vw] py-10 space-x-6">
         <div className="space-y-6">
-          <div className="space-y-1 opacity-60">
+          <div className="space-y-1">
             <p className="font-[500] b3">Discover</p>
-            <p className="b3">Artworks</p>
-            <p className="b3">Curators</p>
+            <Link href="/gallery">
+              <p className="b3 underline-on-hover">Artworks</p>
+            </Link>
+            <Link href="/people?curators">
+              <p className="b3 underline-on-hover">Curators</p>
+            </Link>
           </div>
-          <div className="space-y-1 opacity-60">
+          <div className="space-y-1 ">
             <p className="b3 font-[500]">About Unveil</p>
-            <p className="b3">About</p>
+            <a href="https://learn.unveil.art/about">
+              <p className="b3">About</p>
+            </a>
             <p className="b3">Contact us</p>
           </div>
-          <div className="space-y-1 opacity-60">
+          <div className="space-y-1">
             <p className="b3 font-[500]">Currency</p>
             <p className="b3">ETH/USD</p>
           </div>
