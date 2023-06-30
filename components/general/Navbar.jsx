@@ -62,6 +62,7 @@ const Navbar = ({ value }) => {
         autoAlpha: 0,
       },
       {
+        display: "block",
         autoAlpha: 1,
         duration: 0.4,
         ease: "none",
@@ -78,15 +79,15 @@ const Navbar = ({ value }) => {
     <>
       <nav
         ref={el}
-        className="fixed top-0 left-0 z-40 flex items-center justify-between w-full px-[15px] pt-[15px] md:pt-[32px] md:px-10"
+        className="fixed hidden top-0 left-0 z-40 flex items-center justify-between w-full px-[15px] pt-[15px] md:pt-[32px] md:px-10"
       >
         {/* <div className="fixed flex justify-center items-center top-0 left-0  w-full bg-[#B2B4AE] unveilTransition">
           <p className="text center b3">
             28th of June we’re going live early access card holders.{" "}
-            <a href="https://earlyaccess.unveil.art/" target="_blank" className="underline-on-hover leading-4 md:leading-5">Get access</a>
+            <a href="https://earlyaccess.unveil.art/" target="_blank" className="leading-4 underline-on-hover md:leading-5">Get access</a>
           </p>
         </div> */}
-        <div className="relative flex w-full justify-between items-center">
+        <div className="relative flex items-center justify-between w-full">
           {!isArrow && (
             <div
               onClick={() => handleOpen(setNavOpen, navOpen)}
@@ -125,7 +126,7 @@ const Navbar = ({ value }) => {
           {value && (
             <div
               onClick={() => handleOpen(setLoggedIn, loggedIn)}
-              className="z-40 scale-75 mt-2 md:mt-0 cursor-pointer md:scale-100"
+              className="z-40 mt-2 scale-75 cursor-pointer md:mt-0 md:scale-100"
             >
               <Account color={accountColor} />
             </div>
@@ -134,7 +135,7 @@ const Navbar = ({ value }) => {
           {!value && (
             <div
               onClick={() => handleOpen(setLoginOpen, loginOpen)}
-              className="z-40 mt-2 md:mt-0 cursor-pointer"
+              className="z-40 mt-2 cursor-pointer md:mt-0"
             >
               <p
                 style={{ color: accountColor }}
