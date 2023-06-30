@@ -479,7 +479,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                 </div>
                 <div
                   onClick={() => setOptionsOpen(!optionsOpen)}
-                  className="py-3 uppercase cursor-pointer bg-unveilBlack text-unveilWhite l1 tracking-[0.18rem]"
+                  className="py-3 uppercase cursor-pointer  bg-unveilBlack text-unveilWhite l1 tracking-[0.18rem]"
                 >
                   Select edition
                 </div>
@@ -499,7 +499,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
               alt={artwork.name}
             />
           </div>
-          <p className="text-unveilWhite  py-[15px] text-center w-full l1 uppercase tracking-[0.18rem] ">
+          <p className="text-unveilWhite  py-[15px] text-center w-full pr-10 l1 uppercase tracking-[0.18rem] ">
             Select edition
           </p>
         </div>
