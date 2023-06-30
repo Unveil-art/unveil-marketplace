@@ -138,6 +138,42 @@
     @apply px-[6px] pt-[3px] pb-[2px] my-auto border border-unveilYellow bg-unveilYellow l2 rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
   }
 
+  /* animation for toast */
+  @keyframes fadeInBottom {
+    from {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeOutBottom {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+  }
+
+  .fadeInBottom {
+    animation-name: fadeInBottom;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    animation-delay: 0s;
+  }
+  
+  .fadeOutBottom {
+    animation-name: fadeOutBottom;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    animation-delay: 4.2s;
+  }
+
   /* Transition */
   .unveilTransition {
     transition: all 0.3s ease;

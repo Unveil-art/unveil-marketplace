@@ -68,6 +68,7 @@ const AccountPage = () => {
     return (
       <div className="relative flex pb-5 md:pb-[80px]">
         <ToastContainer />
+        <div id="top-sticky-notification-container" />
         <Sidebar
           user={user}
           accountState={accountState}
