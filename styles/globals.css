@@ -143,34 +143,36 @@
     from {
       opacity: 0;
       transform: translateY(-100%);
+      transition: all 0.3s ease-in-out;
     }
     to {
       opacity: 1;
       transform: translateY(0);
+      transition: all 0.3s ease-in-out;
     }
   }
 
   @keyframes fadeOutBottom {
     from {
       opacity: 1;
+      transition: all 0.3s ease-in-out;
     }
     to {
       opacity: 0;
       transform: translateY(-100%);
+      transition: all 0.3s ease-in-out;
     }
   }
 
   .fadeInBottom {
     animation-name: fadeInBottom;
     animation-duration: 0.4s;
-    animation-fill-mode: forwards;
     animation-delay: 0s;
   }
   
   .fadeOutBottom {
     animation-name: fadeOutBottom;
     animation-duration: 0.4s;
-    animation-fill-mode: forwards;
     animation-delay: 4.2s;
   }
 
