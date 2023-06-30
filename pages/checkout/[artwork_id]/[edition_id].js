@@ -313,6 +313,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
                     setPayment={setPayment}
                     setStep={setStep}
                     paymentOpen={paymentOpen}
+                    index={index}
                     setPaymentOpen={setPaymentOpen}
                   />
                 </Animate>
@@ -347,7 +348,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
                 <div className="h-[136px] w-[106px] md:h-[140px] md:w-[120px] bg-bgColor my-[10px]">
                   <div className="flex items-center justify-center h-full p-5">
                     <div
-                      className={`shadow2 mx-auto bg-unveilWhite w-fit
+                      className={` mx-auto bg-unveilWhite w-fit
             ${frameObject.size === "2mm" ? "border-[3px]" : ""}
             ${frameObject.size === "3mm" ? "border-[4px]" : ""}
             ${frameObject.size === "5mm" ? "border-[5px]" : ""}
@@ -359,7 +360,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
             ${frameObject.border === "10x20" ? "p-4" : ""}`}
                     >
                       <img
-                        className="object-contain h-full"
+                        className="object-contain h-full shadow2"
                         src={artwork.media_url}
                         alt={artwork.name}
                       />

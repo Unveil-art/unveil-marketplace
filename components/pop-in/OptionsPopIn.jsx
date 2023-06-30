@@ -11,6 +11,7 @@ const OptionsPopIn = ({
   setEdition,
   dominantColor,
 }) => {
+  console.log(artwork.editions);
   const [editionSizes, setEditionSizes] = useState([]);
   const [nftEditions, setNftEditions] = useState();
   const [udsEx, setUdsEx] = useState();
@@ -166,9 +167,29 @@ const OptionsPopIn = ({
                         </p>
                         <div className="flex flex-wrap gap-1">
                           {edition.max_copies === edition.sold_copies && (
-                            <span className="px-1 leading-snug rounded-full leading bg-unveilBlack text-unveilWhite l2">
+                            <span className="leading-snug px-1 text-[9px] nft l2 bg-unveilBlack text-unveilWhite border-unveilBlack">
                               SOLD
                             </span>
+                          )}
+                          {artwork.edition_type && (
+                            <>
+                              {artwork.edition_type ===
+                                "NFT_Backed_by_print" && (
+                                <span className="leading-snug px-1 text-[9px] nft-print l2">
+                                  nft + print
+                                </span>
+                              )}
+                              {artwork.edition_type === "NFT_Only" && (
+                                <span className="leading-snug px-1 text-[9px] nft l2">
+                                  nft
+                                </span>
+                              )}
+                              {artwork.edition_type === "Print_Only" && (
+                                <span className="leading-snug px-1 text-[9px] print l2">
+                                  print
+                                </span>
+                              )}
+                            </>
                           )}
                         </div>
                       </div>

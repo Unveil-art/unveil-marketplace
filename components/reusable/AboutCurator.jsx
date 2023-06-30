@@ -97,14 +97,17 @@ const AboutCurator = ({ owner }) => {
             </Link>
           </div>
 
-          <h4
-            onClick={() => setMore((prev) => !prev)}
-            className={`${
-              more ? "md:line-clamp-6" : "line-clamp-[10] md:line-clamp-6"
-            } mt-5 mb-10 overflow-hidden b2 cursor-pointer md:h2`}
-          >
-            {owner.description}
-          </h4>
+          <Link href={`/people/${owner.id}`}>
+            <h4
+              data-cursor="View artist"
+              data-cursor-color="#b2b4ae"
+              className={`${
+                more ? "md:line-clamp-6" : "line-clamp-[10] md:line-clamp-6"
+              } mt-5 mb-10 overflow-hidden b2 cursor-pointer md:h2`}
+            >
+              {owner.description}
+            </h4>
+          </Link>
           <div className="mb-5">
             {recognitions.map(({ id, recognition_type, description }) => (
               <p
