@@ -105,9 +105,11 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
       });
 
       setList(data.data);
-      toast.success("Successful");
+      // toast.success("Successful");
+      showTopStickyNotification("success", "Successful")
     } catch (error) {
-      toast.error(error.message);
+      // toast.error(error.message);
+      showTopStickyNotification("error", error.message)
       setLoading(false);
     }
   };
