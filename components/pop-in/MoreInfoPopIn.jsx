@@ -26,7 +26,7 @@ const MoreInfoPopIn = ({
     <>
       <section
         ref={el}
-        className="fixed z-50 invisible w-full h-screen overflow-hidden"
+        className="fixed z-[55] invisible w-full h-screen overflow-hidden"
       >
         <div
           data-lenis-prevent
@@ -64,7 +64,9 @@ const MoreInfoPopIn = ({
                 </div>
               </div>
             )}
-            <p className={`${smallText ? "b3" : "s2"} `}>{text || "Text"}</p>
+            <p className={`${smallText ? "b3" : "s2"} break-words `}>
+              {text || "Text"}
+            </p>
           </div>
         </div>
         <div
