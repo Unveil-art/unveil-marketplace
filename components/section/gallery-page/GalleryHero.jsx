@@ -302,7 +302,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                 </div>
                 {artwork.collection.curator_id && (
                   <div
-                    onClick={() => setCuratorOpen(true)}
+                    onClick={() => setCuratorOpen((prev) => !prev)}
                     className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
                   >
                     <p className="b5 leading-[23px]">Curator</p>
@@ -313,7 +313,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                 )}
 
                 <div
-                  onClick={() => setSoldAsOpen(true)}
+                  onClick={() => setSoldAsOpen((prev) => !prev)}
                   className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
                 >
                   <p className="b5 leading-[23px]">Sold as</p>
@@ -332,7 +332,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                 </div> */}
                 {artwork.edition_type !== "NFT_Only" && (
                   <div
-                    onClick={() => setSizedOpen(true)}
+                    onClick={() => setSizedOpen((prev) => !prev)}
                     className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
                   >
                     <p className="b5 leading-[23px]">Available sizes</p>
@@ -348,16 +348,23 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                 )}
 
                 <div
-                  onClick={() => setRoyaltyOpen(true)}
+                  onClick={() => setRoyaltyOpen((prev) => !prev)}
                   className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
                 >
                   <p className="b5 leading-[23px]">Creator royalty</p>
                   <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                    {artwork.royalties[0]?.percentage}%,{" "}
-                    {artwork.royalties[1]?.percentage}%
+                    {artwork.royalties[0]?.percentage}%
+                    {artwork.royalties[1]?.percentage ? ", " : ""}{" "}
+                    {artwork.royalties[1]?.percentage
+                      ? artwork.royalties[1]?.percentage
+                      : ""}
+                    {artwork.royalties[1]?.percentage ? "%" : ""}
                   </p>
                 </div>
-                <div className="rounded-[10px]  unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px]">
+                <div
+                  onClick={() => setAddressOpen((prev) => !prev)}
+                  className="rounded-[10px] cursor-pointer hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px]"
+                >
                   <p className="b5 leading-[23px]">Creator & royalty address</p>
                   <p className="truncate b3 !text-[13px] leading-normal md:b4 w-[100px]">
                     {artwork.owner.walletAddress.slice(0, 4).toLowerCase()}...
@@ -538,8 +545,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
         setOpen={setSoldAsOpen}
         title={displaySoldAs}
         subtitle="Sold As"
-        smallText
-        text="A digital NFT, or Non-Fungible Token, is a unique piece of digital artwork that exists only in a digital format. It is like a one-of-a-kind collector's item in the digital world, representing ownership and authenticity. While you can't physically print it, owning an NFT means you have exclusive rights to that specific digital artwork."
+        text="This art piece is part is available as NFT only which means it’s only available as print."
       />
       <MoreInfoPopIn
         open={paymentOpen}
@@ -556,7 +562,13 @@ const GalleryHero = ({ artwork, dominantColor }) => {
         subtitle="Curator royalty"
         smallText
         text="In the world of NFTs, royalties are a way for artists to earn a percentage of the sales each time their artwork is resold to a new collector. Unlike traditional art sales, where artists typically only benefit from the initial sale, NFTs allow artists to continue receiving compensation as their work increases in value over time. This unique feature ensures ongoing recognition and rewards for artists as their creations become more popular in the digital art market. At Unveil, we go a step further by giving artists the option to set two different royalty percentages, discouraging immediate resale and fostering a more meaningful relationship between artists and collectors. This approach promotes a fair and sustainable ecosystem that values the contributions of artists and supports their creative journey."
-        title={`${artwork.royalties[0]?.percentage}% | ${artwork.royalties[1]?.percentage}% `}
+        title={`${artwork.royalties[0]?.percentage}%${
+          artwork.royalties[1]?.percentage ? " | " : ""
+        } ${
+          artwork.royalties[1]?.percentage
+            ? artwork.royalties[1]?.percentage
+            : ""
+        }${artwork.royalties[1]?.percentage ? "%" : ""} `}
       />
       <MoreInfoPopIn
         open={addressOpen}
@@ -567,8 +579,9 @@ const GalleryHero = ({ artwork, dominantColor }) => {
           .slice(-4)
           .toLowerCase()}`}
         subtitle="Creator & royalty address"
-        text="Text"
+        text={`${artwork.owner.walletAddress} is the address which is the address of the collection`}
       />
+
       <MoreInfoPopIn
         open={recognitionsOpen}
         setOpen={setRecognitionsOpen}

@@ -13,7 +13,7 @@ const Steps = ({ step, setStep }) => {
         className={`
         ${
           step !== 1
-            ? "py-[6px] px-[4px] md:py-[9px] md:px-[8px]"
+            ? "py-[6px] cursor-pointer px-[4px] md:py-[9px] md:px-[8px]"
             : "px-[8px] md:px-[10px]"
         }
         ${
@@ -27,7 +27,7 @@ const Steps = ({ step, setStep }) => {
         {step !== 1 && <Check />}
       </p>
       <div
-        className={`${step === 1 ? "bg-unveilDrakGray" : "bg-unveilBlack"} ${
+        className={`${step === 1 ? "bg-unveilDrakGray" : "bg-unveilBlack"}  ${
           step === 2 ? "bg-unveilBlack" : ""
         }  w-5 h-px`}
       ></div>
@@ -39,7 +39,7 @@ const Steps = ({ step, setStep }) => {
         }}
         className={` ${
           step === 3
-            ? "py-[6px] px-[5px] md:py-[9px] md:px-[8px]"
+            ? "py-[6px] cursor-pointer px-[5px] md:py-[9px] md:px-[8px]"
             : "px-[7px] md:px-[9px]"
         } ${step === 1 ? "text-unveilDrakGray border-unveilDrakGray" : ""} ${
           step === 2 ? "text-unveilBlack border-unveilBlack" : ""
