@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "@/components/svg/Loader";
 import Image from "next/image";
@@ -7,6 +6,7 @@ import { uploadImage, putUserMe } from "lib/backend";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 import { useForm } from "react-hook-form";
 import Animate from "@/components/reusable/Animate";
+import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
 
 const ContactDetails = ({ user }) => {
   const [image, setImage] = useState();
@@ -54,11 +54,13 @@ const ContactDetails = ({ user }) => {
     try {
       await putUserMe(value, data);
       setLoading(false);
-      toast.success("Success");
+      // toast.success("Success");
+      showTopStickyNotification("success", "Success")
     } catch (err) {
       setLoading(false);
       console.error(err);
-      toast.error(err.message);
+      // toast.error(err.message);
+      showTopStickyNotification("error", err.message)
     }
   };
 
@@ -202,7 +204,8 @@ const ContactDetails = ({ user }) => {
                   navigator.clipboard.writeText(
                     user.walletAddress?.toLowerCase()
                   );
-                  toast.info("WalletAddress Copied");
+                  // toast.info("WalletAddress Copied");
+                  showTopStickyNotification("success", "WalletAddress Copied")
                 }}
                 className="input cursor-pointer bg-bgColor md:text-[16px] text-unveilGrey rounded-[8px] md:rounded-[10px] px-5 py-3 md:py-4 text-[13px]"
               >

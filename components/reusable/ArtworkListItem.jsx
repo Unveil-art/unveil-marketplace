@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import Link from "next/link";
 
 import { Web3Context } from "@/contexts/Web3AuthContext";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   listArtwork,
