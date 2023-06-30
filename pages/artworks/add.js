@@ -11,10 +11,11 @@ import {
   getCurrentExchangeRateUSDETH,
 } from "lib/backend";
 
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Loader from "@/components/svg/Loader";
+import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
 
 const Create = () => {
   const {
@@ -24,7 +25,7 @@ const Create = () => {
     reset,
   } = useForm();
 
-  const notify = (message) => toast.error(message);
+  const notify = (message) => showTopStickyNotification("error", message)
   const { value } = useLocalStorage("token");
 
   const [sizes, setSizes] = useState([
@@ -192,6 +193,7 @@ const Create = () => {
   return (
     <main className="bg-[#F0EDE4] ">
       <ToastContainer />
+      <div id="top-sticky-notification-container" />
       <form
         onSubmit={handleArtworkSubmit(onSubmitForm)}
         className="pb-[120px] px-[15px] md:px-10 lg:flex justify-between"

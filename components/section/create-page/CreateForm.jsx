@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import Delete from "@/components/svg/Delete";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "@/components/svg/Loader";
 import {
@@ -15,6 +14,7 @@ import {
   getCurrentExchangeRateETHUSD,
 } from "lib/backend";
 import useLocalStorage from "../../../hooks/useLocalStorage";
+import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
 
 const CreateForm = ({
   artwork = false,
@@ -103,7 +103,7 @@ const CreateForm = ({
     }
   }, []);
 
-  const notify = (message) => toast.error(message);
+  const notify = (message) => showTopStickyNotification("error", message)
 
   const [sizeOpen, setSizeOpen] = useState(false);
   const [customSizeInput, setCustomSizeInput] = useState("");

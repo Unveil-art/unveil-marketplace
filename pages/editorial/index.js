@@ -18,6 +18,7 @@ export default function EditorialPage({ data, editorial }) {
 
   return (
     <main className="mt-[120px]">
+      <div id="top-sticky-notification-container" />
       <Title title="Editorial" />
       <OneLiner text="Top art photography projects for their excellence and stunning visuals." />
       {editorial1to5.length > 2 && (

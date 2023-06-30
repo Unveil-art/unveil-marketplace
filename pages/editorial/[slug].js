@@ -23,6 +23,7 @@ const Details = ({ data, recent }) => {
   if (data.data.length > 0) {
     return (
       <main className="md:mt-[120px] relative">
+        <div id="top-sticky-notification-container" />
         <div className="hidden md:block">
           <Title title={data.data[0].attributes.Title} />
         </div>

@@ -9,6 +9,7 @@ import Loader from "@/components/svg/Loader";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 import RPC from "lib/RPC";
 import { EARLY_ACCESS_ABI, EARLY_ACCESS_CONTRACT_ADDRESS } from "lib/constants";
+import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
 
 const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, edition_id }) => {
 
@@ -63,7 +64,8 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
     // }
       const canMint = await canMintThisEdition(edition.edition_id);
       if(!canMint){
-        toast.error('Edition is already Minted');
+        // toast.error('Edition is already Minted');
+        showTopStickyNotification("error", "Edition is already Minted")
         setLoading(false);
         return;
       }
@@ -76,7 +78,8 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
       setLoading(false);
     }catch(err){
       console.log(err);
-        toast.error(err?.response?.data?.message);
+        // toast.error(err?.response?.data?.message);
+        showTopStickyNotification("error", err?.response?.data?.message)
         setLoading(false);
     }
   }
@@ -130,7 +133,8 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
                 }}
                 onError={(error) =>  {
                   console.error("Payment error:", error);
-                  toast.error(error.error.message);
+                  // toast.error(error.error.message);
+                  showTopStickyNotification("error", error.error.message)
                   setStep(3);
                 }}
               />

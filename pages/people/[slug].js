@@ -35,6 +35,7 @@ const PeopleDetails = ({ userId, user }) => {
 
   return (
     <main className="mt-[120px] ">
+      <div id="top-sticky-notification-container" />
       <Title
         title={displayName}
         account={user !== undefined ? user.role : ""}

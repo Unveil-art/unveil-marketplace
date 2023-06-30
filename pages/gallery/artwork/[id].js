@@ -101,6 +101,7 @@ const Details = ({ artwork, browse }) => {
   return (
     <main className="mb-[100px]">
       <ToastContainer />
+      <div id="top-sticky-notification-container" />
       <GalleryHero artwork={artwork} dominantColor={dominantColor} />
       <GalleryAbout artwork={artwork} />
       {/* <Provenance /> */}

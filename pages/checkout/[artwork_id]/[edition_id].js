@@ -33,6 +33,7 @@ import {
 } from "lib/constants";
 import Web3 from "web3";
 import { useRouter } from "next/router";
+import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
 
 const EditionCheckout = ({ artwork, edition_id }) => {
   const { value } = useLocalStorage("token");
@@ -128,7 +129,8 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       const usd = await getCurrentExchangeRateETHUSD();
       const totalPriceInUSD = (edition.price + 0.03) * usd.USD;
       if (fromMint) {
-        toast.error("Insufficient Balance in your Account.");
+        // toast.error("Insufficient Balance in your Account.");
+        showTopStickyNotification("error", "Insufficient Balance in your Account.")
         showRamper(parseInt(totalPriceInUSD));
       }
       setGasFeesUSD(usd.USD * 0.03);
@@ -220,7 +222,8 @@ const EditionCheckout = ({ artwork, edition_id }) => {
     const canMint = await canMintThisEdition(edition_id);
     if (!canMint) {
       setStep(3);
-      toast.info("Edition is Already Minted");
+      // toast.info("Edition is Already Minted");
+      showTopStickyNotification("error", "Edition is Already Minted")
       return;
     }
 
@@ -279,7 +282,8 @@ const EditionCheckout = ({ artwork, edition_id }) => {
     } catch (err) {
       console.log(JSON.stringify(err), "=====");
       if (err?.data?.code == -32000) showRamper(total ? parseInt(total) : 100);
-      toast.error(err?.data?.message);
+      // toast.error(err?.data?.message);
+      showTopStickyNotification("error", err?.data?.message)
       setStep(3);
     }
   };
@@ -287,6 +291,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
   return (
     <main className="min-h-screen my-[120px] px-[15px] md:px-10">
       <ToastContainer />
+      <div id="top-sticky-notification-container" />
       {step === 4 && <Minting artwork={artwork} />}
       {step === 5 && <Minted artwork={artwork} />}
       <section className="lg:flex block gap-5 justify-between lg:gap-[100px]">
