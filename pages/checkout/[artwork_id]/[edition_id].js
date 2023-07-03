@@ -438,7 +438,13 @@ const EditionCheckout = ({ artwork, edition_id }) => {
         </div>
       </section>
       <MoreInfoPopIn open={paymentOpen} setOpen={setPaymentOpen} />
-      <MoreInfoPopIn open={gasOpen} setOpen={setGasOpen} />
+      <MoreInfoPopIn
+        title="Pay to ship the artpiece"
+        subtitle="Gas Fees"
+        text="A gas fee refers to the fee required to conduct transactions or execute contracts on the Etherum network. It is compensating for the computing power used to process these interactions. Called gwei, These fees are small fractions of Ether (ETH). In this case <gas fee> is required to make the transaction."
+        open={gasOpen}
+        setOpen={setGasOpen}
+      />
     </main>
   );
 };
