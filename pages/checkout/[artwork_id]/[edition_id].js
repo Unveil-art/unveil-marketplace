@@ -362,7 +362,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
             ${frameObject.border === "10x20" ? "p-4" : ""}`}
                     >
                       <img
-                        className="object-contain "
+                        className="object-contain shadow2"
                         src={artwork.media_url}
                         alt={artwork.name}
                       />
