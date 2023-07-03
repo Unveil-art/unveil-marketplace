@@ -9,6 +9,7 @@ import GalleryBlockItems from "../../components/section/GalleryBlockItems";
 import { getArtworks, getCollections } from "lib/backend";
 import { useRouter } from "next/router";
 import Loader from "@/components/svg/Loader";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
 export default function Gallery({ artworks }) {
   const [artworkSplit, setArtworkSplit] = useState([]);
@@ -18,6 +19,7 @@ export default function Gallery({ artworks }) {
   const [loading, setLoading] = useState(false);
   const [noApiCalls, setNoApiCalls] = useState(false);
   const paginationDivRef = useRef(null);
+  const { authenticated } = useIsAuthenticated();
 
   const [category, setCategory] = useState(0);
   const [artist, setArtist] = useState(0);
