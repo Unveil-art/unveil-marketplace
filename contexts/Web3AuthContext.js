@@ -41,7 +41,7 @@ const Web3AuthProvider = ({ children }) => {
   const [provider, setProvider] = useState(null);
   const { width } = useWindowSize();
 
-  const showRamper = (amount) =>
+  const showRamper = (amount = 100) =>
     setRamper({
       display: true,
       amount: amount ?? 100,
