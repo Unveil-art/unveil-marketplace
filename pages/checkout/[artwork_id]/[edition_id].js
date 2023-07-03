@@ -124,14 +124,14 @@ const EditionCheckout = ({ artwork, edition_id }) => {
     } catch (err) {
       console.log(JSON.stringify(err), "=====");
 
-      setGasFees(0.03);
+      setGasFees(0.02);
       const usd = await getCurrentExchangeRateETHUSD();
-      const totalPriceInUSD = (edition.price + 0.03) * usd.USD;
+      const totalPriceInUSD = (edition.price + 0.02) * usd.USD;
       if (fromMint) {
         toast.error("Insufficient Balance in your Account.");
         showRamper(parseInt(totalPriceInUSD));
       }
-      setGasFeesUSD(usd.USD * 0.03);
+      setGasFeesUSD(usd.USD * 0.02);
       return false;
     }
   };
@@ -395,7 +395,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
             </div>
             <div className="flex justify-between border-t border-[#DBDED6] py-[10px] md:py-5">
               <div className="flex items-center gap-2">
-                <p className="b3 lg:font-[17px]">Gas Fees</p>{" "}
+                <p className="b3 lg:font-[17px]">Estimated Gas Fees</p>{" "}
                 <div
                   className="cursor-pointer"
                   onClick={() => setGasOpen(!gasOpen)}
