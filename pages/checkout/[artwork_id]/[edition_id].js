@@ -33,6 +33,7 @@ import {
 } from "lib/constants";
 import Web3 from "web3";
 import { useRouter } from "next/router";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
 const EditionCheckout = ({ artwork, edition_id }) => {
   const { value } = useLocalStorage("token");
@@ -40,6 +41,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
   const { step, setStep } = useContext(StepContext);
   const { provider, rpcUrl, showRamper, logout } = useContext(Web3Context);
   const router = useRouter();
+  const { authenticated } = useIsAuthenticated();
 
   const [email, setEmail] = useState("");
   const [paymentOpen, setPaymentOpen] = useState(false);

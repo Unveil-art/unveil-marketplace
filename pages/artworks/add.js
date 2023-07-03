@@ -15,6 +15,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Loader from "@/components/svg/Loader";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
 const Create = () => {
   const {
@@ -23,6 +24,8 @@ const Create = () => {
     formState: { errors },
     reset,
   } = useForm();
+
+  const { authenticated } = useIsAuthenticated();
 
   const notify = (message) => toast.error(message);
   const { value } = useLocalStorage("token");

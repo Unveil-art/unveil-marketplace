@@ -3,11 +3,14 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import { useRouter } from "next/router";
 import Title from "@/components/reusable/Title";
 import { Web3Context } from "@/contexts/Web3AuthContext";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
 const Login = () => {
   const router = useRouter();
   const [error, setError] = useState("");
   const { value } = useLocalStorage("token");
+  const { authenticated } = useIsAuthenticated();
+
   const { account, web3Auth, provider, balance, login, logout, getBalance } =
     useContext(Web3Context);
 

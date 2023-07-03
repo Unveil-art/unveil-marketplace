@@ -8,11 +8,13 @@ import SortPeople from "@/components/section/people-page/SortPeople";
 import PeopleList from "@/components/section/people-page/PeopleList";
 import { getUsers } from "lib/backend";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
 const People = () => {
   const [filter, setFilter] = useState("artist");
   const { value } = useLocalStorage("token");
   const [people, setPeople] = useState();
+  const { authenticated } = useIsAuthenticated();
 
   const router = useRouter();
 

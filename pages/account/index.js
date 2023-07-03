@@ -16,13 +16,14 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import { getArtworksMe, getUserMe } from "lib/backend";
 import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
 const AccountPage = () => {
   const [accountState, setAccountState] = useState(0);
   const { logout } = useContext(Web3Context);
   const { value } = useLocalStorage("token");
   const [user, setUser] = useState();
-
+  const { authenticated } = useIsAuthenticated();
   const router = useRouter();
 
   useEffect(() => {

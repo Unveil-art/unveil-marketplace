@@ -8,8 +8,11 @@ import SearchBlockItems from "@/components/section/SearchBlockItems";
 import About from "@/components/reusable/About";
 import TwoBlockItems from "@/components/reusable/TwoBlockItems";
 import ThreeBlockItems from "@/components/reusable/ThreeBlockItems";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
 const Details = ({ collection }) => {
+  const { authenticated } = useIsAuthenticated();
+
   return (
     <main>
       <div className="md:mt-[120px] mt-[80px]">

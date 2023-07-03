@@ -5,6 +5,7 @@ import { getArtworksSearch, getCollectionsSearch } from "lib/backend";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import Image from "next/image";
 import Link from "next/link";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
 const Search = () => {
   const [search, setSearch] = useState("");
@@ -13,6 +14,7 @@ const Search = () => {
   const [searching, setSearching] = useState(false);
   const [artworks, setArtworks] = useState([]);
   const [collections, setCollections] = useState();
+  const { authenticated } = useIsAuthenticated();
 
   const handleSuggestions = (value) => {
     setSearch(value);

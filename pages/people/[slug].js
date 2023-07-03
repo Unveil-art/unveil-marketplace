@@ -13,11 +13,13 @@ import {
   getArtistsArtwork,
   getArtistCollections,
 } from "lib/backend";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
 const PeopleDetails = ({ userId, user }) => {
   const [page, setPage] = useState(0);
   const [artworks, setArtworks] = useState(null);
   const [collections, setCollections] = useState();
+  const { authenticated } = useIsAuthenticated();
 
   useEffect(() => {
     getArtistsArtwork(userId).then((result) => setArtworks(result.data));
