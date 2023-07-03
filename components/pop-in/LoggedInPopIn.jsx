@@ -50,7 +50,7 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
                 className="mt-2 cursor-pointer b3 underline-on-hover"
                 onClick={() => showRamper()}
               >
-                Add funds
+                Purchase funds
               </button>
               <p className=" l2">
                 {localProvider && (
