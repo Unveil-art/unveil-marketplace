@@ -113,7 +113,7 @@ const AccountPage = () => {
                 </>
               )}
               <option>Wishlist</option>
-              <option>Followeing</option>
+              <option>Following</option>
               <option>Logout</option>
             </select>
           </div>
