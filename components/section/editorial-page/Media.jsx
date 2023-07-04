@@ -22,9 +22,10 @@ const Media = ({ data }) => {
               <Image
                 src={data.Media.data.attributes.url}
                 alt={data.Media.data.attributes.alt}
-                layout="fill"
-                objectFit="cover"
+                fill={true}
+                style={{ objectFit: "cover" }}
                 className="gsap-image"
+                priority
               />
             )}
             {data.Media.data.attributes.mime.includes("video") && (

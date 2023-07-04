@@ -6,9 +6,11 @@ import { useHistory } from "../../contexts/History";
 import { useLenis } from "@studio-freight/react-lenis";
 import Image from "next/image";
 import AccessPopIn2 from "../pop-in/AccessPopIn2";
+import Link from "next/link";
 import AccessPopIn3 from "../pop-in/AccessPopIn3";
 
 const FloatingArt = ({ data }) => {
+  console.log(data);
   const [open, setOpen] = useState(false);
   const [accessOpen, setAccessOpen] = useState(false);
   const el = useRef();
@@ -176,31 +178,35 @@ const FloatingArt = ({ data }) => {
         className="h-[100svh] flex justify-center flex-col p-[15px] sm:p-10 relative overflow-hidden opacity-0"
       >
         <div
-          data-cursor="Coming soon"
+          data-cursor="View artist"
           data-cursor-color={data.topleft_color}
-          className="gsap-thumbnail absolute block top-[5%] left-[20%] z-10 invisible"
+          className="gsap-thumbnail absolute block top-[5%] left-[20%] 2xl:left-[200px] z-10 invisible"
         >
           <div className="gsap-parallax " data-speed="0.1">
-            <div className="w-[85px] bubble-wrap overflow-hidden h-[108px] sm:w-[140px] sm:h-[180px] relative">
-              {data.topleft && (
-                <Image
-                  src={data.topleft.data.attributes.url}
-                  alt={data.topleft.data.attributes.alt}
-                  layout="fill"
-                  objectFit="cover"
-                />
-              )}
+            <Link href={`/people/${data.topleft_id}`}>
+              <div className="w-[85px] bubble-wrap overflow-hidden aspect-[3/4] sm:-w[140px] 2xl:w-[10vw] min-[19200px]:w-[7vw] relative cursor-pointer">
+                {data.topleft && (
+                  <Image
+                    src={data.topleft.data.attributes.url}
+                    alt={data.topleft.data.attributes.alt}
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    priority
+                  />
+                )}
 
-              {data.topleft_bubblewrap && (
-                <Image
-                  src="/images/bubble-wrap.png"
-                  alt="Bubble wrap - coming soon"
-                  layout="fill"
-                  objectFit="cover"
-                  className="gsap-bubblewrap"
-                />
-              )}
-            </div>
+                {data.topleft_bubblewrap && (
+                  <Image
+                    src="/images/bubble-wrap.png"
+                    alt="Bubble wrap - coming soon"
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    className="gsap-bubblewrap"
+                    priority
+                  />
+                )}
+              </div>
+            </Link>
 
             <small className="block l2 text-[8px] md:text-[12px]">
               {data.topleft_name}
@@ -209,61 +215,69 @@ const FloatingArt = ({ data }) => {
         </div>
 
         <div
-          data-cursor="Coming soon"
+          data-cursor="View artist"
           data-cursor-color={data.bottomleft_color}
-          className="gsap-thumbnail absolute block bottom-[20%] sm:bottom-[5%] right-[10%] left-auto sm:left-[40%] sm:right-auto z-10 invisible"
+          className="gsap-thumbnail absolute block bottom-[20%] sm:bottom-[5%] right-[10%] 2xl:left-[500px] left-auto sm:left-[30%] sm:right-auto z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="-0.075">
-            <div className="relative w-[81px] h-[96px] sm:w-[140px] sm:h-[180px]">
-              {data.bottomleft && (
-                <Image
-                  src={data.bottomleft.data.attributes.url}
-                  alt={data.bottomleft.data.attributes.alt}
-                  layout="fill"
-                  objectFit="cover"
-                />
-              )}
-              {data.bottomleft_bubblewrap && (
-                <Image
-                  src="/images/bubble-wrap.png"
-                  alt="Bubble wrap - coming soon"
-                  layout="fill"
-                  objectFit="cover"
-                  className="gsap-bubblewrap"
-                />
-              )}
-            </div>
-            <small className="block l2 text-[8px] md:text-[12px]">
+            <Link href={`/people/${data.bottomleft_id}`}>
+              <div className="relative w-[81px] aspect-[3/4] sm:w-[140px] 2xl:w-[12vw] min-[19200px]:w-[9vw] cursor-pointer">
+                {data.bottomleft && (
+                  <Image
+                    src={data.bottomleft.data.attributes.url}
+                    alt={data.bottomleft.data.attributes.alt}
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    priority
+                  />
+                )}
+                {data.bottomleft_bubblewrap && (
+                  <Image
+                    src="/images/bubble-wrap.png"
+                    alt="Bubble wrap - coming soon"
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    className="gsap-bubblewrap"
+                    priority
+                  />
+                )}
+              </div>
+            </Link>
+            <small className=" block l2 text-[8px] md:text-[12px]">
               {data.bottomleft_name}
             </small>
           </div>
         </div>
 
         <div
-          data-cursor="Coming soon"
+          data-cursor="View artist"
           data-cursor-color={data.topright_color}
-          className="gsap-thumbnail absolute block top-[10%] sm:top-0 right-[4%] sm:right-auto sm:left-1/2 z-10 invisible"
+          className="gsap-thumbnail absolute block top-[10%] sm:top-0 right-[4%] sm:right-auto left-1/2  z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="0.1">
-            <div className="relative w-[136px] h-[184px] sm:w-[410px] sm:h-[500px]">
-              {data.topright && (
-                <Image
-                  src={data.topright.data.attributes.url}
-                  alt={data.topright.data.attributes.alt}
-                  layout="fill"
-                  objectFit="cover"
-                />
-              )}
-              {data.topright_bubblewrap && (
-                <Image
-                  src="/images/bubble-wrap.png"
-                  alt="Bubble wrap - coming soon"
-                  layout="fill"
-                  objectFit="cover"
-                  className="gsap-bubblewrap"
-                />
-              )}
-            </div>
+            <Link href={`/people/${data.topright_id}`}>
+              <div className="relative w-[136px] aspect-[3/4] sm:w-[360px] xl:w-[410px] 2xl:w-[26vw] min-[19200px]:w-[23vw] cursor-pointer">
+                {data.topright && (
+                  <Image
+                    src={data.topright.data.attributes.url}
+                    alt={data.topright.data.attributes.alt}
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    priority
+                  />
+                )}
+                {data.topright_bubblewrap && (
+                  <Image
+                    src="/images/bubble-wrap.png"
+                    alt="Bubble wrap - coming soon"
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    className="gsap-bubblewrap"
+                    priority
+                  />
+                )}
+              </div>
+            </Link>
             <small className="block l2 text-[8px] md:text-[12px]">
               {data.topright_name}
             </small>
@@ -271,31 +285,35 @@ const FloatingArt = ({ data }) => {
         </div>
 
         <div
-          data-cursor="Coming soon"
+          data-cursor="View artist"
           data-cursor-color={data.centerright_color}
-          className="gsap-thumbnail absolute block bottom-[0] sm:bottom-[30%] left-0 sm:left-auto sm:right-0 sm:translate-y-1/2 translate-y-0 z-10 invisible"
+          className="gsap-thumbnail absolute block bottom-[0] sm:bottom-[10%] left-0 sm:left-auto sm:right-0 sm:translate-y-1/2 translate-y-0 z-10 invisible"
         >
           <div className="gsap-parallax" data-speed="0.0">
-            <div className="relative w-[164px] h-[229px] sm:w-[320px] sm:h-[422px]">
-              {data.centerright && (
-                <Image
-                  src={data.centerright.data.attributes.url}
-                  alt={data.centerright.data.attributes.alt}
-                  layout="fill"
-                  objectFit="cover"
-                />
-              )}
-              {data.centerright_bubblewrap && (
-                <Image
-                  src="/images/bubble-wrap.png"
-                  alt="Bubble wrap - coming soon"
-                  layout="fill"
-                  objectFit="cover"
-                  className="gsap-bubblewrap"
-                />
-              )}
-            </div>
-            <small className="block l2 text-[8px] md:text-[12px]">
+            <Link href={`/people/${data.bottomright_id}`}>
+              <div className="relative w-[164px] aspect-[3/4] sm:w-[280px] xl:w-[320px 2xl:w-[20vw] min-[19200px]:w-[17vw] cursor-pointer">
+                {data.centerright && (
+                  <Image
+                    src={data.centerright.data.attributes.url}
+                    alt={data.centerright.data.attributes.alt}
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    priority
+                  />
+                )}
+                {data.centerright_bubblewrap && (
+                  <Image
+                    src="/images/bubble-wrap.png"
+                    alt="Bubble wrap - coming soon"
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    className="gsap-bubblewrap"
+                    priority
+                  />
+                )}
+              </div>
+            </Link>
+            <small className="block l2 md:ml-0 ml-1 text-[8px] md:text-[12px]">
               {data.centerright_name}
             </small>
           </div>
@@ -316,25 +334,43 @@ const FloatingArt = ({ data }) => {
           </h1>
           <div className="flex gap-[10px] mt-5">
             <div className="gsap-stagger">
-              <button
-                onClick={() => setAccessOpen(true)}
-                data-cursor={data.button_1_cursor_text}
-                data-cursor-color={data.button_1_cursor_color}
-                className=" btn btn-primary"
-              >
-                {data.button_1_text}
-              </button>
+              <Link href="/gallery">
+                {data.button_1_cursor_text && (
+                  <button
+                    data-cursor={data.button_1_cursor_text}
+                    data-cursor-color={data.button_1_cursor_color}
+                    className="btn btn-primary"
+                  >
+                    {data.button_1_text}
+                  </button>
+                )}
+                {!data.button_1_cursor_text && (
+                  <button className="btn btn-primary">
+                    {data.button_1_text}
+                  </button>
+                )}
+              </Link>
+
             </div>
             {/* Going to be a link */}
             <div className="gsap-stagger">
-              <button
-                onClick={() => setOpen(true)}
-                data-cursor={data.button_2_cursor_text}
-                data-cursor-color={data.button_2_cursor_color}
-                className="btn btn-secondary"
-              >
-                {data.button_2_text}
-              </button>
+              {data.button_2_cursor_text && (
+                <button
+                  data-cursor={data.button_2_cursor_text}
+                  data-cursor-color={data.button_2_cursor_color}
+                  className="btn btn-secondary"
+                >
+                  {data.button_2_text}
+                </button>
+              )}
+              {!data.button_2_cursor_text && (
+                <button
+                  onClick={() => setOpen(true)}
+                  className="btn btn-secondary"
+                >
+                  {data.button_2_text}
+                </button>
+              )}
             </div>
           </div>
         </div>

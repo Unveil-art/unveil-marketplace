@@ -1,22 +1,20 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useContext } from "react";
 import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import useMagic from "@/hooks/useMagic";
+import { Web3Context } from "@/contexts/Web3AuthContext";
+import Link from "next/link";
+import RPC from "lib/RPC";
 
 const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
-  const { magic_connect, logout } = useMagic();
-  const { value } = useLocalStorage("user");
-  const { value: value2 } = useLocalStorage("token");
-  const [wallet, setWallet] = useState();
-
-  useEffect(() => {
-    if (value) {
-      const user = JSON.parse(value);
-      setWallet(user);
-    }
-  }, [value]);
+  const { value: localProvider } = useLocalStorage("tw:provider:connectors");
+  const { value: wallet } = useLocalStorage("walletAddress");
+  const { balance, logout, getBalance, showRamper } = useContext(Web3Context);
 
   const el = useRef();
+
+  useEffect(() => {
+    getBalance();
+  }, []);
 
   useAsideAnimation(el, loggedIn);
 
@@ -28,44 +26,49 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
       >
         <div
           data-lenis-prevent
-          className="gsap-el fixed overflow-y-scroll top-0 right-0 w-full sm:w-[540px]  bg-[#ECE8DE] px-5 py-10 z-50 rounded-bl-[20px] h-screen sm:h-fit"
+          className="gsap-el fixed overflow-y-scroll top-0 right-0 w-[330px] sm:w-[540px]  bg-[#ECE8DE] px-5 py-10 z-50 rounded-b-[20px] rounded-tl-[20px] h-fit"
         >
-          <div>
-            <div className="w-full h-[7px] bg-unveilBlack"></div>
+          <div className="mt-[80px]">
+            <div className="w-full md:h-[5px] h-[3px] bg-unveilBlack"></div>
             <h3 className="text-center h2 mb-[80px] mt-[60px] mx-auto">
               Wallet connected
             </h3>
             <div className="grid grid-cols-2 text-center border-y border-bgColorHover">
               <div className="py-10 border-r my-[10px] border-bgColorHover">
                 <p className=" b3">Account name</p>
-                <div>
-                  {wallet && (
-                    <p className="truncate l2 w-[100px] mx-auto">
-                      {wallet.user.walletAddress}
-                    </p>
-                  )}
-                </div>
+                <p className="px-5 truncate md:px-14 l2">
+                  {wallet.slice(0, 4)}...{wallet.slice(-4)}
+                </p>
               </div>
               <div className="py-10 my-[10px] border-bgColorHover">
                 <p className="b3">Funds</p>
-                <p className=" l2">xxx</p>
+                <p className=" l2">{balance}</p>
               </div>
             </div>
             <div className="text-center py-10 my-[10px]">
-              <p className="b3">Account name</p>
-              <p className=" l2">xxx</p>
+              <button
+                className="mt-2 cursor-pointer b3 underline-on-hover"
+                onClick={() => showRamper()}
+              >
+                Purchase funds
+              </button>
+              <p className=" l2">
+                {localProvider && (
+                  <>{localProvider.replace('"', "").replace('"', "")}</>
+                )}
+              </p>
             </div>
-            <button className="mt-10 btn btn-lg btn-full btn-primary">
-              My NFTs
-            </button>
+            <Link href="/account">
+              <button
+                onClick={() => setLoggedIn(false)}
+                className=" btn btn-lg btn-full btn-primary"
+              >
+                My account
+              </button>
+            </Link>
             <p
-              onClick={() => {
-                if (magic_connect) {
-                  magic_connect.wallet.disconnect();
-                }
-                logout();
-              }}
-              className="mx-auto mt-5 text-center underline cursor-pointer w-fit b3"
+              onClick={() => logout()}
+              className="block mx-auto mt-5 text-center cursor-pointer underline-on-hover w-fit b3"
             >
               Disconnect
             </p>

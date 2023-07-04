@@ -18,9 +18,10 @@ const RequestAccess = ({ data, request }) => {
             <Image
               src={data.image.data.attributes.url}
               alt={data.image.data.attributes.alt}
-              layout="fill"
-              objectFit="cover"
+              fill={true}
+              style={{ objectFit: "cover" }}
               className="gsap-image"
+              priority
             />
           </Animate>
         )}

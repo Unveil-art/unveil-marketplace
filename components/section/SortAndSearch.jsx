@@ -12,26 +12,19 @@ const SortAndSearch = () => {
     setFilterOpen(!filterOpen);
   };
 
-  useEffect(() => {
-    if (filterOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-  }, [filterOpen]);
-
+  // Replace checked value with a state to let it work
   return (
     <section className="fixed z-50 w-full h-screen overflow-hidden">
       <div
         onClick={() => handleOpen()}
-        className="fixed cursor-pointer -translate-x-1/2 bg-unveilBlack w-fit bottom-[15px] left-1/2 py-[6px] px-5 rounded-full"
+        className="fixed cursor-pointer -translate-x-1/2 unveilTransition hover:scale-105 bg-unveilBlack w-fit bottom-5 left-1/2 py-[6px] px-5 rounded-full"
       >
         <p className="b4 text-unveilWhite">Search & Sort</p>
       </div>
       <div ref={el} className="fixed z-50 w-full h-screen overflow-hidden">
         <div
           data-lenis-prevent
-          className="gsap-el fixed overflow-y-scroll h-screen md:h-[calc(100vh-40px)] top-0 right-0 sm:top-5 sm:right-5 w-full sm:w-[380px] bg-unveilWhite px-5 py-10 z-50 sm:rounded-[20px]"
+          className="gsap-el fixed max-h-[calc(100svh-40px)] overflow-y-scroll top-[15px] right-[15px] sm:top-5 sm:right-5 w-[280px] sm:w-[380px]  bg-unveilWhite px-5 py-10 z-50 rounded-[20px] h-fit"
         >
           <div
             onClick={() => handleOpen()}
@@ -51,8 +44,11 @@ const SortAndSearch = () => {
                     type="radio"
                     name="category"
                     id="artworks"
+                    checked
                   />
-                  <label htmlFor="artworks">Artworks</label>
+                  <label htmlFor="artworks" className="b3">
+                    Artworks
+                  </label>
                 </div>
                 <div>
                   <input
@@ -61,7 +57,9 @@ const SortAndSearch = () => {
                     name="category"
                     id="collections"
                   />
-                  <label htmlFor="collections">Collections</label>
+                  <label htmlFor="collections" className="b3">
+                    Collections
+                  </label>
                 </div>
               </div>
             </div>
@@ -74,8 +72,11 @@ const SortAndSearch = () => {
                     type="radio"
                     name="medium"
                     id="all"
+                    checked
                   />
-                  <label htmlFor="all">All</label>
+                  <label htmlFor="all" className="b3">
+                    All
+                  </label>
                 </div>
                 <div>
                   <input
@@ -84,7 +85,9 @@ const SortAndSearch = () => {
                     name="medium"
                     id="digital"
                   />
-                  <label htmlFor="digital">Digital</label>
+                  <label htmlFor="digital" className="b3">
+                    Digital
+                  </label>
                 </div>
                 <div>
                   <input
@@ -93,7 +96,9 @@ const SortAndSearch = () => {
                     name="medium"
                     id="print"
                   />
-                  <label htmlFor="print">Print</label>
+                  <label htmlFor="print" className="b3">
+                    Print
+                  </label>
                 </div>
                 <div>
                   <input
@@ -102,7 +107,9 @@ const SortAndSearch = () => {
                     name="medium"
                     id="books"
                   />
-                  <label htmlFor="books">Books</label>
+                  <label htmlFor="books" className="b3">
+                    Books
+                  </label>
                 </div>
               </div>
             </div>
@@ -115,8 +122,11 @@ const SortAndSearch = () => {
                     type="radio"
                     name="art"
                     id="allArt"
+                    checked
                   />
-                  <label htmlFor="allArt">All</label>
+                  <label htmlFor="allArt" className="b3">
+                    All
+                  </label>
                 </div>
                 <div>
                   <input
@@ -125,7 +135,9 @@ const SortAndSearch = () => {
                     name="art"
                     id="portrait"
                   />
-                  <label htmlFor="portrait">Portrait</label>
+                  <label htmlFor="portrait" className="b3">
+                    Portrait
+                  </label>
                 </div>
                 <div>
                   <input
@@ -134,7 +146,9 @@ const SortAndSearch = () => {
                     name="art"
                     id="landscape"
                   />
-                  <label htmlFor="landscape">Landscape</label>
+                  <label htmlFor="landscape" className="b3">
+                    Landscape
+                  </label>
                 </div>
                 <div>
                   <input
@@ -143,7 +157,9 @@ const SortAndSearch = () => {
                     name="art"
                     id="still_life"
                   />
-                  <label htmlFor="still_life">Still life</label>
+                  <label htmlFor="still_life" className="b3">
+                    Still life
+                  </label>
                 </div>
               </div>
             </div>
@@ -156,8 +172,11 @@ const SortAndSearch = () => {
                     type="radio"
                     name="sort"
                     id="alphabetical"
+                    checked
                   />
-                  <label htmlFor="alphabetical">Alphabetical</label>
+                  <label htmlFor="alphabetical" className="b3">
+                    Alphabetical
+                  </label>
                 </div>
                 <div>
                   <input
@@ -166,7 +185,9 @@ const SortAndSearch = () => {
                     name="sort"
                     id="followers"
                   />
-                  <label htmlFor="followers">Followers</label>
+                  <label htmlFor="followers" className="b3">
+                    Followers
+                  </label>
                 </div>
                 <div>
                   <input
@@ -175,7 +196,9 @@ const SortAndSearch = () => {
                     name="sort"
                     id="trending"
                   />
-                  <label htmlFor="trending">Trending</label>
+                  <label htmlFor="trending" className="b3">
+                    Trending
+                  </label>
                 </div>
                 <div>
                   <input
@@ -184,7 +207,9 @@ const SortAndSearch = () => {
                     name="sort"
                     id="newest"
                   />
-                  <label htmlFor="newest">Newest</label>
+                  <label htmlFor="newest" className="b3">
+                    Newest
+                  </label>
                 </div>
               </div>
             </div>

@@ -1,6 +1,7 @@
+import Link from "next/link";
 import React, { useState, useEffect } from "react";
 
-const CountdownTimer = ({ targetDate }) => {
+const CountdownTimer = ({ targetDate, owner, owner_id }) => {
   const [timeRemaining, setTimeRemaining] = useState(null);
 
   useEffect(() => {
@@ -14,6 +15,11 @@ const CountdownTimer = ({ targetDate }) => {
 
   const formatTime = (time) => {
     if (time === null) {
+      return "";
+    }
+
+    // if time is negative, return a special message
+    if (time < 0) {
       return "";
     }
 
@@ -35,7 +41,9 @@ const CountdownTimer = ({ targetDate }) => {
 
   return (
     <div>
-      <div>{formatTime(timeRemaining)}</div>
+      {formatTime(timeRemaining)}{" "}
+      {formatTime(timeRemaining) !== "" && owner && `-`}{" "}
+      <Link href={`/people/${owner_id}`}>{owner}</Link>
     </div>
   );
 };

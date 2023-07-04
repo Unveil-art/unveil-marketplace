@@ -6,27 +6,53 @@ import Title from "@/components/reusable/Title";
 import OneLiner from "@/components/reusable/Oneliner";
 import SortPeople from "@/components/section/people-page/SortPeople";
 import PeopleList from "@/components/section/people-page/PeopleList";
+import { getUsers } from "lib/backend";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
 const People = () => {
-  const [filter, setFilter] = useState(0);
+  const [filter, setFilter] = useState("artist");
+  const { value } = useLocalStorage("token");
+  const [people, setPeople] = useState();
+  const { authenticated } = useIsAuthenticated();
 
   const router = useRouter();
+
+  const fetchUsers = async () => {
+    try {
+      const data = await getUsers(filter);
+
+      setPeople(data);
+
+      return data;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
-    router.push("/404");
-  }, []);
+    fetchUsers();
+  }, [filter]);
+
+  useEffect(() => {
+    if ("curators" in router.query) {
+      setFilter("curator");
+    } else {
+      setFilter("artist");
+    }
+  }, [router.query]);
 
   return (
     <main className="pt-[120px] min-h-screen overflow-y-hidden">
       <Title title="People" />
       <OneLiner
         text="Top art photography projects for their excellence and stunning visuals."
-        info
         gallery
       />
       <Browse filter={filter} setFilter={setFilter} />
       <section className="md:flex">
         <SortPeople filter={filter} />
-        <PeopleList />
+        <PeopleList people={people} />
       </section>
     </main>
   );

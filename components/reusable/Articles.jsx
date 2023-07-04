@@ -79,8 +79,9 @@ const Articles = ({ data, homePage = false }) => {
                   <Image
                     src={data[0].attributes.Image.data.attributes.url}
                     alt={data[0].attributes.Image.data.attributes.alt}
-                    layout="fill"
-                    objectFit="cover"
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    priority
                   />
                 )}
               </div>
@@ -115,8 +116,9 @@ const Articles = ({ data, homePage = false }) => {
                   <Image
                     src={data[1].attributes.Image.data.attributes.url}
                     alt={data[1].attributes.Image.data.attributes.alt}
-                    layout="fill"
-                    objectFit="cover"
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    priority
                   />
                 )}
               </div>
@@ -152,8 +154,9 @@ const Articles = ({ data, homePage = false }) => {
                     <Image
                       src={data[2].attributes.Image.data.attributes.url}
                       alt={data[2].attributes.Image.data.attributes.alt}
-                      layout="fill"
-                      objectFit="cover"
+                      fill={true}
+                      style={{ objectFit: "cover" }}
+                      priority
                     />
                   )}
                 </div>
@@ -187,8 +190,9 @@ const Articles = ({ data, homePage = false }) => {
                     <Image
                       src={data[3].attributes.Image.data.attributes.url}
                       alt={data[3].attributes.Image.data.attributes.alt}
-                      layout="fill"
-                      objectFit="cover"
+                      fill={true}
+                      style={{ objectFit: "cover" }}
+                      priority
                     />
                   )}
                 </div>
@@ -222,8 +226,9 @@ const Articles = ({ data, homePage = false }) => {
                     <Image
                       src={data[4].attributes.Image.data.attributes.url}
                       alt={data[4].attributes.Image.data.attributes.alt}
-                      layout="fill"
-                      objectFit="cover"
+                      fill={true}
+                      style={{ objectFit: "cover" }}
+                      priority
                     />
                   )}
                 </div>
@@ -258,8 +263,9 @@ const Articles = ({ data, homePage = false }) => {
                   <Image
                     src={data[3].attributes.Image.data.attributes.url}
                     alt={data[3].attributes.Image.data.attributes.alt}
-                    layout="fill"
-                    objectFit="cover"
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    priority
                   />
                 )}
               </div>
@@ -293,8 +299,9 @@ const Articles = ({ data, homePage = false }) => {
                   <Image
                     src={data[4].attributes.Image.data.attributes.url}
                     alt={data[4].attributes.Image.data.attributes.alt}
-                    layout="fill"
-                    objectFit="cover"
+                    fill={true}
+                    style={{ objectFit: "cover" }}
+                    priority
                   />
                 )}
               </div>

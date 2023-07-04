@@ -16,6 +16,12 @@
   .btn-secondary {
     @apply bg-transparent border border-unveilBlack hover:bg-bgColor unveilTransition;
   }
+  .btn-white {
+    @apply bg-transparent border border-unveilWhite hover:bg-[rgba(255,255,255,0.1)] text-unveilWhite unveilTransition;
+  }
+  .btn-opacity {
+    @apply bg-transparent border border-[#DBDED6] hover:bg-bgColor unveilTransition;
+  }
   .btn-lg {
     @apply text-[13px] md:text-[16px] leading-[19px] md:leading-[25px] pt-[14px] pb-[15px];
   }
@@ -53,7 +59,7 @@
   }
   h5,
   .h5 {
-    @apply font-teodor font-light font-light text-[11px] md:text-[19px] leading-[16px] md:leading-[25px];
+    @apply font-teodor font-light text-[11px] md:text-[19px] leading-[16px] md:leading-[25px];
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -63,7 +69,7 @@
     @apply font-graphik font-light text-[20px] md:text-[24px] leading-[19px] md:leading-[110.6%] tracking-[-0.03em] md:tracking-[-0.04em];
   }
   .s2 {
-    @apply font-teodor !font-light text-[21px] md:text-[26px] leading-[100%] md:leading-[26px] tracking-[-0.01em] md:tracking-[-0.03em];
+    @apply font-teodor !font-light text-[21px] md:text-[26px] leading-[24px] md:leading-[26px] tracking-[-0.01em] md:tracking-[-0.03em];
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -114,22 +120,22 @@
 
   /* Labels */
   .nft-print {
-    @apply px-[6px] pt-[4px] pb-[3px] my-auto border border-unveilGreen rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
+    @apply px-[6px] pt-[3px] pb-[2px] my-auto border border-unveilGreen rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
   }
   .nft {
-    @apply px-[6px] pt-[4px] pb-[3px] my-auto border border-unveilGreen bg-unveilGreen rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
+    @apply px-[6px] pt-[3px] pb-[2px] my-auto border border-unveilGreen bg-unveilGreen rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
   }
   .print {
-    @apply px-[6px] pt-[4px] pb-[3px] my-auto border border-unveilYellow bg-unveilYellow rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
+    @apply px-[6px] pt-[3px] pb-[2px] my-auto border border-unveilYellow bg-unveilYellow rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
   }
   .artist {
-    @apply px-[6px] pt-[4px] pb-[3px] my-auto border border-unveilBlack bg-unveilBlack text-unveilWhite l2 rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
+    @apply px-[6px] pt-[3px] pb-[2px] my-auto border border-unveilBlack bg-unveilBlack text-unveilWhite l2 rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
   }
   .collector {
-    @apply px-[6px] pt-[4px] pb-[3px] my-auto border border-unveilGreen bg-unveilGreen  l2 rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
+    @apply px-[6px] pt-[3px] pb-[2px] my-auto border border-unveilGreen bg-unveilGreen  l2 rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
   }
   .curator {
-    @apply px-[6px] pt-[4px] pb-[3px] my-auto border border-unveilYellow bg-unveilYellow l2 rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
+    @apply px-[6px] pt-[3px] pb-[2px] my-auto border border-unveilYellow bg-unveilYellow l2 rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
   }
 
   /* Transition */
@@ -147,6 +153,11 @@
   .bg-blur {
     backdrop-filter: blur(14px) !important;
     -webkit-backdrop-filter: blur(14px) !important;
+  }
+  .black-gradient {
+    background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
+    opacity: 0.1;
+    transform: rotate(-180deg);
   }
 
   /* Swiper */
@@ -168,7 +179,7 @@
     @apply w-full px-0 pt-3 pb-[13px] text-center bg-transparent border-b border-unveilDrakGray l2 text-[12px] focus:outline-none;
   }
   select.select-input {
-    @apply w-full py-3 md:py-4 text-[13px] md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:text-unveilBlack focus:outline-none;
+    @apply w-full disabled:opacity-60 py-3 md:py-4 text-[13px] md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:b3  b3 focus:outline-none;
   }
 
   /* Checkbox */
@@ -228,10 +239,10 @@
 
   /* input */
   input.input {
-    @apply w-full py-3 md:py-4 text-[13px] unveilTransition outline-none focus:bg-bgColorHover md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:text-unveilBlack focus:outline-none;
+    @apply w-full disabled:opacity-60 py-3 md:py-4 text-[13px] unveilTransition outline-none focus:bg-bgColorHover md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:b3 b3 focus:outline-none;
   }
   textarea.textarea {
-    @apply w-full py-3 md:py-4 min-h-[10rem] text-[13px] md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:text-unveilBlack focus:outline-none;
+    @apply w-full py-3 md:py-4 min-h-[10rem] text-[13px] md:text-[16px] bg-bgColor rounded-[8px] md:rounded-[10px] px-5 text-unveilBlack placeholder:b3 b3 focus:outline-none;
   }
   input.checkbox {
     @apply bg-transparent;
@@ -241,14 +252,25 @@
   .drop-cap::first-letter {
     -webkit-initial-letter: 2;
     initial-letter: 2;
-    margin-right: 10px;
+    margin-right: 5px;
   }
 
-  /* Shadow */
+  /* Frames */
+  .frame-1 {
+    box-shadow: 0.966391px 0.966391px 0.966391px rgba(0, 0, 0, 0.17);
+    @apply border-4 border-unveilCreme;
+  }
+
   .shadow {
-    transform: matrix(-1, 0, 0, 1, 0, 0);
     box-shadow: 0.966391px 0.966391px 0.966391px rgba(0, 0, 0, 0.17);
     @apply p-3 border-[#3F3030] border-4;
+  }
+  /* .shadow1 {
+    filter: drop-shadow(75px 107px 52px rgba(0, 0, 0, 0.01))
+      drop-shadow(42px 60px 44px rgba(0, 0, 0, 0.05))
+      drop-shadow(19px 27px 33px rgba(0, 0, 0, 0.09))
+      drop-shadow(5px 7px 18px rgba(0, 0, 0, 0.1))
+      drop-shadow(0px 0px 0px rgba(0, 0, 0, 0.1));
   }
   .shadow2 {
     filter: drop-shadow(8px 11px 5px rgba(0, 0, 0, 0.01))
@@ -256,10 +278,17 @@
       drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.09))
       drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.1))
       drop-shadow(0px 0px 0px rgba(0, 0, 0, 0.1));
+  } */
+  .shadow3 {
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
   }
   .underline-on-hover {
     position: relative;
     display: inline-block;
+  }
+
+  .underline-on-hover-white::after {
+    background-color: #f7f4ed !important;
   }
 
   .underline-on-hover::after {
@@ -340,15 +369,14 @@
 
 @font-face {
   font-family: "Teodor";
-  src: url("/fonts/Teodor-light.woff2") format("woff2"),
-    url("/fonts/Teodor-light.woff2") format("woff2");
+  src: url("/fonts/Teodor-Light.woff") format("woff"),
+    url("/fonts/Teodor-Light.woff2") format("woff2");
   font-weight: 300;
 }
 
-@font-face {
-  font-family: "Teodor";
-  src: url("/fonts/Teodor-Regular.woff2") format("woff2"),
-    url("/fonts/Teodor-Regular.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
+.hide {
+  display: none;
+}
+.show {
+  display: block;
 }

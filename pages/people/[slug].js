@@ -8,38 +8,57 @@ import PeopleArtworks from "@/components/section/people-page/PeopleArtworks";
 import PeopleCollections from "@/components/section/people-page/PeopleCollections";
 import PeopleAbout from "@/components/section/people-page/PeopleAbout";
 import FAQ from "@/components/section/FAQ";
-import { getFAQ } from "lib/strapi";
+import {
+  getUserInfo,
+  getArtistsArtwork,
+  getArtistCollections,
+} from "lib/backend";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
-const PeopleDetails = ({ faq }) => {
-  const faqData = faq.data[0].attributes.faq;
+const PeopleDetails = ({ userId, user }) => {
   const [page, setPage] = useState(0);
+  const [artworks, setArtworks] = useState(null);
+  const [collections, setCollections] = useState();
+  const { authenticated } = useIsAuthenticated();
 
-  const router = useRouter();
   useEffect(() => {
-    router.push("/404");
+    getArtistsArtwork(userId).then((result) => setArtworks(result.data));
+    getArtistCollections(userId).then((result) => setCollections(result.data));
   }, []);
 
+  let displayName = "";
+  if (user) {
+    if (user.firstName && user.lastName) {
+      displayName = user.firstName + " " + user.lastName;
+    } else if (user.email) {
+      displayName = user.email.split("@")[0].replace(".", " ");
+    }
+  }
+
   return (
-    <main className="mt-[120px]">
-      <Title title="Mike Schaper" account="collector" />
-      <PeopleHeader />
-      <PageSelector setPage={setPage} page={page} />
-      {page === 0 && <PeopleArtworks />}
-      {page === 1 && <PeopleCollections />}
-      {page === 2 && <PeopleAbout />}
-      <FAQ data={faqData.block} />
+    <main className="mt-[120px] ">
+      <Title
+        title={displayName}
+        account={user !== undefined ? user.role : ""}
+      />
+      <PeopleHeader people={user} />
+      <PageSelector setPage={setPage} page={page} role={user.role} />
+      {page === 0 && <PeopleArtworks artworks={artworks} role={user.role} />}
+      {page === 1 && <PeopleCollections collections={collections} />}
+      {page === 2 && <PeopleAbout details={user} />}
     </main>
   );
 };
 
 export default PeopleDetails;
 
-export async function getServerSideProps() {
-  const faq = await getFAQ();
+export async function getServerSideProps({ params: { slug } }) {
+  const data = await getUserInfo(slug);
 
   return {
     props: {
-      faq,
+      user: data,
+      userId: slug,
     },
   };
 }

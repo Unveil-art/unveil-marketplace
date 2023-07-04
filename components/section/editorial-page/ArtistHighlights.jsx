@@ -38,7 +38,7 @@ const ArtistHighlights = ({ data }) => {
         {data.block.map((item, index) => (
           <SwiperSlide
             key={index}
-            className="!w-[164px] !h-[240px] md:!w-[340px] md:!h-[480px] relative bg-unveilGreen !flex justify-center items-center"
+            className="!w-[164px] cursor-pointer !h-[240px] md:!w-[340px] md:!h-[480px] relative bg-unveilGreen !flex justify-center items-center"
           >
             <div className="z-20">
               <Play />
@@ -46,8 +46,9 @@ const ArtistHighlights = ({ data }) => {
             <Image
               src={item.media.data.attributes.url}
               alt={item.media.data.attributes.alt}
-              layout="fill"
-              objectFit="cover"
+              fill={true}
+              style={{ objectFit: "cover" }}
+              priority
             />
             <h4 className="absolute text-unveilWhite bottom-5 left-5 s2">
               {item.text}

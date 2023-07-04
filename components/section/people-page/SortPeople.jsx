@@ -19,39 +19,63 @@ const SortPeople = ({ filter }) => {
           <div className="grid grid-cols-2 pb-[15px] w-full">
             <div>
               <input
+                disabled
                 className="radio-block top-left"
                 type="radio"
                 name="sort"
                 id="alphabetical"
               />
-              <label htmlFor="alphabetical">Alphabetical</label>
+              <label
+                htmlFor="alphabetical"
+                className="!cursor-not-allowed opacity-60"
+              >
+                Alphabetical
+              </label>
             </div>
             <div>
               <input
+                disabled
                 className="radio-block top-right"
                 type="radio"
                 name="sort"
                 id="followers"
               />
-              <label htmlFor="followers">Followers</label>
+              <label
+                htmlFor="followers"
+                className="!cursor-not-allowed opacity-60"
+              >
+                Followers
+              </label>
             </div>
             <div>
               <input
+                disabled
                 className="radio-block bottom-left"
                 type="radio"
                 name="sort"
                 id="trending"
               />
-              <label htmlFor="trending">Trending</label>
+              <label
+                htmlFor="trending"
+                className="!cursor-not-allowed opacity-60"
+              >
+                Trending
+              </label>
             </div>
             <div>
               <input
+                disabled
                 className="radio-block bottom-right"
                 type="radio"
                 name="sort"
                 id="newest"
               />
-              <label htmlFor="newest">Newest</label>
+              <label
+                htmlFor="newest"
+                className="!cursor-not-allowed opacity-60"
+              >
+                Newest
+              </label>
             </div>
           </div>
         </div>
@@ -60,28 +84,43 @@ const SortPeople = ({ filter }) => {
           <div className="grid grid-cols-2 pb-[15px] w-full">
             <div>
               <input
+                disabled
                 className="border-collapse radio-block left"
                 type="radio"
                 name="category"
-                id="artworks"
+                id="established1"
               />
-              <label htmlFor="artworks">Artworks</label>
+              <label
+                htmlFor="established1"
+                className="!cursor-not-allowed opacity-60"
+              >
+                Established
+              </label>
             </div>
             <div>
               <input
+                disabled
                 className=" radio-block right"
                 type="radio"
                 name="category"
-                id="collections"
+                id="talent1"
               />
-              <label htmlFor="collections">Collections</label>
+              <label
+                htmlFor="talent1"
+                className="!cursor-not-allowed opacity-60"
+              >
+                Talent
+              </label>
             </div>
           </div>
         </div>
 
         <div>
           <label className="b4 block pb-[10px]">Sort (ascending)</label>
-          <button className="mb-[6px] btn btn-secondary btn-full">
+          <button
+            disabled
+            className="disabled:opacity-40 cursor-not-allowed mb-[6px] btn btn-secondary btn-full"
+          >
             Search
           </button>
         </div>

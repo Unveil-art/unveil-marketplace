@@ -2,7 +2,13 @@ import { forwardRef, useRef } from "react";
 import { useLineMaskingAnimation } from "../../hooks/animations/useLineMaskingAnimation";
 
 const Title = (
-  { title = "Title", color = "#141414", account, link = false },
+  {
+    title = "Title",
+    color = "#141414",
+    account,
+    link = false,
+    truncate = false,
+  },
   ref
 ) => {
   const el = useRef();
@@ -23,18 +29,33 @@ const Title = (
           <h2
             data-cursor="Read more"
             data-cursor-color="#B2B4AE"
-            className={`pb-2 gsap-transform h1`}
+            className={`pb-2 gsap-transform h1 truncate `}
           >
             {title}
           </h2>
         )}
-        {!link && <h2 className={`pb-2 gsap-transform h1`}>{title}</h2>}
-
-        {account === "artist" && <span className="artist">Artist</span>}
-        {account === "collector" && (
-          <span className="mt-[70px] collector">Collector</span>
+        {!link && (
+          <h2
+            className={`pb-2 gsap-transform h1 ${truncate ? "truncate" : ""}`}
+          >
+            {title}
+          </h2>
         )}
-        {account === "curator" && <span className="curator">Curator</span>}
+        {account === "artist" && (
+          <span className="artist mt-[20px] md:mt-[70px] tracking-[0.2em]">
+            Artist
+          </span>
+        )}
+        {account === "collector" && (
+          <span className="mt-[20px] md:mt-[70px] collector tracking-[0.2em]">
+            Collector
+          </span>
+        )}
+        {account === "curator" && (
+          <span className="curator mt-[20px] md:mt-[70px] tracking-[0.2em]">
+            Curator
+          </span>
+        )}
       </div>
     </div>
   );

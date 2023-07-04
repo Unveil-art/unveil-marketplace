@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Animate from "@/components/reusable/Animate";
+import ReactMarkdown from "react-markdown";
 
 const TextImageTwo = ({ data }) => {
   return (
@@ -9,9 +10,9 @@ const TextImageTwo = ({ data }) => {
         options={{ alpha: true }}
         className="order-2 md:col-span-2 md:order-1"
       >
-        <p className="md:max-w-[350px] sticky top-[32px] h-fit mt-10 leading-[110%] px-[15px] ml-[100px] md:ml-[40px] s2 drop-cap">
+        <ReactMarkdown className="md:max-w-[350px] sticky top-[32px] h-fit mt-10 leading-[110%] px-[15px] ml-[100px] md:ml-[40px] s2 drop-cap">
           {data.Text}
-        </p>
+        </ReactMarkdown>
       </Animate>
       <div className="relative order-1 w-full overflow-hidden md:col-span-3 md:order-2">
         <Animate
@@ -22,9 +23,10 @@ const TextImageTwo = ({ data }) => {
             <Image
               src={data.Image.data.attributes.url}
               alt={data.Image.data.attributes.alt}
-              layout="fill"
-              objectFit="cover"
+              fill={true}
+              style={{ objectFit: "cover" }}
               className="gsap-image"
+              priority
             />
           )}
         </Animate>
