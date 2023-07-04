@@ -337,13 +337,13 @@ const FloatingArt = ({ data }) => {
                   <button
                     data-cursor={data.button_1_cursor_text}
                     data-cursor-color={data.button_1_cursor_color}
-                    className="bg-opacity-90 btn btn-primary"
+                    className="btn btn-primary"
                   >
                     {data.button_1_text}
                   </button>
                 )}
                 {!data.button_1_cursor_text && (
-                  <button className="bg-opacity-90 btn btn-primary">
+                  <button className="btn btn-primary">
                     {data.button_1_text}
                   </button>
                 )}

@@ -5,13 +5,11 @@ import Title from "../../components/reusable/Title";
 import Filter from "../../components/section/Filter";
 import SortAndSearch from "../../components/section/SortAndSearch";
 import PageHead from "../../components/general/Head";
-import SearchBlockItems from "../../components/section/SearchBlockItems";
 import GalleryBlockItems from "../../components/section/GalleryBlockItems";
 import { getArtworks, getCollections } from "lib/backend";
 import { useRouter } from "next/router";
-import useLocalStorage from "@/hooks/useLocalStorage";
-import LoadMore from "@/components/section/gallery-page/LoadMore";
 import Loader from "@/components/svg/Loader";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
 export default function Gallery({ artworks }) {
   const [artworkSplit, setArtworkSplit] = useState([]);
@@ -21,6 +19,7 @@ export default function Gallery({ artworks }) {
   const [loading, setLoading] = useState(false);
   const [noApiCalls, setNoApiCalls] = useState(false);
   const paginationDivRef = useRef(null);
+  const { authenticated } = useIsAuthenticated();
 
   const [category, setCategory] = useState(0);
   const [artist, setArtist] = useState(0);
@@ -89,6 +88,7 @@ export default function Gallery({ artworks }) {
     setVariant(1);
     setPagination(0);
     setCollectionSplit(result);
+    console.log(collectionSplit);
   };
 
   const fetchFirstArtworks = async () => {

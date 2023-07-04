@@ -34,6 +34,7 @@ import {
 import Web3 from "web3";
 import { useRouter } from "next/router";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
 const EditionCheckout = ({ artwork, edition_id }) => {
   const { value } = useLocalStorage("token");
@@ -41,6 +42,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
   const { step, setStep } = useContext(StepContext);
   const { provider, rpcUrl, showRamper, logout } = useContext(Web3Context);
   const router = useRouter();
+  const { authenticated } = useIsAuthenticated();
 
   const [email, setEmail] = useState("");
   const [paymentOpen, setPaymentOpen] = useState(false);
@@ -125,15 +127,15 @@ const EditionCheckout = ({ artwork, edition_id }) => {
     } catch (err) {
       console.log(JSON.stringify(err), "=====");
 
-      setGasFees(0.03);
+      setGasFees(0.02);
       const usd = await getCurrentExchangeRateETHUSD();
-      const totalPriceInUSD = (edition.price + 0.03) * usd.USD;
+      const totalPriceInUSD = (edition.price + 0.02) * usd.USD;
       if (fromMint) {
         // toast.error("Insufficient Balance in your Account.");
         showTopStickyNotification("error", "Insufficient Balance in your Account.")
         showRamper(parseInt(totalPriceInUSD));
       }
-      setGasFeesUSD(usd.USD * 0.03);
+      setGasFeesUSD(usd.USD * 0.02);
       return false;
     }
   };
@@ -318,6 +320,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
                     setPayment={setPayment}
                     setStep={setStep}
                     paymentOpen={paymentOpen}
+                    index={index}
                     setPaymentOpen={setPaymentOpen}
                   />
                 </Animate>
@@ -352,7 +355,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
                 <div className="h-[136px] w-[106px] md:h-[140px] md:w-[120px] bg-bgColor my-[10px]">
                   <div className="flex items-center justify-center h-full p-5">
                     <div
-                      className={`shadow2 mx-auto bg-unveilWhite w-fit
+                      className={` mx-auto bg-unveilWhite w-fit
             ${frameObject.size === "2mm" ? "border-[3px]" : ""}
             ${frameObject.size === "3mm" ? "border-[4px]" : ""}
             ${frameObject.size === "5mm" ? "border-[5px]" : ""}
@@ -361,10 +364,9 @@ const EditionCheckout = ({ artwork, edition_id }) => {
             ${frameObject.colour === "White" ? "border-unveilCreme" : ""}
             ${frameObject.border === "None" ? "p-0" : ""}
             ${frameObject.border === "5x10" ? "p-2" : ""}
-            ${frameObject.border === "10x20" ? "p-4" : ""}`}
-                    >
+            ${frameObject.border === "10x20" ? "p-4" : ""}`}>
                       <img
-                        className="object-contain h-full"
+                        className="object-contain shadow2"
                         src={artwork.media_url}
                         alt={artwork.name}
                       />
@@ -399,7 +401,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
             </div>
             <div className="flex justify-between border-t border-[#DBDED6] py-[10px] md:py-5">
               <div className="flex items-center gap-2">
-                <p className="b3 lg:font-[17px]">Gas Fees</p>{" "}
+                <p className="b3 lg:font-[17px]">Estimated Gas Fees</p>{" "}
                 <div
                   className="cursor-pointer"
                   onClick={() => setGasOpen(!gasOpen)}
@@ -440,7 +442,13 @@ const EditionCheckout = ({ artwork, edition_id }) => {
         </div>
       </section>
       <MoreInfoPopIn open={paymentOpen} setOpen={setPaymentOpen} />
-      <MoreInfoPopIn open={gasOpen} setOpen={setGasOpen} />
+      <MoreInfoPopIn
+        title="Pay to ship the artpiece"
+        subtitle="Gas Fees"
+        text="A gas fee refers to the fee required to conduct transactions or execute contracts on the Etherum network. It is compensating for the computing power used to process these interactions. Called gwei, These fees are small fractions of Ether (ETH). In this case <gas fee> is required to make the transaction."
+        open={gasOpen}
+        setOpen={setGasOpen}
+      />
     </main>
   );
 };

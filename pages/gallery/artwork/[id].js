@@ -9,9 +9,11 @@ import Provenance from "../../../components/section/gallery-page/Provenance";
 import { getArtworkById, getArtworks } from "lib/backend";
 import { ToastContainer } from "react-toastify";
 import ColorThief from "colorthief";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
 const Details = ({ artwork, browse }) => {
   const [dominantColor, setDominantColor] = useState("rgba(21, 17, 0, 0.05)");
+  const { authenticated } = useIsAuthenticated();
 
   function isLight(rgb) {
     const [r, g, b] = rgb;

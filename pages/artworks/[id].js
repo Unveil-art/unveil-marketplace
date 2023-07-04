@@ -23,9 +23,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CreatingNFT from "@/components/section/create-page/CreatingNFT";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
 const Edit = ({ artwork }) => {
   const { provider, convertWei } = useContext(Web3Context);
+  const { authenticated } = useIsAuthenticated();
 
   const notify = (message) => showTopStickyNotification("error", message)
   const {

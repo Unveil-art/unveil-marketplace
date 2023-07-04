@@ -73,11 +73,11 @@ const EditionPopIn = ({ edition, setEdition, dominantColor }) => {
             </div>
             <div className="pt-5">
               <div className="h-[200px] md:h-[300px] relative">
-                {/* <p className="px-5 s2">100x50</p> */}
+                {/* <p className="px-5 s2 text-unveilWhite">100x50</p> */}
                 <p
                   className={`${
                     edition.edition_type === "NFT_Only" ? "s2" : "b3"
-                  } px-5 `}
+                  } px-5 text-unveilWhite`}
                 >
                   Edition {edition.edition_index} of {edition.max_editions}
                 </p>

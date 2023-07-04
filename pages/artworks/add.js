@@ -16,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Loader from "@/components/svg/Loader";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
 const Create = () => {
   const {
@@ -26,6 +27,9 @@ const Create = () => {
   } = useForm();
 
   const notify = (message) => showTopStickyNotification("error", message)
+  
+  const { authenticated } = useIsAuthenticated();
+
   const { value } = useLocalStorage("token");
 
   const [sizes, setSizes] = useState([

@@ -12,11 +12,13 @@ import NewlyCurated from "../components/section/NewlyCurated";
 import Editorial from "../components/section/Editorial";
 
 import { getFAQ, getHomePage, getEditorials } from "../lib/strapi";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
 export default function Home({ data, faq, editorials }) {
   const homeData = data.data[0].attributes;
   const faqData = faq.data[0].attributes.faq;
   const editorialData = editorials.data;
+  const { authenticated } = useIsAuthenticated();
 
   return (
     <>

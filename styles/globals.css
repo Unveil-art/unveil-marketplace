@@ -303,7 +303,7 @@
     box-shadow: 0.966391px 0.966391px 0.966391px rgba(0, 0, 0, 0.17);
     @apply p-3 border-[#3F3030] border-4;
   }
-  .shadow1 {
+  /* .shadow1 {
     filter: drop-shadow(75px 107px 52px rgba(0, 0, 0, 0.01))
       drop-shadow(42px 60px 44px rgba(0, 0, 0, 0.05))
       drop-shadow(19px 27px 33px rgba(0, 0, 0, 0.09))
@@ -316,7 +316,7 @@
       drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.09))
       drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.1))
       drop-shadow(0px 0px 0px rgba(0, 0, 0, 0.1));
-  }
+  } */
   .shadow3 {
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
   }

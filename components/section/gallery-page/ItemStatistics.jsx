@@ -1,9 +1,27 @@
 import React, { useEffect, useState } from "react";
 import Chat from "@/components/reusable/Chat";
 import Link from "next/link";
+import MoreInfoPopIn from "@/components/pop-in/MoreInfoPopIn";
 
 const ItemStatistics = ({ artwork }) => {
   const [dimension, setDimension] = useState("1920 X 1080");
+
+  //Pop-in states
+  const [totalVolume, setTotalVolume] = useState(false);
+  const [lastPrice, setLastPrice] = useState(false);
+  const [lastVolume, setLastVolume] = useState(false);
+  const [highest, setHighest] = useState(false);
+  const [unique, setUnique] = useState(false);
+  const [claimed, setClaimed] = useState(false);
+  const [increase, setIncrease] = useState(false);
+  const [distribution, setDistribution] = useState(false);
+  const [editions, setEditions] = useState(false);
+
+  const [dimensionOpen, setDimensionOpen] = useState(false);
+  const [fileSize, setFileSize] = useState(false);
+  const [blockchain, setBlockchain] = useState(false);
+  const [token, setToken] = useState(false);
+  const [address, setAddress] = useState(false);
 
   useEffect(() => {
     const getImageDimension = (url) => {
@@ -48,45 +66,66 @@ const ItemStatistics = ({ artwork }) => {
 
           <div className="relative pt-5 md:pt-[80px] flex justify-between gap-5">
             <div className="md:space-y-[6px] w-full md:block grid grid-cols-2 gap-[6px]">
-              <div className="rounded-[10px] hover:border-unveilBlack  border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
+              <div
+                onClick={() => setTotalVolume((prev) => !prev)}
+                className="rounded-[10px] hover:border-unveilBlack  border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer"
+              >
                 <p className="truncate b5">
                   Total selling volume market volume
                 </p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                  $ 0.00
+                  $0.00
                 </p>
               </div>
-              <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
+              <div
+                onClick={() => setLastPrice((prev) => !prev)}
+                className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer"
+              >
                 <p className="b5 leading-[23px]">Last purchase price</p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                  $ 0.00
+                  $0.00
                 </p>
               </div>
-              <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
+              <div
+                onClick={() => setLastVolume((prev) => !prev)}
+                className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer"
+              >
                 <p className="b5 leading-[23px]">Volume last 30 days</p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                  $ 0.00
+                  $0.00
                 </p>
               </div>
-              <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
+              <div
+                onClick={() => setHighest((prev) => !prev)}
+                className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer"
+              >
                 <p className="b5 leading-[23px]">Highest non-accepted bid</p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                  $ 0.00
+                  $0.00
                 </p>
               </div>
-              <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
+              <div
+                onClick={() => setUnique((prev) => !prev)}
+                className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer"
+              >
                 <p className="b5 leading-[23px]">Unique collectors</p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
                   0
                 </p>
               </div>
-              <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
+              <div
+                onClick={() => setClaimed((prev) => !prev)}
+                className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer"
+              >
                 <p className="b5 leading-[23px]">Claimed physical artworks</p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
                   0%
                 </p>
               </div>
-              <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
+              <div
+                onClick={() => setIncrease((prev) => !prev)}
+                className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer"
+              >
                 <p className="b5 leading-[23px]">
                   Price increase since first sale
                 </p>
@@ -94,13 +133,19 @@ const ItemStatistics = ({ artwork }) => {
                   0%
                 </p>
               </div>
-              <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
+              <div
+                onClick={() => setDistribution((prev) => !prev)}
+                className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer"
+              >
                 <p className="b5 leading-[23px]">Distribution Primary Sale</p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                  87.5% artist, 0% curator
+                  0% artist, 0% curator
                 </p>
               </div>
-              <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
+              <div
+                onClick={() => setEditions((prev) => !prev)}
+                className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer"
+              >
                 <p className="b5 leading-[23px]">Editions left</p>
                 <p className="truncate b3 !text-[13px] leading-normal md:b4">
                   {editions_left}
@@ -150,23 +195,38 @@ const ItemStatistics = ({ artwork }) => {
                   </p>
                 </div>
               )}
-              <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
+              <div
+                onClick={() => setDimensionOpen((prev) => !prev)}
+                className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer"
+              >
                 <p className="b5">Dimensions (DAB)</p>
                 <p className="truncate b4">{dimension}</p>
               </div>
-              <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
+              <div
+                onClick={() => setFileSize((prev) => !prev)}
+                className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer"
+              >
                 <p className="b5">File size</p>
-                <p className="truncate b4">~ 1 MB</p>
+                <p className="truncate b4">0MB</p>
               </div>
-              <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
+              <div
+                onClick={() => setBlockchain((prev) => !prev)}
+                className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer"
+              >
                 <p className="b5">Blockchain</p>
                 <p className="truncate b4">Ethereum</p>
               </div>
-              <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
+              <div
+                onClick={() => setToken((prev) => !prev)}
+                className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer"
+              >
                 <p className="b5">Token standard</p>
                 <p className="truncate b4">ERC721</p>
               </div>
-              <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
+              <div
+                onClick={() => setAddress((prev) => !prev)}
+                className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer"
+              >
                 <p className="b5">Collection address</p>
                 <p className="truncate w-[100px] b4">
                   {artwork?.contract_address?.slice(0, 4)}...
@@ -194,6 +254,133 @@ const ItemStatistics = ({ artwork }) => {
           </div>
         </div>
       </div>
+      <MoreInfoPopIn
+        open={totalVolume}
+        setOpen={setTotalVolume}
+        text="This is the total value volume of sales for this artpiece."
+        title="$0"
+        subtitle="Total selling volume"
+      />
+
+      {/* lastPrice pop-in */}
+      <MoreInfoPopIn
+        open={lastPrice}
+        setOpen={setLastPrice}
+        text="This is the last price someone paid for this artpiece,"
+        title="$0"
+        subtitle="Last purchase price"
+      />
+
+      {/* lastVolume pop-in */}
+      <MoreInfoPopIn
+        open={lastVolume}
+        setOpen={setLastVolume}
+        text="In the last 30 days this is the volume of sales for this artpiece."
+        title="$0"
+        subtitle="Volume last 30 days"
+      />
+
+      {/* highest pop-in */}
+      <MoreInfoPopIn
+        open={highest}
+        setOpen={setHighest}
+        text="This is the highest non-accepted bid on this art piece."
+        title="$0"
+        subtitle="Highest non-accepted bid"
+      />
+
+      {/* unique pop-in */}
+      <MoreInfoPopIn
+        open={unique}
+        setOpen={setUnique}
+        text="This is the amount of unique collectors owning this art piece."
+        title="0"
+        subtitle="Unique collectors"
+      />
+
+      {/* claimed pop-in */}
+      <MoreInfoPopIn
+        open={claimed}
+        setOpen={setClaimed}
+        text="0% of the NFTs have been printed of this artwork."
+        title="0%"
+        subtitle="Claimed physical artworks"
+      />
+
+      {/* increase pop-in */}
+      <MoreInfoPopIn
+        open={increase}
+        setOpen={setIncrease}
+        text="Over time, the price has rose 0% of the initial selling price."
+        title="0%"
+        subtitle="Price increase since first sale"
+      />
+
+      {/* distribution pop-in */}
+      <MoreInfoPopIn
+        open={distribution}
+        setOpen={setDistribution}
+        text="82.5% of the selling price will go to the artist and 5% to the curator"
+        title="0% artist, 0% curator"
+        subtitle="Distribution Primary Sale"
+      />
+
+      {/* editions pop-in */}
+      <MoreInfoPopIn
+        open={editions}
+        setOpen={setEditions}
+        text={`${editions_left} editions of the total of ${artwork.editions.length} editions are still available directly from the artist.`}
+        title={editions_left}
+        subtitle="Editions left on primary market"
+      />
+
+      {/* dimensionOpen pop-in */}
+      <MoreInfoPopIn
+        open={dimensionOpen}
+        setOpen={setDimensionOpen}
+        text={`The dimension of the artpiece uploaded is ${dimension} pixels`}
+        title={dimension}
+        subtitle="Dimensions"
+      />
+
+      {/* fileSize pop-in */}
+      <MoreInfoPopIn
+        open={fileSize}
+        setOpen={setFileSize}
+        text="The size of the artwork is 0MB."
+        title="0MB"
+        subtitle="File size"
+      />
+
+      {/* blockchain pop-in */}
+      <MoreInfoPopIn
+        open={blockchain}
+        setOpen={setBlockchain}
+        text="This is the blockchain of our smart contract."
+        title="Ethereum"
+        subtitle="Blockchain"
+      />
+
+      {/* token pop-in */}
+      <MoreInfoPopIn
+        open={token}
+        setOpen={setToken}
+        text="This is the token standard of our smart contract."
+        title="ERC-721"
+        subtitle="Token standard"
+      />
+
+      {/* address pop-in */}
+      <MoreInfoPopIn
+        open={address}
+        setOpen={setAddress}
+        text={`${artwork?.contract_address} is the address which is the address of the collection`}
+        title={` ${artwork?.contract_address?.slice(
+          0,
+          4
+        )}...${artwork?.contract_address?.slice(-4)}`}
+        subtitle="Collection address"
+      />
     </div>
   );
 };

@@ -48,9 +48,9 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
             <div className="text-center py-10 my-[10px]">
               <button
                 className="mt-2 cursor-pointer b3 underline-on-hover"
-                onClick={showRamper}
+                onClick={() => showRamper()}
               >
-                Add funds
+                Purchase funds
               </button>
               <p className=" l2">
                 {localProvider && (

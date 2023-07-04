@@ -121,20 +121,22 @@ const PeopleHeader = ({ collection, people }) => {
               <p className="text-[27px]">0</p>
             </div>
           </div>
-          <button
-            className="mt-[15px] btn btn-secondary btn-full"
-            onClick={() => handleFollowUnfollow(following)}
-          >
-            {loading ? (
-              <div className="h-[25px] animate-spin justify-center flex items-center">
-                <Loader />
-              </div>
-            ) : following ? (
-              `Followed`
-            ) : (
-              `Follow`
-            )}
-          </button>
+          {people && (
+            <button
+              className="mt-[15px] btn btn-secondary btn-full"
+              onClick={() => handleFollowUnfollow(following)}
+            >
+              {loading ? (
+                <div className="h-[25px] animate-spin justify-center flex items-center">
+                  <Loader />
+                </div>
+              ) : following ? (
+                `Followed`
+              ) : (
+                `Follow`
+              )}
+            </button>
+          )}
         </div>
         <div className="w-full md:w-[240px] xl:w-[300px] mt-[10px]">
           {collection && (
