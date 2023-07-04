@@ -7,7 +7,6 @@ import {
   unfollowArtist,
 } from "lib/backend";
 import useLocalStorage from "../../../hooks/useLocalStorage";
-import { toast } from "react-toastify";
 import { getUserName } from "lib/utils";
 import Loader from "@/components/svg/Loader";
 

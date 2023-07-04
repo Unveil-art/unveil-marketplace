@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import Oneliner from "../../reusable/Oneliner";
 import Invite from "@/components/reusable/Invite";
 import Animate from "@/components/reusable/Animate";
-import { toast } from "react-toastify";
 import ReferralForm from "./ReferralForm";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { sendInvite } from "lib/backend";
+import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
 
 const Referrals = () => {
   const [referrals, setReferrals] = useState([
@@ -13,7 +13,7 @@ const Referrals = () => {
   ]);
   const { value } = useLocalStorage("token");
 
-  const notify = (message) => toast.error(message);
+  const notify = (message) => showTopStickyNotification("info",message);
 
   const handleFormSubmit = async (index, data) => {
     try {
@@ -21,7 +21,7 @@ const Referrals = () => {
       await sendInvite(value, data);
     } catch (error) {
       console.error(error);
-      toast.error(error.message);
+      notify(error.message);
     }
   };
 
