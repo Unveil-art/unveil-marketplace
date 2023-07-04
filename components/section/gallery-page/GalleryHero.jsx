@@ -10,7 +10,6 @@ import {
   removeFromWishlist,
 } from "lib/backend";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import { toast } from "react-toastify";
 import Loader from "@/components/svg/Loader";
 import MoreInfoPopIn from "@/components/pop-in/MoreInfoPopIn";
 import Wallet from "@/components/svg/Wallet";
@@ -30,6 +29,7 @@ import Torus from "@/components/svg/Torus";
 import Link from "next/link";
 import { Freshchat } from "reactjs-freshchat";
 import "reactjs-freshchat/dist/index.css";
+import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
 
 const GalleryHero = ({ artwork, dominantColor }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
@@ -68,7 +68,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
       }
   }, [isIntersecting]);
 
-  const notifyError = (message) => toast.error(message);
+  const notifyError = (message) => showTopStickyNotification("error", message)
 
   const init = async () => {
     try {

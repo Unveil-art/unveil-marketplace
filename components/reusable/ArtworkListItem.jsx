@@ -2,8 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import Link from "next/link";
 
 import { Web3Context } from "@/contexts/Web3AuthContext";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import {
   listArtwork,
   listEdition,
@@ -15,6 +13,7 @@ import RPC from "lib/RPC";
 import Web3 from "web3";
 import { MARKET_ABI } from "lib/constants";
 import Loader from "../svg/Loader";
+import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
 
 const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
   const [list, setList] = useState(item);
@@ -28,16 +27,19 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
       setLoading(true);
       if (value && item.id) {
         await removeFromWishlist(value, item.id);
-        toast.success("Remove from Wishlist");
+        // toast.success("Remove from Wishlist");
+        showTopStickyNotification("success", "Remove from Wishlist")
       } else {
-        toast.error("User Not Logged In");
+        // toast.error("User Not Logged In");
+        showTopStickyNotification("error", "User Not Logged In")
       }
       setLoading(false);
     } catch (err) {
       setLoading(false);
       console.log(err);
       if (err?.response?.data?.message)
-        toast.error(err?.response?.data?.message);
+        // toast.error(err?.response?.data?.message);
+        showTopStickyNotification("error", err?.response?.data?.message)
     }
   };
 
@@ -101,9 +103,11 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
       });
 
       setList(data.data);
-      toast.success("Successful");
+      // toast.success("Successful");
+      showTopStickyNotification("success", "Successful")
     } catch (error) {
-      toast.error(error.message);
+      // toast.error(error.message);
+      showTopStickyNotification("error", error.message)
       setLoading(false);
     }
   };

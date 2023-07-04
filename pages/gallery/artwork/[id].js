@@ -7,7 +7,6 @@ import AboutCurator from "../../../components/reusable/AboutCurator";
 import ContinueBrowsing from "../../../components/section/gallery-page/ContinueBrowsing";
 import Provenance from "../../../components/section/gallery-page/Provenance";
 import { getArtworkById, getArtworks } from "lib/backend";
-import { ToastContainer } from "react-toastify";
 import ColorThief from "colorthief";
 import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
@@ -102,7 +101,6 @@ const Details = ({ artwork, browse }) => {
 
   return (
     <main className="mb-[100px]">
-      <ToastContainer />
       <GalleryHero artwork={artwork} dominantColor={dominantColor} />
       <GalleryAbout artwork={artwork} />
       {/* <Provenance /> */}

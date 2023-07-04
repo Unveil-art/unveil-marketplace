@@ -14,7 +14,6 @@ import Following from "../../components/section/accout-page/Following";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { getArtworksMe, getUserMe } from "lib/backend";
-import { ToastContainer, toast } from "react-toastify";
 import { useRouter } from "next/router";
 import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
@@ -68,7 +67,6 @@ const AccountPage = () => {
   if (user) {
     return (
       <div className="relative flex pb-5 md:pb-[80px]">
-        <ToastContainer />
         <Sidebar
           user={user}
           accountState={accountState}

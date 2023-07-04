@@ -8,8 +8,8 @@ import {
   deleteRecognition,
 } from "lib/backend";
 import Loader from "@/components/svg/Loader";
-import { toast } from "react-toastify";
 import Animate from "@/components/reusable/Animate";
+import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
 
 const Recognitions = () => {
   const [loading, setLoading] = useState(false);
@@ -29,7 +29,8 @@ const Recognitions = () => {
       return data;
     } catch (err) {
       console.error(err);
-      toast.error(err.message);
+      // toast.error(err.message);
+      showTopStickyNotification("error", err.message)
     }
   };
 
@@ -57,12 +58,14 @@ const Recognitions = () => {
     try {
       await postRecognition(value, data);
       setLoading(false);
-      toast.success("Success");
+      // toast.success("Success");
+      showTopStickyNotification("success", "Success")
       fetchRecognitions();
     } catch (err) {
       setLoading(false);
       console.error(err);
-      toast.error(err.message);
+      // toast.error(err.message);
+      showTopStickyNotification("error", err.message)
     }
   };
 
