@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "react-toastify/dist/ReactToastify.css";
 import Loader from "@/components/svg/Loader";
 import Image from "next/image";
 import { uploadImage, putUserMe } from "lib/backend";

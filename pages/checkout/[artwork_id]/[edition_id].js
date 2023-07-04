@@ -13,7 +13,6 @@ import { StepContext } from "@/contexts/StepContext";
 import Minting from "@/components/section/checkout-page/Minting";
 import Minted from "@/components/section/checkout-page/Minted";
 import Animate from "@/components/reusable/Animate";
-import { ToastContainer, toast } from "react-toastify";
 import {
   getArtworkById,
   getCurrentExchangeRateUSDETH,
@@ -132,7 +131,10 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       const totalPriceInUSD = (edition.price + 0.02) * usd.USD;
       if (fromMint) {
         // toast.error("Insufficient Balance in your Account.");
-        showTopStickyNotification("error", "Insufficient Balance in your Account.")
+        showTopStickyNotification(
+          "error",
+          "Insufficient Balance in your Account."
+        );
         showRamper(parseInt(totalPriceInUSD));
       }
       setGasFeesUSD(usd.USD * 0.02);
@@ -225,7 +227,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
     if (!canMint) {
       setStep(3);
       // toast.info("Edition is Already Minted");
-      showTopStickyNotification("error", "Edition is Already Minted")
+      showTopStickyNotification("error", "Edition is Already Minted");
       return;
     }
 
@@ -285,14 +287,13 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       console.log(JSON.stringify(err), "=====");
       if (err?.data?.code == -32000) showRamper(total ? parseInt(total) : 100);
       // toast.error(err?.data?.message);
-      showTopStickyNotification("error", err?.data?.message)
+      showTopStickyNotification("error", err?.data?.message);
       setStep(3);
     }
   };
 
   return (
     <main className="min-h-screen my-[120px] px-[15px] md:px-10">
-      <ToastContainer />
       <div id="top-sticky-notification-container" />
       {step === 4 && <Minting artwork={artwork} />}
       {step === 5 && <Minted artwork={artwork} />}
@@ -364,7 +365,8 @@ const EditionCheckout = ({ artwork, edition_id }) => {
             ${frameObject.colour === "White" ? "border-unveilCreme" : ""}
             ${frameObject.border === "None" ? "p-0" : ""}
             ${frameObject.border === "5x10" ? "p-2" : ""}
-            ${frameObject.border === "10x20" ? "p-4" : ""}`}>
+            ${frameObject.border === "10x20" ? "p-4" : ""}`}
+                    >
                       <img
                         className="object-contain shadow2"
                         src={artwork.media_url}

@@ -8,7 +8,6 @@ import {
   deleteRecognition,
 } from "lib/backend";
 import Loader from "@/components/svg/Loader";
-import { toast } from "react-toastify";
 import Animate from "@/components/reusable/Animate";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
 

@@ -19,8 +19,6 @@ import { FACTORY_ABI, FACTORY_CONTRACT_ADDRESS } from "lib/constants";
 import RPC from "lib/RPC";
 import Loader from "@/components/svg/Loader";
 
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import CreatingNFT from "@/components/section/create-page/CreatingNFT";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
 import useIsAuthenticated from "@/hooks/useIsAuthenticated";
@@ -29,7 +27,7 @@ const Edit = ({ artwork }) => {
   const { provider, convertWei } = useContext(Web3Context);
   const { authenticated } = useIsAuthenticated();
 
-  const notify = (message) => showTopStickyNotification("error", message)
+  const notify = (message) => showTopStickyNotification("error", message);
   const {
     register,
     handleSubmit: handleArtworkSubmit,
@@ -328,7 +326,6 @@ const Edit = ({ artwork }) => {
 
   return (
     <main className="bg-[#F0EDE4] ">
-      <ToastContainer />
       <div id="top-sticky-notification-container" />
       {creating && <CreatingNFT />}
       <form

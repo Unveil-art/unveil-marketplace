@@ -10,7 +10,6 @@ import {
   removeFromWishlist,
 } from "lib/backend";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import { toast } from "react-toastify";
 import Loader from "@/components/svg/Loader";
 import MoreInfoPopIn from "@/components/pop-in/MoreInfoPopIn";
 import Wallet from "@/components/svg/Wallet";

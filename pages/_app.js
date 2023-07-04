@@ -7,7 +7,6 @@ import { HistoryProvider } from "../contexts/History";
 import Layout from "../components/general/Layout";
 import Web3AuthProvider from "@/contexts/Web3AuthContext";
 import { StepProvider } from "@/contexts/StepContext";
-import "react-toastify/dist/ReactToastify.css";
 import Script from "next/script";
 
 function MyApp({ Component, pageProps }) {

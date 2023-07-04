@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import Delete from "@/components/svg/Delete";
-import "react-toastify/dist/ReactToastify.css";
 import Loader from "@/components/svg/Loader";
 import {
   getUsers,

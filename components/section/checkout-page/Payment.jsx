@@ -3,7 +3,6 @@ import { CheckoutWithCard } from "@paperxyz/react-client-sdk";
 import Chat from "@/components/reusable/Chat";
 import Ideal from "@/components/svg/Ideal";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import { toast } from "react-toastify";
 import { canMintThisEdition, getClientSecret, mintEdition, postTransaction } from "lib/backend";
 import Loader from "@/components/svg/Loader";
 import { Web3Context } from "@/contexts/Web3AuthContext";
