@@ -110,7 +110,7 @@ const AccessPopIn2 = ({ accessOpen, setAccessOpen, data, i }) => {
             </div>
           </div>
 
-          <button className="btn btn-full btn-primary btn-big" type="submit">
+          <button type="submit" className="btn btn-full btn-primary">
             Apply now
           </button>
         </form>

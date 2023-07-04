@@ -7,10 +7,12 @@ import { useLenis } from "@studio-freight/react-lenis";
 import Image from "next/image";
 import AccessPopIn2 from "../pop-in/AccessPopIn2";
 import Link from "next/link";
+import AccessPopIn3 from "../pop-in/AccessPopIn3";
 
 const FloatingArt = ({ data }) => {
   console.log(data);
   const [open, setOpen] = useState(false);
+  const [accessOpen, setAccessOpen] = useState(false);
   const el = useRef();
   const once = useRef(false);
   const size = useWindowSize();
@@ -348,6 +350,7 @@ const FloatingArt = ({ data }) => {
                   </button>
                 )}
               </Link>
+
             </div>
             {/* Going to be a link */}
             <div className="gsap-stagger">
@@ -372,6 +375,7 @@ const FloatingArt = ({ data }) => {
           </div>
         </div>
       </section>
+      <AccessPopIn3 open={accessOpen} setOpen={setAccessOpen} />
       <AccessPopIn2
         accessOpen={open}
         setAccessOpen={setOpen}
