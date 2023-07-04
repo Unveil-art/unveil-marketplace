@@ -37,7 +37,7 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
               <div className="py-10 border-r my-[10px] border-bgColorHover">
                 <p className=" b3">Account name</p>
                 <p className="px-5 truncate md:px-14 l2">
-                  {wallet.slice(0, 4)}...{wallet.slice(-4)}
+                  {wallet?.slice(0, 4)}...{wallet?.slice(-4)}
                 </p>
               </div>
               <div className="py-10 my-[10px] border-bgColorHover">

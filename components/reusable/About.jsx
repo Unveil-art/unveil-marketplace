@@ -11,7 +11,7 @@ import ColorThief from "colorthief";
 
 const About = ({ item }) => {
   const [exchangeRate, setExchangeRate] = useState(1900);
-  const [dominantColor, setDominantColor] = useState("rgba(21, 17, 0, 0.05)");
+  const [dominantColor, setDominantColor] = useState("#141414");
 
   function isLight(rgb) {
     const [r, g, b] = rgb;
@@ -115,7 +115,9 @@ const About = ({ item }) => {
 
   return (
     <Animate options={{ alpha: true }}>
-      <section className="relative grid grid-cols-1 my-5 md:grid-cols-2 2xl:h-screen md:my-10">
+      <section
+        className={`relative grid grid-cols-1 my-5 md:grid-cols-2 2xl:h-screen unveilTransition md:my-10 `}
+      >
         <div
           data-cursor={item.name}
           data-cursor-color="#b2b4ae"
@@ -155,7 +157,7 @@ const About = ({ item }) => {
         </div>
         <div
           style={{ backgroundColor: dominantColor }}
-          className="relative p-[15px] pt-10 md:p-10 text-unveilWhite aspect-[10/11] md:aspect-auto"
+          className="relative p-[15px] pt-10 md:p-10 unveilTransition bg-bgColor text-unveilWhite aspect-[10/11] md:aspect-auto"
         >
           {item.title && (
             <Link href={`/gallery/collection/${item.id}`}>
