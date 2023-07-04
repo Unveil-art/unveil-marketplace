@@ -294,7 +294,6 @@ const EditionCheckout = ({ artwork, edition_id }) => {
 
   return (
     <main className="min-h-screen my-[120px] px-[15px] md:px-10">
-      <div id="top-sticky-notification-container" />
       {step === 4 && <Minting artwork={artwork} />}
       {step === 5 && <Minted artwork={artwork} />}
       <section className="lg:flex block gap-5 justify-between lg:gap-[100px]">

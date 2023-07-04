@@ -183,7 +183,6 @@ export default function Gallery({ artworks }) {
     <>
       <PageHead />
       <main className="mt-24 md:mt-[130px] mb-20 md:mb-[100px]">
-        <div id="top-sticky-notification-container" />
         <Title title="Gallery" />
         <OneLiner
           text="Art photographers recognized for unique vision, skill, and exhibitions."

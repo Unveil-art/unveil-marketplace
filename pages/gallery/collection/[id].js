@@ -15,7 +15,6 @@ const Details = ({ collection }) => {
 
   return (
     <main>
-      <div id="top-sticky-notification-container" />
       <div className="md:mt-[120px] mt-[80px]">
         <Title title={collection.title} />
         <PeopleHeader collection={collection} />

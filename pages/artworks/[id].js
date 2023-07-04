@@ -326,7 +326,6 @@ const Edit = ({ artwork }) => {
 
   return (
     <main className="bg-[#F0EDE4] ">
-      <div id="top-sticky-notification-container" />
       {creating && <CreatingNFT />}
       <form
         onSubmit={handleArtworkSubmit(onSubmitForm)}

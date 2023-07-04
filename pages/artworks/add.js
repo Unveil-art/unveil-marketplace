@@ -192,7 +192,6 @@ const Create = () => {
 
   return (
     <main className="bg-[#F0EDE4] ">
-      <div id="top-sticky-notification-container" />
       <form
         onSubmit={handleArtworkSubmit(onSubmitForm)}
         className="pb-[120px] px-[15px] md:px-10 lg:flex justify-between"

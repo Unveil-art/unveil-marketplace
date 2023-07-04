@@ -67,7 +67,6 @@ const AccountPage = () => {
   if (user) {
     return (
       <div className="relative flex pb-5 md:pb-[80px]">
-        <div id="top-sticky-notification-container" />
         <Sidebar
           user={user}
           accountState={accountState}
