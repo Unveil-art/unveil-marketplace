@@ -54,12 +54,12 @@ const ContactDetails = ({ user }) => {
       await putUserMe(value, data);
       setLoading(false);
       // toast.success("Success");
-      showTopStickyNotification("success", "Success")
+      showTopStickyNotification("success", "Success");
     } catch (err) {
       setLoading(false);
       console.error(err);
       // toast.error(err.message);
-      showTopStickyNotification("error", err.message)
+      showTopStickyNotification("error", err.message);
     }
   };
 
@@ -68,7 +68,7 @@ const ContactDetails = ({ user }) => {
       <Animate options={{ alpha: true }}>
         <form
           onSubmit={handleSubmit(onSubmitForm)}
-          className="ml-[40px] md:ml-[35svw] pr-[15px] md:pr-10 max-w-[640px]"
+          className="ml-[40px] md:ml-[35vw] pr-[15px] md:pr-10 max-w-[640px]"
         >
           <div className=" pt-[80px] md:pt-[160px] pb-10 md:pb-20 flex gap-5 items-center">
             <div className="w-[308px] md:h-[308px] relative overflow-hidden aspect-square  bg-bgColor rounded-full">
@@ -204,13 +204,16 @@ const ContactDetails = ({ user }) => {
                     user.walletAddress?.toLowerCase()
                   );
                   // toast.info("WalletAddress Copied");
-                  showTopStickyNotification("success", "WalletAddress Copied")
+                  showTopStickyNotification("success", "WalletAddress Copied");
                 }}
                 className="input cursor-pointer bg-bgColor md:text-[16px] text-unveilGrey rounded-[8px] md:rounded-[10px] px-5 py-3 md:py-4 text-[13px]"
               >
                 {user.walletAddress?.toLowerCase()}
               </div>
             </div>
+            <p className="mt-5 b4 opacity-60">
+              To add funds, please send over Ethereum to this wallet address.
+            </p>
           </div>
           <div className="pt-10">
             <h3 className="b3 text-[17px] mb-5">Quote or oneliner</h3>

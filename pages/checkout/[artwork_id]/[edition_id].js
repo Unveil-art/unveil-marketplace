@@ -347,8 +347,8 @@ const EditionCheckout = ({ artwork, edition_id }) => {
             )}
           </div>
         </div>
-        <div className="order-1  mt-10 md:mt-0 lg:order-2 w-full lg:min-w-[450px] 2xl:min-w-[700px] 2xl:max-w-[700px]">
-          <Animate options={{ alpha: true }} className="sticky top-20">
+        <div className="order-1 mt-10 md:mt-0 lg:order-2 w-full lg:min-w-[450px] 2xl:min-w-[700px] 2xl:max-w-[700px]">
+          <Animate options={{ alpha: true }} className="sticky top-24">
             <div className="h-[3px] md:h-[5px] bg-unveilBlack"></div>
             <div className="flex items-center justify-between md:my-5 my-[15px]">
               <div className="flex items-center gap-5">

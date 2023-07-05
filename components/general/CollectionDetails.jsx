@@ -52,7 +52,7 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
       <div
         className={`${
           imageMargin ? "md:mb-10 md:ml-10" : ""
-        } w-full md:w-[65svw] pr-10 md:pr-0`}
+        } w-full md:w-[65vw] pr-10 md:pr-0`}
       >
         {data.image.data.attributes.mime.includes("video") && (
           <Animate

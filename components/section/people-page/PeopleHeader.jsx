@@ -87,7 +87,7 @@ const PeopleHeader = ({ collection, people }) => {
   }, [value]);
 
   return (
-    <section className="ml-[40px] md:ml-[35svw] pt-20 pr-[15px] md:mt-0 md:pr-[40px]">
+    <section className="ml-[40px] md:ml-[35vw] pt-20 pr-[15px] md:mt-0 md:pr-[40px]">
       {collection && typeof collection != "string" && (
         <p className="s2 my-[60px] md:block hidden ">
           {collection.description}

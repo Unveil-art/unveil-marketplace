@@ -24,7 +24,7 @@ const FAQ = ({ data }) => {
   }, []);
 
   return (
-    <section className="ml-10 md:ml-[35svw] mr-[15px] md:mr-10 mt-[120px] mb-[120px]">
+    <section className="ml-10 md:ml-[35vw] mr-[15px] md:mr-10 mt-[120px] mb-[120px]">
       <Animate
         options={{ alpha: true }}
         className="flex items-end justify-between mb-6"

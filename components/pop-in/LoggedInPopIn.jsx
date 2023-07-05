@@ -45,9 +45,17 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
                 <p className=" l2">{balance}</p>
               </div>
             </div>
-            <div className="text-center py-10 my-[10px]">
+            <div className="text-center pt-5 my-[10px]">
+              <Link href="/account?contact-details">
+                <button
+                  onClick={() => setLoggedIn(false)}
+                  className="mt-2 cursor-pointer b3 btn btn-secondary btn-full btn-lg"
+                >
+                  Add funds
+                </button>
+              </Link>
               <button
-                className="mt-2 cursor-pointer b3 underline-on-hover"
+                className="mt-2 cursor-pointer b3 btn btn-secondary btn-full btn-lg"
                 onClick={() => showRamper()}
               >
                 Purchase funds

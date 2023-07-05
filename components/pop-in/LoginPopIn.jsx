@@ -19,7 +19,7 @@ const LoginPopIn = ({ loginOpen, setLoginOpen }) => {
       >
         <div
           data-lenis-prevent
-          className="gsap-el fixed overflow-y-scroll top-0 right-0 w-[330px] sm:w-[540px]  bg-[#ECE8DE] px-5 pt-[80px] py-10 z-50 rounded-b-[20px] rounded-tl-[20px] h-fit"
+          className="gsap-el fixed overflow-y-scroll top-0 right-0 w-[330px] sm:w-[540px]  bg-[#ECE8DE] px-5 pt-[80px] py-10 z-50 rounded-b-[20px] rounded-tl-[20px]"
         >
           <div>
             <div className="w-full h-[3px] md:h-[5px] mt-[40px] bg-unveilBlack"></div>

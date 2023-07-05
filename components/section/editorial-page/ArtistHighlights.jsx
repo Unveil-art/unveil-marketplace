@@ -32,9 +32,70 @@ const ArtistHighlights = ({ data }) => {
         loop={true}
         modules={[Autoplay]}
         grabCursor
+        centeredSlides={true}
         slidesPerView={"auto"}
         className="swiper4"
       >
+        {data.block.map((item, index) => (
+          <SwiperSlide
+            key={index}
+            className="!w-[164px] cursor-pointer !h-[240px] md:!w-[340px] md:!h-[480px] relative bg-unveilGreen !flex justify-center items-center"
+          >
+            <div className="z-20">
+              <Play />
+            </div>
+            <Image
+              src={item.media.data.attributes.url}
+              alt={item.media.data.attributes.alt}
+              fill={true}
+              style={{ objectFit: "cover" }}
+              priority
+            />
+            <h4 className="absolute text-unveilWhite bottom-5 left-5 s2">
+              {item.text}
+            </h4>
+          </SwiperSlide>
+        ))}
+        {data.block.map((item, index) => (
+          <SwiperSlide
+            key={index}
+            className="!w-[164px] cursor-pointer !h-[240px] md:!w-[340px] md:!h-[480px] relative bg-unveilGreen !flex justify-center items-center"
+          >
+            <div className="z-20">
+              <Play />
+            </div>
+            <Image
+              src={item.media.data.attributes.url}
+              alt={item.media.data.attributes.alt}
+              fill={true}
+              style={{ objectFit: "cover" }}
+              priority
+            />
+            <h4 className="absolute text-unveilWhite bottom-5 left-5 s2">
+              {item.text}
+            </h4>
+          </SwiperSlide>
+        ))}
+        {data.block.map((item, index) => (
+          <SwiperSlide
+            key={index}
+            className="!w-[164px] cursor-pointer !h-[240px] md:!w-[340px] md:!h-[480px] relative bg-unveilGreen !flex justify-center items-center"
+          >
+            <div className="z-20">
+              <Play />
+            </div>
+            <Image
+              src={item.media.data.attributes.url}
+              alt={item.media.data.attributes.alt}
+              fill={true}
+              style={{ objectFit: "cover" }}
+              priority
+            />
+            <h4 className="absolute text-unveilWhite bottom-5 left-5 s2">
+              {item.text}
+            </h4>
+          </SwiperSlide>
+        ))}
         {data.block.map((item, index) => (
           <SwiperSlide
             key={index}

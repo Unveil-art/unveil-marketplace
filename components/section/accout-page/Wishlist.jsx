@@ -17,7 +17,7 @@ const Wishlist = () => {
 
   return (
     <Animate options={{ alpha: true }}>
-      <div className="ml-[40px] pt-[80px] md:pt-[160px] md:ml-[35svw] pr-[15px] md:pr-10 pb-10">
+      <div className="ml-[40px] pt-[80px] md:pt-[160px] md:ml-[35vw] pr-[15px] md:pr-10 pb-10">
         <h3 className="b3 text-[17px] mb-[10px]">Artworks</h3>
         <hr className="mb-[15px] h-[2px] bg-unveilGreen" />
         {artworks?.length < 1 && (
