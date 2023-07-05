@@ -2,7 +2,7 @@ import React from "react";
 
 const Upcoming = ({ data }) => {
   return (
-    <div className="ml-[15px] py-10 md:flex justify-between md:ml-[35svw] md:pr-[40px]">
+    <div className="ml-[15px] py-10 md:flex justify-between md:ml-[35vw] md:pr-[40px]">
       <div className="flex gap-[15px] justify-between md:justify-start">
         <div className="min-w-[90px]">
           <p className="b4">Artists</p>

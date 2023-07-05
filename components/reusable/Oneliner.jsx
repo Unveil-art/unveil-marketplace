@@ -28,7 +28,7 @@ const OneLiner = ({
       <Animate className={`flex ${alignLeft ? "" : ""}`}>
         <div
           className={`${mr ? "max-w-[640px]" : ""} ${
-            alignLeft ? "ml-[15px] md:ml-10" : "ml-10 md:ml-[35svw]"
+            alignLeft ? "ml-[15px] md:ml-10" : "ml-10 md:ml-[35vw]"
           } ${gallery ? "pb-5 md:pb-10" : "pb-[40px] md:pb-[70px]"} ${
             nmb ? "!pb-0 " : ""
           } s2  pt-[80px] md:pt-[160px] `}

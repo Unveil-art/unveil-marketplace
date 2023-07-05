@@ -16,7 +16,6 @@ export function useAuth() {
     setValue(data.accessToken);
     console.log(data, "login response");
     if (data?.user?.role === "artist") router.push("/account");
-    else router.push("/gallery");
   }
 
   const doLogout = async () => {

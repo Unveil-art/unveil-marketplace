@@ -2,7 +2,7 @@ import React from "react";
 
 const Browse = ({ filter, setFilter }) => {
   return (
-    <section className=" flex gap-2 ml-[40px] md:ml-[35svw] md:pr-[40px] overflow-hidden">
+    <section className=" flex gap-2 ml-[40px] md:ml-[35vw] md:pr-[40px] overflow-hidden">
       <p>Browse</p>{" "}
       <div className="flex items-center gap-1">
         <span

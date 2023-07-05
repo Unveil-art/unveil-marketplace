@@ -8,6 +8,28 @@ import { getCurrentExchangeRateETHUSD } from "lib/backend";
 
 const ProductCard = ({ rounded = false, item }) => {
   const [exchangeRate, setExchangeRate] = useState(1900);
+  const [uniqueEditionTypes, setUniqueEditionTypes] = useState([]);
+
+  useEffect(() => {
+    if (item.title) {
+      const types = item.artworks.map((artwork) => {
+        switch (artwork.edition_type) {
+          case "NFT_Only":
+            return "NFT";
+          case "Print_Only":
+            return "PRINT";
+          case "NFT_Backed_by_Print":
+            return "NFT + PRINT";
+          default:
+            return null;
+        }
+      });
+
+      const flatUniqueTypes = [...new Set(types.flat())];
+
+      setUniqueEditionTypes(flatUniqueTypes);
+    }
+  }, []);
 
   const init = async () => {
     try {
@@ -87,6 +109,20 @@ const ProductCard = ({ rounded = false, item }) => {
         </Link>
       )}
 
+      {uniqueEditionTypes && (
+        <>
+          {uniqueEditionTypes.map((item, i) => (
+            <span
+              key={i}
+              className={`${item === "NFT" ? "nft" : ""} ${
+                item === "NFT + PRINT" ? "nft-print" : ""
+              } ${item === "PRINT" ? "print" : ""} `}
+            >
+              {item}
+            </span>
+          ))}
+        </>
+      )}
       {item.edition_type && (
         <>
           {item.edition_type === "NFT_Backed_by_print" && (

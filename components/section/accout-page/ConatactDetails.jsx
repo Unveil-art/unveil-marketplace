@@ -3,7 +3,7 @@ import React from "react";
 const ConatactDetails = () => {
   return (
     <>
-      <form className="ml-[40px] md:ml-[35svw] pr-[15px] md:pr-10">
+      <form className="ml-[40px] md:ml-[35vw] pr-[15px] md:pr-10">
         <div className="pt-[100px] pb-20 flex gap-5 items-center">
           <div className="w-[308px] h-[308px] bg-unveilGreen rounded-full"></div>
           <div>

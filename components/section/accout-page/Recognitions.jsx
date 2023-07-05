@@ -30,7 +30,7 @@ const Recognitions = () => {
     } catch (err) {
       console.error(err);
       // toast.error(err.message);
-      showTopStickyNotification("error", err.message)
+      showTopStickyNotification("error", err.message);
     }
   };
 
@@ -59,19 +59,19 @@ const Recognitions = () => {
       await postRecognition(value, data);
       setLoading(false);
       // toast.success("Success");
-      showTopStickyNotification("success", "Success")
+      showTopStickyNotification("success", "Success");
       fetchRecognitions();
     } catch (err) {
       setLoading(false);
       console.error(err);
       // toast.error(err.message);
-      showTopStickyNotification("error", err.message)
+      showTopStickyNotification("error", err.message);
     }
   };
 
   return (
     <Animate options={{ alpha: true }}>
-      <div className="ml-[40px] md:ml-[35svw] mb-10 pr-[15px] md:pr-10 overflow-hidden">
+      <div className="ml-[40px] md:ml-[35vw] mb-10 pr-[15px] md:pr-10 overflow-hidden">
         <h2 className=" pt-[100px] md:pt-[160px] pb-10">Your recognitions</h2>
         <table className="w-full  max-w-[640px]">
           <thead>

@@ -52,7 +52,7 @@ const OptionsPopIn = ({
     >
       <div
         data-lenis-prevent
-        className="gsap-el fixed overflow-y-scroll top-[15px] right-[15px] sm:top-5 sm:right-5 w-[330px] sm:w-[380px] max-h-[calc(100vh-40px)] bg-[#ECE8DE] px-5 pt-5 pb-10 z-50 rounded-[20px] h-fit"
+        className="gsap-el fixed overflow-y-scroll top-[15px] right-[15px] sm:top-5 sm:right-5 w-[330px] sm:w-[380px] max-h-[calc(100vh-40px)] bg-[#ECE8DE] px-5 pt-5 pb-10 z-50 rounded-[20px]"
       >
         <div
           onClick={() => setOptionsOpen(false)}

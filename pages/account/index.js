@@ -28,8 +28,34 @@ const AccountPage = () => {
   useEffect(() => {
     if ("wishlist" in router.query) {
       setAccountState(6);
-    } else {
-      setAccountState(6);
+    }
+    if ("contact-details" in router.query) {
+      setAccountState(3);
+    }
+    if (user) {
+      if (user?.role === "artist" && "wishlist" in router.query) {
+        setAccountState(0);
+      } else if (
+        user?.role === "artist" &&
+        !"wishlist" in router.query &&
+        !"contact-details" in router.query
+      ) {
+        setAccountState(6);
+      } else if (user?.role === "artist" && "contact-details" in router.query) {
+        setAccountState(3);
+      }
+
+      if (user?.role !== "artist" && "wishlist" in router.query) {
+        setAccountState(2);
+      } else if (
+        user?.role !== "artist" &&
+        !"wishlist" in router.query &&
+        !"contact-details" in router.query
+      ) {
+        setAccountState(6);
+      } else if (user?.role !== "artist" && "contact-details" in router.query) {
+        setAccountState(3);
+      }
     }
   }, [router.query]);
 
@@ -44,17 +70,6 @@ const AccountPage = () => {
     const token = localStorage.getItem("token");
     if (!token) router.push("/");
   }, [value]);
-
-  useEffect(() => {
-    if (user) {
-      if (user.role === "artist") {
-        setAccountState(0);
-      }
-      if (user.role !== "artist") {
-        setAccountState(2);
-      }
-    }
-  }, [user]);
 
   const handleAccountState = (e) => {
     window.scrollTo(0, 0);
@@ -94,7 +109,7 @@ const AccountPage = () => {
           )}
           {accountState === 6 && <Title title="Wishlist" />}
           {accountState === 7 && <Title title="Following" />}
-          <div className="block md:hidden  mt-[80px] ml-[40px] md:ml-[35svw] border-unveilBlack border-t-2 mr-[15px]">
+          <div className="block md:hidden  mt-[80px] ml-[40px] md:ml-[35vw] border-unveilBlack border-t-2 mr-[15px]">
             <select
               className="uppercase select"
               onChange={(e) => handleAccountState(e)}

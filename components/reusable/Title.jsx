@@ -18,7 +18,7 @@ const Title = (
   return (
     <div
       ref={el}
-      className="ml-[40px] md:ml-[35svw] md:pr-[40px] overflow-hidden"
+      className="ml-[40px] md:ml-[35vw] md:pr-[40px] overflow-hidden"
     >
       <div
         style={{ backgroundColor: color }}

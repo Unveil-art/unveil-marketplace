@@ -68,7 +68,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
       }
   }, [isIntersecting]);
 
-  const notifyError = (message) => showTopStickyNotification("error", message)
+  const notifyError = (message) => showTopStickyNotification("error", message);
 
   const init = async () => {
     try {
@@ -251,8 +251,8 @@ const GalleryHero = ({ artwork, dominantColor }) => {
             <div
               className={`${
                 orientation
-                  ? " mx-5 md:mx-10 w-[calc(100%-40px)] md:w-[calc(100%-80px)] "
-                  : " mx-10 md:mx-20 w-[calc(100%-80px)] md:w-[calc(100%-160px)] "
+                  ? " mx-10 md:mx-20 w-[calc(100%-70px)] md:w-[calc(100%-160px)] "
+                  : " mx-20 md:mx-32  w-[calc(100%-160px)] md:w-[calc(100%-256px)]"
               } ${width < 768 ? "shadow2" : "shadow1"}
                 relative h-full z-20`}
             >
