@@ -115,6 +115,7 @@ const TwoBlockItem = ({ item, i }) => {
             <>
               {uniqueEditionTypes.map((item) => (
                 <span
+                  key={i}
                   className={`${item === "NFT" ? "nft" : ""} ${
                     item === "NFT + PRINT" ? "nft-print" : ""
                   } ${item === "PRINT" ? "print" : ""} `}

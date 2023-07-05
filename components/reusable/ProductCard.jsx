@@ -31,10 +31,6 @@ const ProductCard = ({ rounded = false, item }) => {
     }
   }, []);
 
-  useEffect(() => {
-    console.log(uniqueEditionTypes);
-  }, [uniqueEditionTypes]);
-
   const init = async () => {
     try {
       const data = await getCurrentExchangeRateETHUSD();
@@ -115,8 +111,9 @@ const ProductCard = ({ rounded = false, item }) => {
 
       {uniqueEditionTypes && (
         <>
-          {uniqueEditionTypes.map((item) => (
+          {uniqueEditionTypes.map((item, i) => (
             <span
+              key={i}
               className={`${item === "NFT" ? "nft" : ""} ${
                 item === "NFT + PRINT" ? "nft-print" : ""
               } ${item === "PRINT" ? "print" : ""} `}
