@@ -9,7 +9,6 @@ import AccessPopIn2 from "../pop-in/AccessPopIn2";
 import Link from "next/link";
 
 const FloatingArt = ({ data }) => {
-  console.log(data);
   const [open, setOpen] = useState(false);
   const el = useRef();
   const once = useRef(false);
@@ -353,6 +352,7 @@ const FloatingArt = ({ data }) => {
             <div className="gsap-stagger">
               {data.button_2_cursor_text && (
                 <button
+                  onClick={() => setOpen(true)}
                   data-cursor={data.button_2_cursor_text}
                   data-cursor-color={data.button_2_cursor_color}
                   className="btn btn-secondary"
