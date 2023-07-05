@@ -20,7 +20,7 @@ const Login = () => {
     return (
       <div className="h-screen pt-[120px]">
         <Title title="Logout" />
-        <div className="ml-[40px] mt-[120px] md:ml-[35svw] pr-[15px] md:pr-10 ">
+        <div className="ml-[40px] mt-[120px] md:ml-[35vw] pr-[15px] md:pr-10 ">
           <button
             className="btn btn-primary btn-lg btn-wide"
             onClick={() => logout()}
@@ -34,7 +34,7 @@ const Login = () => {
     return (
       <div className="h-screen pt-[120px]">
         <Title title="Login" />
-        <div className="ml-[40px] mt-[120px] md:ml-[35svw] pr-[15px] md:pr-10 ">
+        <div className="ml-[40px] mt-[120px] md:ml-[35vw] pr-[15px] md:pr-10 ">
           <button
             className="btn btn-primary btn-lg btn-wide"
             onClick={() => login()}

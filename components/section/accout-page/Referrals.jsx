@@ -13,7 +13,7 @@ const Referrals = () => {
   ]);
   const { value } = useLocalStorage("token");
 
-  const notify = (message) => showTopStickyNotification("info",message);
+  const notify = (message) => showTopStickyNotification("info", message);
 
   const handleFormSubmit = async (index, data) => {
     try {
@@ -39,7 +39,7 @@ const Referrals = () => {
           gallery={true}
           text="Unveil's Curation Board has selected a collection of top art photography projects for their excellence and stunning visuals."
         />
-        <div className="ml-[40px] mt-10 md:ml-[35svw] pr-[15px] md:pr-10 max-w-[640px] pb-10">
+        <div className="ml-[40px] mt-10 md:ml-[35vw] pr-[15px] md:pr-10 max-w-[640px] pb-10">
           <Invite />
           {referrals.map((referral, i) => (
             <ReferralForm

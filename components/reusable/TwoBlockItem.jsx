@@ -9,6 +9,29 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 const TwoBlockItem = ({ item, i }) => {
   const [orientation, setOrientation] = useState(false);
   const [exchangeRate, setExchangeRate] = useState(1900);
+  const [uniqueEditionTypes, setUniqueEditionTypes] = useState([]);
+
+  useEffect(() => {
+    if (item.title) {
+      const types = item.artworks.map((artwork) => {
+        switch (artwork.edition_type) {
+          case "NFT_Only":
+            return "NFT";
+          case "Print_Only":
+            return "PRINT";
+          case "NFT_Backed_by_Print":
+            return "NFT + PRINT";
+          default:
+            return null;
+        }
+      });
+
+      const flatUniqueTypes = [...new Set(types.flat())];
+
+      setUniqueEditionTypes(flatUniqueTypes);
+    }
+  }, []);
+
   const { width } = useWindowSize();
 
   const init = async () => {
@@ -87,6 +110,20 @@ const TwoBlockItem = ({ item, i }) => {
                 </div>
               </div>
             </Link>
+          )}
+          {uniqueEditionTypes && (
+            <>
+              {uniqueEditionTypes.map((item) => (
+                <span
+                  key={i}
+                  className={`${item === "NFT" ? "nft" : ""} ${
+                    item === "NFT + PRINT" ? "nft-print" : ""
+                  } ${item === "PRINT" ? "print" : ""} `}
+                >
+                  {item}
+                </span>
+              ))}
+            </>
           )}
           {item.edition_type && (
             <>

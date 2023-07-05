@@ -14,8 +14,6 @@ const GalleryBlockItems = ({ items }) => {
           {itemArr.length === 1 && <About item={itemArr[0]} bg="#54382F" />}
         </>
       ))}
-
-      {/* <TwoBlockItems /> */}
     </>
   );
 };

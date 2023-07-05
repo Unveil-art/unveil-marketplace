@@ -26,6 +26,10 @@ export default function Gallery({ artworks }) {
   const [medium, setMedium] = useState(0);
 
   const router = useRouter();
+  console.log(collectionSplit);
+  console.log(collectionSplit);
+  console.log(collectionSplit);
+  console.log(collectionSplit);
 
   const getPattern = (length) => {
     switch (length) {

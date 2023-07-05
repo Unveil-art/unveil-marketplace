@@ -52,7 +52,7 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
       <div
         className={`${
           imageMargin ? "md:mb-10 md:ml-10" : ""
-        } w-full md:w-[65svw] pr-10 md:pr-0`}
+        } w-full md:w-[65vw] pr-10 md:pr-0`}
       >
         {data.image.data.attributes.mime.includes("video") && (
           <Animate
@@ -102,7 +102,7 @@ const CollectionDetails = ({ imageMargin, color, backgroundColor, data }) => {
             value: 0.07,
           },
         }}
-        className="pl-10 md:pl-[30px] md:mb-0 mb-[55px] sticky top-10 pb-10 left-0 h-fit overflow-hidden"
+        className="pl-10 pr-10 md:pr-0 md:pl-[30px] md:mb-0 mb-[55px] sticky top-10 pb-10 left-0 h-fit overflow-hidden"
       >
         <div className="block gsap-transform">
           <h6

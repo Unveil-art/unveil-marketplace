@@ -5,7 +5,7 @@ const Transactions = () => {
   return (
     <>
       <Animate options={{ alpha: true }}>
-        <div className="ml-[40px] md:ml-[35svw] mb-6 md:pr-10 pr-[15px] pt-[80px] md:pt-[160px]  ">
+        <div className="ml-[40px] md:ml-[35vw] mb-6 md:pr-10 pr-[15px] pt-[80px] md:pt-[160px]  ">
           {/* <table className="w-full ">
             <tr>
               <th className="font-normal b3 text-[17px] text-left py-5">

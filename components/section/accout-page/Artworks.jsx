@@ -44,7 +44,7 @@ const Artworks = () => {
             View gallery
           </button>
         </Link>
-        <div className="ml-[40px] md:ml-[35svw] mb-6 md:pr-10 pr-[15px]">
+        <div className="ml-[40px] md:ml-[35vw] mb-6 md:pr-10 pr-[15px]">
           {/* <Invite /> */}
           <Link href="/artworks/add">
             <button className="mt-4 mb-20 btn btn-secondary btn-lg md:btn-fit md:btn-wide btn-full ">
@@ -80,7 +80,7 @@ const Artworks = () => {
             </span>
           </div>
         </div>
-        <div className="ml-[40px] md:ml-[35svw] pr-[15px] md:pr-10 mb-10">
+        <div className="ml-[40px] md:ml-[35vw] pr-[15px] md:pr-10 mb-10">
           {filter === 0 && (
             <>
               {artworksUnlist.length > 0 && (

@@ -175,7 +175,7 @@ const FloatingArt = ({ data }) => {
     <>
       <section
         ref={el}
-        className="h-[100svh] flex justify-center flex-col p-[15px] sm:p-10 relative overflow-hidden opacity-0"
+        className="h-[100vh] flex justify-center flex-col p-[15px] sm:p-10 relative overflow-hidden opacity-0"
       >
         <div
           data-cursor="View artist"

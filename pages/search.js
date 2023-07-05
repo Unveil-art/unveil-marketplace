@@ -41,7 +41,7 @@ const Search = () => {
 
   return (
     <main className="pt-[120px] min-h-screen">
-      <div className="ml-[40px] md:ml-[35svw] md:pr-[40px] ">
+      <div className="ml-[40px] md:ml-[35vw] md:pr-[40px] ">
         <div
           className={`bg-unveilBlack h-[3px] md:h-[5px] mb-3 md:mb-5 md:mr-0 mr-[15px]`}
         ></div>
@@ -65,7 +65,7 @@ const Search = () => {
         </div>
       </div>
 
-      <div className="ml-[40px] md:ml-[35svw] md:pr-[40px] mt-[60px]">
+      <div className="ml-[40px] md:ml-[35vw] md:pr-[40px] mt-[60px]">
         {!searching && (
           <>
             <p className="b3 text-[17px] mb-1">Suggestions</p>
