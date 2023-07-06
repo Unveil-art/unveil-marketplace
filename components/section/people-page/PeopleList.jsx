@@ -47,22 +47,22 @@ const PeopleList = ({ people }) => {
                             </p>
                             <div className="block md:hidden">
                               <p className="b3 opacity-60">Artworks</p>
-                              <p>{item?._count?.artworks}</p>
+                              <p>{item?.artworks}</p>
                             </div>
                             <div className="block md:hidden">
                               <p className="b3 opacity-60">Collections</p>
-                              <p>{item?._count?.collections}</p>
+                              <p>{item?.collections}</p>
                             </div>
                           </div>
                         </div>
                         <div className="hidden gap-10 md:flex">
                           <div>
                             <p className="b3 opacity-60">Artworks</p>
-                            <p>{item?._count?.artworks}</p>
+                            <p>{item?.artworks}</p>
                           </div>
                           <div>
                             <p className="b3 opacity-60">Collections</p>
-                            <p>{item?._count?.collections}</p>
+                            <p>{item?.collections}</p>
                           </div>
                         </div>
                       </div>
