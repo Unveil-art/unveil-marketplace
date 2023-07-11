@@ -29,7 +29,7 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
     return max+1;
   }
   const tokenId = findNextTokenId(artwork.editions)
-  console.log(tokenId,"token")
+
   const hasEACard = async () => {
     try {
       if (!provider) {

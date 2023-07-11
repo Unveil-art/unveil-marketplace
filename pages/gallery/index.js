@@ -26,10 +26,6 @@ export default function Gallery({ artworks }) {
   const [medium, setMedium] = useState(0);
 
   const router = useRouter();
-  console.log(collectionSplit);
-  console.log(collectionSplit);
-  console.log(collectionSplit);
-  console.log(collectionSplit);
 
   const getPattern = (length) => {
     switch (length) {
@@ -92,7 +88,6 @@ export default function Gallery({ artworks }) {
     setVariant(1);
     setPagination(0);
     setCollectionSplit(result);
-    console.log(collectionSplit);
   };
 
   const fetchFirstArtworks = async () => {

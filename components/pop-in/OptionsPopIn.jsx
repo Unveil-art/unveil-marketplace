@@ -11,7 +11,6 @@ const OptionsPopIn = ({
   setEdition,
   dominantColor,
 }) => {
-  console.log(artwork.editions);
   const [editionSizes, setEditionSizes] = useState([]);
   const [nftEditions, setNftEditions] = useState();
   const [udsEx, setUdsEx] = useState();

@@ -1,10 +1,10 @@
 import React from "react";
 
-const Loader = ({ color = "#141414" }) => {
+const Loader = ({ color = "#141414", size=15 }) => {
   return (
     <svg
-      width="15"
-      height="15"
+      width={size}
+      height={size}
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
