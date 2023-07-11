@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 
 import Title from "@/components/reusable/Title";
@@ -14,6 +14,7 @@ import {
   getArtistCollections,
 } from "lib/backend";
 import useIsAuthenticated from "@/hooks/useIsAuthenticated";
+import { Web3Context } from "@/contexts/Web3AuthContext";
 
 const PeopleDetails = ({ userId, user }) => {
   const [page, setPage] = useState(0);

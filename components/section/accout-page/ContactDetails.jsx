@@ -18,7 +18,6 @@ const ContactDetails = ({ user }) => {
     formState: { errors },
   } = useForm();
 
-  console.log(user);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];

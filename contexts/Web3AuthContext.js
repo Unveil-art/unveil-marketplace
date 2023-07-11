@@ -7,15 +7,18 @@ import { useWindowSize } from "react-use";
 import Web3 from "web3";
 import RPC from "lib/RPC";
 import { useAuth } from "@/hooks/useAuth";
-import { doWalletHasEmail, getNonce } from "lib/backend";
+import { doWalletHasEmail, getNonce, getUserMe } from "lib/backend";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import Talk from "talkjs";
 
 export const Web3Context = createContext({
   account: "",
   web3Auth: null,
   provider: null,
+  session: null,
   balance: "",
   email: true,
+  currentUser: null,
   displayRamper: false,
   ramperAmount: 100,
   login: () => {},
@@ -39,6 +42,8 @@ const Web3AuthProvider = ({ children }) => {
   });
   const [web3Auth, setWeb3Auth] = useState(null);
   const [provider, setProvider] = useState(null);
+  const [session, setSession] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const { width } = useWindowSize();
 
   const showRamper = (amount = 100) =>
@@ -68,8 +73,51 @@ const Web3AuthProvider = ({ children }) => {
     setValue: setAccount,
     removeValue: removeAccount,
   } = useLocalStorage("accounts");
-  const { setValue, removeValue } = useLocalStorage("token");
+  const { value: token, setValue, removeValue } = useLocalStorage("token");
   const [email, setEmail] = useState();
+
+  const [talkLoaded, markTalkLoaded] = useState(false);
+
+  const sessionSetter = async (token) => {
+    try {
+      const data = await getUserMe(token);
+      if (data) {
+        const currentUser = new Talk.User({
+          id: data.id,
+          name: `${data.firstName} ${data.lastName}`,
+          email: data.email,
+          photoUrl: data.profileUrl,
+          welcomeMessage: "Hello!",
+          role: "default",
+        });
+        setCurrentUser(currentUser);
+        const session = new Talk.Session({
+          appId: process.env.NEXT_PUBLIC_TALK_APP_ID,
+          me: currentUser,
+        });
+        setSession(session);
+      } else {
+        setSession(null);
+        setCurrentUser(null);
+      }
+    } catch (err) {
+      console.log(err);
+      setSession(null);
+      setCurrentUser(null);
+    }
+  };
+
+  useEffect(() => {
+    Talk.ready.then(() => markTalkLoaded(true));
+
+    if (talkLoaded && token) {
+      sessionSetter(token);
+
+      return () => session.destroy();
+    } else {
+      setSession(null);
+    }
+  }, [talkLoaded, token]);
 
   const init = async () => {
     try {
@@ -260,7 +308,9 @@ const Web3AuthProvider = ({ children }) => {
         balance,
         login,
         logout,
+        currentUser,
         getBalance,
+        session,
         email,
         displayRamper: ramper.display,
         ramperAmount: ramper.amount,

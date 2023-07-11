@@ -1,21 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import {
   getFollowerInfo,
   postFollower,
   isFollowed,
   unfollowArtist,
+  getUserInfo,
 } from "lib/backend";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 import { getUserName } from "lib/utils";
 import Loader from "@/components/svg/Loader";
+import { Web3Context } from "@/contexts/Web3AuthContext";
+import Talk from "talkjs";
 
 const PeopleHeader = ({ collection, people }) => {
   const [followers, setFollowers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [following, setFollowing] = useState(false);
+  const [popup , setPopup] = useState(null);
+  const { value } = useLocalStorage("token");  
+  const { session,currentUser } = useContext(Web3Context);
 
-  const { value } = useLocalStorage("token");
 
   function formatInstagramUrl(url) {
     url = url.endsWith("/") ? url.slice(0, -1) : url;
@@ -72,6 +77,31 @@ const PeopleHeader = ({ collection, people }) => {
     }
   };
 
+  const startConversation = async() => {
+    try{
+
+      const otherUser = new Talk.User({
+          id: people.id,
+          name: `${people.firstName} ${people.lastName}`,
+          email: `${people.email}`,
+          photoUrl: people.profileUrl,
+          welcomeMessage: 'Hello!',
+          role: 'default',
+        });
+      const conversationId = Talk.oneOnOneId(currentUser, otherUser);
+      const conversation = session.getOrCreateConversation(conversationId);
+      conversation.setParticipant(currentUser);
+      conversation.setParticipant(otherUser);
+
+      const _popup = session.createPopup();
+      _popup.select(conversation);
+      _popup.mount({ show: false });
+      setPopup(_popup);
+    }catch(err){
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     if (people && value) {
       fetchUser(people.id);
@@ -84,7 +114,11 @@ const PeopleHeader = ({ collection, people }) => {
         })
         .finally(() => setLoading(false));
     }
-  }, [value]);
+
+    if(people && value && currentUser && session){
+      startConversation();
+    }
+  }, [value, currentUser,session]);
 
   return (
     <section className="ml-[40px] md:ml-[35vw] pt-20 pr-[15px] md:mt-0 md:pr-[40px]">
@@ -120,6 +154,7 @@ const PeopleHeader = ({ collection, people }) => {
               <p className="text-[27px]">0</p>
             </div>
           </div>
+          <div className="flex flex-row gap-4 items-center">
           {people && (
             <button
               className="mt-[15px] btn btn-secondary btn-full"
@@ -136,6 +171,15 @@ const PeopleHeader = ({ collection, people }) => {
               )}
             </button>
           )}
+          {popup && (
+            <button
+              className="mt-[15px] btn btn-primary btn-full"
+              onClick={() => popup?.show()}
+            >
+              Ask Artist
+            </button>
+          )}
+          </div>
         </div>
         <div className="w-full md:w-[240px] xl:w-[300px] mt-[10px]">
           {collection && (

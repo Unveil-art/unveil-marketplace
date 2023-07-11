@@ -79,7 +79,8 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
                 edition.signature
               );
             } else {
-              const hash = await contract.methods
+              if(!edition.buyer_id || edition.buyer_id===edition.owner_id){
+                const hash = await contract.methods
                 .getHashMessage(
                   item.contract_address,
                   item.json_uri,
@@ -90,6 +91,7 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
                 });
               const signature = await rpc.signMessage(hash, wallet, "");
               await listEdition(value, edition.id, !list.listed, signature);
+              }
             }
             if (fetchUser) {
               fetchUser();
