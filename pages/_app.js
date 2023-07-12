@@ -31,6 +31,22 @@ function MyApp({ Component, pageProps }) {
       <StepProvider>
         <Layout>
           <HistoryProvider>
+            <Script
+              strategy="lazyOnload"
+              id="gacdn"
+              src={`https://www.googletagmanager.com/gtag/js?id=G-MP9BYYS5EQ`}
+            />
+
+            <Script id="ga" strategy="lazyOnload">
+              {`
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MP9BYYS5EQ', {
+  page_path: window.location.pathname,
+  });
+`}
+            </Script>
             <Lenis
               root
               options={{

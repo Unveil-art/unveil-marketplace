@@ -13,16 +13,20 @@ import { StepContext } from "@/contexts/StepContext";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 import { getHomePage } from "../../lib/strapi";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import Inbox from "../svg/Inbox";
+import InboxPopIn from "../pop-in/InboxPopIn";
 
 const Navbar = ({ value }) => {
-  const { login, logout, email } = useContext(Web3Context);
+  const { login, logout, email, session } = useContext(Web3Context);
   const el = useRef();
   const [loggedIn, setLoggedIn] = useState(false);
+  const [inboxOpen, setInboxOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const router = useRouter();
   const { step, setStep, color: colorBoolean } = useContext(StepContext);
   const path = router.asPath;
+  const [unreadCount, setUnreadCount] = useState(0);
   const { width } = useWindowSize();
 
   let color, accountColor;
@@ -53,6 +57,15 @@ const Navbar = ({ value }) => {
       setNavWarning(result.data[0].attributes.page9.navigation_footer_text)
     );
   }, []);
+
+  useEffect(() => {
+    if(session){
+      session.unreads.onChange((unReadConversations) => {
+        const unReadMessages = unReadConversations.length;
+        setUnreadCount(unReadMessages);
+      })
+    }
+  },[session])
 
   useEffect(() => {
     const delay = Router.route === "/" ? 2.5 : 0.0;
@@ -123,6 +136,14 @@ const Navbar = ({ value }) => {
               <Logo color={color} />
             </div>
           </Link>
+          <div className="flex items-center gap-4 lg:gap-6">
+          {/* {value && <div
+              onClick={() => handleOpen(setInboxOpen, inboxOpen)}
+              className="z-40 relative mt-2 scale-75 cursor-pointer md:mt-0 md:scale-100"
+            >
+              <Inbox width={35} height={35} color={accountColor} />
+              {unreadCount>0 && <div className="bg-red-500 absolute -top-2 -right-2 p-1 text-white text-xs rounded-full px-2">{unreadCount > 99 ? "99+": unreadCount}</div>}
+            </div>} */}
           {value && (
             <div
               onClick={() => handleOpen(setLoggedIn, loggedIn)}
@@ -145,6 +166,8 @@ const Navbar = ({ value }) => {
               </p>
             </div>
           )}
+          </div>
+         
         </div>
       </nav>
       <NavbarPopIn
@@ -155,6 +178,7 @@ const Navbar = ({ value }) => {
       {!value && (
         <LoginPopIn loginOpen={loginOpen} setLoginOpen={setLoginOpen} />
       )}
+      {/* {value && <InboxPopIn inboxOpen={inboxOpen} setInboxOpen={setInboxOpen} /> } */}
       {value && <LoggedInPopIn loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
     </>
   );
