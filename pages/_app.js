@@ -33,10 +33,11 @@ function MyApp({ Component, pageProps }) {
           <HistoryProvider>
             <Script
               strategy="lazyOnload"
+              id="gacdn"
               src={`https://www.googletagmanager.com/gtag/js?id=G-MP9BYYS5EQ`}
             />
 
-            <Script strategy="lazyOnload">
+            <Script id="ga" strategy="lazyOnload">
               {`
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
