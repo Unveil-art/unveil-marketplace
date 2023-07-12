@@ -111,9 +111,7 @@ const Web3AuthProvider = ({ children }) => {
     Talk.ready.then(() => markTalkLoaded(true));
 
     if (talkLoaded && token) {
-      sessionSetter(token);
-
-      return () => session.destroy();
+      // sessionSetter(token);
     } else {
       setSession(null);
     }

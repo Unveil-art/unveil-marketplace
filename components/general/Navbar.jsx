@@ -137,13 +137,13 @@ const Navbar = ({ value }) => {
             </div>
           </Link>
           <div className="flex items-center gap-4 lg:gap-6">
-          {value && <div
+          {/* {value && <div
               onClick={() => handleOpen(setInboxOpen, inboxOpen)}
               className="z-40 relative mt-2 scale-75 cursor-pointer md:mt-0 md:scale-100"
             >
               <Inbox width={35} height={35} color={accountColor} />
               {unreadCount>0 && <div className="bg-red-500 absolute -top-2 -right-2 p-1 text-white text-xs rounded-full px-2">{unreadCount > 99 ? "99+": unreadCount}</div>}
-            </div>}
+            </div>} */}
           {value && (
             <div
               onClick={() => handleOpen(setLoggedIn, loggedIn)}
@@ -178,7 +178,7 @@ const Navbar = ({ value }) => {
       {!value && (
         <LoginPopIn loginOpen={loginOpen} setLoginOpen={setLoginOpen} />
       )}
-      {value && <InboxPopIn inboxOpen={inboxOpen} setInboxOpen={setInboxOpen} /> }
+      {/* {value && <InboxPopIn inboxOpen={inboxOpen} setInboxOpen={setInboxOpen} /> } */}
       {value && <LoggedInPopIn loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
     </>
   );
