@@ -287,7 +287,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       console.log(JSON.stringify(err), "=====");
       if (err?.data?.code == -32000) showRamper(total ? parseInt(total) : 100);
       // toast.error(err?.data?.message);
-      showTopStickyNotification("error", err?.data?.message);
+      showTopStickyNotification("error", err?.message);
       setStep(3);
     }
   };
