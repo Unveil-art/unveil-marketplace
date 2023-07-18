@@ -250,7 +250,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
 
             await postTransaction(value, {
               transaction_hash: data.result.transactionHash,
-              amount: parseFloat(edition.price.toFixed(2)),
+              amount: parseFloat(edition.price.toFixed(4)),
               currency: "ETH",
               transaction_type: "MINT_EDITION",
               chain_link: rpcUrl,
