@@ -65,16 +65,7 @@ const MakeOfferPopIn = ({ edition, setEdition, offerOpen, setOfferOpen }) => {
 
             <p className="b4 text-center">Buy from collector</p>
             <h3 className="mt-1.5 s2 text-center">Make offer</h3>
-            <h5
-              className={`text-teal-500 mb-[20px] text-center s2 max-w-[270px] mx-auto ${isSuccess}`}
-            >
-              Your request has been sent successfully
-            </h5>
-            <h5
-              className={`text-rose-500 mb-[20px] text-center s2 max-w-[270px] mx-auto ${isError}`}
-            >
-              An error occured, please try again
-            </h5>
+
             <form onSubmit={handleFormSubmit} className="mt-24">
               <div className="relative">
                 <p className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 b3">
