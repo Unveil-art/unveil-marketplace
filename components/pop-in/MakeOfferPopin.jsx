@@ -1,12 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
 import Close from "../svg/Close";
-import { getCurrentExchangeRateETHUSD, makeOffer } from "lib/backend";
+import { makeOffer } from "lib/backend";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
+import Loader from "../svg/Loader";
 
 const MakeOfferPopIn = ({ edition, setEdition, offerOpen, setOfferOpen }) => {
   const { value } = useLocalStorage("token");
+  const [loading, setLoading] = useState(false);
 
   const el = useRef();
 
@@ -25,6 +27,7 @@ const MakeOfferPopIn = ({ edition, setEdition, offerOpen, setOfferOpen }) => {
     };
 
     try {
+      setLoading(true);
       await makeOffer(value, data);
       showTopStickyNotification(
         "info",
@@ -33,10 +36,12 @@ const MakeOfferPopIn = ({ edition, setEdition, offerOpen, setOfferOpen }) => {
       setTimeout(() => {
         setOfferOpen(false);
         setEdition(null);
-      }, 1000);
+      }, 500);
     } catch (error) {
       let message = error.response.data.message[0] || error.message;
       showTopStickyNotification("error", message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -88,9 +93,16 @@ const MakeOfferPopIn = ({ edition, setEdition, offerOpen, setOfferOpen }) => {
               />
               <button
                 type="submit"
+                disabled={loading}
                 className="btn disabled:cursor-not-allowed btn-primary btn-full mt-2.5"
               >
-                Send offer
+                {loading ? (
+                  <div className="h-[25px] animate-spin justify-center flex items-center">
+                    <Loader color="#F7F4ED" />
+                  </div>
+                ) : (
+                  "Send offer"
+                )}
               </button>
             </form>
           </div>
