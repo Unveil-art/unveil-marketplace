@@ -6,16 +6,9 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
 
 const MakeOfferPopIn = ({ edition, setEdition, offerOpen, setOfferOpen }) => {
-  const [udsEx, setUdsEx] = useState();
-  const [isSuccess, setSuccessMessage] = useState("hide");
-  const [isError, setErrorMessage] = useState("hide");
   const { value } = useLocalStorage("token");
 
   const el = useRef();
-
-  useEffect(() => {
-    getUsdEx();
-  }, []);
 
   const getUsdEx = async () => {
     const res = await getCurrentExchangeRateETHUSD();
