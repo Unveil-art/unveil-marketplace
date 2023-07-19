@@ -10,11 +10,6 @@ const MakeOfferPopIn = ({ edition, setEdition, offerOpen, setOfferOpen }) => {
 
   const el = useRef();
 
-  const getUsdEx = async () => {
-    const res = await getCurrentExchangeRateETHUSD();
-    setUdsEx(res.USD);
-  };
-
   useAsideAnimation(el, offerOpen);
 
   const handleFormSubmit = async (e) => {
