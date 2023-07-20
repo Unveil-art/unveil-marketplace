@@ -7,6 +7,7 @@ import Title from "../../components/reusable/Title";
 import ContactDetails from "../../components/section/accout-page/ContactDetails";
 import Referrals from "../../components/section/accout-page/Referrals";
 import OwnedNFTs from "../../components/section/accout-page/OwnedNFTs";
+import Offers from "@/components/section/accout-page/Offers";
 import Recognitions from "../../components/section/accout-page/Recognitions";
 import Wishlist from "../../components/section/accout-page/Wishlist";
 import Following from "../../components/section/accout-page/Following";
@@ -109,6 +110,7 @@ const AccountPage = () => {
           )}
           {accountState === 6 && <Title title="Wishlist" />}
           {accountState === 7 && <Title title="Following" />}
+          {accountState === 8 && <Title title="Offers" />}
           <div className="block md:hidden  mt-[80px] ml-[40px] md:ml-[35vw] border-unveilBlack border-t-2 mr-[15px]">
             <select
               className="uppercase select"
@@ -127,6 +129,7 @@ const AccountPage = () => {
               )}
               <option>Wishlist</option>
               <option>Following</option>
+              <option>Offers</option>
               <option>Logout</option>
             </select>
           </div>
@@ -138,6 +141,7 @@ const AccountPage = () => {
           {user.role === "artist" && accountState === 5 && <Recognitions />}
           {accountState === 6 && <Wishlist />}
           {accountState === 7 && <Following />}
+          {accountState === 8 && <Offers />}
         </section>
       </div>
     );

@@ -1,6 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getOffer } from "lib/backend";
+import { useRouter } from "next/router";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const Details = () => {
+  const [offer, setOffer] = useState();
+  const [loading, setLoading] = useState(true);
+  const { value: token } = useLocalStorage("token");
+  const router = useRouter();
+
+  const init = async () => {
+    setLoading(true);
+    try {
+      const offerData = await getOffer(token, router.query.id);
+      console.log(offerData);
+      setOffer(offerData);
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      init();
+    }
+  }, [token]);
+
   return (
     <main className="pb-[120px] px-[15px] md:px-10 lg:flex justify-between gap-5">
       <div className="lg:flex justify-center w-full mt-[120px]">
