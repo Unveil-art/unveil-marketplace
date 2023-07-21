@@ -12,7 +12,7 @@ module.exports = {
     extend: {
       colors: {
         unveilBlack: "#141414",
-        unveilGrey: "rgba(0, 0, 0, 0.6)",
+        unveilGrey: "rgba(0, 0, 0, 0.4)",
         unveilWhite: "#F7F4ED",
         unveilCreme: "#f9f7f2",
         unveilYellow: "#FFB800",
