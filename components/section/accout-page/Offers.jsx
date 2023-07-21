@@ -70,9 +70,9 @@ const Offers = () => {
               </div>
             )}
 
-            {rejectedOffers.length !== 0 && (
+            {acceptedOffers.length !== 0 && (
               <div>
-                <h3 className="b3 mb-[15px] text-[17px]">Rejected Offers</h3>
+                <h3 className="b3 mb-[15px] text-[17px]">Accepted Offers</h3>
                 <hr className="mb-[15px] h-[2px] bg-unveilGreen" />
                 {rejectedOffers.map((offer, i) => (
                   <OfferListItem
@@ -84,9 +84,9 @@ const Offers = () => {
               </div>
             )}
 
-            {acceptedOffers.length !== 0 && (
+            {rejectedOffers.length !== 0 && (
               <div>
-                <h3 className="b3 mb-[15px] text-[17px]">Accepted Offers</h3>
+                <h3 className="b3 mb-[15px] text-[17px]">Rejected Offers</h3>
                 <hr className="mb-[15px] h-[2px] bg-unveilGreen" />
                 {rejectedOffers.map((offer, i) => (
                   <OfferListItem

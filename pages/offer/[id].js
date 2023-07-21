@@ -42,6 +42,8 @@ const Details = () => {
         const res = await getCurrentExchangeRateETHUSD();
         setPrice((res.USD * offerData?.amount).toFixed(2));
       }
+      if (offerData?.status !== "PENDING") router.push("/account");
+
       setOffer(offerData);
       setArtwork(artworkData);
 
@@ -98,8 +100,8 @@ const Details = () => {
         showTopStickyNotification("info", "Offer accepted sucessfully");
       }
     } catch (error) {
-      let message = error.response.data.message || error.message;
-      showTopStickyNotification("error", message);
+      // let message = error.response.data.message || error.message;
+      showTopStickyNotification("error", "Something went wrong");
     } finally {
       setCreating(false);
     }
@@ -111,8 +113,8 @@ const Details = () => {
       await rejectOffer(token, offer.id);
       showTopStickyNotification("info", "Offer rejected sucessfully");
     } catch (error) {
-      let message = error.response.data.message || error.message;
-      showTopStickyNotification("error", message);
+      // let message = error.response.data.message || error.message;
+      showTopStickyNotification("error", "Something went wrong");
     } finally {
       setCreating(false);
     }
