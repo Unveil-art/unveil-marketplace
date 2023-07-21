@@ -161,7 +161,7 @@ const Edit = ({ artwork }) => {
 
         await postTransaction(value, {
           transaction_hash: tx.transactionHash,
-          amount: parseInt(convertWei(String(tx.gasUsed))),
+          amount: parseFloat(convertWei(String(tx.gasUsed))),
           currency: "ETH",
           transaction_type: "DEPLOY_ARTWORK",
           chain_link: process.env.NEXT_PUBLIC_CHAIN_LINK,

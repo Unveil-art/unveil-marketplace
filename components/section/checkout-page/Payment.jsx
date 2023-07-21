@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import { CheckoutWithCard } from "@paperxyz/react-client-sdk";
 import Chat from "@/components/reusable/Chat";
 import Ideal from "@/components/svg/Ideal";
@@ -9,16 +9,14 @@ import { Web3Context } from "@/contexts/Web3AuthContext";
 import RPC from "lib/RPC";
 import { EARLY_ACCESS_ABI, EARLY_ACCESS_CONTRACT_ADDRESS } from "lib/constants";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
-import axios from "axios";
 
-const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, edition_id }) => {
+const Payment = ({ pollForTransactionHash,mint, payment,artwork, edition, setStep, total, artwork_id, edition_id }) => {
 
   const [secretSdkClient, setSecretSdkClient] = useState("");
   const [ loading ,setLoading] =  useState(false);
   const { value:token } = useLocalStorage('token');
   const { value:wallet } = useLocalStorage('accounts');
-  const _interval = useRef(null);
-  const _timeout = useRef(null);
+
   
   const { rpcUrl, provider } = useContext(Web3Context);
 
@@ -75,64 +73,7 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
     }
   }
 
-  const pollForTransactionHash = async(id) => {
-    _interval.current = setInterval(() => {
-      axios({
-        method:'GET',
-        url:`https://withpaper.com/api/v1/transaction-status/${id}`,
-        headers:{
-          Authorization:`Bearer ${process.env.NEXT_PUBLIC_PAPER_API_SECRET}`,
-          Accept:'application/json'
-        }
-      }).then(async({ data,status }) => {
-        if(status===200 && data.result.status==='TRANSFER_SUCCEEDED'){
-          await mintEdition(
-            token,
-            {
-              artwork_id: artwork.id,
-              token_id: parseInt(data.result.claimedTokens.tokens[0].tokenId),
-              signature: edition.signature,
-              transactionHash: data.result.transactionHash,
-              json_uri: artwork.json_uri,
-            },
-            edition.edition_id
-          );
-          
-          await postTransaction(token, {
-            transaction_hash: data.result.transactionHash,
-            amount: parseFloat(
-              (edition.price).toFixed(2)
-            ),
-            currency: "ETH",
-            transaction_type: "MINT_EDITION",
-            chain_link: rpcUrl,
-            edition_id: edition.id,
-            artwork_id: artwork.id,
-          });
-          setStep(5);
-          clearInterval(_interval.current);
-          clearTimeout(_timeout.current);
-        }
-      }).catch((err) => {
-        console.log(err);
-        console.log("re-requesting");
-      })
-      
-    },1500);
 
-    _timeout.current = setTimeout(() => {
-      clearInterval(_interval.current);
-      showTopStickyNotification("error","Server Timeout Please Contact Unveil Team.");
-    },30000);
-
-  }
-
-  useEffect(() => {
-    return () => {
-        clearInterval(_interval.current);
-        clearTimeout(_timeout.current);
-    }
-},[])
 
   
 
@@ -154,9 +95,9 @@ const Payment = ({ mint, payment,artwork, edition, setStep, total, artwork_id, e
                   inputBorderColor: '#3f3f3f',
                 }}
                 onPaymentSuccess={(result) => {
-                  setStep(4);
                   console.log("Payment successful.", result);
                   pollForTransactionHash(result.id);
+                  setStep(4);
                 }}
                 onError={(error) =>  {
                   console.error("Payment error:", error);

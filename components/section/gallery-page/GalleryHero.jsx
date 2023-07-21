@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext, useRef } from "react";
 import Wishlist from "../../svg/Wishlist";
 import OptionsPopIn from "@/components/pop-in/OptionsPopIn";
 import EditionPopIn from "@/components/pop-in/EditionPopIn";
+import MakeOfferPopIn from "@/components/pop-in/MakeOfferPopin";
 import {
   addToWishlist,
   artworkInWishlist,
@@ -42,6 +43,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
   const [exchangeRate, setExchangeRate] = useState(1900);
   const [orientation, setOrientation] = useState(false);
   const { width } = useWindowSize();
+  const [offerOpen, setOfferOpen] = useState(false);
 
   // Popin states
   const [collectionOpen, setCollectionOpen] = useState(false);
@@ -518,12 +520,24 @@ const GalleryHero = ({ artwork, dominantColor }) => {
         optionsOpen={optionsOpen}
         setOptionsOpen={setOptionsOpen}
         dominantColor={dominantColor}
+        setOfferOpen={setOfferOpen}
       />
-      <EditionPopIn
-        edition={edition}
-        setEdition={setEdition}
-        dominantColor={dominantColor}
-      />
+      {offerOpen && (
+        <MakeOfferPopIn
+          edition={edition}
+          setEdition={setEdition}
+          offerOpen={offerOpen}
+          setOfferOpen={setOfferOpen}
+        />
+      )}
+
+      {!offerOpen && (
+        <EditionPopIn
+          edition={edition}
+          setEdition={setEdition}
+          dominantColor={dominantColor}
+        />
+      )}
 
       {/* About pop-ins */}
       <MoreInfoPopIn

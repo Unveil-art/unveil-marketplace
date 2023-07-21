@@ -17,6 +17,7 @@ const Recognitions = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -58,6 +59,7 @@ const Recognitions = () => {
     try {
       await postRecognition(value, data);
       setLoading(false);
+      reset();
       // toast.success("Success");
       showTopStickyNotification("success", "Success");
       fetchRecognitions();
@@ -119,6 +121,7 @@ const Recognitions = () => {
               <option value="AWARD">Award</option>
               <option value="EXHIBITION">Exhibition</option>
               <option value="COLLECTION">Collection</option>
+              <option value="EDUCATION">EDUCATION</option>
             </select>
             <p
               className={`text-red-500 opacity-0 b5 absolute -bottom-[18px] left-0 ${
@@ -172,6 +175,16 @@ const Recognitions = () => {
             >
               {errors.year?.message}
             </p>
+          </div>
+          <div className="relative">
+            <input
+              placeholder="Add Link"
+              className="input"
+              type="text"
+              name="link"
+              id="link"
+              {...register("link")}
+            />
           </div>
 
           {/* <input placeholder="Add link" className="input mb-[15px]" type="text" /> */}

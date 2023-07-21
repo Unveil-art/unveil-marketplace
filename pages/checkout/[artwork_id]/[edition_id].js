@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import useLocalStorage from "@/hooks/useLocalStorage";
 
 import Steps from "@/components/section/checkout-page/Steps";
@@ -34,6 +34,7 @@ import Web3 from "web3";
 import { useRouter } from "next/router";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
 import useIsAuthenticated from "@/hooks/useIsAuthenticated";
+import axios from "axios";
 
 const EditionCheckout = ({ artwork, edition_id }) => {
   const { value } = useLocalStorage("token");
@@ -53,6 +54,19 @@ const EditionCheckout = ({ artwork, edition_id }) => {
   const [gasFeesUSD, setGasFeesUSD] = useState();
   const [total, setTotal] = useState();
   const [index, setIndex] = useState();
+  const _interval = useRef(null);
+  const _timeout = useRef(null);
+
+  const findNextTokenId = (editions = []) => {
+    let max = -1;
+    editions.forEach((edition) => {
+      if (edition.token_id !== null && edition.token_id > max) {
+        max = edition.token_id;
+      }
+    });
+    return max + 1;
+  };
+  const tokenId = findNextTokenId(artwork.editions);
 
   const init = async (token) => {
     try {
@@ -206,6 +220,71 @@ const EditionCheckout = ({ artwork, edition_id }) => {
     }
   };
 
+  const pollForTransactionHash = (id) => {
+    console.log("polling started", id);
+
+    _interval.current = setInterval(() => {
+      console.log("polling running");
+      axios({
+        method: "GET",
+        url: `https://withpaper.com/api/v1/transaction-status/${id}`,
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_PAPER_API_SECRET}`,
+          Accept: "application/json",
+        },
+      })
+        .then(async ({ data, status }) => {
+          console.log(data, "data");
+          if (status === 200 && data.result.status === "TRANSFER_SUCCEEDED") {
+            await mintEdition(
+              value,
+              {
+                artwork_id: artwork.id,
+                token_id: parseInt(tokenId),
+                signature: edition.signature,
+                transactionHash: data.result.transactionHash,
+                json_uri: artwork.json_uri,
+              },
+              edition.edition_id
+            );
+
+            await postTransaction(value, {
+              transaction_hash: data.result.transactionHash,
+              amount: parseFloat(edition.price.toFixed(4)),
+              currency: "ETH",
+              transaction_type: "MINT_EDITION",
+              chain_link: rpcUrl,
+              edition_id: edition.id,
+              artwork_id: artwork.id,
+            });
+            setStep(5);
+            clearInterval(_interval.current);
+            clearTimeout(_timeout.current);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log("re-requesting");
+        });
+    }, 3000);
+
+    _timeout.current = setTimeout(() => {
+      clearInterval(_interval.current);
+      setStep(3);
+      showTopStickyNotification(
+        "error",
+        "Server Timeout Please Contact Unveil Team."
+      );
+    }, 30000);
+  };
+
+  useEffect(() => {
+    return () => {
+      clearInterval(_interval.current);
+      clearTimeout(_timeout.current);
+    };
+  }, []);
+
   const mint = async () => {
     if (!provider) {
       console.log("Provider not initialized yet");
@@ -334,6 +413,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
             {step === 3 && (
               <Animate options={{ alpha: true }}>
                 <Payment
+                  pollForTransactionHash={pollForTransactionHash}
                   artwork_id={artwork.id}
                   edition_id={edition.id}
                   artwork={artwork}
