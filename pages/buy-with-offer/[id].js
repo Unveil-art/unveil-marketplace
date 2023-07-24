@@ -5,7 +5,8 @@ import {
   getCurrentExchangeRateETHUSD,
   updateSignature,
   acceptOffer,
-  rejectOffer,
+  buyEdition,
+  postTransaction,
 } from "lib/backend";
 import Image from "next/image";
 import Web3 from "web3";
@@ -22,7 +23,6 @@ import { extractDate } from "lib/utils";
 const Details = () => {
   const { provider, convertWei } = useContext(Web3Context);
   const { value: token } = useLocalStorage("token");
-  const { value: wallet } = useLocalStorage("walletAddress");
   const router = useRouter();
 
   const [offer, setOffer] = useState();
@@ -30,7 +30,6 @@ const Details = () => {
   const [price, setPrice] = useState();
   const [originalPrice, setOriginalPrice] = useState();
   const [loading, setLoading] = useState(true);
-  const [creating, setCreating] = useState(false);
   const [royalty, setRoyalty] = useState();
 
   const init = async () => {
@@ -44,7 +43,7 @@ const Details = () => {
         setPrice((res.USD * offerData?.amount).toFixed(2));
         setOriginalPrice((res.USD * offerData?.edition?.price).toFixed(2));
       }
-      if (offerData?.status !== "PENDING") router.push("/account");
+      if (offerData?.status !== "ACCEPTED") router.push("/account");
 
       setOffer(offerData);
       setArtwork(artworkData);
@@ -66,6 +65,36 @@ const Details = () => {
     (offer?.amount /
       (offer?.edition?.price === 0 ? 1 : offer?.edition?.price)) *
     100;
+
+  const handleBuy = async () => {
+    try {
+      if (provider) {
+        setLoading(true);
+        // console.log(offer?.edition.edition_id);
+        // const res = await buyEdition(token, offer?.edition.id);
+
+        console.log(res);
+
+        // await postTransaction(token, {
+        //   transaction_hash: data.result.transactionHash,
+        //   amount: parseFloat(edition.price.toFixed(4)),
+        //   currency: "ETH",
+        //   transaction_type: "MINT_EDITION",
+        //   chain_link: rpcUrl,
+        //   edition_id: edition.id,
+        //   artwork_id: artwork.id,
+        // });
+
+        // showTopStickyNotification("info", "Offer accepted sucessfully");
+        // router.push("/account");
+      }
+    } catch (error) {
+      let message = error.response.data.message || error.message;
+      showTopStickyNotification("error", message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleAcceptOffer = async () => {
     try {
@@ -108,20 +137,6 @@ const Details = () => {
     }
   };
 
-  const handleRejectOffer = async () => {
-    setCreating(true);
-    try {
-      await rejectOffer(token, offer.id);
-      router.push("/account");
-      showTopStickyNotification("info", "Offer rejected sucessfully");
-    } catch (error) {
-      let message = error.response.data.message || error.message;
-      showTopStickyNotification("error", message);
-    } finally {
-      setCreating(false);
-    }
-  };
-
   useEffect(() => {
     if (token) {
       init();
@@ -133,10 +148,10 @@ const Details = () => {
       {offer ? (
         <div className="lg:flex justify-between gap-5">
           <div className="lg:flex justify-center w-full mt-[120px]">
-            <div className="max-w-2xl">
-              <h1 className="lg:mb-20 mb-4">New offer</h1>
+            <div className="max-w-3xl">
+              <h1 className="lg:mb-20 mb-4">Offer accepted</h1>
               <p className="s2 lg:mb-10 mb-8">
-                Good news! you have recieved an offer of ${price}.
+                Good news! the buyer has accepted your offer of ${price}.
               </p>
               <h2 className="b3 lg:mb-6 mb-3">Personal message</h2>
               <p className="b3 mb-8 lg:mb-10 max-w-[500px]">{offer?.message}</p>
@@ -180,29 +195,16 @@ const Details = () => {
                 </div>
                 <div className="flex">
                   <button
-                    className="w-1/2 btn btn-lg btn-secondary mr-5 disabled:cursor-not-allowed"
-                    disabled={creating}
-                    onClick={handleRejectOffer}
-                  >
-                    {creating ? (
-                      <div className="h-[25px] animate-spin justify-center flex items-center">
-                        <Loader />
-                      </div>
-                    ) : (
-                      "Reject offer"
-                    )}
-                  </button>
-                  <button
                     className="w-1/2 btn btn-lg btn-primary disabled:cursor-not-allowed"
-                    onClick={handleAcceptOffer}
-                    disabled={creating}
+                    onClick={handleBuy}
+                    disabled={loading}
                   >
-                    {creating ? (
+                    {loading ? (
                       <div className="h-[25px] animate-spin justify-center flex items-center">
                         <Loader color="#F7F4ED" />
                       </div>
                     ) : (
-                      "Accept offer"
+                      "Buy now"
                     )}
                   </button>
                 </div>
