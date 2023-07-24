@@ -87,7 +87,6 @@ const Details = () => {
             console.log(result);
           });
         const signature = await rpc.signMessage(hash, wallet, "");
-        console.log(signature);
 
         const res = await updateSignature(
           token,
@@ -96,12 +95,12 @@ const Details = () => {
         );
 
         await acceptOffer(token, offer.id);
-        routr.push("/account");
+        router.push("/account");
         showTopStickyNotification("info", "Offer accepted sucessfully");
       }
     } catch (error) {
-      // let message = error.response.data.message || error.message;
-      showTopStickyNotification("error", "Something went wrong");
+      let message = error.response.data.message || error.message;
+      showTopStickyNotification("error", message);
     } finally {
       setCreating(false);
     }
@@ -111,10 +110,11 @@ const Details = () => {
     setCreating(true);
     try {
       await rejectOffer(token, offer.id);
+      router.push("/account");
       showTopStickyNotification("info", "Offer rejected sucessfully");
     } catch (error) {
-      // let message = error.response.data.message || error.message;
-      showTopStickyNotification("error", "Something went wrong");
+      let message = error.response.data.message || error.message;
+      showTopStickyNotification("error", message);
     } finally {
       setCreating(false);
     }
