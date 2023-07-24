@@ -82,13 +82,14 @@ const Details = () => {
         const hash = await contract.methods
           .getHashMessage(
             artwork.contract_address,
-            artwork.json_uri,
+            String(offer.edition.token_id),
             priceInWei
           )
           .call(function (error, result) {
             console.log(result);
           });
         const signature = await rpc.signMessage(hash, wallet, "");
+
 
         const res = await updateSignature(
           token,
@@ -103,7 +104,7 @@ const Details = () => {
         router.push("/account");
       }
     } catch (error) {
-      let message = error.response.data.message || error.message;
+      let message = error?.response?.data?.message || error?.message;
       showTopStickyNotification("error", message);
     } finally {
       setCreating(false);
