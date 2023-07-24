@@ -134,10 +134,7 @@ const Details = () => {
             <div className="max-w-2xl">
               <h1 className="lg:mb-20 mb-4">New offer</h1>
               <p className="s2 lg:mb-10 mb-8">
-                Good news! Lorem ipsum dolor sit amet, consectetur adipiscing
-                elit. Etiam consequat magna eu convallis malesuada. €2000 Ut
-                semper semper orci at viverra. Quisque et leo sagittis, rutrum
-                lorem dapibus,
+                Good news! you have recieved an offer of ${price}.
               </p>
               <h2 className="b3 lg:mb-6 mb-3">Personal message</h2>
               <p className="b3 mb-8 lg:mb-10 max-w-[500px]">{offer?.message}</p>
