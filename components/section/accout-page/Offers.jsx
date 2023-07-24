@@ -74,7 +74,7 @@ const Offers = () => {
               <div>
                 <h3 className="b3 mb-[15px] text-[17px]">Accepted Offers</h3>
                 <hr className="mb-[15px] h-[2px] bg-unveilGreen" />
-                {rejectedOffers.map((offer, i) => (
+                {acceptedOffers.map((offer, i) => (
                   <OfferListItem
                     key={offer.id}
                     offer={offer}
