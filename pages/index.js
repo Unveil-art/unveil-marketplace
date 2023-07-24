@@ -10,6 +10,7 @@ import FAQ from "../components/section/FAQ";
 import WhyCollect from "../components/section/WhyCollect";
 import NewlyCurated from "../components/section/NewlyCurated";
 import Editorial from "../components/section/Editorial";
+import HomepageHero from "@/components/section/HomepageHero";
 
 import { getFAQ, getHomePage, getEditorials } from "../lib/strapi";
 import useIsAuthenticated from "@/hooks/useIsAuthenticated";
@@ -23,6 +24,7 @@ export default function Home({ data, faq, editorials }) {
   return (
     <>
       <FloatingArt data={homeData.page1} />
+      <HomepageHero data={homeData.page1} />
       <GridColThree data={homeData.page1.blocks} />
       <Collection
         data={homeData.page5}
