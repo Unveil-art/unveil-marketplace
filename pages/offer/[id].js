@@ -127,9 +127,9 @@ const Details = () => {
   }, [token]);
 
   return (
-    <main className="pb-[120px] px-[15px] md:px-10 lg:flex justify-between gap-5">
+    <main className="pb-[120px] px-[15px] md:px-10">
       {offer ? (
-        <div>
+        <div className="lg:flex justify-between gap-5">
           <div className="lg:flex justify-center w-full mt-[120px]">
             <div className="max-w-2xl">
               <h1 className="lg:mb-20 mb-4">New offer</h1>
