@@ -93,8 +93,10 @@ const Details = () => {
         const res = await updateSignature(
           token,
           { signature },
-          offer.edition_id
+          offer?.edition.id
         );
+
+        console.log(res);
 
         await acceptOffer(token, offer.id);
         showTopStickyNotification("info", "Offer accepted sucessfully");
