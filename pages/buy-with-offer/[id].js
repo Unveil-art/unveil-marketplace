@@ -21,8 +21,9 @@ import Loader from "@/components/svg/Loader";
 import { extractDate } from "lib/utils";
 
 const Details = () => {
-  const { provider, convertWei } = useContext(Web3Context);
+  const { provider, convertWei, rpcUrl } = useContext(Web3Context);
   const { value: token } = useLocalStorage("token");
+  const { value: wallet } = useLocalStorage("walletAddress");
   const router = useRouter();
 
   const [offer, setOffer] = useState();
@@ -30,6 +31,7 @@ const Details = () => {
   const [price, setPrice] = useState();
   const [originalPrice, setOriginalPrice] = useState();
   const [loading, setLoading] = useState(true);
+  const [transacting, setTransacting] = useState(false);
   const [royalty, setRoyalty] = useState();
 
   const init = async () => {
@@ -96,10 +98,10 @@ const Details = () => {
     }
   };
 
-  const handleAcceptOffer = async () => {
+  const handlebuyWithOffer = async () => {
     try {
       if (provider) {
-        setCreating(true);
+        setTransacting(true);
         const priceInWei = Web3.utils.toWei(offer.amount.toFixed(4));
 
         let rpc = new RPC(provider);
@@ -108,32 +110,59 @@ const Details = () => {
           process.env.NEXT_PUBLIC_MARKET_ADDRESS
         );
 
-        const hash = await contract.methods
-          .getHashMessage(
+        // const hash = await contract.methods
+        //   .getHashMessage(
+        //     artwork.contract_address,
+        //     artwork.json_uri,
+        //     priceInWei
+        //   )
+        //   .call(function (error, result) {
+        //     console.log(result);
+        //   });
+        // const signature = await rpc.signMessage(hash, wallet, "");
+
+        // const res = await updateSignature(
+        //   token,
+        //   { signature },
+        //   offer.edition_id
+        // );
+
+        // await acceptOffer(token, offer.id);
+        // const buyRes = await buyEdition(token, offer?.edition.id);
+        // showTopStickyNotification("info", "Offer accepted sucessfully");
+        // router.push("/account");
+
+        const transaction = await contract.methods
+          .buyNft(
             artwork.contract_address,
-            artwork.json_uri,
-            priceInWei
+            offer?.edition.token_id,
+            offer?.edition.signature,
+            priceInWei,
+            "0x0000000000000000000000000000000000000000",
+            "0x0000000000000000000000000000000000000000"
           )
-          .call(function (error, result) {
-            console.log(result);
-          });
-        const signature = await rpc.signMessage(hash, wallet, "");
+          .send({ from: wallet, value: priceInWei });
 
-        const res = await updateSignature(
-          token,
-          { signature },
-          offer.edition_id
-        );
+        const res = await buyEdition(token, offer?.edition.id, {
+          offer_id: offer.id,
+        });
 
-        await acceptOffer(token, offer.id);
-        showTopStickyNotification("info", "Offer accepted sucessfully");
-        router.push("/account");
+        await postTransaction(token, {
+          transaction_hash: transaction.transactionHash,
+          amount: parseFloat(offer.amount.toFixed(4)),
+          currency: "ETH",
+          transaction_type: "BUY_EDITION",
+          chain_link: rpcUrl,
+          edition_id: offer?.edition.id,
+          artwork_id: artwork.id,
+        });
       }
     } catch (error) {
-      let message = error.response.data.message || error.message;
-      showTopStickyNotification("error", message);
+      // let message = error.response.data.message || error.message;
+      // showTopStickyNotification("error", message);
+      console.log(JSON.stringify(error), "error");
     } finally {
-      setCreating(false);
+      setTransacting(false);
     }
   };
 
@@ -196,10 +225,10 @@ const Details = () => {
                 <div className="flex">
                   <button
                     className="w-1/2 btn btn-lg btn-primary disabled:cursor-not-allowed"
-                    onClick={handleBuy}
-                    disabled={loading}
+                    onClick={handlebuyWithOffer}
+                    disabled={transacting}
                   >
-                    {loading ? (
+                    {transacting ? (
                       <div className="h-[25px] animate-spin justify-center flex items-center">
                         <Loader color="#F7F4ED" />
                       </div>
