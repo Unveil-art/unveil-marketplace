@@ -32,6 +32,7 @@ import Link from "next/link";
 import { Freshchat } from "reactjs-freshchat";
 import "reactjs-freshchat/dist/index.css";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
+import CountdownTimer from "@/components/reusable/CountdownTimer";
 
 const GalleryHero = ({ artwork, dominantColor }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
@@ -539,7 +540,10 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                     optionsOpen ? "translate-x-[200%]" : ""
                   }`}
                 >
-                  <div className="aspect-[2/3] flex justify-center items-center m-[35px] relative ">
+                  <div className="absolute top-2 h5 left-1/2 transform -translate-x-1/2">
+                    <CountdownTimer targetDate={new Date(2023, 6, 30)} />
+                  </div>
+                  <div className="aspect-[2/3] flex justify-center items-center m-[35px] relative">
                     <img
                       className="object-contain shadow2 group-hover:scale-90 unveilTransition"
                       src={artwork.media_url}

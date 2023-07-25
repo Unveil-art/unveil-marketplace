@@ -41,14 +41,19 @@ const ItemStatistics = ({ artwork }) => {
     0
   );
   return (
-    <div className="relative grid grid-cols-1 mx-0 mt-10 md:grid-cols-5 md:mx-10 md:mt-[100px] pb-[80px] md:pb-[160px]">
-      <div className="relative md:col-span-2 bg-bgColor py-[120px] hidden md:block w-full">
-        <div className=" mx-32 md:sticky md:top-[120px] md:left-[22%]  aspect-[3/4] ">
-          <img
-            className="object-contain mx-auto shadow2"
-            src={artwork.media_url}
-            alt={artwork.name}
-          />
+    <div className="relative grid grid-cols-1 mx-0 mt-10 md:grid-cols-6 gap-y-10 md:mx-10 md:mt-[100px] pb-[80px] md:pb-[160px]">
+      <div className="relative md:col-span-3 bg-bgColor min-h-[1420px] pt-[120px] md:pb-[197px] pb-[172px] md:block w-full">
+        <div className="mx-auto max-w-[183px] md:max-w-[265px] sticky top-[120px] aspect-[3/4] frame-2">
+          <div className="flex items-center justify-center p-2.5">
+            <img
+              className="object-contain mx-auto shadow2"
+              src={artwork.media_url}
+              alt={artwork.name}
+            />
+          </div>
+        </div>
+        <div className="absolute bottom-[120px] z-[-1] left-[50.2%] transform -translate-x-1/2 max-w-[283px] md:max-w-[411px] w-full">
+          <img src="/images/frame.jpg" alt="audio gif" />
         </div>
       </div>
 

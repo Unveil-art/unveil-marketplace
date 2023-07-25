@@ -169,7 +169,7 @@
     animation-duration: 0.4s;
     animation-delay: 0s;
   }
-  
+
   .fadeOutBottom {
     animation-name: fadeOutBottom;
     animation-duration: 0.4s;
@@ -297,6 +297,17 @@
   .frame-1 {
     box-shadow: 0.966391px 0.966391px 0.966391px rgba(0, 0, 0, 0.17);
     @apply border-4 border-unveilCreme;
+  }
+
+  .frame-2 {
+    box-shadow: 2.4089391231536865px 2.4089391231536865px 2.4089391231536865px
+        0px rgba(0, 0, 0, 0.17),
+      8px 9px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    @apply bg-unveilCreme;
+
+    > * {
+      @apply border-[7px] border-white h-full;
+    }
   }
 
   .shadow {
