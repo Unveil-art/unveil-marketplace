@@ -82,14 +82,6 @@ const AboutCurator = ({ owner }) => {
     }
   };
 
-  const toggleMute = () => {
-    if (isVideoMuted) {
-      setIsVideoMuted(false);
-    } else {
-      setIsVideoMuted(true);
-    }
-  };
-
   return (
     <section className="grid grid-cols-1 md:grid-cols-2">
       <div className="relative w-full h-screen bg-bgColor">
@@ -123,7 +115,7 @@ const AboutCurator = ({ owner }) => {
                   {isVideoPlaying ? "Pause" : "Play"}
                 </button>
                 <button
-                  onClick={toggleMute}
+                  onClick={() => setIsVideoMuted(!isVideoMuted)}
                   className="uppercase l2 text-unveilWhite"
                 >
                   {isVideoMuted ? "Unmute" : "Mute"}
