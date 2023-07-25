@@ -198,6 +198,14 @@
     transform: rotate(-180deg);
   }
 
+  .video-gradient {
+    background: linear-gradient(
+      360deg,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+
   /* Swiper */
   .payment-swiper .swiper-slide-active {
     border: 1px solid #141414;
@@ -308,6 +316,14 @@
     > * {
       @apply border-[7px] border-white h-full;
     }
+  }
+
+  .frame-brown {
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+      3px 3px 8px 0px rgba(0, 0, 0, 0.2), 11px 10px 15px 0px rgba(0, 0, 0, 0.17),
+      26px 23px 21px 0px rgba(0, 0, 0, 0.1),
+      46px 41px 25px 0px rgba(0, 0, 0, 0.03),
+      72px 64px 27px 0px rgba(0, 0, 0, 0);
   }
 
   .shadow {
