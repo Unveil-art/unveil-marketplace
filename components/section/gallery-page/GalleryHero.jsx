@@ -312,13 +312,19 @@ const GalleryHero = ({ artwork, dominantColor }) => {
             </p>
             <div className="pt-10 md:pt-[100px]">
               <div className="pb-10 md:pb-16">
-                <div className="flex items-center mb-4">
-                  <div className="mr-3.5 w-10 h-10 rounded-full overflow-hidden bg-unveilGrey"></div>
-                  <div className="text-left">
-                    <h2 className="b5">Artist</h2>
-                    <h2 className="b4 font-medium">{displayName}</h2>
+                <Link href={`/people/${artwork.owner.id}`}>
+                  <div
+                    className="flex items-center mb-4"
+                    data-cursor="View artist"
+                    data-cursor-color="#b2b4ae"
+                  >
+                    <div className="mr-3.5 w-10 h-10 rounded-full overflow-hidden bg-unveilGrey"></div>
+                    <div className="text-left">
+                      <h2 className="b5">Artist</h2>
+                      <h2 className="b4 font-medium">{displayName}</h2>
+                    </div>
                   </div>
-                </div>
+                </Link>
                 <div className="">
                   <ul className="l1">
                     <li className="flex items-center mb-1 last:mb-0">
