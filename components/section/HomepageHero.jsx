@@ -29,6 +29,8 @@ const HomepageHero = ({ data }) => {
     const artworkContainers = query(".gsap-artwork-container");
     const indicators = query(".gsap-indicator");
     const progress = query(".gsap-progress");
+    const background = query(".gsap-background");
+
     const length = artworkContainers.length;
     let currentIndex = 0;
     const timeToNextSlide = 5;
@@ -42,6 +44,11 @@ const HomepageHero = ({ data }) => {
       sliderTl.set(artworkContainers[currentIndex], {
         zIndex: 1,
         opacity: 1,
+      });
+      gsap.to(background, {
+        backgroundColor: artworkContainers[currentIndex].dataset.cursorColor,
+        duration: 0.5,
+        delay: 0.1,
       });
       sliderTl
         .from(artworkContainers[currentIndex], {
@@ -142,7 +149,7 @@ const HomepageHero = ({ data }) => {
         ref={el}
       >
         <div
-          className="md:col-span-2 flex items-center justify-center relative"
+          className="md:col-span-2 flex items-center justify-center relative gsap-background"
           style={{ backgroundColor: background }}
         >
           <div className="max-w-[446px] w-full overflow-hidden aspect-[4/5]">
