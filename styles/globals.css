@@ -169,7 +169,7 @@
     animation-duration: 0.4s;
     animation-delay: 0s;
   }
-  
+
   .fadeOutBottom {
     animation-name: fadeOutBottom;
     animation-duration: 0.4s;
@@ -192,10 +192,19 @@
     backdrop-filter: blur(14px) !important;
     -webkit-backdrop-filter: blur(14px) !important;
   }
+
   .black-gradient {
     background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
     opacity: 0.1;
     transform: rotate(-180deg);
+  }
+
+  .black-gradient-2 {
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
   }
 
   /* Swiper */
@@ -361,6 +370,14 @@
   }
   .markdown a:hover::after {
     width: 100%;
+  }
+
+  .grid-area-1\/1 {
+    display: grid;
+
+    & > * {
+      grid-area: 1/1;
+    }
   }
 }
 

@@ -23,8 +23,8 @@ export default function Home({ data, faq, editorials }) {
 
   return (
     <>
-      <FloatingArt data={homeData.page1} />
       <HomepageHero data={homeData.page1} />
+      <FloatingArt data={homeData.page1} />
       <GridColThree data={homeData.page1.blocks} />
       <Collection
         data={homeData.page5}
