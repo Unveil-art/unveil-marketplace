@@ -7,6 +7,7 @@ import AccessPopIn3 from "../pop-in/AccessPopIn3";
 import { useFontLoaded } from "@/hooks/useFontLoaded";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import Image from "next/image";
+import { useLenis } from "@studio-freight/react-lenis";
 
 const HomepageHero = ({ data }) => {
   const el = useRef();
@@ -15,14 +16,15 @@ const HomepageHero = ({ data }) => {
   const query = gsap.utils.selector(el);
   const loaded = useFontLoaded(["Graphik", "Teodor"]);
   const size = useWindowSize();
+  const heading = data.heading.split(/\r?\n|\r|\n/g);
 
   const [open, setOpen] = useState(false);
   const [accessOpen, setAccessOpen] = useState(false);
-  const [background, setBackground] = useState(data.topleft_color);
+  const [background, setBackground] = useState("transparent");
 
   const animateIn = useCallback(() => {
-    const tl = gsap.timeline({ paused: true, repeat: -1 });
-    let sliderTl = gsap.timeline();
+    const tl = gsap.timeline({ paused: true });
+    let sliderTl = gsap.timeline({ paused: true });
     const progressTl = gsap.timeline();
     const stagger = query(".gsap-stagger");
     const artworks = query(".gsap-artwork");
@@ -31,42 +33,109 @@ const HomepageHero = ({ data }) => {
     const progress = query(".gsap-progress");
     const background = query(".gsap-background");
     const artworkDetails = query(".gsap-fade");
+    const words = query(".gsap-word");
 
     const length = artworkContainers.length;
     let currentIndex = 0;
     const timeToNextSlide = 5;
     let delay;
 
+    tl.fromTo(
+      words,
+      {
+        x: 10,
+        autoAlpha: 0,
+      },
+      {
+        x: 0,
+        autoAlpha: 1,
+        duration: 1,
+        stagger: 0.3,
+        ease: "expo.out",
+      }
+    ).fromTo(
+      stagger,
+      {
+        x: 10,
+        autoAlpha: 0,
+      },
+      {
+        x: 0,
+        autoAlpha: 1,
+        duration: 0.75,
+        stagger: 0.07,
+        ease: "expo.out",
+      },
+      "-=0.6"
+    );
+
     const slideArtworkin = () => {
       sliderTl.clear();
       sliderTl.set(artworkContainers, {
         zIndex: 0,
       });
+
       sliderTl.set(artworkContainers[currentIndex], {
         zIndex: 1,
         opacity: 1,
       });
+
       gsap.to(background, {
         backgroundColor: artworkContainers[currentIndex].dataset.cursorColor,
         duration: 0.5,
-        delay: 0.1,
+        delay: 0.3,
+        ease: "power1.easeIn",
       });
+
+      gsap.to(artworkDetails, {
+        duration: 0.3,
+        y: 8,
+        opacity: 0,
+        ease: "power1.easeIn",
+      });
+
+      // get other artwork containers
+      const otherArtworkContainers = artworkContainers.filter(
+        (artworkContainer, index) => index !== currentIndex
+      );
+
+      gsap.to(otherArtworkContainers, {
+        duration: 2,
+        xPercent: -30,
+        ease: "Expo.easeInOut",
+      });
+
       sliderTl
-        .from(artworkContainers[currentIndex], {
-          duration: 2,
-          xPercent: 100,
-          ease: "Expo.easeInOut",
-        })
-        .from(artworks[currentIndex], {
-          duration: 2,
-          xPercent: -100,
-          delay: -2,
-          ease: "Expo.easeInOut",
-        })
-        .from(artworkDetails[currentIndex], {
+        .fromTo(
+          artworkContainers[currentIndex],
+          {
+            xPercent: 100,
+          },
+          {
+            duration: 2,
+            xPercent: 0,
+            ease: "Expo.easeInOut",
+          }
+        )
+        .fromTo(
+          artworks[currentIndex],
+          {
+            xPercent: -100,
+            scale: 1.4,
+          },
+          {
+            duration: 2,
+            delay: -2,
+            xPercent: 0,
+            scale: 1,
+            ease: "Expo.easeInOut",
+          }
+        )
+        .to(artworkDetails[currentIndex], {
           duration: 0.3,
-          opacity: 0,
-          ease: "linear",
+          y: 0,
+          opacity: 1,
+          ease: "power1.easeIn",
         });
     };
 
@@ -81,6 +150,7 @@ const HomepageHero = ({ data }) => {
         opacity: 1,
         duration: 0.3,
       });
+
       progressTl.from(progress[currentIndex], {
         duration: timeToNextSlide,
         scaleX: 0,
@@ -88,8 +158,6 @@ const HomepageHero = ({ data }) => {
         transformOrigin: "left",
       });
     };
-
-    slideArtworkin();
 
     sliderTl.eventCallback("onComplete", () => {
       progressAnimation();
@@ -125,6 +193,8 @@ const HomepageHero = ({ data }) => {
       });
     });
 
+    slideArtworkin();
+    sliderTl.play();
     tl.restart();
   });
 
@@ -148,17 +218,31 @@ const HomepageHero = ({ data }) => {
     }
   }, [loaded, size]);
 
+  useLenis(({ scroll }) => {
+    const parallax = query(".gsap-parallax");
+    parallax.forEach((el, index) => {
+      const speed = el.getAttribute("data-speed");
+      const direction = index % 2 === 0 ? 1 : -1;
+      gsap.set(el, {
+        y: scroll * speed * direction,
+      });
+    });
+  }, []);
+
   return (
     <>
       <section
-        className="h-[100vh] relative grid grid-cols-1 md:grid-cols-3"
+        className="md:h-[100vh] relative flex flex-col-reverse md:grid grid-cols-1 md:grid-cols-3"
         ref={el}
       >
         <div
-          className="md:col-span-2 flex items-center justify-center relative gsap-background"
+          className="md:col-span-2 flex flex-col md:flex-row md:pt-0 pt-12 md:pb-0 pb-10 items-center justify-center relative gsap-background"
           style={{ backgroundColor: background }}
         >
-          <div className="max-w-[446px] w-full overflow-hidden aspect-[4/5]">
+          <div
+            className="max-w-[285px] md:max-w-[446px] w-full overflow-hidden rounded aspect-[4/5] gsap-parallax"
+            data-speed="-0.05"
+          >
             <div className="relative w-full h-full grid-area-1/1">
               {/* {[1, 1, 1, 1].map((_, i) => ( */}
               <Link
@@ -229,7 +313,7 @@ const HomepageHero = ({ data }) => {
               {/* ))} */}
             </div>
           </div>
-          <div className="absolute left-1/2 transform -translate-x-1/2 flex gap-2 bottom-[13vh]">
+          <div className="md:absolute md:mt-0 mt-4 left-1/2 transform md:-translate-x-1/2 flex gap-2 bottom-[13vh]">
             <button className="w-[84px] h-[3px] rounded-[31px] overflow-hidden grid-area-1/1 gsap-indicator">
               <span className="opacity-20 bg-unveilBlack block h-full w-full" />
               <span
@@ -248,8 +332,20 @@ const HomepageHero = ({ data }) => {
           </div>
         </div>
         <div className="md:col-span-1 md:flex flex-col justify-center pl-9 pr-7">
-          <h1 className="h3">{data.heading}</h1>
-          <p className="h5 mt-5 mb-6 max-w-[386px]">
+          <h1 className="gsap-title h3">
+            {heading[0].split(" ").map((word, index) => (
+              <span
+                className="flex gap-2 md:gap-4 gsap-line overflow-hidden"
+                key={index}
+              >
+                <span className="gsap-word opacity-0">{word}</span>
+              </span>
+            ))}
+            <span className="flex gap-2 md:gap-4 gsap-line overflow-hidden">
+              <span className="gsap-word opacity-0">{heading[1]}</span>
+            </span>
+          </h1>
+          <p className="h5 mt-5 mb-6 max-w-[386px] gsap-stagger opacity-0">
             Curated photography by renowned photographers, and icons of the
             future.
           </p>
@@ -269,7 +365,7 @@ const HomepageHero = ({ data }) => {
           )} */}
 
           <div className="flex gap-[10px] mt-5">
-            <div className="gsap-stagger">
+            <div className="gsap-stagger opacity-0">
               <Link href="/gallery">
                 {data.button_1_cursor_text && (
                   <button
@@ -288,7 +384,7 @@ const HomepageHero = ({ data }) => {
               </Link>
             </div>
             {/* Going to be a link */}
-            <div className="gsap-stagger">
+            <div className="gsap-stagger opacity-0">
               {data.button_2_cursor_text && (
                 <button
                   onClick={() => setOpen(true)}
