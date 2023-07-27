@@ -24,8 +24,9 @@ export default function Home({ data, faq, editorials }) {
   return (
     <>
       <HomepageHero data={homeData.page1} />
-      <FloatingArt data={homeData.page1} />
+      {/* <FloatingArt data={homeData.page1} /> */}
       <GridColThree data={homeData.page1.blocks} />
+      <NewlyCurated data={homeData.page3} />
       <Collection
         data={homeData.page5}
         oneLiner={homeData.page5.oneliner}
@@ -42,7 +43,6 @@ export default function Home({ data, faq, editorials }) {
         color={homeData.page2.fontcolor}
         imageMargin={homeData.page2.margin}
       />
-      <NewlyCurated data={homeData.page3} />
       <TrustedPartners data={homeData.page4} />
       <RequestAccess
         data={homeData.page6}

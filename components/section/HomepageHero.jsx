@@ -30,6 +30,7 @@ const HomepageHero = ({ data }) => {
     const indicators = query(".gsap-indicator");
     const progress = query(".gsap-progress");
     const background = query(".gsap-background");
+    const artworkDetails = query(".gsap-fade");
 
     const length = artworkContainers.length;
     let currentIndex = 0;
@@ -61,6 +62,11 @@ const HomepageHero = ({ data }) => {
           xPercent: -100,
           delay: -2,
           ease: "Expo.easeInOut",
+        })
+        .from(artworkDetails[currentIndex], {
+          duration: 0.3,
+          opacity: 0,
+          ease: "linear",
         });
     };
 
@@ -145,7 +151,7 @@ const HomepageHero = ({ data }) => {
   return (
     <>
       <section
-        className="h-[100vh] relative grid grid-cols-1 md:grid-cols-3 gap-9"
+        className="h-[100vh] relative grid grid-cols-1 md:grid-cols-3"
         ref={el}
       >
         <div
@@ -171,10 +177,19 @@ const HomepageHero = ({ data }) => {
                   />
                 </div>
                 <div className="absolute left-0 top-0 w-full h-full pointer-events-none black-gradient-2">
-                  <div className="absolute bottom-6 left-5 pointer-events-auto">
+                  <div className="absolute bottom-6 left-5 pointer-events-auto gsap-fade">
+                    <div className="flex">
+                      <span className="print">print</span>
+                      <div className="b5 text-unveilWhite ml-1.5">
+                        Edition of 5
+                      </div>
+                    </div>
                     <small className=" block text-white l2 text-[8px] md:text-[12px]">
                       {data.topleft_name}
                     </small>
+                    <div className="text-unveilWhite b4">
+                      €2920 <span className="b5">(1,02 ETH)</span>
+                    </div>
                   </div>
                 </div>
               </Link>
@@ -195,10 +210,19 @@ const HomepageHero = ({ data }) => {
                   />
                 </div>
                 <div className="absolute left-0 top-0 w-full h-full pointer-events-none black-gradient-2">
-                  <div className="absolute bottom-6 left-5 pointer-events-auto">
+                  <div className="absolute bottom-6 left-5 pointer-events-auto gsap-fade">
+                    <div className="flex">
+                      <span className="print">print</span>
+                      <div className="b5 text-unveilWhite ml-1.5">
+                        Edition of 5
+                      </div>
+                    </div>
                     <small className=" block text-white l2 text-[8px] md:text-[12px]">
                       {data.bottomleft_name}
                     </small>
+                    <div className="text-unveilWhite b4">
+                      €2920 <span className="b5">(1,02 ETH)</span>
+                    </div>
                   </div>
                 </div>
               </Link>
@@ -223,9 +247,9 @@ const HomepageHero = ({ data }) => {
             </button>
           </div>
         </div>
-        <div className="md:col-span-1 md:flex flex-col justify-center">
+        <div className="md:col-span-1 md:flex flex-col justify-center pl-9 pr-7">
           <h1 className="h3">{data.heading}</h1>
-          <p className="h5 mt-5 mb-6">
+          <p className="h5 mt-5 mb-6 max-w-[386px]">
             Curated photography by renowned photographers, and icons of the
             future.
           </p>
