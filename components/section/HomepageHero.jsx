@@ -83,7 +83,7 @@ const HomepageHero = ({ data }) => {
       gsap.to(background, {
         backgroundColor: artworkContainers[currentIndex].dataset.cursorColor,
         duration: 0.5,
-        delay: 0.3,
+        delay: 0.2,
         ease: "power1.easeIn",
       });
 
