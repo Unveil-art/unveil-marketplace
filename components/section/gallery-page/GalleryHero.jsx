@@ -318,7 +318,16 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                     data-cursor="View artist"
                     data-cursor-color="#b2b4ae"
                   >
-                    <div className="mr-3.5 w-10 h-10 rounded-full overflow-hidden bg-unveilGrey"></div>
+                    {artwork.owner.profileUrl && (
+                      <div className="mr-3.5 w-10 h-10 rounded-full overflow-hidden relative">
+                        <Image
+                          src={aetwork.owner.profileUrl}
+                          alt={displayName}
+                          fill={true}
+                          style={{ objectFit: "cover" }}
+                        />
+                      </div>
+                    )}
                     <div className="text-left">
                       <h2 className="b5">Artist</h2>
                       <h2 className="b4 font-medium">{displayName}</h2>
