@@ -331,7 +331,7 @@ const HomepageHero = ({ data }) => {
             </button>
           </div>
         </div>
-        <div className="md:col-span-1 md:flex flex-col justify-center pl-9 pr-7">
+        <div className="md:col-span-1 mt-[114px] mb-[69px] md:mb-0 md:mt-0 md:flex flex-col justify-center px-2 md:px-8">
           <h1 className="gsap-title h3">
             {heading[0].split(" ").map((word, index) => (
               <span
@@ -345,7 +345,7 @@ const HomepageHero = ({ data }) => {
               <span className="gsap-word opacity-0">{heading[1]}</span>
             </span>
           </h1>
-          <p className="h5 mt-5 mb-6 max-w-[386px] gsap-stagger opacity-0">
+          <p className="h5 mt-2.5 mb-4 md:mt-5 md:mb-6 max-w-[386px] gsap-stagger opacity-0">
             Curated photography by renowned photographers, and icons of the
             future.
           </p>
