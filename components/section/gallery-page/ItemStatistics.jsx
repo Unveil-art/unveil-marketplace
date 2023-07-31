@@ -52,13 +52,15 @@ const ItemStatistics = ({ artwork }) => {
             />
           </div>
         </div>
-        <div className="absolute bottom-[120px] z-[-1] left-[50.2%] transform -translate-x-1/2 max-w-[283px] md:max-w-[411px] w-full">
-          <img
-            src="/images/frame.jpg"
-            alt="audio gif"
-            className="frame-brown"
-          />
-        </div>
+        {artwork.edition_type !== "NFT_Only" && (
+          <div className="absolute bottom-[120px] z-[-1] left-[50.2%] transform -translate-x-1/2 max-w-[283px] md:max-w-[411px] w-full">
+            <img
+              src="/images/frame.jpg"
+              alt="audio gif"
+              className="frame-brown"
+            />
+          </div>
+        )}
       </div>
 
       <div className="md:col-span-3">
