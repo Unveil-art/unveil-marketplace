@@ -6,9 +6,16 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
 import Loader from "../svg/Loader";
 
-const MakeOfferPopIn = ({ edition, setEdition, offerOpen, setOfferOpen }) => {
+const MakeOfferPopIn = ({
+  edition,
+  setEdition,
+  offerOpen,
+  setOfferOpen,
+  exchangeRate,
+}) => {
   const { value } = useLocalStorage("token");
   const [loading, setLoading] = useState(false);
+  const [ethAmount, setEthAmount] = useState();
 
   const el = useRef();
 
@@ -45,6 +52,13 @@ const MakeOfferPopIn = ({ edition, setEdition, offerOpen, setOfferOpen }) => {
     }
   };
 
+  const handleEthAmountChange = (e) => {
+    const amount = e.target.value;
+    setEthAmount(amount);
+  };
+
+  const dollarAmount = (ethAmount * exchangeRate).toFixed(2);
+
   return (
     <>
       {edition && (
@@ -74,12 +88,18 @@ const MakeOfferPopIn = ({ edition, setEdition, offerOpen, setOfferOpen }) => {
             <form onSubmit={handleFormSubmit} className="mt-24">
               <div className="relative">
                 <p className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 b3">
-                  ETH
+                  ETH{" "}
+                  <span className="b4 text-unveilGrey">
+                    {ethAmount ? `(${dollarAmount} USD)` : ""}
+                  </span>
                 </p>
                 <input
                   type="number"
                   name="amount"
                   placeholder="(e.g. 0.5)"
+                  onChange={handleEthAmountChange}
+                  value={ethAmount}
+                  step="0.00001"
                   required
                   className="input [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
