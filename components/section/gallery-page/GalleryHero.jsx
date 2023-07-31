@@ -7,6 +7,7 @@ import {
   addToWishlist,
   artworkInWishlist,
   getArtistRecognitions,
+  getArtistStats,
   getCurrentExchangeRateETHUSD,
   removeFromWishlist,
 } from "lib/backend";
@@ -42,6 +43,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
   const [loading, setLoading] = useState(false);
   const { value: token } = useLocalStorage("token");
   const [recognitions, setRecognitions] = useState([]);
+  const [stats, setStats] = useState({});
   const [exchangeRate, setExchangeRate] = useState(1900);
   const [orientation, setOrientation] = useState(false);
   const { width } = useWindowSize();
@@ -218,9 +220,15 @@ const GalleryHero = ({ artwork, dominantColor }) => {
     const data = await getArtistRecognitions(artist_id);
     setRecognitions(data);
   };
+  const getStats = async (artist_id) => {
+    const data = await getArtistStats(artist_id);
+    setStats(data);
+  };
+
   useEffect(() => {
     if (artwork.owner_id) {
       getRecognitions(artwork.owner_id);
+      getStats(artwork.owner_id);
     }
   }, [artwork]);
 
@@ -336,26 +344,34 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                 </Link>
                 <div className="">
                   <ul className="l1">
-                    <li className="flex items-center mb-1 last:mb-0">
-                      <span className="mr-2 inline-block">
-                        <Check2 />
-                      </span>
-                      <span>
-                        {displayName} has over {recognitions.length}{" "}
-                        recognitions
-                      </span>
-                    </li>
-                    <li className="flex items-center mb-1 last:mb-0">
-                      <span className="mr-2 inline-block">
-                        <Check2 />
-                      </span>
-                      <span>Has made +30 sales by 10 collectors</span>
-                    </li>
+                    {recognitions.length > 0 && (
+                      <li className="flex items-center mb-1 last:mb-0">
+                        <span className="mr-2 inline-block">
+                          <Check2 />
+                        </span>
+                        <span>
+                          {displayName} has over {recognitions.length}{" "}
+                          recognitions
+                        </span>
+                      </li>
+                    )}
+                    {stats?.sales > 0 && (
+                      <li className="flex items-center mb-1 last:mb-0">
+                        <span className="mr-2 inline-block">
+                          <Check2 />
+                        </span>
+                        <span>
+                          Has made {stats.sales} sales by {stats.collectors}{" "}
+                          collectors
+                        </span>
+                      </li>
+                    )}
                     <li className="flex items-center mb-1 last:mb-0">
                       <span className="mr-2 inline-block">
                         <Check2 />
                       </span>
                       <span>2 reviews by experts</span>
+                      {/* Hardcoded */}
                     </li>
                   </ul>
                 </div>
@@ -372,6 +388,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                     <p className="b5 leading-[23px]">Editions</p>
                     <p className="truncate b3 !text-[13px] leading-normal  md:b4">
                       55 ediions claimed
+                      {/* Hardcoded */}
                     </p>
                   </div>
                   {artwork.collection.curator_id && (
@@ -555,9 +572,13 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                     optionsOpen ? "translate-x-[200%]" : ""
                   }`}
                 >
-                  <div className="absolute top-2 h5 left-1/2 transform -translate-x-1/2">
-                    <CountdownTimer targetDate={new Date(2023, 6, 30)} />
-                  </div>
+                  {artwork?.collection.live_time && (
+                    <div className="absolute top-2 h5 left-1/2 transform -translate-x-1/2">
+                      <CountdownTimer
+                        targetDate={new Date(artwork?.collection.live_time)}
+                      />
+                    </div>
+                  )}
                   <div className="aspect-[2/3] flex justify-center items-center m-[35px] relative">
                     <img
                       className="object-contain shadow2 group-hover:scale-90 unveilTransition"
