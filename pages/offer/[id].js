@@ -11,7 +11,12 @@ import Image from "next/image";
 import Web3 from "web3";
 import { useRouter } from "next/router";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import { MARKET_ABI, MARKET_CONTRACT_ADDRESS, UNVEIL_NFT_ABI, UNVEIL_NFT_CONTRACT_ADDRESS } from "lib/constants";
+import {
+  MARKET_ABI,
+  MARKET_CONTRACT_ADDRESS,
+  UNVEIL_NFT_ABI,
+  UNVEIL_NFT_CONTRACT_ADDRESS,
+} from "lib/constants";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 import RPC from "lib/RPC";
 
@@ -31,6 +36,7 @@ const Details = () => {
   const [originalPrice, setOriginalPrice] = useState();
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
+  const [isRejecting, setIsRejecting] = useState(false);
   const [royalty, setRoyalty] = useState();
 
   const init = async () => {
@@ -79,9 +85,11 @@ const Details = () => {
           UNVEIL_NFT_ABI,
           artwork.contract_address
         );
-        const approve = await unveil_contract.methods.approve(MARKET_CONTRACT_ADDRESS,offer.edition.token_id).send({
-          from:wallet
-        })
+        const approve = await unveil_contract.methods
+          .approve(MARKET_CONTRACT_ADDRESS, offer.edition.token_id)
+          .send({
+            from: wallet,
+          });
 
         let contract = await rpc.getContract(
           MARKET_ABI,
@@ -99,7 +107,6 @@ const Details = () => {
           });
         const signature = await rpc.signMessage(hash, wallet, "");
 
-
         const res = await updateSignature(
           token,
           { signature },
@@ -113,7 +120,7 @@ const Details = () => {
         router.push("/account");
       }
     } catch (error) {
-      console.log(JSON.stringify(error))
+      console.log(JSON.stringify(error));
       let message = error?.response?.data?.message || error?.message;
       showTopStickyNotification("error", message);
     } finally {
@@ -122,7 +129,7 @@ const Details = () => {
   };
 
   const handleRejectOffer = async () => {
-    setCreating(true);
+    setIsRejecting(true);
     try {
       await rejectOffer(token, offer.id);
       router.push("/account");
@@ -131,7 +138,7 @@ const Details = () => {
       let message = error.response.data.message || error.message;
       showTopStickyNotification("error", message);
     } finally {
-      setCreating(false);
+      setIsRejecting(false);
     }
   };
 
@@ -194,10 +201,10 @@ const Details = () => {
                 <div className="flex">
                   <button
                     className="w-1/2 btn btn-lg btn-secondary mr-5 disabled:cursor-not-allowed"
-                    disabled={creating}
+                    disabled={creating || isRejecting}
                     onClick={handleRejectOffer}
                   >
-                    {creating ? (
+                    {isRejecting ? (
                       <div className="h-[25px] animate-spin justify-center flex items-center">
                         <Loader />
                       </div>
@@ -208,7 +215,7 @@ const Details = () => {
                   <button
                     className="w-1/2 btn btn-lg btn-primary disabled:cursor-not-allowed"
                     onClick={handleAcceptOffer}
-                    disabled={creating}
+                    disabled={creating || isRejecting}
                   >
                     {creating ? (
                       <div className="h-[25px] animate-spin justify-center flex items-center">
