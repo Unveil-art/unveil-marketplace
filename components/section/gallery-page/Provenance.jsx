@@ -19,6 +19,7 @@ const Provenance = () => {
             </div>
             <p className="hidden md:block">To</p>
           </div>
+          {/* Hardcoded */}
           {[1, 1, 1, 1, 1, 1].map((item, i) => (
             <div
               key={i}

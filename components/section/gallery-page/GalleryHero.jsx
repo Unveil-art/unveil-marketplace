@@ -131,7 +131,6 @@ const GalleryHero = ({ artwork, dominantColor }) => {
   };
 
   useEffect(() => {
-    console.log(artwork);
     init();
   }, []);
 
@@ -241,6 +240,9 @@ const GalleryHero = ({ artwork, dominantColor }) => {
   // Find the lowest price
   const prices = artwork.editions.map((edition) => edition.price);
   const lowestPrice = Math.min(...prices);
+  const editionsClaimed = artwork.editions.filter(
+    (edition) => edition.buyer_id !== null
+  ).length;
 
   return (
     <>
@@ -366,13 +368,12 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                         </span>
                       </li>
                     )}
-                    <li className="flex items-center mb-1 last:mb-0">
+                    {/* <li className="flex items-center mb-1 last:mb-0">
                       <span className="mr-2 inline-block">
                         <Check2 />
                       </span>
                       <span>2 reviews by experts</span>
-                      {/* Hardcoded */}
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </div>
@@ -384,13 +385,14 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                       {artwork.collection.title}
                     </p>
                   </div>
-                  <div className="rounded-[10px] unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] ">
-                    <p className="b5 leading-[23px]">Editions</p>
-                    <p className="truncate b3 !text-[13px] leading-normal  md:b4">
-                      55 ediions claimed
-                      {/* Hardcoded */}
-                    </p>
-                  </div>
+                  {editionsClaimed > 0 && (
+                    <div className="rounded-[10px] unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] ">
+                      <p className="b5 leading-[23px]">Editions</p>
+                      <p className="truncate b3 !text-[13px] leading-normal  md:b4">
+                        {editionsClaimed} ediions claimed
+                      </p>
+                    </div>
+                  )}
                   {artwork.collection.curator_id && (
                     <div
                       onClick={() => setCuratorOpen((prev) => !prev)}

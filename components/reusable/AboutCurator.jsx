@@ -108,7 +108,7 @@ const AboutCurator = ({ owner }) => {
               playsinline
               src={owner.profileUrl}
             />
-            {/* Hardcoded */}
+
             <div className="absolute video-gradient h-full w-full top-0 left-0 pointer-events-none flex items-end">
               <div className="pointer-events-auto flex justify-between w-full items-center px-8 py-6">
                 <button
