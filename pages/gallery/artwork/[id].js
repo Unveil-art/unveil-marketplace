@@ -103,7 +103,7 @@ const Details = ({ artwork, browse }) => {
     <main className="mb-[100px]">
       <GalleryHero artwork={artwork} dominantColor={dominantColor} />
       <GalleryAbout artwork={artwork} />
-      <Provenance />
+      <Provenance artwork={artwork} />
       <AboutCurator owner={artwork.owner} />
       <ContinueBrowsing browse={browse} />
     </main>

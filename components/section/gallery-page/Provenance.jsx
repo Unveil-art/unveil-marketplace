@@ -1,6 +1,23 @@
-import React from "react";
+import { getArtworkTransaction } from "lib/backend";
+import React, { useEffect, useState } from "react";
 
-const Provenance = () => {
+const Provenance = ({ artwork }) => {
+  const [transactions, setTransactions] = useState([]);
+
+  const init = async () => {
+    const res = await getArtworkTransaction(artwork.id);
+
+    setTransactions(res.data);
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+
+  useEffect(() => {
+    // console.log(transactions);
+  }, [transactions]);
+
   return (
     <section className="px-[15px] md:px-10 py-[100px]">
       <h2 className="mb-10 s1">Artwork History secured Tezos ꜩ</h2>
