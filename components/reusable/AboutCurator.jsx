@@ -9,6 +9,7 @@ import {
   getUserMe,
 } from "lib/backend";
 import Loader from "../svg/Loader";
+import { isVideo } from "lib/utils";
 
 const AboutCurator = ({ owner }) => {
   const [recognitions, setRecognitions] = useState([]);
@@ -16,7 +17,6 @@ const AboutCurator = ({ owner }) => {
   const [loading, setLoading] = useState(false);
   const [authUser, setAuthUser] = useState({});
   const [more, setMore] = useState(false);
-  const [isVideo, setIsVideo] = useState(true);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   const videoRef = useRef(null);
@@ -31,6 +31,8 @@ const AboutCurator = ({ owner }) => {
   } else {
     displayName = owner.email;
   }
+
+  const isProfileVideo = isVideo(owner.profileUrl);
 
   const handleFollowUnfollow = (isFollow) => {
     setLoading(true);
@@ -85,7 +87,7 @@ const AboutCurator = ({ owner }) => {
   return (
     <section className="grid grid-cols-1 md:grid-cols-2">
       <div className="relative w-full h-screen bg-bgColor">
-        {owner.profileUrl && !isVideo && (
+        {owner.profileUrl && !isProfileVideo && (
           <Image
             src={owner.profileUrl}
             alt={owner.displayName}
@@ -94,7 +96,7 @@ const AboutCurator = ({ owner }) => {
           />
         )}
 
-        {owner.profileUrl && isVideo && (
+        {owner.profileUrl && isProfileVideo && (
           <div className="w-full h-full relative">
             <video
               ref={videoRef}
@@ -102,9 +104,9 @@ const AboutCurator = ({ owner }) => {
               onPlay={() => setIsVideoPlaying(true)}
               muted={isVideoMuted}
               onEnded={() => setIsVideoPlaying(false)}
-              className="w-full h-full object-cover object-center grayscale"
+              className="w-full h-full object-cover object-center"
               playsinline
-              src="https://player.vimeo.com/external/507533586.sd.mp4?s=c3f3f4471ea9bff78baf2b1e67b73b0ed190beb0&amp;profile_id=164&amp;oauth2_token_id=57447761"
+              src={owner.profileUrl}
             />
             {/* Hardcoded */}
             <div className="absolute video-gradient h-full w-full top-0 left-0 pointer-events-none flex items-end">
