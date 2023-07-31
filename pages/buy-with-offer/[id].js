@@ -68,36 +68,6 @@ const Details = () => {
       (offer?.edition?.price === 0 ? 1 : offer?.edition?.price)) *
     100;
 
-  const handleBuy = async () => {
-    try {
-      if (provider) {
-        setLoading(true);
-        // console.log(offer?.edition.edition_id);
-        // const res = await buyEdition(token, offer?.edition.id);
-
-        console.log(res);
-
-        // await postTransaction(token, {
-        //   transaction_hash: data.result.transactionHash,
-        //   amount: parseFloat(edition.price.toFixed(4)),
-        //   currency: "ETH",
-        //   transaction_type: "MINT_EDITION",
-        //   chain_link: rpcUrl,
-        //   edition_id: edition.id,
-        //   artwork_id: artwork.id,
-        // });
-
-        // showTopStickyNotification("info", "Offer accepted sucessfully");
-        // router.push("/account");
-      }
-    } catch (error) {
-      let message = error.response.data.message || error.message;
-      showTopStickyNotification("error", message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handlebuyWithOffer = async () => {
     try {
       if (provider) {
@@ -135,7 +105,13 @@ const Details = () => {
           edition_id: offer?.edition.id,
           artwork_id: artwork.id,
         });
-        setTransacting(false);
+
+        showTopStickyNotification(
+          "success",
+          "You have successfully bought this edition"
+        );
+
+        router.push("/account");
       }
     } catch (error) {
       // let message = error.response.data.message || error.message;
