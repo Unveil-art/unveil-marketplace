@@ -112,6 +112,7 @@ const Details = () => {
 
         const transaction = await contract.methods
           .buyNft(
+            wallet,
             artwork.contract_address,
             offer?.edition.token_id,
             offer?.edition.signature,
@@ -119,23 +120,22 @@ const Details = () => {
             "0x0000000000000000000000000000000000000000",
             "0x0000000000000000000000000000000000000000"
           )
-          .estimateGas({ from: wallet, value: priceInWei });
+          .send({ from: wallet, value: priceInWei });
 
-        console.log(transaction,"transaction");
+        const res = await buyEdition(token, offer?.edition.id, {
+          offer_id: offer.id,
+        });
+
+        await postTransaction(token, {
+          transaction_hash: transaction.transactionHash,
+          amount: parseFloat(offer.amount.toFixed(4)),
+          currency: "ETH",
+          transaction_type: "BUY_EDITION",
+          chain_link: rpcUrl,
+          edition_id: offer?.edition.id,
+          artwork_id: artwork.id,
+        });
         setTransacting(false);
-        // const res = await buyEdition(token, offer?.edition.id, {
-        //   offer_id: offer.id,
-        // });
-
-        // await postTransaction(token, {
-        //   transaction_hash: transaction.transactionHash,
-        //   amount: parseFloat(offer.amount.toFixed(4)),
-        //   currency: "ETH",
-        //   transaction_type: "BUY_EDITION",
-        //   chain_link: rpcUrl,
-        //   edition_id: offer?.edition.id,
-        //   artwork_id: artwork.id,
-        // });
       }
     } catch (error) {
       // let message = error.response.data.message || error.message;

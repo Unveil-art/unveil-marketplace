@@ -11,7 +11,7 @@ import Image from "next/image";
 import Web3 from "web3";
 import { useRouter } from "next/router";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import { MARKET_ABI } from "lib/constants";
+import { MARKET_ABI, MARKET_CONTRACT_ADDRESS, UNVEIL_NFT_ABI, UNVEIL_NFT_CONTRACT_ADDRESS } from "lib/constants";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 import RPC from "lib/RPC";
 
@@ -74,9 +74,18 @@ const Details = () => {
         const priceInWei = Web3.utils.toWei(offer.amount.toFixed(4));
 
         let rpc = new RPC(provider);
+
+        const unveil_contract = await rpc.getContract(
+          UNVEIL_NFT_ABI,
+          artwork.contract_address
+        );
+        const approve = await unveil_contract.methods.approve(MARKET_CONTRACT_ADDRESS,offer.edition.token_id).send({
+          from:wallet
+        })
+
         let contract = await rpc.getContract(
           MARKET_ABI,
-          process.env.NEXT_PUBLIC_MARKET_ADDRESS
+          MARKET_CONTRACT_ADDRESS
         );
 
         const hash = await contract.methods
@@ -104,6 +113,7 @@ const Details = () => {
         router.push("/account");
       }
     } catch (error) {
+      console.log(JSON.stringify(error))
       let message = error?.response?.data?.message || error?.message;
       showTopStickyNotification("error", message);
     } finally {
