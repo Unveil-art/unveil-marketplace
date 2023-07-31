@@ -262,7 +262,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
           style={{ backgroundColor: dominantColor }}
           className={`h-[65svh] unveilTransition md:h-screen overflow-hidden md:sticky  top-0 flex items-center justify-center md:col-span-3 `}
         >
-          <div className={`h-full  aspect-[3/4] mb-1`}>
+          <div className={`h-full aspect-[3/4] mb-1`}>
             <div
               className={`${
                 orientation
@@ -339,8 +339,10 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                       </div>
                     )}
                     <div className="text-left">
-                      <h2 className="b5">Artist</h2>
-                      <h2 className="b4 font-medium">{displayName}</h2>
+                      <h2 className="b5 mb-1 leading-tight">Artist</h2>
+                      <h2 className="b4 font-medium leading-tight">
+                        {displayName}
+                      </h2>
                     </div>
                   </div>
                 </Link>
@@ -574,14 +576,14 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                     optionsOpen ? "translate-x-[200%]" : ""
                   }`}
                 >
-                  {artwork?.collection.live_time && (
-                    <div className="absolute top-2 h5 left-1/2 transform -translate-x-1/2">
-                      <CountdownTimer
-                        targetDate={new Date(artwork?.collection.live_time)}
-                      />
-                    </div>
-                  )}
-                  <div className="aspect-[2/3] flex justify-center items-center m-[35px] relative">
+                  <div className="aspect-[2/3] flex flex-col justify-center items-center m-[35px] relative">
+                    {artwork?.collection.live_time && (
+                      <div className="h5 mb-5 -mt-5">
+                        <CountdownTimer
+                          targetDate={new Date(artwork?.collection.live_time)}
+                        />
+                      </div>
+                    )}
                     <img
                       className="object-contain shadow2 group-hover:scale-90 unveilTransition"
                       src={artwork.media_url}
