@@ -106,6 +106,7 @@ const AboutCurator = ({ owner }) => {
               playsinline
               src="https://player.vimeo.com/external/507533586.sd.mp4?s=c3f3f4471ea9bff78baf2b1e67b73b0ed190beb0&amp;profile_id=164&amp;oauth2_token_id=57447761"
             />
+            {/* Hardcoded */}
             <div className="absolute video-gradient h-full w-full top-0 left-0 pointer-events-none flex items-end">
               <div className="pointer-events-auto flex justify-between w-full items-center px-8 py-6">
                 <button

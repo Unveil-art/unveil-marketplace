@@ -329,7 +329,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                     {artwork.owner.profileUrl && (
                       <div className="mr-3.5 w-10 h-10 rounded-full overflow-hidden relative">
                         <Image
-                          src={aetwork.owner.profileUrl}
+                          src={artwork.owner.profileUrl}
                           alt={displayName}
                           fill={true}
                           style={{ objectFit: "cover" }}
