@@ -633,6 +633,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
           setEdition={setEdition}
           offerOpen={offerOpen}
           setOfferOpen={setOfferOpen}
+          exchangeRate={exchangeRate}
         />
       )}
 
