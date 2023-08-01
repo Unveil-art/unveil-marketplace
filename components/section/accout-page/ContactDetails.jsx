@@ -6,6 +6,8 @@ import useLocalStorage from "../../../hooks/useLocalStorage";
 import { useForm } from "react-hook-form";
 import Animate from "@/components/reusable/Animate";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
+import { copyTextToClipboard } from "lib/utils/clipboard";
+import Copy from "@/components/svg/Copy";
 
 const ContactDetails = ({ user }) => {
   const [image, setImage] = useState();
@@ -17,7 +19,6 @@ const ContactDetails = ({ user }) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -197,17 +198,20 @@ const ContactDetails = ({ user }) => {
           <div className="pt-10">
             <h3 className="b3 text-[17px] mb-5">Wallet address</h3>
             <div className="relative">
-              <div
-                onClick={() => {
-                  navigator.clipboard.writeText(
-                    user.walletAddress?.toLowerCase()
-                  );
-                  // toast.info("WalletAddress Copied");
-                  showTopStickyNotification("success", "WalletAddress Copied");
-                }}
-                className="input cursor-pointer bg-bgColor md:text-[16px] text-unveilGrey rounded-[8px] md:rounded-[10px] px-5 py-3 md:py-4 text-[13px]"
-              >
-                {user.walletAddress?.toLowerCase()}
+              <div className="input cursor-pointer bg-bgColor md:text-[16px] text-unveilGrey rounded-[8px] md:rounded-[10px] px-5 py-3 md:py-4 text-[13px] flex justify-between">
+                <span>{user.walletAddress?.toLowerCase()}</span>
+                <button
+                  onClick={() => {
+                    copyTextToClipboard(user.walletAddress?.toLowerCase());
+                    // toast.info("WalletAddress Copied");
+                    showTopStickyNotification(
+                      "success",
+                      "WalletAddress Copied"
+                    );
+                  }}
+                >
+                  <Copy />
+                </button>
               </div>
             </div>
             <p className="mt-5 b4 opacity-60">
