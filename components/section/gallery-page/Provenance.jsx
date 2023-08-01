@@ -1,9 +1,31 @@
-import React from "react";
+import { getArtworkTransaction } from "lib/backend";
+import React, { useEffect, useState } from "react";
 
-const Provenance = () => {
+const Provenance = ({ artwork }) => {
+  const [transactions, setTransactions] = useState([]);
+
+  const init = async () => {
+    const res = await getArtworkTransaction(artwork.id);
+
+    setTransactions(res.data);
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
+
+  const filteredTransactions = transactions.filter(
+    (item) => item.edition !== null
+  );
+
+  useEffect(() => {
+    console.log(filteredTransactions);
+    // console.log(artwork.editions);
+  }, [transactions]);
+
   return (
     <section className="px-[15px] md:px-10 py-[100px]">
-      <h2 className="mb-10 s1">Provenance</h2>
+      <h2 className="mb-10 s1">Artwork History secured Tezos ꜩ</h2>
       <div className="gap-10 md:flex">
         <div className="w-full">
           <p className="block md:hidden b4 w-[180px] mb-10">
@@ -17,22 +39,42 @@ const Provenance = () => {
               <p className="w-[150px]">Edition</p>
               <p>Transaction</p>
             </div>
-            <p className="hidden md:block">To</p>
+            {/* <p className="hidden md:block">To</p> */}
           </div>
-          {[1, 1, 1, 1, 1, 1].map((item, i) => (
-            <div
-              key={i}
-              className="justify-between gap-1 py-2 border-b md:flex md:border-t-0 last:border-none border-bgBlackOpacity2"
-            >
-              <div className="md:flex">
-                <p className="w-[150px] b3 md:l2">40x30 no 1/3 </p>
-                <p className="b3 opacity-60">
-                  jonbranson3210 bought from mackstokes.
-                </p>
+          {/* Hardcoded */}
+          {filteredTransactions?.map((item, i) => {
+            const index = artwork.editions.findIndex(
+              (edition) => edition.edition_id === item.edition?.edition_id
+            );
+            return (
+              <div
+                key={i}
+                className="justify-between gap-1 py-2 border-b md:flex md:border-t-0 last:border-none border-bgBlackOpacity2"
+              >
+                <div className="md:flex">
+                  <div className="w-[150px] b3 md:l2">
+                    {index !== -1 && (
+                      <p>
+                        {index + 1}/{artwork.editions.length}
+                      </p>
+                    )}
+                  </div>
+                  {item.transaction_type === "MINT_EDITION" && (
+                    <p className="b3 opacity-60">
+                      {item.user?.firstName} minted artwork
+                    </p>
+                  )}
+                  {item.transaction_type === "BUY_EDITION" && (
+                    <p className="b3 opacity-60">
+                      {item.user?.firstName} bought artwork from{" "}
+                      {filteredTransactions[i - 1]?.user?.firstName}
+                    </p>
+                  )}
+                </div>
+                {/* <p className="b3">€1300</p> */}
               </div>
-              <p className="b3">€1300</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
         <button className="block mt-5 btn btn-secondary btn-full md:hidden">
           Show more

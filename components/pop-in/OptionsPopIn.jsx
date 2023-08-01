@@ -198,6 +198,7 @@ const OptionsPopIn = ({
                           <button
                             onClick={() => {
                               setOfferOpen(true);
+                              setOptionsOpen(false);
                               setEdition(edition);
                             }}
                             className="btn btn-full disabled:opacity-40 disabled:cursor-not-allowed btn-secondary"

@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Chat from "@/components/reusable/Chat";
 import Link from "next/link";
 import MoreInfoPopIn from "@/components/pop-in/MoreInfoPopIn";
+import { useLenis } from "@studio-freight/react-lenis";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { gsap } from "gsap";
 
 const ItemStatistics = ({ artwork }) => {
   const [dimension, setDimension] = useState("1920 X 1080");
@@ -23,6 +26,12 @@ const ItemStatistics = ({ artwork }) => {
   const [token, setToken] = useState(false);
   const [address, setAddress] = useState(false);
 
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  const art = useRef(null);
+  const artContainer = useRef(null);
+  const query = gsap.utils.selector(artContainer);
+
   useEffect(() => {
     const getImageDimension = (url) => {
       const img = new window.Image();
@@ -40,16 +49,94 @@ const ItemStatistics = ({ artwork }) => {
     (acc, emm) => acc + (emm.max_copies - emm.sold_copies),
     0
   );
+  let isAnimationDone = true;
+
+  useLenis(({ scroll }) => {
+    const cover = query(".gsap-cover");
+    let offsetBottom;
+
+    if (cover.length) {
+      if (art.current && artContainer.current) {
+        const artRect = art.current.getBoundingClientRect();
+        const artContainerRect = artContainer.current.getBoundingClientRect();
+        const artBottom = artRect.bottom - artContainerRect.top;
+        const artContainerBottom =
+          artContainerRect.bottom - artContainerRect.top;
+
+        if (isDesktop) {
+          offsetBottom = 160;
+        } else {
+          offsetBottom = 152;
+        }
+
+        if (artBottom + offsetBottom === artContainerBottom) {
+          if (!isAnimationDone) {
+            gsap.fromTo(
+              cover,
+              {
+                xPercent: 20,
+                opacity: 0,
+              },
+              {
+                duration: 0.3,
+                xPercent: 0,
+                opacity: 1,
+              }
+            );
+          }
+          isAnimationDone = true;
+        } else {
+          if (isAnimationDone) {
+            gsap.to(cover, {
+              duration: 0.3,
+              opacity: 0,
+              xPercent: 20,
+            });
+          }
+          isAnimationDone = false;
+        }
+      }
+    }
+  }, []);
+
   return (
-    <div className="relative grid grid-cols-1 mx-0 mt-10 md:grid-cols-5 md:mx-10 md:mt-[100px] pb-[80px] md:pb-[160px]">
-      <div className="relative md:col-span-2 bg-bgColor py-[120px] hidden md:block w-full">
-        <div className=" mx-32 md:sticky md:top-[120px] md:left-[22%]  aspect-[3/4] ">
-          <img
-            className="object-contain mx-auto shadow2"
-            src={artwork.media_url}
-            alt={artwork.name}
-          />
+    <div className="relative grid grid-cols-1 mx-0 mt-10 md:grid-cols-6 gap-y-10 md:mx-10 md:mt-[100px] pb-[80px] md:pb-[160px]">
+      <div
+        className="relative md:col-span-3 bg-bgColor min-h-[1420px] pt-[120px] md:pb-[160px] pb-[152px] md:block w-full"
+        ref={artContainer}
+      >
+        <div
+          className={`mx-auto max-w-[204px] md:max-w-[265px] sticky top-[120px] aspect-[3/4] ${
+            artwork.edition_type !== "NFT_Only" ? "frame-2" : ""
+          }`}
+        >
+          <div
+            className="flex items-center h-full justify-center p-2.5"
+            ref={art}
+          >
+            <img
+              className="object-contain mx-auto shadow2"
+              src={artwork.media_url}
+              alt={artwork.name}
+            />
+          </div>
         </div>
+        {artwork.edition_type !== "NFT_Only" && (
+          <div>
+            <div className="absolute bottom-[120px] z-[-1] left-[49.9%] transform -translate-x-1/2 max-w-[266px] md:max-w-[344px] w-full">
+              <img
+                src="/images/frame-foam.jpg"
+                alt="frame foam"
+                className="frame-brown"
+              />
+            </div>
+            <div className="absolute bottom-[120px] z-[1] left-[49.9%] transform -translate-x-1/2 max-w-[266px] md:max-w-[344px] w-full">
+              <div className="w-full h-full gsap-cover">
+                <img src="/images/frame-cover.jpg" alt="frame cover" />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="md:col-span-3">
