@@ -110,7 +110,10 @@ const ItemStatistics = ({ artwork }) => {
             artwork.edition_type !== "NFT_Only" ? "frame-2" : ""
           }`}
         >
-          <div className="flex items-center justify-center p-2.5" ref={art}>
+          <div
+            className="flex items-center h-full justify-center p-2.5"
+            ref={art}
+          >
             <img
               className="object-contain mx-auto shadow2"
               src={artwork.media_url}

@@ -103,7 +103,9 @@ const Details = ({ artwork, browse }) => {
     <main className="mb-[100px]">
       <GalleryHero artwork={artwork} dominantColor={dominantColor} />
       <GalleryAbout artwork={artwork} />
-      <Provenance artwork={artwork} />
+      {artwork.edition_type === "Print_Only" && (
+        <Provenance artwork={artwork} />
+      )}
       <AboutCurator owner={artwork.owner} />
       <ContinueBrowsing browse={browse} />
     </main>
