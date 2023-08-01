@@ -134,7 +134,7 @@ const Navbar = ({ value }) => {
             <div className="xl:flex items-center ml-14 gap-6 hidden">
               <Link
                 href="/gallery?print"
-                className="underline-on-hover uppercase b6 leading-tight inline-block relative"
+                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px]"
                 style={{ color }}
               >
                 Prints Editions
@@ -142,7 +142,7 @@ const Navbar = ({ value }) => {
 
               <Link
                 href="/gallery?digital"
-                className="underline-on-hover uppercase b6 leading-tight inline-block relative"
+                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px]"
                 style={{ color }}
               >
                 Digital Editions
@@ -168,7 +168,7 @@ const Navbar = ({ value }) => {
               <a
                 href="https://learn.unveil.art/"
                 target="_blank"
-                className="underline-on-hover uppercase b6 leading-tight inline-block relative"
+                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px]"
               >
                 How it works
               </a>
@@ -176,13 +176,13 @@ const Navbar = ({ value }) => {
               <a
                 href="https://learn.unveil.art/about"
                 target="_blank"
-                className="underline-on-hover uppercase b6 leading-tight inline-block relative"
+                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px]"
               >
                 About
               </a>
               <Link
                 href="/search"
-                className="underline-on-hover uppercase b6 leading-tight inline-block relative"
+                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px]"
               >
                 Search
               </Link>
