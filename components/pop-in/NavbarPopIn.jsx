@@ -51,7 +51,6 @@ const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
                   Digital Editions
                 </p>
               </Link>
-              {/* Hardcoded */}
             </div>
 
             <h4 className="b3 font-[500] mb-[10px] mt-8">Discover</h4>
