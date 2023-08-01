@@ -135,6 +135,7 @@ const Navbar = ({ value }) => {
               <Link
                 href="/gallery?print"
                 className="underline-on-hover uppercase b6 leading-tight inline-block relative"
+                style={{ color }}
               >
                 Prints Editions
               </Link>
@@ -142,6 +143,7 @@ const Navbar = ({ value }) => {
               <Link
                 href="/gallery?digital"
                 className="underline-on-hover uppercase b6 leading-tight inline-block relative"
+                style={{ color }}
               >
                 Digital Editions
               </Link>
