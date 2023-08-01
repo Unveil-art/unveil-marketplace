@@ -185,18 +185,18 @@ export default function Gallery({ artworks }) {
   }, [pagination]);
 
   useEffect(() => {
-    if ("collections" in router.query) {
-      setCategory(1);
-    } else {
-      setCategory(0);
-    }
-
     if ("digital" in router.query) {
       setMedium(0);
     }
 
     if ("print" in router.query) {
       setMedium(1);
+    }
+
+    if ("collections" in router.query) {
+      setCategory(1);
+    } else {
+      setCategory(0);
     }
   }, [router.query]);
 
