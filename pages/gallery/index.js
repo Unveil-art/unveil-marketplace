@@ -23,7 +23,7 @@ export default function Gallery({ artworks }) {
 
   const [category, setCategory] = useState(0);
   const [artist, setArtist] = useState(0);
-  const [medium, setMedium] = useState(0);
+  const [medium, setMedium] = useState(null);
 
   const router = useRouter();
 
@@ -54,6 +54,15 @@ export default function Gallery({ artworks }) {
 
   const splitArrayByPattern = (arr, variant) => {
     let pattern;
+
+    if (category === 0) {
+      if (medium === 0) {
+        arr = arr.filter((item) => item.edition_type === "NFT_Only");
+      }
+      if (medium === 1) {
+        arr = arr.filter((item) => item.edition_type !== "NFT_Only");
+      }
+    }
 
     if (arr.length < 9) {
       // If the array length is less than 9, always use pattern 1
@@ -162,6 +171,11 @@ export default function Gallery({ artworks }) {
   }, [category]);
 
   useEffect(() => {
+    // setPagination(0);
+    fetchFirstArtworks();
+  }, [medium]);
+
+  useEffect(() => {
     if (pagination > 0 && category === 0) {
       fetchItems(pagination, setArtworkSplit, getArtworks);
     }
@@ -175,6 +189,14 @@ export default function Gallery({ artworks }) {
       setCategory(1);
     } else {
       setCategory(0);
+    }
+
+    if ("digital" in router.query) {
+      setMedium(0);
+    }
+
+    if ("print" in router.query) {
+      setMedium(1);
     }
   }, [router.query]);
 

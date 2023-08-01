@@ -39,7 +39,7 @@ const Filter = ({
           </span>
         </div>
       </div>
-      <div className="hidden md:block">
+      {/* <div className="hidden md:block">
         <p className="md:mb-2 b3 md:b6">Artist</p>
         <div className="flex items-center gap-1">
           <span
@@ -60,19 +60,35 @@ const Filter = ({
             Talent
           </span>
         </div>
-      </div>
+      </div> */}
       <div className="hidden md:block">
         <p className="md:mb-2 b3 md:b6">Medium</p>
-        <div className="flex items-center">
+        <div className="flex items-center gap-1">
           <span
-            // onClick={() => setMedium(0)}
-            className={`opacity-60 px-4 py-[0px] border rounded-l-[5px] unveilTransition cursor-not-allowed l2`}
+            onClick={() => setMedium(0)}
+            className={`${
+              category === 1
+                ? "cursor-not-allowed opacity-60 border-opacity-0"
+                : "cursor-pointer"
+            } ${
+              medium === 0
+                ? "border-unveilBlack"
+                : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
+            } px-2 border tracking-[0.1em] rounded-full  unveilTransition md:px-4 l2 `}
           >
             Digital
           </span>
           <span
-            // onClick={() => setMedium(1)}
-            className={`opacity-60 px-4 py-[0px] border rounded-r-[5px] unveilTransition cursor-not-allowed l2`}
+            onClick={() => setMedium(1)}
+            className={`${
+              category === 1
+                ? "cursor-not-allowed opacity-60 border-opacity-0"
+                : "cursor-pointer"
+            } ${
+              medium === 1
+                ? "border-unveilBlack"
+                : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
+            } px-2 border tracking-[0.1em] rounded-full  unveilTransition md:px-4 l2 `}
           >
             Print
           </span>

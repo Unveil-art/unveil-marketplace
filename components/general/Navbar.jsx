@@ -133,20 +133,14 @@ const Navbar = ({ value }) => {
             )}
             <div className="xl:flex items-center ml-14 gap-6 hidden">
               <Link
-                href="/"
+                href="/gallery?print"
                 className="underline-on-hover uppercase b6 leading-tight inline-block relative"
               >
-                Extended Prints
+                Prints Editions
               </Link>
 
               <Link
-                href="/"
-                className="underline-on-hover uppercase b6 leading-tight inline-block relative"
-              >
-                Limited Prints
-              </Link>
-              <Link
-                href="/"
+                href="/gallery?digital"
                 className="underline-on-hover uppercase b6 leading-tight inline-block relative"
               >
                 Digital Editions
