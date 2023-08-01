@@ -145,7 +145,6 @@ const Navbar = ({ value }) => {
               >
                 Digital Editions
               </Link>
-              {/* Hardcoded */}
             </div>
           </div>
 
@@ -178,7 +177,7 @@ const Navbar = ({ value }) => {
                 About
               </Link>
               <Link
-                href="/"
+                href="/search"
                 className="underline-on-hover uppercase b6 leading-tight inline-block relative"
               >
                 Search
