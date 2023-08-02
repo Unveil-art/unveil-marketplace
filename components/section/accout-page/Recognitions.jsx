@@ -40,6 +40,8 @@ const Recognitions = () => {
     await fetchRecognitions();
   };
 
+  console.log(recognition);
+
   useEffect(() => {
     if (value) {
       fetchRecognitions();

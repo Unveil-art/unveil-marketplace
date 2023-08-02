@@ -151,15 +151,15 @@ const PeopleAbout = (collection) => {
             <div className="md:mb-8 mb-3 last:mb-0">
               <h3 className="l1 mb-2">by The Guardian</h3>
               <p className="h5 font-light">
-                Van der Molen's Sequester: A mesmerizing portrayal of Canaries'
-                desolate beauty, showcasing nature's poise and patience.
+                Van der Molen Sequester: A mesmerizing portrayal of Canaries
+                desolate beauty, showcasing nature poise and patience.
               </p>
             </div>
             <div className="md:mb-8 mb-3 last:mb-0">
               <h3 className="l1 mb-2">by The Guardian</h3>
               <p className="h5 font-light">
-                Van der Molen's Sequester: A mesmerizing portrayal of Canaries'
-                desolate beauty, showcasing nature's poise and patience.
+                Van der Molen Sequester: A mesmerizing portrayal of Canaries
+                desolate beauty, showcasing nature poise and patience.
               </p>
             </div>
           </div>
