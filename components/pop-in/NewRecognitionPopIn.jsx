@@ -51,7 +51,7 @@ const NewRecognitionPopIn = ({ open, setOpen, fetchRecognitions, value }) => {
       ref={el}
       className="fixed z-50 invisible w-full h-screen overflow-hidden"
     >
-      <div className="gsap-el fixed overflow-y-scroll top-[15px] right-[15px] sm:top-5 sm:right-5 w-[280px] sm:w-[380px]  bg-[#ECE8DE] px-5 py-10 z-50 rounded-[20px] h-screen sm:h-fit">
+      <div className="gsap-el fixed overflow-y-scroll top-[15px] right-[15px] sm:top-5 sm:right-5 sm:w-[380px]  bg-[#ECE8DE] px-5 py-10 z-50 rounded-[20px] sm:h-fit">
         <div
           onClick={() => setOpen(false)}
           className="absolute top-[15px] right-[15px] w-8 h-8 rounded-full bg-unveilBlack cursor-pointer"
@@ -61,7 +61,10 @@ const NewRecognitionPopIn = ({ open, setOpen, fetchRecognitions, value }) => {
           </div>
         </div>
         <div>
-          <h2 className="pt-[60px] pb-10 text-center">Add recognition</h2>
+          <div className="pt-[60px] pb-10 text-center">
+            <div className="mb-1.5 b4">Submit archievement</div>
+            <h2 className="">Add Achievement</h2>
+          </div>
           <form
             onSubmit={handleSubmit(onSubmitForm)}
             className="space-y-2 md:space-y-[15px] relative max-w-[640px]"
@@ -159,12 +162,6 @@ const NewRecognitionPopIn = ({ open, setOpen, fetchRecognitions, value }) => {
               )}
               {!loading && <>Add</>}
             </button>
-            <div className="md:absolute bottom-0 md:w-40  w-full -right-[calc(10rem+15px)]">
-              <p className=" md:leading-[25px] b4">
-                <span className="font-[500]">Verifications</span>
-                <br /> Adjustable info block about our verifications
-              </p>
-            </div>
           </form>
         </div>
       </div>

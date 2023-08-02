@@ -72,16 +72,21 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
                 </button>
               </Link>
               <button
-                className="mt-2 cursor-pointer b3 btn btn-secondary btn-full btn-lg relative flex md:justify-center"
+                className="mt-2 cursor-pointer b3 btn btn-secondary btn-full btn-lg relative flex justify-center"
                 onClick={() => showRamper()}
               >
                 <span>Purchase funds</span>
-                <span className="flex justify-start items-center space-x-2.5 right-4 absolute top-1/2 tranasform -translate-y-1/2">
+                <span className="justify-start items-center hidden md:flex space-x-2.5 right-4 absolute top-1/2 tranasform -translate-y-1/2">
                   <MasterCardName />
                   <VisaBlack />
                   <Ideal />
                 </span>
               </button>
+              <span className="justify-center items-center flex md:hidden space-x-2.5 my-4">
+                <MasterCardName />
+                <VisaBlack />
+                <Ideal />
+              </span>
               <p className=" l2">
                 {localProvider && (
                   <>{localProvider.replace('"', "").replace('"', "")}</>
