@@ -10,7 +10,7 @@ import {
 import Loader from "@/components/svg/Loader";
 import Animate from "@/components/reusable/Animate";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
-import NewRecognitionPopIn from "@/components/pop-in/NewRecognitionPopin";
+import NewRecognitionPopIn from "@/components/pop-in/NewRecognitionPopIn";
 
 const Recognitions = () => {
   const [loading, setLoading] = useState(false);
