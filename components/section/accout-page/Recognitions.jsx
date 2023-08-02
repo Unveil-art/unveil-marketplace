@@ -10,10 +10,13 @@ import {
 import Loader from "@/components/svg/Loader";
 import Animate from "@/components/reusable/Animate";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
+import NewRecognitionPopIn from "@/components/pop-in/NewRecognitionPopin";
 
 const Recognitions = () => {
   const [loading, setLoading] = useState(false);
   const [recognition, setRecognition] = useState();
+  const [showPopIn, setShowPopIn] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -39,8 +42,6 @@ const Recognitions = () => {
     await deleteRecognition(value, id);
     await fetchRecognitions();
   };
-
-  console.log(recognition);
 
   useEffect(() => {
     if (value) {
@@ -106,7 +107,7 @@ const Recognitions = () => {
             </tbody>
           )}
         </table>
-        <h2 className="pt-[60px] pb-10">Add recognition</h2>
+        {/* <h2 className="pt-[60px] pb-10">Add recognition</h2>
         <form
           onSubmit={handleSubmit(onSubmitForm)}
           className="space-y-2 md:space-y-[15px] relative max-w-[640px]"
@@ -189,7 +190,7 @@ const Recognitions = () => {
             />
           </div>
 
-          {/* <input placeholder="Add link" className="input mb-[15px]" type="text" /> */}
+          <input placeholder="Add link" className="input mb-[15px]" type="text" />
           <button
             type="submit"
             className="flex items-center justify-center btn btn-secondary btn-full btn-lg"
@@ -207,7 +208,21 @@ const Recognitions = () => {
               <br /> Adjustable info block about our verifications
             </p>
           </div>
-        </form>
+        </form> */}
+
+        <button
+          onClick={() => setShowPopIn(true)}
+          className="flex items-center justify-center mt-8 btn btn-secondary btn-full btn-lg max-w-[640px]"
+        >
+          Add Achievement
+        </button>
+
+        <NewRecognitionPopIn
+          open={showPopIn}
+          setOpen={setShowPopIn}
+          fetchRecognitions={fetchRecognitions}
+          value={value}
+        />
       </div>
     </Animate>
   );
