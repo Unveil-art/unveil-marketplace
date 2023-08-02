@@ -23,7 +23,6 @@ const HomepageHero = ({ data }) => {
   const [background, setBackground] = useState("transparent");
 
   const animateIn = useCallback(() => {
-    const tl = gsap.timeline({ paused: true });
     let sliderTl = gsap.timeline({ paused: true });
     const progressTl = gsap.timeline();
     const stagger = query(".gsap-stagger");
@@ -39,35 +38,6 @@ const HomepageHero = ({ data }) => {
     let currentIndex = 0;
     const timeToNextSlide = 5;
     let delay;
-
-    tl.fromTo(
-      words,
-      {
-        x: 10,
-        autoAlpha: 0,
-      },
-      {
-        x: 0,
-        autoAlpha: 1,
-        duration: 1,
-        stagger: 0.3,
-        ease: "expo.out",
-      }
-    ).fromTo(
-      stagger,
-      {
-        x: 10,
-        autoAlpha: 0,
-      },
-      {
-        x: 0,
-        autoAlpha: 1,
-        duration: 0.75,
-        stagger: 0.07,
-        ease: "expo.out",
-      },
-      "-=0.6"
-    );
 
     const slideArtworkin = () => {
       sliderTl.clear();
@@ -193,8 +163,80 @@ const HomepageHero = ({ data }) => {
       });
     });
 
-    slideArtworkin();
-    sliderTl.play();
+    const tl = gsap.timeline({
+      paused: true,
+      onComplete: () => {
+        progressAnimation();
+
+        delay = gsap.delayedCall(timeToNextSlide, () => {
+          currentIndex++;
+          if (currentIndex === length) {
+            currentIndex = 0;
+          }
+
+          slideArtworkin();
+          sliderTl.play();
+        });
+      },
+    });
+
+    tl.fromTo(
+      words,
+      {
+        x: 10,
+        autoAlpha: 0,
+      },
+      {
+        x: 0,
+        autoAlpha: 1,
+        duration: 1,
+        stagger: 0.3,
+        ease: "expo.out",
+      }
+    )
+      .fromTo(
+        stagger,
+        {
+          x: 10,
+          autoAlpha: 0,
+        },
+        {
+          x: 0,
+          autoAlpha: 1,
+          duration: 0.75,
+          stagger: 0.07,
+          ease: "expo.out",
+        },
+        "-=0.6"
+      )
+      .to(
+        background,
+        {
+          backgroundColor: artworkContainers[0].dataset.cursorColor,
+          duration: 0.5,
+          ease: "power1.easeIn",
+        },
+        "-=1.2"
+      )
+      .fromTo(
+        artworkContainers[0],
+        {
+          opacity: 0,
+          scale: 0.6,
+          yPercent: -100,
+          rotate: 20,
+        },
+        {
+          duration: 2,
+          opacity: 1,
+          scale: 1,
+          yPercent: 0,
+          rotate: 0,
+          ease: "expo.out",
+        },
+        "-=0.8"
+      );
+
     tl.restart();
   });
 
