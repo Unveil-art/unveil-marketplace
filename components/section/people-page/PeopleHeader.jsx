@@ -17,10 +17,9 @@ const PeopleHeader = ({ collection, people }) => {
   const [followers, setFollowers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [following, setFollowing] = useState(false);
-  const [popup , setPopup] = useState(null);
-  const { value } = useLocalStorage("token");  
-  const { session,currentUser } = useContext(Web3Context);
-
+  const [popup, setPopup] = useState(null);
+  const { value } = useLocalStorage("token");
+  const { session, currentUser } = useContext(Web3Context);
 
   function formatInstagramUrl(url) {
     url = url.endsWith("/") ? url.slice(0, -1) : url;
@@ -77,17 +76,16 @@ const PeopleHeader = ({ collection, people }) => {
     }
   };
 
-  const startConversation = async() => {
-    try{
-
+  const startConversation = async () => {
+    try {
       const otherUser = new Talk.User({
-          id: people.id,
-          name: `${people.firstName} ${people.lastName}`,
-          email: `${people.email}`,
-          photoUrl: people.profileUrl,
-          welcomeMessage: 'Hello!',
-          role: 'default',
-        });
+        id: people.id,
+        name: `${people.firstName} ${people.lastName}`,
+        email: `${people.email}`,
+        photoUrl: people.profileUrl,
+        welcomeMessage: "Hello!",
+        role: "default",
+      });
       const conversationId = Talk.oneOnOneId(currentUser, otherUser);
       const conversation = session.getOrCreateConversation(conversationId);
       conversation.setParticipant(currentUser);
@@ -97,10 +95,10 @@ const PeopleHeader = ({ collection, people }) => {
       _popup.select(conversation);
       _popup.mount({ show: false });
       setPopup(_popup);
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
     if (people && value) {
@@ -115,12 +113,10 @@ const PeopleHeader = ({ collection, people }) => {
         .finally(() => setLoading(false));
     }
 
-    if(people && value && currentUser && session){
+    if (people && value && currentUser && session) {
       startConversation();
     }
   }, [value, currentUser, session]);
-  
-  console.log(people);
 
   return (
     <section className="ml-[40px] md:ml-[35vw] pt-20 pr-[15px] md:mt-0 md:pr-[40px]">

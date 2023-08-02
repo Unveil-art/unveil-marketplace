@@ -12,20 +12,41 @@ import {
   getUserInfo,
   getArtistsArtwork,
   getArtistCollections,
+  getRecognitions,
 } from "lib/backend";
 import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 import { Web3Context } from "@/contexts/Web3AuthContext";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const PeopleDetails = ({ userId, user }) => {
   const [page, setPage] = useState(0);
   const [artworks, setArtworks] = useState(null);
   const [collections, setCollections] = useState();
   const { authenticated } = useIsAuthenticated();
+  const [recognition, setRecognition] = useState(false);
+  const { value } = useLocalStorage("token");
 
   useEffect(() => {
     getArtistsArtwork(userId).then((result) => setArtworks(result.data));
     getArtistCollections(userId).then((result) => setCollections(result.data));
   }, []);
+
+  const fetchRecognitions = async () => {
+    try {
+      const data = await getRecognitions(value);
+      setRecognition(data.data);
+      return data;
+    } catch (err) {
+      console.error(err);
+      showTopStickyNotification("error", err.message);
+    }
+  };
+
+  useEffect(() => {
+    if (value) {
+      fetchRecognitions();
+    }
+  }, [value]);
 
   let displayName = "";
   if (user) {
@@ -51,6 +72,7 @@ const PeopleDetails = ({ userId, user }) => {
           details={user}
           displayName={displayName}
           collections={collections}
+          recognition={recognition}
         />
       )}
     </main>

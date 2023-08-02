@@ -4,7 +4,7 @@ import { default as NextImage } from "next/image";
 import Check2 from "@/components/svg/Check2";
 import ColorThief from "colorthief";
 
-const PeopleAbout = (collection) => {
+const PeopleAbout = ({ details, displayName, collections, recognition }) => {
   const [dominantColor, setDominantColor] = useState("rgb(21, 17, 0)");
   const [isLightColor, setIsLightColor] = useState(false);
 
@@ -75,10 +75,10 @@ const PeopleAbout = (collection) => {
   }
 
   useEffect(() => {
-    if (collection.details.profileUrl) {
+    if (details.profileUrl) {
       const colorThief = new ColorThief();
       let img = new Image();
-      img.src = collection.details.profileUrl + "?" + Date.now();
+      img.src = details.profileUrl + "?" + Date.now();
       img.crossOrigin = "Anonymous";
 
       img.onload = function () {
@@ -95,22 +95,35 @@ const PeopleAbout = (collection) => {
   }, []);
 
   const instagram = () => {
-    collection.details.instagram
-      ? window.open(collection.details.instagram)
-      : "";
+    details.instagram ? window.open(details.instagram) : "";
   };
   const website = () => {
-    collection.details.website ? window.open(collection.details.website) : "";
+    details.website ? window.open(details.website) : "";
   };
+
+  const awardRecognition = recognition.filter(
+    (item) => item.recognition_type === "AWARD"
+  );
+
+  const collectionRecognition = recognition.filter(
+    (item) => item.recognition_type === "COLLECTION"
+  );
+
+  const exhibitionRecognition = recognition.filter(
+    (item) => item.recognition_type === "EXHIBITION"
+  );
+
+  const educationRecognition = recognition.filter(
+    (item) => item.recognition_type === "EDUCATION"
+  );
 
   return (
     <section>
       <div className="md:flex md:pr-10 pr-[15px] ml-10 md:ml-0 mt-10">
         <div className="md:max-w-[35vw] h-fit w-full md:pl-10 md:pr-14 mb-11 md:mb-0">
           <h2 className="s2 mb-8">Unveil Collector’s Advice</h2>
-          <div className="mb-5 last:mb-0">
+          {/* <div className="mb-5 last:mb-0">
             <div className="b3 font-medium mb-0.5">Achievements</div>
-            {/* Hardcoded */}
             <ul className="b3">
               <li className="flex items-center mb-1 last:mb-0">
                 <span className="mr-2 inline-block">
@@ -126,9 +139,9 @@ const PeopleAbout = (collection) => {
               </li>
             </ul>
           </div>
+
           <div className="mb-5 last:mb-0">
             <div className="b3 font-medium mb-0.5">Market highlights</div>
-            {/* Hardcoded */}
             <ul className="b3">
               <li className="flex items-center mb-1 last:mb-0">
                 <span className="mr-2 inline-block">
@@ -147,7 +160,6 @@ const PeopleAbout = (collection) => {
 
           <div className="mb-5 last:mb-0">
             <div className="b3 font-medium mb-3">Market highlights</div>
-            {/* Hardcoded */}
             <div className="md:mb-8 mb-3 last:mb-0">
               <h3 className="l1 mb-2">by The Guardian</h3>
               <p className="h5 font-light">
@@ -162,20 +174,50 @@ const PeopleAbout = (collection) => {
                 desolate beauty, showcasing nature poise and patience.
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="">
-          <p className="h4 drop-cap max-w-[740px]">
-            {collection.details.description}
-          </p>
-          <div className="mt-10">
-            <h3 className="s2 mb-6">Collections</h3>
-            <ul className="h5">
-              {collection.collections.map((collection, index) => (
-                <li key={index}>{collection.title}</li>
-              ))}
-            </ul>
-          </div>
+          <p className="h4 drop-cap max-w-[740px]">{details.description}</p>
+          {educationRecognition.length > 0 && (
+            <div className="mt-10">
+              <h3 className="s2 mb-6">Education</h3>
+              <ul className="h5">
+                {educationRecognition.map((item, index) => (
+                  <li key={index}>{item.description}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {exhibitionRecognition.length > 0 && (
+            <div className="mt-10">
+              <h3 className="s2 mb-6">Exhibitions</h3>
+              <ul className="h5">
+                {exhibitionRecognition.map((item, index) => (
+                  <li key={index}>{item.description}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {collectionRecognition.length > 0 && (
+            <div className="mt-10">
+              <h3 className="s2 mb-6">Collections</h3>
+              <ul className="h5">
+                {collectionRecognition.map((item, index) => (
+                  <li key={index}>{item.description}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {awardRecognition.length > 0 && (
+            <div className="mt-10">
+              <h3 className="s2 mb-6">Awards</h3>
+              <ul className="h5">
+                {awardRecognition.map((item, index) => (
+                  <li key={index}>{item.description}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
       <div className="relative grid grid-cols-1 mt-10 md:mt-[140px] md:grid-cols-2 mb-10 md:mb-[160px]">
@@ -184,9 +226,9 @@ const PeopleAbout = (collection) => {
             options={{ y: 0, image: true }}
             className="w-full sticky top-0  overflow-hidden h-fit bg-bgColor aspect-[10/11]"
           >
-            {collection.details.profileUrl && (
+            {details.profileUrl && (
               <NextImage
-                src={collection.details.profileUrl}
+                src={details.profileUrl}
                 alt={"People"}
                 fill={true}
                 style={{ objectFit: "cover" }}
@@ -206,7 +248,7 @@ const PeopleAbout = (collection) => {
               color: isLightColor ? "#141414" : "#F9F7F2",
             }}
           >
-            Start collecting work <br /> of {collection.displayName}
+            Start collecting work <br /> of {displayName}
           </div>
         </div>
         {/* <Animate
@@ -218,7 +260,7 @@ const PeopleAbout = (collection) => {
               className="mt-20 btn btn-secondary btn-full"
               onClick={() => instagram()}
             >
-              {collection.details.instagram
+              {details.instagram
                 ? "Instagram"
                 : "No Instagram available"}
             </button>
@@ -226,13 +268,13 @@ const PeopleAbout = (collection) => {
               className="mt-[10px] btn btn-secondary btn-full md:mb-0 mb-10"
               onClick={() => website()}
             >
-              {collection.details.twitter ? "Website" : "No Twitter available"}
+              {details.twitter ? "Website" : "No Twitter available"}
             </button>
             <button
               className="mt-[10px] btn btn-secondary btn-full md:mb-0 mb-10"
               onClick={() => website()}
             >
-              {collection.details.website ? "Website" : "No Website available"}
+              {details.website ? "Website" : "No Website available"}
             </button>
           </div>
         </Animate> */}
