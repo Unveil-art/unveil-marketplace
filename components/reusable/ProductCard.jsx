@@ -6,7 +6,7 @@ import Link from "next/link";
 import { getUserName } from "lib/utils";
 import { getCurrentExchangeRateETHUSD } from "lib/backend";
 
-const ProductCard = ({ rounded = false, item }) => {
+const ProductCard = ({ rounded = false, item, hasMargin = true }) => {
   const [exchangeRate, setExchangeRate] = useState(1900);
   const [uniqueEditionTypes, setUniqueEditionTypes] = useState([]);
 
@@ -54,7 +54,7 @@ const ProductCard = ({ rounded = false, item }) => {
         alpha: true,
         delay: "random",
       }}
-      className="[&:nth-child(3)]:mt-[120px]"
+      className={hasMargin && `[&:nth-child(3)]:mt-[120px]`}
     >
       {item?.title && (
         <Link href={`/gallery/collection/${item.id}`}>

@@ -14,8 +14,9 @@ import HomepageHero from "@/components/section/HomepageHero";
 
 import { getFAQ, getHomePage, getEditorials } from "../lib/strapi";
 import useIsAuthenticated from "@/hooks/useIsAuthenticated";
+import { getLatestArtworks } from "lib/backend";
 
-export default function Home({ data, faq, editorials }) {
+export default function Home({ data, faq, editorials, artworks }) {
   const homeData = data.data[0].attributes;
   const faqData = faq.data[0].attributes.faq;
   const editorialData = editorials.data;
@@ -26,7 +27,7 @@ export default function Home({ data, faq, editorials }) {
       <HomepageHero data={homeData.page1} />
       {/* <FloatingArt data={homeData.page1} /> */}
       <GridColThree data={homeData.page1.blocks} />
-      <NewlyCurated data={homeData.page3} />
+      <NewlyCurated data={homeData.page3} artworks={artworks} />
       <Collection
         data={homeData.page5}
         oneLiner={homeData.page5.oneliner}
@@ -59,11 +60,13 @@ export async function getServerSideProps() {
   const data = await getHomePage();
   const faq = await getFAQ();
   const editorials = await getEditorials();
+  const artworks = await getLatestArtworks();
   return {
     props: {
       data,
       faq,
       editorials,
+      artworks,
     },
   };
 }
