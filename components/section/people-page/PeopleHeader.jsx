@@ -118,10 +118,13 @@ const PeopleHeader = ({ collection, people }) => {
     if(people && value && currentUser && session){
       startConversation();
     }
-  }, [value, currentUser,session]);
+  }, [value, currentUser, session]);
+  
+  console.log(people);
 
   return (
     <section className="ml-[40px] md:ml-[35vw] pt-20 pr-[15px] md:mt-0 md:pr-[40px]">
+      {/* {people.oneLiner && <p className="h5 mb-20">{people.oneLiner}</p>} */}
       {collection && typeof collection != "string" && (
         <p className="s2 my-[60px] md:block hidden ">
           {collection.description}
@@ -155,30 +158,30 @@ const PeopleHeader = ({ collection, people }) => {
             </div>
           </div>
           <div className="flex flex-row gap-4 items-center">
-          {people && (
-            <button
-              className="mt-[15px] btn btn-secondary btn-full"
-              onClick={() => handleFollowUnfollow(following)}
-            >
-              {loading ? (
-                <div className="h-[25px] animate-spin justify-center flex items-center">
-                  <Loader />
-                </div>
-              ) : following ? (
-                `Followed`
-              ) : (
-                `Follow`
-              )}
-            </button>
-          )}
-          {popup && (
-            <button
-              className="mt-[15px] btn btn-primary btn-full"
-              onClick={() => popup?.show()}
-            >
-              Ask Artist
-            </button>
-          )}
+            {people && (
+              <button
+                className="mt-[15px] btn btn-secondary btn-full"
+                onClick={() => handleFollowUnfollow(following)}
+              >
+                {loading ? (
+                  <div className="h-[25px] animate-spin justify-center flex items-center">
+                    <Loader />
+                  </div>
+                ) : following ? (
+                  `Followed`
+                ) : (
+                  `Follow`
+                )}
+              </button>
+            )}
+            {popup && (
+              <button
+                className="mt-[15px] btn btn-primary btn-full"
+                onClick={() => popup?.show()}
+              >
+                Ask Artist
+              </button>
+            )}
           </div>
         </div>
         <div className="w-full md:w-[240px] xl:w-[300px] mt-[10px]">

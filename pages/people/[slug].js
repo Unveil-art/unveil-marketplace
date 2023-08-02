@@ -46,7 +46,13 @@ const PeopleDetails = ({ userId, user }) => {
       <PageSelector setPage={setPage} page={page} role={user.role} />
       {page === 0 && <PeopleArtworks artworks={artworks} role={user.role} />}
       {page === 1 && <PeopleCollections collections={collections} />}
-      {page === 2 && <PeopleAbout details={user} />}
+      {page === 2 && (
+        <PeopleAbout
+          details={user}
+          displayName={displayName}
+          collections={collections}
+        />
+      )}
     </main>
   );
 };
