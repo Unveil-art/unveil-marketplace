@@ -458,3 +458,9 @@
 .show {
   display: block;
 }
+
+[data-hover-bg] {
+  &:hover {
+    background-color: var(--hover-bg-color);
+  }
+}
