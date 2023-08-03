@@ -75,6 +75,10 @@ const Edit = ({ artwork }) => {
       setEditionPricing((prevEditionPrice) =>
         prevEditionPrice.filter((price) => !inactiveSizes.includes(price))
       );
+
+      setShippingPricing((prevShippingPrice) =>
+        prevShippingPrice.filter((price) => !inactiveSizes.includes(price))
+      );
     }
   }, [sizes]);
 
@@ -90,6 +94,8 @@ const Edit = ({ artwork }) => {
   const { showRamper } = useContext(Web3Context);
   const [editionPricing, setEditionPricing] = useState([]);
   const [editionPrice, setEditionPrice] = useState([]);
+  const [shippingPricing, setShippingPricing] = useState([]);
+  const [shippingPrice, setShippingPrice] = useState([]);
   const [editionType, setEditionType] = useState("NFT_Only");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -220,12 +226,20 @@ const Edit = ({ artwork }) => {
                     parseFloat(editionPricing[i].usd) * ethEx.ETH
                   ).toFixed(4)
                 ),
-            size: editionPricing[i],
+            shipping_price: shippingPricing[i].eth
+              ? parseFloat(shippingPricing[i].eth)
+              : parseFloat(
+                  parseFloat(
+                    parseFloat(shippingPricing[i].usd) * ethEx.ETH
+                  ).toFixed(4)
+                ),
+            size: editionPricing[i].activeSize,
             max_copies: 1,
           });
         } else {
           editions.push({
             price: parseInt(editionPrice[i]),
+            shipping_price: parseInt(shippingPrice[i]),
             paper: null,
             frame: null,
             technique: null,
@@ -342,6 +356,10 @@ const Edit = ({ artwork }) => {
               setEditionPrice={setEditionPrice}
               setEditionPricing={setEditionPricing}
               editionPricing={editionPricing}
+              shippingPrice={shippingPrice}
+              setShippingPrice={setShippingPrice}
+              setShippingPricing={setShippingPricing}
+              shippingPricing={shippingPricing}
               setActiveSize={setActiveSize}
               activeSize={activeSize}
               frame={frame}

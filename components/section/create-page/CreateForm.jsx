@@ -19,8 +19,12 @@ const CreateForm = ({
   artwork = false,
   editionPrice,
   setEditionPrice,
-  setEditionPricing,
   editionPricing,
+  setEditionPricing,
+  shippingPrice,
+  setShippingPrice,
+  shippingPricing,
+  setShippingPricing,
   setActiveSize,
   activeSize,
   errors,
@@ -102,7 +106,7 @@ const CreateForm = ({
     }
   }, []);
 
-  const notify = (message) => showTopStickyNotification("error", message)
+  const notify = (message) => showTopStickyNotification("error", message);
 
   const [sizeOpen, setSizeOpen] = useState(false);
   const [customSizeInput, setCustomSizeInput] = useState("");
@@ -186,6 +190,7 @@ const CreateForm = ({
 
       artwork.editions.forEach((edition) => {
         setEditionPrice((prevItems) => [...prevItems, edition.price]);
+        setShippingPrice((prevItems) => [...prevItems, edition.shipping_price]);
       });
 
       setRoyalties(artwork.royalties);
@@ -203,6 +208,15 @@ const CreateForm = ({
           activeSize: edition.size,
           eth: edition.price,
           usd: (res.USD * edition.price).toFixed(2),
+        },
+      ]);
+
+      setShippingPricing((prevItems) => [
+        ...prevItems,
+        {
+          activeSize: edition.size,
+          eth: edition.shipping_price,
+          usd: (res.USD * edition.shipping_price).toFixed(2),
         },
       ]);
     });
@@ -343,6 +357,18 @@ const CreateForm = ({
       return updatedItems;
     });
   };
+
+  const handleChangeShipping = (value, index) => {
+    setShippingPricing((prevItems) => {
+      const updatedItems = [...prevItems];
+      if (eth) {
+        updatedItems[index].eth = value;
+      } else {
+        updatedItems[index].usd = value;
+      }
+      return updatedItems;
+    });
+  };
   const handleActive = (i, setState) => {
     setState((prevItems) => {
       const updated = [...prevItems];
@@ -390,9 +416,21 @@ const CreateForm = ({
           item.eth = (ethEx.ETH * item.usd).toFixed(4);
         }
       });
+
+      shippingPricing.forEach((item) => {
+        if (item.usd !== null) {
+          item.eth = (ethEx.ETH * item.usd).toFixed(4);
+        }
+      });
     } else {
       const usdEx = await getCurrentExchangeRateETHUSD();
       editionPricing.forEach((item) => {
+        if (item.eth !== null) {
+          item.usd = (usdEx.USD * item.eth).toFixed(2);
+        }
+      });
+
+      shippingPricing.forEach((item) => {
         if (item.eth !== null) {
           item.usd = (usdEx.USD * item.eth).toFixed(2);
         }
@@ -467,13 +505,13 @@ const CreateForm = ({
         <p className="mb-[15px] lg:mb-[35px] b3 pt-5 text-[13px] md:text-[16px] px-5">
           Editions
         </p>
-        <div className="grid grid-cols-3 pb-[15px] px-5">
+        <div className="grid grid-cols-2 pb-[15px] px-5">
           <div>
             <input
               className="radio-block left"
               type="radio"
               name="edition_type"
-              disabled
+              // disabled
               id="NFT_Backed_by_print"
               value="NFT_Backed_by_print"
               checked={editionType === "NFT_Backed_by_print"}
@@ -484,9 +522,9 @@ const CreateForm = ({
               })}
             />
             <label
-              data-cursor="Coming soon"
-              data-cursor-color="#b2b4ae"
-              className="b4 md:text-[16px] text-unveilGrey opacity-60 !cursor-default hover:!border-bgColorHover"
+              // data-cursor="Coming soon"
+              // data-cursor-color="#b2b4ae"
+              className="b4 md:text-[16px]"
               htmlFor="NFT_Backed_by_print"
             >
               NFT backed by print
@@ -511,7 +549,7 @@ const CreateForm = ({
               NFT Only
             </label>
           </div>
-          <div>
+          {/* <div>
             <input
               className="cursor-default radio-block right"
               type="radio"
@@ -534,7 +572,7 @@ const CreateForm = ({
             >
               Print only
             </label>
-          </div>
+          </div> */}
         </div>
         {editionType !== "NFT_Only" && (
           <>
@@ -700,7 +738,7 @@ const CreateForm = ({
                 </div>
               )}
             </div>
-            <div className="border-t border-[#DBDED6] px-5 py-[15px] items-end flex justify-between">
+            {/* <div className="border-t border-[#DBDED6] px-5 py-[15px] items-end flex justify-between">
               <div className="w-[70%]">
                 <p className="mb-[15px] b3 w-fit">Frame</p>
                 {!frameOpen && (
@@ -816,7 +854,7 @@ const CreateForm = ({
               >
                 {frameOpen ? "Save" : "Edit"}
               </p>
-            </div>
+            </div> */}
             <div className=" px-5 py-[15px] border-t  border-[#DBDED6]">
               <div className="flex items-end justify-between ">
                 <div>
@@ -963,15 +1001,19 @@ const CreateForm = ({
                 }
               })}
             </div>
-            <div className="grid grid-cols-6 gap-2 px-5 uppercase b4 my-[15px]">
+            <div className="grid grid-cols-7 gap-2 px-5 uppercase b5 my-[15px]">
               <div></div>
               <label htmlFor="paper-select">Paper</label>
               <label htmlFor="frame-select">Frame</label>
               <label htmlFor="technique-select">Technique</label>
-              <div className="flex justify-between w-full col-span-2 pr-[30px]">
-                <label htmlFor="pricing-select">
-                  Pricing ({eth ? "ETH" : "USD"})
-                </label>
+              <label htmlFor="shipping-select">
+                Shipping ({eth ? "ETH" : "USD"})
+              </label>
+              <label htmlFor="pricing-select">
+                Pricing ({eth ? "ETH" : "USD"})
+              </label>
+
+              <div>
                 <div className="flex items-center gap-1">
                   <p className={`${eth ? "opacity-60" : ""}`}>USD</p>
                   <div
@@ -991,182 +1033,211 @@ const CreateForm = ({
           </>
         )}
         {editionPricing.map((item, i) => {
-          if (editionType === "NFT_Only" || activeSize === item) {
-            return (
-              <div
-                key={i}
-                className={`grid grid-cols-6 gap-2 px-5 py-[15px]  ${
-                  editionType !== "NFT_Only" ? "border-b border-[#DBDED6]" : ""
-                }`}
-              >
-                <div className="my-auto">
-                  {i + 1}/{editionPricing.length}
-                </div>
-                {editionType !== "NFT_Only" && (
-                  <>
-                    <div className="relative">
-                      <select
-                        name={`paper[${i}]`}
-                        id="paper-select"
-                        disabled={soldCopies}
-                        defaultValue={artwork ? artwork.editions[0].paper : ""}
-                        className="truncate select-input"
-                        {...register(`paper[${i}]`, { required: "Required" })}
-                      >
-                        {papers.map((item, i) => {
-                          if (item.active) {
-                            return <option key={i}>{item.paper}</option>;
-                          }
-                        })}
-                      </select>
-                      {errors.frame && errors.frame[i] && (
-                        <p
-                          className={`text-red-500 opacity-0  b5 absolute -bottom-5 left-0 ${
-                            errors.paper[i]?.message ? "opacity-100 block " : ""
-                          }`}
-                        >
-                          {errors.paper[i]?.message}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="relative">
-                      <select
-                        id="frame-select"
-                        className="truncate select-input"
-                        disabled={soldCopies}
-                        defaultValue={
-                          artwork.editions && artwork.editions <= i
-                            ? artwork.editions[i].value
-                            : null
+          // if (editionType === "NFT_Only" || activeSize === item) {
+          return (
+            <div
+              key={i}
+              className={`grid grid-cols-7 gap-2 px-5 py-[15px]  ${
+                editionType !== "NFT_Only" ? "border-b border-[#DBDED6]" : ""
+              }`}
+            >
+              <div className="my-auto">
+                {i + 1}/{editionPricing.length}
+              </div>
+              {editionType !== "NFT_Only" && (
+                <>
+                  <div className="relative">
+                    <select
+                      name={`paper[${i}]`}
+                      id="paper-select"
+                      disabled={soldCopies}
+                      defaultValue={artwork ? artwork.editions[0].paper : ""}
+                      className="truncate select-input"
+                      {...register(`paper[${i}]`, { required: "Required" })}
+                    >
+                      {papers.map((item, i) => {
+                        if (item.active) {
+                          return <option key={i}>{item.paper}</option>;
                         }
-                        name={`frame[${i}]`}
-                        {...register(`frame[${i}]`, { required: "Required" })}
+                      })}
+                    </select>
+                    {errors.frame && errors.frame[i] && (
+                      <p
+                        className={`text-red-500 opacity-0  b5 absolute -bottom-5 left-0 ${
+                          errors.paper[i]?.message ? "opacity-100 block " : ""
+                        }`}
                       >
-                        <option>
-                          {frame.frame}, {frame.size}, {frame.colour} frame,
-                          White border {frame.border}
-                        </option>
-                      </select>
-                      {errors.frame && errors.frame[i] && (
-                        <p
-                          className={`text-red-500 opacity-0  b5 absolute -bottom-5 left-0 ${
-                            errors.frame[i]?.message ? "opacity-100 block " : ""
-                          }`}
-                        >
-                          {errors.frame[i]?.message}
-                        </p>
-                      )}
-                    </div>
+                        {errors.paper[i]?.message}
+                      </p>
+                    )}
+                  </div>
 
-                    <div className="relative">
-                      <select
-                        id="technique-select"
-                        className="truncate select-input"
-                        name={`technique[${i}]`}
-                        disabled={soldCopies}
-                        defaultValue={
-                          artwork.editions
-                            ? artwork.editions[i].technique
-                            : null
+                  <div className="relative">
+                    <select
+                      id="frame-select"
+                      className="truncate select-input"
+                      disabled={soldCopies}
+                      defaultValue={
+                        artwork.editions && artwork.editions <= i
+                          ? artwork.editions[i].value
+                          : null
+                      }
+                      name={`frame[${i}]`}
+                      {...register(`frame[${i}]`, { required: "Required" })}
+                    >
+                      <option>
+                        {frame.frame}, {frame.size}, {frame.colour} frame, White
+                        border {frame.border}
+                      </option>
+                    </select>
+                    {errors.frame && errors.frame[i] && (
+                      <p
+                        className={`text-red-500 opacity-0  b5 absolute -bottom-5 left-0 ${
+                          errors.frame[i]?.message ? "opacity-100 block " : ""
+                        }`}
+                      >
+                        {errors.frame[i]?.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="relative">
+                    <select
+                      id="technique-select"
+                      className="truncate select-input"
+                      name={`technique[${i}]`}
+                      disabled={soldCopies}
+                      defaultValue={
+                        artwork.editions ? artwork.editions[i].technique : null
+                      }
+                      {...register(`technique[${i}]`, {
+                        required: "Required",
+                      })}
+                    >
+                      {techniques.map((item, i) => {
+                        if (item.active) {
+                          return <option key={i}>{item.technique}</option>;
                         }
-                        {...register(`technique[${i}]`, {
-                          required: "Required",
-                        })}
+                      })}
+                    </select>
+                    {errors.technique && errors.technique[i] && (
+                      <p
+                        className={`text-red-500 opacity-0 b5 absolute -bottom-5 left-0 ${
+                          errors.technique[i]?.message ? "opacity-100  " : ""
+                        }`}
                       >
-                        {techniques.map((item, i) => {
-                          if (item.active) {
-                            return <option key={i}>{item.technique}</option>;
-                          }
-                        })}
-                      </select>
-                      {errors.technique && errors.technique[i] && (
-                        <p
-                          className={`text-red-500 opacity-0 b5 absolute -bottom-5 left-0 ${
-                            errors.technique[i]?.message ? "opacity-100  " : ""
-                          }`}
-                        >
-                          {errors.technique[i]?.message}
-                        </p>
-                      )}
-                    </div>
-                  </>
-                )}
+                        {errors.technique[i]?.message}
+                      </p>
+                    )}
+                  </div>
 
-                <div
-                  key={i}
-                  className={`${
-                    editionType === "NFT_Only"
-                      ? "col-span-5 md:col-span-2"
-                      : "col-span-2"
-                  } flex relative items-center gap-[10px] `}
-                >
                   <div className="relative md:w-[unset] w-full">
                     <input
                       type="text"
                       className="input"
-                      placeholder="Select Price"
+                      placeholder="Select Shipping"
                       disabled={soldCopies}
-                      name={`price[${i}]`}
+                      name={`shipping[${i}]`}
                       value={
-                        eth ? editionPricing[i].eth : editionPricing[i].usd
+                        eth ? shippingPricing[i].eth : shippingPricing[i].usd
                       }
-                      {...register(`price[${i}]`, {
+                      {...register(`shipping[${i}]`, {
                         required: "Required",
                         pattern: {
                           value: /^[0-9]*\.?[0-9]*$/,
                           message: "Invalid number",
                         },
                         onChange: (e) => {
-                          handleChangePrice(e.target.value, i);
+                          handleChangeShipping(e.target.value, i);
                         },
                       })}
                     />
-                    {errors.price && errors.price[i] && (
+                    {errors.shipping && errors.shipping[i] && (
                       <p
                         className={`text-red-500 opacity-0 b5 absolute -bottom-5 left-0 ${
-                          errors.price[i]?.message ? "opacity-100  " : ""
+                          errors.shipping[i]?.message ? "opacity-100  " : ""
                         }`}
                       >
-                        {errors.price[i]?.message}
+                        {errors.shipping[i]?.message}
                       </p>
                     )}
                   </div>
-                  <div
-                    className={`${
-                      editionPricing.length === 1 || soldCopies
-                        ? "opacity-40"
-                        : "cursor-pointer"
-                    }`}
-                    onClick={() => {
-                      if (!soldCopies) {
-                        handleDeleteRow(i, setEditionPricing, true, i, item);
-                      }
-                    }}
-                  >
-                    <Delete big />
+                </>
+              )}
+
+              <div
+                key={i}
+                className={`${
+                  editionType === "NFT_Only"
+                    ? "col-span-5 md:col-span-2"
+                    : "col-span-2"
+                } flex relative items-center gap-[10px] `}
+              >
+                <div className="relative md:w-[unset] w-full">
+                  <input
+                    type="text"
+                    className="input"
+                    placeholder="Select Price"
+                    disabled={soldCopies}
+                    name={`price[${i}]`}
+                    value={eth ? editionPricing[i].eth : editionPricing[i].usd}
+                    {...register(`price[${i}]`, {
+                      required: "Required",
+                      pattern: {
+                        value: /^[0-9]*\.?[0-9]*$/,
+                        message: "Invalid number",
+                      },
+                      onChange: (e) => {
+                        handleChangePrice(e.target.value, i);
+                      },
+                    })}
+                  />
+                  {errors.price && errors.price[i] && (
+                    <p
+                      className={`text-red-500 opacity-0 b5 absolute -bottom-5 left-0 ${
+                        errors.price[i]?.message ? "opacity-100  " : ""
+                      }`}
+                    >
+                      {errors.price[i]?.message}
+                    </p>
+                  )}
+                </div>
+                <div
+                  className={`${
+                    editionPricing.length === 1 || soldCopies
+                      ? "opacity-40"
+                      : "cursor-pointer"
+                  }`}
+                  onClick={() => {
+                    if (!soldCopies) {
+                      handleDeleteRow(i, setEditionPricing, true, i, item);
+                      handleDeleteRow(i, setShippingPricing, true, i, item);
+                    }
+                  }}
+                >
+                  <Delete big />
+                </div>
+              </div>
+              <div></div>
+              {editionType !== "NFT_Only" && (
+                <div className="col-span-4">
+                  <div className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="news"
+                      id="news"
+                      className="checkbox"
+                      disabled={soldCopies}
+                    />
+                    <label htmlFor="news" className="b3 md:b4">
+                      Previously sold
+                    </label>
                   </div>
                 </div>
-                <div></div>
-                {editionType !== "NFT_Only" && (
-                  <div className="col-span-4">
-                    <div className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        name="news"
-                        id="news"
-                        className="checkbox"
-                        disabled={soldCopies}
-                      />
-                      <label htmlFor="news" className="b3 md:b4">
-                        Previously sold
-                      </label>
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          }
+              )}
+            </div>
+          );
+          // }
         })}
 
         <div className="grid grid-cols-2 lg:grid-cols-6 gap-2 px-5 pt-[15px] pb-5 lg:pb-[30px]">
@@ -1175,6 +1246,11 @@ const CreateForm = ({
             onClick={() => {
               if (!soldCopies) {
                 setEditionPricing((prevItems) => [
+                  ...prevItems,
+                  { activeSize, eth: null, usd: null },
+                ]);
+
+                setShippingPricing((prevItems) => [
                   ...prevItems,
                   { activeSize, eth: null, usd: null },
                 ]);
