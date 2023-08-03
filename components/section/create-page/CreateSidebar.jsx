@@ -14,6 +14,7 @@ const CreateSidebar = ({
   const [detailImage1, setDetailImage1] = useState(null);
   const [detailImage2, setDetailImage2] = useState(null);
   const [soundbite, setSoundBite] = useState(null);
+  const [soundbite2, setSoundBite2] = useState(null);
 
   useEffect(() => {
     if (artwork && artwork.detail_shots[0]) {
@@ -138,125 +139,259 @@ const CreateSidebar = ({
       {/* detail shot 1 */}
       <div className="bg-[#F9F7F2] shadow3 pb-[30px] rounded-[10px]">
         <p className="px-5 pt-5 pb-[35px] text-[13px] md:text-[16px]">
-          Detail shot 1
+          Supportive imagery
         </p>
-        <div className="flex relative items-center border-t border-[#DBDED6] py-[15px] px-5 gap-[10px]">
-          <label
-            htmlFor="detail-shot-image-1"
-            className="border hover:bg-bgColor unveilTransition cursor-pointer overflow-hidden relative border-unveilBlack rounded-[10px] min-w-[120px] min-h-[120px] max-w-[120px] max-h-[120px]"
-          >
-            {!detailImage1 && (
-              <>
-                {!artwork?.detail_shots[0]?.image_url && (
-                  <>
-                    <div className="absolute z-10 w-5 h-px -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
-                    <div className="absolute z-10 w-5 h-px rotate-90 -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
-                  </>
-                )}
-              </>
-            )}
-            <input
-              accept="image/*"
-              type="file"
-              hidden
-              name="detailShotImage1"
-              id="detail-shot-image-1"
-              {...register("detailShotImage1", {
+        <div>
+          <div className="flex relative items-center border-t border-[#DBDED6] py-[15px] px-5 gap-[10px]">
+            <label
+              htmlFor="detail-shot-image-1"
+              className="border hover:bg-bgColor unveilTransition cursor-pointer overflow-hidden relative border-unveilBlack rounded-[10px] min-w-[120px] min-h-[120px] max-w-[120px] max-h-[120px]"
+            >
+              {!detailImage1 && (
+                <>
+                  {!artwork?.detail_shots[0]?.image_url && (
+                    <>
+                      <div className="absolute z-10 w-5 h-px -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
+                      <div className="absolute z-10 w-5 h-px rotate-90 -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
+                    </>
+                  )}
+                </>
+              )}
+              <input
+                accept="image/*"
+                type="file"
+                hidden
+                name="detailShotImage1"
+                id="detail-shot-image-1"
+                {...register("detailShotImage1", {
+                  onChange: (e) => {
+                    handleImageChange(e, setDetailImage1);
+                  },
+                })}
+              />
+
+              {detailImage1 && (
+                <Image
+                  src={URL.createObjectURL(detailImage1)}
+                  alt="Selected"
+                  fill={true}
+                  style={{ objectFit: "cover" }}
+                  priority
+                />
+              )}
+              {!detailImage1 && artwork && (
+                <>
+                  {artwork.detail_shots[0]?.image_url && (
+                    <Image
+                      src={artwork.detail_shots[0].image_url}
+                      alt="Selected"
+                      fill={true}
+                      style={{ objectFit: "cover" }}
+                      priority
+                    />
+                  )}
+                </>
+              )}
+            </label>
+            <div className="w-full">
+              {detailImage1 && (
+                <>
+                  <p className="truncate w-[200px] b3">{detailImage1.name}</p>
+                  <p
+                    onClick={() => handleRemoveImage(setDetailImage1)}
+                    className="underline cursor-pointer underline-offset-2 b4 decoration-1"
+                  >
+                    Remove
+                  </p>
+                </>
+              )}
+              {!detailImage1 && !artwork && (
+                <>
+                  <p className="text-[13px] md:text-[16px] b3">Add image</p>
+                  <p className="b4">(minimally 2000px)</p>
+                  <p
+                    className={`text-red-500 opacity-0 b5 ${
+                      errors.detailShotImage1?.message ? "opacity-100" : ""
+                    }`}
+                  >
+                    {errors.detailShotImage1?.message}
+                  </p>
+                </>
+              )}
+              {!detailImage1 && artwork && (
+                <>
+                  <p className="text-[13px] md:text-[16px]  b3">Change image</p>
+                  <p className="b4">(minimally 2000px)</p>
+                  <p
+                    className={`text-red-500 opacity-0 b5 ${
+                      errors.detailShotImage1?.message ? "opacity-100" : ""
+                    }`}
+                  >
+                    {errors.detailShotImage1?.message}
+                  </p>
+                </>
+              )}
+            </div>
+          </div>
+          <div className="border-y border-[#DBDED6] relative py-[15px] px-5 gap-[10px]">
+            <label htmlFor="detail-shot-caption-1">Caption</label>
+            <textarea
+              name="detailShotCaption1"
+              id="detail-shot-caption-1"
+              value={description}
+              placeholder="Add caption (max 300 char)"
+              className="bg-bgColor rounded-[10px] w-full h-[120px] mt-5 p-[15px] focus:bg-bgColorHover focus:outline-none"
+              {...register("detailShotCaption1", {
+                maxLength: 300,
                 onChange: (e) => {
-                  handleImageChange(e, setDetailImage1);
+                  handleDescription(e);
                 },
               })}
-            />
-
-            {detailImage1 && (
-              <Image
-                src={URL.createObjectURL(detailImage1)}
-                alt="Selected"
-                fill={true}
-                style={{ objectFit: "cover" }}
-                priority
-              />
-            )}
-            {!detailImage1 && artwork && (
-              <>
-                {artwork.detail_shots[0]?.image_url && (
-                  <Image
-                    src={artwork.detail_shots[0].image_url}
-                    alt="Selected"
-                    fill={true}
-                    style={{ objectFit: "cover" }}
-                    priority
-                  />
-                )}
-              </>
-            )}
-          </label>
-          <div className="w-full">
-            {detailImage1 && (
-              <>
-                <p className="truncate w-[200px] b3">{detailImage1.name}</p>
-                <p
-                  onClick={() => handleRemoveImage(setDetailImage1)}
-                  className="underline cursor-pointer underline-offset-2 b4 decoration-1"
-                >
-                  Remove
-                </p>
-              </>
-            )}
-            {!detailImage1 && !artwork && (
-              <>
-                <p className="text-[13px] md:text-[16px] b3">Add image</p>
-                <p className="b4">(minimally 2000px)</p>
-                <p
-                  className={`text-red-500 opacity-0 b5 ${
-                    errors.detailShotImage1?.message ? "opacity-100" : ""
-                  }`}
-                >
-                  {errors.detailShotImage1?.message}
-                </p>
-              </>
-            )}
-            {!detailImage1 && artwork && (
-              <>
-                <p className="text-[13px] md:text-[16px]  b3">Change image</p>
-                <p className="b4">(minimally 2000px)</p>
-                <p
-                  className={`text-red-500 opacity-0 b5 ${
-                    errors.detailShotImage1?.message ? "opacity-100" : ""
-                  }`}
-                >
-                  {errors.detailShotImage1?.message}
-                </p>
-              </>
-            )}
+            ></textarea>
+            <p
+              className={`text-red-500 opacity-0 b5 absolute bottom-0 left-5 ${
+                errors.detailShotCaption1?.message ? "opacity-100" : ""
+              }`}
+            >
+              {errors.detailShotCaption1?.message}
+            </p>
           </div>
         </div>
-        <div className="border-y border-[#DBDED6] relative py-[15px] px-5 gap-[10px]">
-          <label htmlFor="detail-shot-caption-1">Caption</label>
-          <textarea
-            name="detailShotCaption1"
-            id="detail-shot-caption-1"
-            value={description}
-            placeholder="Add caption (max 300 char)"
-            className="bg-bgColor rounded-[10px] w-full h-[120px] mt-5 p-[15px] focus:bg-bgColorHover focus:outline-none"
-            {...register("detailShotCaption1", {
-              maxLength: 300,
-              onChange: (e) => {
-                handleDescription(e);
-              },
-            })}
-          ></textarea>
-          <p
-            className={`text-red-500 opacity-0 b5 absolute bottom-0 left-5 ${
-              errors.detailShotCaption1?.message ? "opacity-100" : ""
-            }`}
-          >
-            {errors.detailShotCaption1?.message}
-          </p>
-        </div>
-        <div className="px-5 pt-[15px] relative">
-          <p>Add soundbite (optional)</p>
 
+        <div>
+          <div className="flex items-center border-t border-[#DBDED6] py-[15px] px-5 gap-[10px]">
+            <label
+              htmlFor="detail-shot-2"
+              className="border hover:bg-bgColor unveilTransition cursor-pointer overflow-hidden relative border-unveilBlack rounded-[10px] min-w-[120px] min-h-[120px] max-w-[120px] max-h-[120px]"
+            >
+              {!detailImage2 && (
+                <>
+                  {!artwork?.detail_shots[1]?.image_url && (
+                    <>
+                      <div className="absolute z-10 w-5 h-px -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
+                      <div className="absolute z-10 w-5 h-px rotate-90 -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
+                    </>
+                  )}
+                </>
+              )}
+
+              <input
+                accept="image/*"
+                type="file"
+                hidden
+                name="detailShotImage2"
+                id="detail-shot-2"
+                {...register("detailShotImage2", {
+                  onChange: (e) => {
+                    handleImageChange(e, setDetailImage2);
+                  },
+                })}
+              />
+
+              {detailImage2 && (
+                <Image
+                  src={URL.createObjectURL(detailImage2)}
+                  alt="Selected"
+                  fill={true}
+                  style={{ objectFit: "cover" }}
+                  priority
+                />
+              )}
+              {!detailImage2 && artwork && (
+                <>
+                  {artwork.detail_shots[1]?.image_url && (
+                    <Image
+                      src={artwork.detail_shots[1].image_url}
+                      alt="Selected"
+                      fill={true}
+                      style={{ objectFit: "cover" }}
+                      priority
+                    />
+                  )}
+                </>
+              )}
+            </label>
+            <div>
+              {detailImage2 && (
+                <>
+                  <p className="truncate w-[200px] b3">{detailImage2.name}</p>
+                  <p
+                    onClick={() => handleRemoveImage(setDetailImage2)}
+                    className="underline cursor-pointer underline-offset-2 b4 decoration-1"
+                  >
+                    Remove
+                  </p>
+                </>
+              )}
+              {!detailImage2 && (
+                <>
+                  <p className="text-[13px] md:text-[16px] b3">Add image</p>
+                  <p className="b4">(minimally 2000px)</p>
+                  <p
+                    className={`text-red-500 opacity-0 b5 ${
+                      errors.detailShotImage2?.message ? "opacity-100" : ""
+                    }`}
+                  >
+                    {errors.detailShotImage2?.message}
+                  </p>
+                </>
+              )}
+              {!detailImage2 && artwork?.detail_shots[1]?.image_url && (
+                <>
+                  <p className="text-[13px] md:text-[16px] b3">Change image</p>
+                  <p className="b4">(minimally 2000px)</p>
+                  <p
+                    className={`text-red-500 opacity-0 b5 ${
+                      errors.detailShotImage2?.message ? "opacity-100" : ""
+                    }`}
+                  >
+                    {errors.detailShotImage2?.message}
+                  </p>
+                </>
+              )}
+            </div>
+          </div>
+          <div className="border-t relative border-[#DBDED6] pt-[15px] px-5 gap-[10px]">
+            <label htmlFor="detail-shot-caption-1">Caption</label>
+
+            <textarea
+              name="detailShotCaption2"
+              id="detail-shot-caption-1"
+              placeholder="Add caption (max 300 char)"
+              defaultValue={
+                artwork && artwork.detail_shots
+                  ? artwork.detail_shots[1]?.caption
+                  : null
+              }
+              className="bg-bgColor rounded-[10px] w-full h-[120px] mt-5 p-[15px] focus:bg-bgColorHover focus:outline-none"
+              {...register("detailShotCaption2", {
+                maxLength: 300,
+              })}
+            ></textarea>
+            <p
+              className={`text-red-500 opacity-0 b5 absolute left-5 -bottom-4 ${
+                errors.detailShotCaption2?.message ? "opacity-100" : ""
+              }`}
+            >
+              {errors.detailShotCaption2?.message}
+            </p>
+
+            <p className="b4 mt-5">
+              Enhance your artwork&rsquo;s presentation by uploading additional
+              photos. These can include contextual shots or detailed zoom-ins of
+              the artwork itself.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* detail shot 2 */}
+      <div className="bg-[#F9F7F2] shadow3 pb-[30px] rounded-[10px]">
+        <p className="px-5 pt-5 pb-[35px] text-[13px] md:text-[16px]">
+          Soundbites (optional)
+        </p>
+
+        <div className="px-5 pt-[15px] relative">
           {artwork && (
             <label
               htmlFor="soundbite"
@@ -339,130 +474,6 @@ const CreateSidebar = ({
               Remove
             </p>
           )}
-        </div>
-      </div>
-
-      {/* detail shot 2 */}
-      <div className="bg-[#F9F7F2] shadow3 pb-[30px] rounded-[10px]">
-        <p className="px-5 pt-5 pb-[35px] text-[13px] md:text-[16px]">
-          Detail shot 2
-        </p>
-        <div className="flex items-center border-t border-[#DBDED6] py-[15px] px-5 gap-[10px]">
-          <label
-            htmlFor="detail-shot-2"
-            className="border hover:bg-bgColor unveilTransition cursor-pointer overflow-hidden relative border-unveilBlack rounded-[10px] min-w-[120px] min-h-[120px] max-w-[120px] max-h-[120px]"
-          >
-            {!detailImage2 && (
-              <>
-                {!artwork?.detail_shots[1]?.image_url && (
-                  <>
-                    <div className="absolute z-10 w-5 h-px -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
-                    <div className="absolute z-10 w-5 h-px rotate-90 -translate-x-1/2 -translate-y-1/2 bg-unveilBlack top-1/2 left-1/2"></div>
-                  </>
-                )}
-              </>
-            )}
-
-            <input
-              accept="image/*"
-              type="file"
-              hidden
-              name="detailShotImage2"
-              id="detail-shot-2"
-              {...register("detailShotImage2", {
-                onChange: (e) => {
-                  handleImageChange(e, setDetailImage2);
-                },
-              })}
-            />
-
-            {detailImage2 && (
-              <Image
-                src={URL.createObjectURL(detailImage2)}
-                alt="Selected"
-                fill={true}
-                style={{ objectFit: "cover" }}
-                priority
-              />
-            )}
-            {!detailImage2 && artwork && (
-              <>
-                {artwork.detail_shots[1]?.image_url && (
-                  <Image
-                    src={artwork.detail_shots[1].image_url}
-                    alt="Selected"
-                    fill={true}
-                    style={{ objectFit: "cover" }}
-                    priority
-                  />
-                )}
-              </>
-            )}
-          </label>
-          <div>
-            {detailImage2 && (
-              <>
-                <p className="truncate w-[200px] b3">{detailImage2.name}</p>
-                <p
-                  onClick={() => handleRemoveImage(setDetailImage2)}
-                  className="underline cursor-pointer underline-offset-2 b4 decoration-1"
-                >
-                  Remove
-                </p>
-              </>
-            )}
-            {!detailImage2 && (
-              <>
-                <p className="text-[13px] md:text-[16px] b3">Add image</p>
-                <p className="b4">(minimally 2000px)</p>
-                <p
-                  className={`text-red-500 opacity-0 b5 ${
-                    errors.detailShotImage2?.message ? "opacity-100" : ""
-                  }`}
-                >
-                  {errors.detailShotImage2?.message}
-                </p>
-              </>
-            )}
-            {!detailImage2 && artwork?.detail_shots[1]?.image_url && (
-              <>
-                <p className="text-[13px] md:text-[16px] b3">Change image</p>
-                <p className="b4">(minimally 2000px)</p>
-                <p
-                  className={`text-red-500 opacity-0 b5 ${
-                    errors.detailShotImage2?.message ? "opacity-100" : ""
-                  }`}
-                >
-                  {errors.detailShotImage2?.message}
-                </p>
-              </>
-            )}
-          </div>
-        </div>
-        <div className="border-t relative border-[#DBDED6] pt-[15px] px-5 gap-[10px]">
-          <label htmlFor="detail-shot-caption-1">Caption</label>
-
-          <textarea
-            name="detailShotCaption2"
-            id="detail-shot-caption-1"
-            placeholder="Add caption (max 300 char)"
-            defaultValue={
-              artwork && artwork.detail_shots
-                ? artwork.detail_shots[1]?.caption
-                : null
-            }
-            className="bg-bgColor rounded-[10px] w-full h-[120px] mt-5 p-[15px] focus:bg-bgColorHover focus:outline-none"
-            {...register("detailShotCaption2", {
-              maxLength: 300,
-            })}
-          ></textarea>
-          <p
-            className={`text-red-500 opacity-0 b5 absolute left-5 -bottom-4 ${
-              errors.detailShotCaption2?.message ? "opacity-100" : ""
-            }`}
-          >
-            {errors.detailShotCaption2?.message}
-          </p>
         </div>
       </div>
     </div>
