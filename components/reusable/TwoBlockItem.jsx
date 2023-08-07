@@ -84,7 +84,7 @@ const TwoBlockItem = ({ item, i }) => {
           {item.title && (
             <Link href={`/gallery/collection/${item.id}`}>
               <div
-                className="relative w-full overflow-hidden bg-bgColor aspect-square transition-colors"
+                className="relative w-full overflow-hidden bg-bgColor aspect-square transition-colors duration-500"
                 data-hover-bg
                 style={{
                   "--hover-bg-color": `${dominantColor}`,
@@ -112,7 +112,7 @@ const TwoBlockItem = ({ item, i }) => {
           {item.name && (
             <Link href={`/gallery/artwork/${item.id}`}>
               <div
-                className="relative w-full overflow-hidden bg-bgColor aspect-square transition-colors"
+                className="relative w-full overflow-hidden bg-bgColor aspect-square transition-colors duration-500"
                 data-hover-bg
                 style={{
                   "--hover-bg-color": `${dominantColor}`,

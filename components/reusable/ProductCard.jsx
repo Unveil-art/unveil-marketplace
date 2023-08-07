@@ -81,7 +81,7 @@ const ProductCard = ({ rounded = false, item }) => {
           <div
             className={`${
               rounded && !item?.title ? "rounded-t-full" : ""
-            } bg-bgColor overflow-hidden aspect-[3/4] mb-1`}
+            } bg-bgColor overflow-hidden aspect-[3/4] mb-1 transition-colors duration-500`}
             data-hover-bg
             style={{
               "--hover-bg-color": `${dominantColor}`,
@@ -112,7 +112,7 @@ const ProductCard = ({ rounded = false, item }) => {
           <div
             className={`${
               rounded ? "rounded-t-full" : ""
-            } bg-bgColor overflow-hidden aspect-[3/4] mb-1 transition-colors`}
+            } bg-bgColor overflow-hidden aspect-[3/4] mb-1 transition-colors duration-500`}
             data-hover-bg
             style={{
               "--hover-bg-color": `${dominantColor}`,
