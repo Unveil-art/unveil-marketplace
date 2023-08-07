@@ -56,10 +56,10 @@ export default function Gallery({ artworks }) {
     let pattern;
 
     if (category === 0) {
-      if (medium === 0) {
+      if ("digital" in router.query) {
         arr = arr.filter((item) => item.edition_type === "NFT_Only");
       }
-      if (medium === 1) {
+      if ("print" in router.query) {
         arr = arr.filter((item) => item.edition_type !== "NFT_Only");
       }
     }

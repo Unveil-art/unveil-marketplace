@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import Animate from "@/components/reusable/Animate";
 
 const Filter = ({
@@ -9,6 +10,7 @@ const Filter = ({
   medium,
   setMedium,
 }) => {
+  const router = useRouter();
   return (
     <Animate
       options={{ alpha: true, delay: 0.5 }}
@@ -65,7 +67,17 @@ const Filter = ({
         <p className="md:mb-2 b3 md:b6">Medium</p>
         <div className="flex items-center gap-1">
           <span
-            onClick={() => setMedium(0)}
+            onClick={() => {
+              // change route query to digital
+              router.push(
+                {
+                  pathname: "/gallery",
+                  query: { digital: "" },
+                },
+                undefined,
+                { shallow: true }
+              );
+            }}
             className={`${
               category === 1
                 ? "cursor-not-allowed opacity-60 border-opacity-0"
@@ -79,7 +91,16 @@ const Filter = ({
             Digital
           </span>
           <span
-            onClick={() => setMedium(1)}
+            onClick={() => {
+              router.push(
+                {
+                  pathname: "/gallery",
+                  query: { print: "" },
+                },
+                undefined,
+                { shallow: true }
+              );
+            }}
             className={`${
               category === 1
                 ? "cursor-not-allowed opacity-60 border-opacity-0"
