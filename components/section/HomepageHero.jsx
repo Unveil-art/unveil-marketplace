@@ -9,7 +9,7 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import Image from "next/image";
 import { useLenis } from "@studio-freight/react-lenis";
 
-const HomepageHero = ({ data }) => {
+const HomepageHero = ({ data, featuredArtworks }) => {
   const el = useRef();
   const once = useRef(false);
   const { previous } = useHistory();
@@ -224,7 +224,7 @@ const HomepageHero = ({ data }) => {
           opacity: 0,
           scale: 0.6,
           yPercent: -100,
-          rotate: 20,
+          // rotate: 20,
         },
         {
           duration: 2,
