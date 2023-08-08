@@ -59,13 +59,13 @@ const Navbar = ({ value }) => {
   }, []);
 
   useEffect(() => {
-    if(session){
+    if (session) {
       session.unreads.onChange((unReadConversations) => {
         const unReadMessages = unReadConversations.length;
         setUnreadCount(unReadMessages);
-      })
+      });
     }
-  },[session])
+  }, [session]);
 
   useEffect(() => {
     const delay = Router.route === "/" ? 2.5 : 0.0;
@@ -101,35 +101,54 @@ const Navbar = ({ value }) => {
           </p>
         </div> */}
         <div className="relative flex items-center justify-between w-full">
-          {!isArrow && (
-            <div
-              onClick={() => handleOpen(setNavOpen, navOpen)}
-              className="relative mt-2 md:mt-0 w-[20px] md:w-[31px] h-[12px] group cursor-pointer"
-            >
+          <div className="flex items-center">
+            {!isArrow && (
               <div
-                style={{ backgroundColor: color }}
-                className={`w-full h-[3px]  absolute top-0 unveilTransition group-hover:w-[85%]`}
-              ></div>
+                onClick={() => handleOpen(setNavOpen, navOpen)}
+                className="relative mt-2 md:mt-0 w-[20px] md:w-[31px] h-[12px] group cursor-pointer"
+              >
+                <div
+                  style={{ backgroundColor: color }}
+                  className={`w-full h-[3px]  absolute top-0 unveilTransition group-hover:w-[85%]`}
+                ></div>
+                <div
+                  style={{ backgroundColor: color }}
+                  className={`w-full h-[3px] bg-unveilBlack absolute bottom-0 unveilTransition group-hover:w-[115%]`}
+                ></div>
+              </div>
+            )}
+            {isArrow && (
               <div
-                style={{ backgroundColor: color }}
-                className={`w-full h-[3px] bg-unveilBlack absolute bottom-0 unveilTransition group-hover:w-[115%]`}
-              ></div>
+                className="rotate-180 cursor-pointer"
+                onClick={() => {
+                  if (step === 1) {
+                    router.back();
+                  } else {
+                    setStep(step - 1);
+                  }
+                }}
+              >
+                <Arrow color={color} />
+              </div>
+            )}
+            <div className="xl:flex items-center ml-14 gap-6 hidden">
+              <Link
+                href="/gallery?print"
+                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px]"
+                style={{ color }}
+              >
+                Prints Editions
+              </Link>
+
+              <Link
+                href="/gallery?digital"
+                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px]"
+                style={{ color }}
+              >
+                Digital Editions
+              </Link>
             </div>
-          )}
-          {isArrow && (
-            <div
-              className="rotate-180 cursor-pointer"
-              onClick={() => {
-                if (step === 1) {
-                  router.back();
-                } else {
-                  setStep(step - 1);
-                }
-              }}
-            >
-              <Arrow color={color} />
-            </div>
-          )}
+          </div>
 
           <Link href="/">
             <div className="w-[106px] md:w-[144px] top-2 md:top-0 left-1/2 -translate-x-1/2 absolute cursor-pointer">
@@ -137,37 +156,62 @@ const Navbar = ({ value }) => {
             </div>
           </Link>
           <div className="flex items-center gap-4 lg:gap-6">
-          {/* {value && <div
+            {/* {value && <div
               onClick={() => handleOpen(setInboxOpen, inboxOpen)}
               className="z-40 relative mt-2 scale-75 cursor-pointer md:mt-0 md:scale-100"
             >
               <Inbox width={35} height={35} color={accountColor} />
               {unreadCount>0 && <div className="bg-red-500 absolute -top-2 -right-2 p-1 text-white text-xs rounded-full px-2">{unreadCount > 99 ? "99+": unreadCount}</div>}
             </div>} */}
-          {value && (
-            <div
-              onClick={() => handleOpen(setLoggedIn, loggedIn)}
-              className="z-40 mt-2 scale-75 cursor-pointer md:mt-0 md:scale-100"
-            >
-              <Account color={accountColor} />
-            </div>
-          )}
 
-          {!value && (
-            <div
-              onClick={() => handleOpen(setLoginOpen, loginOpen)}
-              className="z-40 mt-2 cursor-pointer md:mt-0"
-            >
-              <p
-                style={{ color: accountColor }}
-                className={`b3 !text-[14px] font-[500]`}
+            <div className="xl:flex items-center mr-8 gap-4 hidden">
+              <a
+                href="https://learn.unveil.art/"
+                target="_blank"
+                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px]"
               >
-                Sign in
-              </p>
+                How it works
+              </a>
+
+              <a
+                href="https://learn.unveil.art/about"
+                target="_blank"
+                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px]"
+              >
+                About
+              </a>
+              <Link
+                href="/search"
+                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px]"
+              >
+                Search
+              </Link>
+              {/* Hardcoded */}
             </div>
-          )}
+
+            {value && (
+              <div
+                onClick={() => handleOpen(setLoggedIn, loggedIn)}
+                className="z-40 mt-2 scale-75 cursor-pointer md:mt-0 md:scale-100"
+              >
+                <Account color={accountColor} />
+              </div>
+            )}
+
+            {!value && (
+              <div
+                onClick={() => handleOpen(setLoginOpen, loginOpen)}
+                className="z-40 mt-2 cursor-pointer md:mt-0"
+              >
+                <p
+                  style={{ color: accountColor }}
+                  className={`b3 !text-[14px] font-[500]`}
+                >
+                  Sign in
+                </p>
+              </div>
+            )}
           </div>
-         
         </div>
       </nav>
       <NavbarPopIn

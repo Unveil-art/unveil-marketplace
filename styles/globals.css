@@ -169,7 +169,7 @@
     animation-duration: 0.4s;
     animation-delay: 0s;
   }
-  
+
   .fadeOutBottom {
     animation-name: fadeOutBottom;
     animation-duration: 0.4s;
@@ -196,6 +196,14 @@
     background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
     opacity: 0.1;
     transform: rotate(-180deg);
+  }
+
+  .video-gradient {
+    background: linear-gradient(
+      360deg,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
   }
 
   /* Swiper */
@@ -299,11 +307,43 @@
     @apply border-4 border-unveilCreme;
   }
 
+  .frame-2 {
+    box-shadow: 2.4089391231536865px 2.4089391231536865px 2.4089391231536865px
+        0px rgba(0, 0, 0, 0.17),
+      8px 9px 4px 0px rgba(0, 0, 0, 0.25) inset;
+    @apply bg-unveilCreme;
+
+    > * {
+      @apply border-[7px] border-white h-full;
+    }
+  }
+
+  .frame-brown {
+    /* box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+      3px 3px 8px 0px rgba(0, 0, 0, 0.2), 11px 10px 15px 0px rgba(0, 0, 0, 0.17),
+      26px 23px 21px 0px rgba(0, 0, 0, 0.1),
+      46px 41px 25px 0px rgba(0, 0, 0, 0.03),
+      72px 64px 27px 0px rgba(0, 0, 0, 0); */
+
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2),
+      1.7007298469543457px 1.7007298469543457px 4.535279750823975px 0px
+        rgba(0, 0, 0, 0.2),
+      6.23600959777832px 5.6690993309021px 8.503649711608887px 0px
+        rgba(0, 0, 0, 0.17),
+      14.73965835571289px 13.038928985595703px 11.905108451843262px 0px
+        rgba(0, 0, 0, 0.1),
+      26.077857971191406px 23.24330711364746px 14.172748565673828px 0px
+        rgba(0, 0, 0, 0.03),
+      40.81751251220703px 36.2822380065918px 15.30656909942627px 0px
+        rgba(0, 0, 0, 0);
+  }
+
   .shadow {
     box-shadow: 0.966391px 0.966391px 0.966391px rgba(0, 0, 0, 0.17);
     @apply p-3 border-[#3F3030] border-4;
   }
-  /* .shadow1 {
+
+  .shadow1 {
     filter: drop-shadow(75px 107px 52px rgba(0, 0, 0, 0.01))
       drop-shadow(42px 60px 44px rgba(0, 0, 0, 0.05))
       drop-shadow(19px 27px 33px rgba(0, 0, 0, 0.09))
@@ -316,7 +356,7 @@
       drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.09))
       drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.1))
       drop-shadow(0px 0px 0px rgba(0, 0, 0, 0.1));
-  } */
+  }
   .shadow3 {
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
   }
