@@ -3,19 +3,38 @@ import { useForm } from "react-hook-form";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
 import Loader from "@/components/svg/Loader";
 import Image from "next/image";
+import { getArtworkById, getArtworks, getCurrentExchangeRateETHUSD, getEditionById } from "lib/backend";
+import { useEffect } from "react";
 
-const PrintNft = () => {
+const PrintNft = ({ edition }) => {
   const [loading, setLoading] = useState(false);
+  const [price, setPrice] = useState(198);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues:{
+      firstName: edition?.buyer?.firstName,
+      lastName:edition?.buyer?.lastName
+    }
+  });
 
-  const onSubmitForm = (e) => {
-    e.preventDefault();
+  const handlePrice = async () => {
+      const res = await getCurrentExchangeRateETHUSD();
+      setPrice((res.USD * edition.shipping_price).toFixed(2));
   };
+
+  const onSubmitForm = (data) => {
+    console.log(data,"edition")
+  };
+
+  useEffect(() => {
+    if(edition){
+      handlePrice();
+    }
+  },[edition])
 
   return (
     <main className="pb-[120px] px-[15px] md:px-10 lg:flex justify-between gap-5">
@@ -174,12 +193,12 @@ const PrintNft = () => {
             <div className="">
               <div className="w-full border-t border-unveilBlack flex justify-between items-center h5 py-4">
                 <div>Insured carbon Neutral shipping</div>
-                <div>€99</div>
+                <div>${price}</div>
               </div>
 
               <div className="w-full border-t-2 border-unveilBlack flex justify-between items-center h5 pt-1.5">
                 <div>Total costs</div>
-                <div className="s2">€198</div>
+                <div className="s2">${price}</div>
               </div>
             </div>
 
@@ -220,10 +239,19 @@ const PrintNft = () => {
       <div className="w-full lg:min-w-[400px] lg:max-w-[460px] mt-10 lg:mt-[120px] relative">
         <div className="w-full lg:sticky lg:top-[120px]">
           <div className="w-full h-[526px] bg-[#F0EDE4] flex justify-center items-center mb-4">
-            <div className="bg-unveilWhite w-full max-w-[220px] h-[300px] border-[#3F3030] shadow p-0"></div>
+            <div className="bg-unveilWhite w-full max-w-[220px] h-[300px] border-[#3F3030] shadow p-0 relative">
+            <Image
+                src={edition?.artwork?.media_url}
+                alt="Nick Fancher"
+                fill={true}
+                style={{ objectFit: "contain" }}
+                priority
+                className="relative"
+              />
+            </div>
           </div>
-          <p className="text-center">Artwork Name</p>
-          <p className="text-unveilGrey text-center">Alexander Sporre</p>
+          <p className="text-center">{edition.artwork?.name}</p>
+          <p className="text-unveilGrey text-center">{edition?.owner?.firstName} {edition?.owner?.lastName}</p>
         </div>
       </div>
     </main>
@@ -233,7 +261,11 @@ const PrintNft = () => {
 export default PrintNft;
 
 export async function getServerSideProps({ params }) {
+  const edition = await getEditionById(params.id);
+
   return {
-    props: {},
+    props: {
+      edition,
+    },
   };
 }

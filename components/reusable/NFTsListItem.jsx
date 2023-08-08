@@ -29,7 +29,7 @@ const NFTsListItem = ({ edition, currentExchangeRate=0 }) => {
         <h4 className="mb-2 md:mb-0 s1">${(edition.price*currentExchangeRate).toFixed(2)} ({edition.price.toFixed(2)} ETH)</h4>
       </div>
       <div className="flex flex-col gap-1 md:flex-row">
-        {/* <button className=" btn btn-secondary">print</button> */}
+        {edition?.artwork?.edition_type=="NFT_Backed_by_print" && !edition.printed && <button  onClick={() => router.push(`/print/${edition?.id}`)} className=" btn btn-secondary">print</button>}
         <button onClick={() => router.push(`/gallery/artwork/${edition?.artwork?.id}`)} className=" btn btn-secondary">Show info</button>
       </div>
     </div>

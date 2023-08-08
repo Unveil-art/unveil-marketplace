@@ -11,8 +11,8 @@ import {
 const OwnedNFTs = () => {
   const { value: token } = useLocalStorage("token");
   const [ownedEditions, setOwnedEditions] = useState([]);
-  const [exchangeRate, setExchangeRate] = useState(0);
-
+  const [exchangeRate, setExchangeRate] = useState(0);  
+  console.log(ownedEditions, "owned")
   const init = async () => {
     try {
       const _data = await getCurrentExchangeRateETHUSD();
