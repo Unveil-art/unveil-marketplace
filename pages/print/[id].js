@@ -8,7 +8,7 @@ import { useEffect } from "react";
 
 const PrintNft = ({ edition }) => {
   const [loading, setLoading] = useState(false);
-  const [price, setPrice] = useState(198);
+  const [price, setPrice] = useState(0);
 
   const {
     register,
