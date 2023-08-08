@@ -26,6 +26,16 @@ function MyApp({ Component, pageProps }) {
     };
   }, [lenis]);
 
+  useEffect(() => {
+    if (
+      navigator.userAgent.indexOf("Safari") > -1 &&
+      navigator.userAgent.indexOf("Chrome") <= -1
+    ) {
+      // Safari
+      document.body.classList.add("safari");
+    }
+  }, []);
+
   return (
     <Web3AuthProvider>
       <StepProvider>
