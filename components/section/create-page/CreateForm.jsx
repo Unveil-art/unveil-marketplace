@@ -1108,7 +1108,7 @@ const CreateForm = ({
                       name={`technique[${i}]`}
                       disabled={soldCopies}
                       defaultValue={
-                        artwork.editions ? artwork.editions[i].technique : null
+                        artwork.editions ? artwork.editions[0].technique : null
                       }
                       {...register(`technique[${i}]`, {
                         required: "Required",

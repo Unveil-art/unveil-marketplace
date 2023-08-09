@@ -238,13 +238,28 @@ const Edit = ({ artwork }) => {
           });
         } else {
           editions.push({
-            price: parseInt(editionPrice[i]),
-            shipping_price: parseInt(shippingPrice[i]),
-            paper: null,
-            frame: null,
-            technique: null,
-            size: null,
+            paper: values.paper[i],
+            frame: values.frame[i],
+            technique: values.technique[i],
+            price: editionPricing[i].eth
+              ? parseFloat(editionPricing[i].eth)
+              : parseFloat(
+                  parseFloat(
+                    parseFloat(editionPricing[i].usd) * ethEx.ETH
+                  ).toFixed(4)
+                ),
+            shipping_price: shippingPricing[i].eth
+              ? parseFloat(shippingPricing[i].eth)
+              : parseFloat(
+                  parseFloat(
+                    parseFloat(shippingPricing[i].usd) * ethEx.ETH
+                  ).toFixed(4)
+                ),
+            size: editionPricing[i].activeSize,
+            json_uri: null,
             max_copies: 1,
+            token_id: null,
+            transaction_hash: null,
           });
         }
       });
