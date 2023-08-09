@@ -55,6 +55,7 @@ const CreateForm = ({
     { from: "First 12 months", percentage: "15%" },
   ]);
   const [royaltyTS, setRoyaltyTS] = useState({});
+  const [ethRate, setEthRate] = useState(0);
 
   const timestampMap = useMemo(() => {
     const _res = {};
@@ -201,6 +202,7 @@ const CreateForm = ({
 
   const handleUSD = async () => {
     const res = await getCurrentExchangeRateETHUSD();
+
     artwork.editions.forEach((edition) => {
       setEditionPricing((prevItems) => [
         ...prevItems,
@@ -220,6 +222,9 @@ const CreateForm = ({
         },
       ]);
     });
+
+    const ethEx = await getCurrentExchangeRateUSDETH();
+    setEthRate(ethEx.ETH);
   };
 
   const {
@@ -353,6 +358,7 @@ const CreateForm = ({
         updatedItems[index].eth = value;
       } else {
         updatedItems[index].usd = value;
+        updatedItems[index].eth = (value * ethRate).toFixed(4);
       }
       return updatedItems;
     });
