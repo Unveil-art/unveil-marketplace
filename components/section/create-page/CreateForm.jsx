@@ -1103,8 +1103,8 @@ const CreateForm = ({
                         {...register(`frame[${i}]`, { required: "Required" })}
                       >
                         <option>
-                          {frame.size}, {frame.colour} frame, White border{" "}
-                          {frame.border}
+                          {frame.frame}, {frame.size}, {frame.colour} frame,
+                          White border {frame.border}
                         </option>
                       </select>
                       {errors.frame && errors.frame[i] && (
