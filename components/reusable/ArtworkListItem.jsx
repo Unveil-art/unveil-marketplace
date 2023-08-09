@@ -89,7 +89,7 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
                 .call(function (error, result) {
                   console.log(result);
                 });
-              if(edition?.shipping_price){
+              if(edition?.shipping_price!==null){
                 const shippingPriceInWei = Web3.utils.toWei(edition?.shipping_price.toFixed(4));
                 const shipping_hash = await contract.methods
                 .getShippingHashMessage(
