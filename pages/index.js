@@ -15,7 +15,7 @@ import HomepageHero from "@/components/section/HomepageHero";
 import { getFAQ, getHomePage, getEditorials } from "../lib/strapi";
 import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 import { getFeaturedArtworks, getLatestArtworks } from "lib/backend";
-import ColorThief from "colorthief";
+import * as Vibrant from "node-vibrant";
 
 export default function Home({
   data,
@@ -70,13 +70,27 @@ export async function getServerSideProps() {
   const artworks = await getLatestArtworks();
   const featuredArtworks = await getFeaturedArtworks();
 
+  const modifiedFeaturedArtworks = await Promise.all(
+    featuredArtworks.map(async (artwork) => {
+      let v = new Vibrant(artwork.media_url, {
+        colorCount: 1,
+      });
+      const palette = await Vibrant.from(artwork.media_url).getPalette();
+
+      return {
+        ...artwork,
+        vibrant_color: palette.Vibrant.hex,
+      };
+    })
+  );
+
   return {
     props: {
       data,
       faq,
       editorials,
       artworks,
-      featuredArtworks,
+      featuredArtworks: modifiedFeaturedArtworks,
     },
   };
 }

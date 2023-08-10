@@ -22,6 +22,8 @@ const HomepageHero = ({ data, featuredArtworks }) => {
   const [accessOpen, setAccessOpen] = useState(false);
   const [background, setBackground] = useState("transparent");
 
+  console.log(featuredArtworks);
+
   const animateIn = useCallback(() => {
     let sliderTl = gsap.timeline({ paused: true });
     const progressTl = gsap.timeline();
@@ -36,17 +38,23 @@ const HomepageHero = ({ data, featuredArtworks }) => {
 
     const length = artworkContainers.length;
     let currentIndex = 0;
+    let previousIndex = 0;
     const timeToNextSlide = 5;
     let delay;
 
     const slideArtworkin = () => {
       sliderTl.clear();
+
       sliderTl.set(artworkContainers, {
         zIndex: 0,
       });
 
-      sliderTl.set(artworkContainers[currentIndex], {
+      sliderTl.set(artworkContainers[previousIndex], {
         zIndex: 1,
+      });
+
+      sliderTl.set(artworkContainers[currentIndex], {
+        zIndex: 2,
         opacity: 1,
       });
 
@@ -66,7 +74,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
 
       // get other artwork containers
       const otherArtworkContainers = artworkContainers.filter(
-        (artworkContainer, index) => index !== currentIndex
+        (_, index) => index !== currentIndex
       );
 
       gsap.to(otherArtworkContainers, {
@@ -131,6 +139,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
 
     sliderTl.eventCallback("onComplete", () => {
       progressAnimation();
+      previousIndex = currentIndex;
 
       delay = gsap.delayedCall(timeToNextSlide, () => {
         currentIndex++;
@@ -145,6 +154,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
       indicator.addEventListener("click", () => {
         // kill all animations
         if (i !== currentIndex) {
+          previousIndex = currentIndex;
           sliderTl.kill();
           progressTl.kill();
           delay.kill();
@@ -159,6 +169,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
 
           currentIndex = i;
           slideArtworkin();
+          sliderTl.play();
         }
       });
     });
@@ -286,91 +297,69 @@ const HomepageHero = ({ data, featuredArtworks }) => {
             data-speed="-0.05"
           >
             <div className="relative w-full h-full grid-area-1/1">
-              {/* {[1, 1, 1, 1].map((_, i) => ( */}
-              <Link
-                className="gsap-artwork-container opacity-0 overflow-hidden relative w-full h-full inline-block"
-                data-cursor="View Artwork"
-                data-cursor-color={data.topleft_color}
-                href={`/people/${data.topleft_id}`}
-              >
-                <div className="w-full h-full gsap-artwork">
-                  <Image
-                    src={data.topleft.data.attributes.url}
-                    alt={data.topleft.data.attributes.alt}
-                    fill={true}
-                    style={{ objectFit: "cover" }}
-                    priority
-                  />
-                </div>
-                <div className="absolute left-0 top-0 w-full h-full pointer-events-none black-gradient-2">
-                  <div className="absolute bottom-6 left-5 pointer-events-auto gsap-fade">
-                    <div className="flex">
-                      <span className="print">print</span>
-                      <div className="b5 text-unveilWhite ml-1.5">
-                        Edition of 5
+              {featuredArtworks.map((item, i) => (
+                <Link
+                  key={i}
+                  className="gsap-artwork-container opacity-0 overflow-hidden relative w-full h-full inline-block"
+                  data-cursor="View Artwork"
+                  data-cursor-color={item.vibrant_color}
+                  href={`/gallery/artwork/${item.id}`}
+                  style={{ zIndex: -i }}
+                >
+                  <div className="w-full h-full gsap-artwork">
+                    <Image
+                      src={item.media_url}
+                      alt={item.name}
+                      fill={true}
+                      style={{ objectFit: "cover" }}
+                      priority
+                    />
+                  </div>
+                  <div className="absolute left-0 top-0 w-full h-full pointer-events-none black-gradient-2">
+                    <div className="absolute bottom-6 left-5 pointer-events-auto gsap-fade">
+                      <div className="flex">
+                        {item.edition_type && (
+                          <>
+                            {item.edition_type === "NFT_Backed_by_print" && (
+                              <span className="nft">nft + print</span>
+                            )}
+                            {item.edition_type === "NFT_Only" && (
+                              <span className="nft">nft</span>
+                            )}
+                            {item.edition_type === "Print_Only" && (
+                              <span className="print">print</span>
+                            )}
+                          </>
+                        )}
+                        <div className="b5 text-unveilWhite ml-1.5">
+                          Edition of {item.editions?.length}
+                        </div>
+                      </div>
+                      <small className=" block text-white l2 text-[8px] md:text-[12px]">
+                        {item.name}
+                      </small>
+                      <div className="text-unveilWhite b4">
+                        €2920 <span className="b5">(1,02 ETH)</span>
                       </div>
                     </div>
-                    <small className=" block text-white l2 text-[8px] md:text-[12px]">
-                      {data.topleft_name}
-                    </small>
-                    <div className="text-unveilWhite b4">
-                      €2920 <span className="b5">(1,02 ETH)</span>
-                    </div>
                   </div>
-                </div>
-              </Link>
-
-              <Link
-                className="gsap-artwork-container opacity-0 overflow-hidden relative w-full h-full inline-block"
-                data-cursor="View Artwork"
-                data-cursor-color={data.bottomleft_color}
-                href={`/people/${data.bottomleft_id}`}
-              >
-                <div className="w-full h-full gsap-artwork">
-                  <Image
-                    src={data.bottomleft.data.attributes.url}
-                    alt={data.bottomleft.data.attributes.alt}
-                    fill={true}
-                    style={{ objectFit: "cover" }}
-                    priority
-                  />
-                </div>
-                <div className="absolute left-0 top-0 w-full h-full pointer-events-none black-gradient-2">
-                  <div className="absolute bottom-6 left-5 pointer-events-auto gsap-fade">
-                    <div className="flex">
-                      <span className="print">print</span>
-                      <div className="b5 text-unveilWhite ml-1.5">
-                        Edition of 5
-                      </div>
-                    </div>
-                    <small className=" block text-white l2 text-[8px] md:text-[12px]">
-                      {data.bottomleft_name}
-                    </small>
-                    <div className="text-unveilWhite b4">
-                      €2920 <span className="b5">(1,02 ETH)</span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-              {/* ))} */}
+                </Link>
+              ))}
             </div>
           </div>
           <div className="md:absolute md:mt-0 mt-4 left-1/2 transform md:-translate-x-1/2 flex gap-2 bottom-[13vh]">
-            <button className="w-[84px] h-[3px] rounded-[31px] overflow-hidden grid-area-1/1 gsap-indicator">
-              <span className="opacity-20 bg-unveilBlack block h-full w-full" />
-              <span
-                className="bg-unveilWhite relative gsap-progress opacity-0 block h-full w-full"
-                style={{ zIndex: 1 }}
-              />
-            </button>
-
-            <button className="w-[84px] h-[3px] rounded-[31px] overflow-hidden grid-area-1/1 gsap-indicator">
-              <span className="opacity-20 bg-unveilBlack block h-full w-full" />
-              <span
-                className="bg-unveilWhite relative gsap-progress opacity-0 block h-full w-full"
-                style={{ zIndex: 1 }}
-              />
-            </button>
+            {featuredArtworks.map((_, i) => (
+              <button
+                className="w-[84px] h-[3px] rounded-[31px] overflow-hidden grid-area-1/1 gsap-indicator"
+                key={i}
+              >
+                <span className="opacity-20 bg-unveilBlack block h-full w-full" />
+                <span
+                  className="bg-unveilWhite relative gsap-progress opacity-0 block h-full w-full"
+                  style={{ zIndex: 1 }}
+                />
+              </button>
+            ))}
           </div>
         </div>
         <div className="md:col-span-1 mt-[114px] mb-[69px] md:mb-0 md:mt-0 md:flex flex-col justify-center px-2 md:px-8">
@@ -391,20 +380,6 @@ const HomepageHero = ({ data, featuredArtworks }) => {
             Curated photography by renowned photographers, and icons of the
             future.
           </p>
-          {/* 
-          {artwork.edition_type && (
-            <>
-              {artwork.edition_type === "NFT_Backed_by_print" && (
-                <span className="nft-print">nft + print</span>
-              )}
-              {artwork.edition_type === "NFT_Only" && (
-                <span className="nft">nft</span>
-              )}
-              {artwork.edition_type === "Print_Only" && (
-                <span className="print">print</span>
-              )}
-            </>
-          )} */}
 
           <div className="flex gap-[10px] mt-5">
             <div className="gsap-stagger opacity-0">
