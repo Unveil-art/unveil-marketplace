@@ -191,6 +191,10 @@ const HomepageHero = ({ data, featuredArtworks }) => {
       },
     });
 
+    gsap.set(artworkContainers[0], {
+      opacity: 1,
+    });
+
     tl.fromTo(
       words,
       {
@@ -201,7 +205,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
         x: 0,
         autoAlpha: 1,
         duration: 1,
-        stagger: 0.3,
+        stagger: 0.2,
         ease: "expo.out",
       }
     )
@@ -218,7 +222,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
           stagger: 0.07,
           ease: "expo.out",
         },
-        "-=0.6"
+        "-=0.7"
       )
       .to(
         background,
@@ -232,20 +236,18 @@ const HomepageHero = ({ data, featuredArtworks }) => {
       .fromTo(
         artworkContainers[0],
         {
-          opacity: 0,
           scale: 0.6,
-          yPercent: -100,
+          yPercent: -200,
           // rotate: 20,
         },
         {
-          duration: 2,
-          opacity: 1,
+          duration: 1.5,
           scale: 1,
           yPercent: 0,
           rotate: 0,
           ease: "expo.out",
         },
-        "-=0.8"
+        "-=0.5"
       );
 
     tl.restart();
