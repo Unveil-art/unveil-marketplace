@@ -22,8 +22,6 @@ const HomepageHero = ({ data, featuredArtworks }) => {
   const [accessOpen, setAccessOpen] = useState(false);
   const [background, setBackground] = useState("transparent");
 
-  console.log(featuredArtworks);
-
   const animateIn = useCallback(() => {
     let sliderTl = gsap.timeline({ paused: true });
     const progressTl = gsap.timeline();
