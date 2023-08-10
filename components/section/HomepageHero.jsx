@@ -35,6 +35,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
     const background = query(".gsap-background");
     const artworkDetails = query(".gsap-fade");
     const words = query(".gsap-word");
+    const overflowEl = query(".gsap-overflow");
 
     const length = artworkContainers.length;
     let currentIndex = 0;
@@ -179,6 +180,10 @@ const HomepageHero = ({ data, featuredArtworks }) => {
       onComplete: () => {
         progressAnimation();
 
+        gsap.set(overflowEl, {
+          overflow: "hidden",
+        });
+
         delay = gsap.delayedCall(timeToNextSlide, () => {
           currentIndex++;
           if (currentIndex === length) {
@@ -191,63 +196,64 @@ const HomepageHero = ({ data, featuredArtworks }) => {
       },
     });
 
-    gsap.set(artworkContainers[0], {
+    gsap.set(background, {
+      backgroundColor: artworkContainers[0].dataset.cursorColor,
+    });
+    gsap.set(indicators, {
       opacity: 1,
     });
 
     tl.fromTo(
-      words,
+      [words, stagger],
       {
-        x: 10,
-        autoAlpha: 0,
+        xPercent: 150,
+        autoAlpha: 1,
       },
       {
-        x: 0,
+        xPercent: 0,
         autoAlpha: 1,
-        duration: 1,
-        stagger: 0.2,
+        duration: 2,
+        stagger: 0.05,
         ease: "expo.out",
       }
     )
       .fromTo(
-        stagger,
-        {
-          x: 10,
-          autoAlpha: 0,
-        },
-        {
-          x: 0,
-          autoAlpha: 1,
-          duration: 0.75,
-          stagger: 0.07,
-          ease: "expo.out",
-        },
-        "-=0.7"
-      )
-      .to(
         background,
         {
-          backgroundColor: artworkContainers[0].dataset.cursorColor,
-          duration: 0.5,
-          ease: "power1.easeIn",
-        },
-        "-=1.2"
-      )
-      .fromTo(
-        artworkContainers[0],
-        {
-          scale: 0.6,
-          yPercent: -200,
-          // rotate: 20,
+          xPercent: -100,
         },
         {
-          duration: 1.5,
-          scale: 1,
-          yPercent: 0,
-          rotate: 0,
+          xPercent: 0,
+          duration: 2,
           ease: "expo.out",
         },
-        "-=0.5"
+        "-=2.1"
+      )
+      .fromTo(
+        artworkContainers,
+        {
+          xPercent: -10,
+          autoAlpha: 1,
+        },
+        {
+          duration: 1,
+          stagger: 0.3,
+          xPercent: 0,
+          autoAlpha: 1,
+          ease: "expo.out",
+        },
+        "-=2.05"
+      )
+      .fromTo(
+        artworkDetails,
+        {
+          yPercent: 200,
+        },
+        {
+          duration: 0.75,
+          yPercent: 0,
+          ease: "expo.out",
+        }
       );
 
     tl.restart();
@@ -287,7 +293,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
   return (
     <>
       <section
-        className="md:h-[100vh] relative flex flex-col-reverse md:grid grid-cols-1 md:grid-cols-3"
+        className="md:h-[100vh] relative flex flex-col-reverse md:grid grid-cols-1 md:grid-cols-3 overflow-hidden"
         ref={el}
       >
         <div
@@ -295,7 +301,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
           style={{ backgroundColor: background }}
         >
           <div
-            className="max-w-[285px] md:max-w-[446px] w-full overflow-hidden rounded aspect-[4/5] gsap-parallax"
+            className="max-w-[285px] md:max-w-[446px] w-full rounded aspect-[4/5] gsap-parallax gsap-overflow"
             data-speed="-0.05"
           >
             <div className="relative w-full h-full grid-area-1/1">
@@ -317,7 +323,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
                       priority
                     />
                   </div>
-                  <div className="absolute left-0 top-0 w-full h-full pointer-events-none black-gradient-2">
+                  <div className="absolute left-0 top-0 w-full h-full pointer-events-none black-gradient-2 overflow-hidden">
                     <div className="absolute bottom-6 left-5 pointer-events-auto gsap-fade">
                       <div className="flex">
                         {item.edition_type && (
@@ -352,7 +358,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
           <div className="md:absolute md:mt-0 mt-4 left-1/2 transform md:-translate-x-1/2 flex gap-2 bottom-[13vh]">
             {featuredArtworks.map((_, i) => (
               <button
-                className="w-[84px] h-[3px] rounded-[31px] overflow-hidden grid-area-1/1 gsap-indicator"
+                className="w-[84px] h-[3px] rounded-[31px] overflow-hidden grid-area-1/1 gsap-indicator opacity-0"
                 key={i}
               >
                 <span className="opacity-20 bg-unveilBlack block h-full w-full" />
@@ -383,8 +389,8 @@ const HomepageHero = ({ data, featuredArtworks }) => {
             future.
           </p>
 
-          <div className="flex gap-[10px] mt-5">
-            <div className="gsap-stagger opacity-0">
+          <div className="flex gap-[10px] mt-5 gsap-stagger opacity-0">
+            <div>
               <Link href="/gallery">
                 {data.button_1_cursor_text && (
                   <button
@@ -403,7 +409,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
               </Link>
             </div>
             {/* Going to be a link */}
-            <div className="gsap-stagger opacity-0">
+            <div>
               {data.button_2_cursor_text && (
                 <button
                   onClick={() => setOpen(true)}
