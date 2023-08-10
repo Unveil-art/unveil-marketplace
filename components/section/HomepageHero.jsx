@@ -237,12 +237,12 @@ const HomepageHero = ({ data, featuredArtworks }) => {
         },
         {
           duration: 1,
-          stagger: 0.3,
+          stagger: 0.2,
           xPercent: 0,
           autoAlpha: 1,
           ease: "expo.out",
         },
-        "-=2.05"
+        "-=2"
       )
       .fromTo(
         artworkDetails,
