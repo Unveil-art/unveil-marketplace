@@ -43,7 +43,7 @@ const People = () => {
   }, [router.query]);
 
   return (
-    <main className="pt-[120px] min-h-screen overflow-y-hidden">
+    <main className="py-[120px] min-h-screen overflow-y-hidden">
       <Title title="People" />
       <OneLiner
         text="Top art photography projects for their excellence and stunning visuals."

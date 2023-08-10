@@ -74,13 +74,13 @@ const ItemStatistics = ({ artwork }) => {
             gsap.fromTo(
               cover,
               {
-                xPercent: 20,
-                opacity: 0,
+                xPercent: 200,
+                z: 10,
               },
               {
                 duration: 0.3,
                 xPercent: 0,
-                opacity: 1,
+                z: 0,
               }
             );
           }
@@ -88,9 +88,9 @@ const ItemStatistics = ({ artwork }) => {
         } else {
           if (isAnimationDone) {
             gsap.to(cover, {
-              duration: 0.3,
-              opacity: 0,
-              xPercent: 20,
+              duration: 0.5,
+              xPercent: 200,
+              z: 10,
             });
           }
           isAnimationDone = false;
@@ -106,7 +106,7 @@ const ItemStatistics = ({ artwork }) => {
         ref={artContainer}
       >
         <div
-          className={`mx-auto max-w-[204px] md:max-w-[265px] sticky top-[120px] aspect-[3/4] ${
+          className={`mx-auto max-w-[204px] md:max-w-[265px] sticky top-[120px] ${
             artwork.edition_type !== "NFT_Only" ? "frame-2" : ""
           }`}
         >
@@ -130,8 +130,8 @@ const ItemStatistics = ({ artwork }) => {
                 className="frame-brown"
               />
             </div>
-            <div className="absolute bottom-[120px] z-[1] left-[49.9%] transform -translate-x-1/2 max-w-[266px] md:max-w-[344px] w-full">
-              <div className="w-full h-full gsap-cover">
+            <div className="absolute bottom-[120px] z-[1] left-[49.9%] transform -translate-x-1/2 w-full overflow-hidden">
+              <div className="w-full h-full gsap-cover max-w-[266px] md:max-w-[344px] mx-auto">
                 <img src="/images/frame-cover.jpg" alt="frame cover" />
               </div>
             </div>

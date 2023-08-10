@@ -5,10 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { getUserName } from "lib/utils";
 import { getCurrentExchangeRateETHUSD } from "lib/backend";
+import ColorThief from "colorthief";
+import { darkenColor, isLight } from "lib/utils/color";
 
 const ProductCard = ({ rounded = false, item, hasMargin = true }) => {
   const [exchangeRate, setExchangeRate] = useState(1900);
   const [uniqueEditionTypes, setUniqueEditionTypes] = useState([]);
+  const [dominantColor, setDominantColor] = useState("rgba(21, 17, 0, 0.05)");
 
   useEffect(() => {
     if (item.title) {
@@ -30,6 +33,23 @@ const ProductCard = ({ rounded = false, item, hasMargin = true }) => {
       setUniqueEditionTypes(flatUniqueTypes);
     }
   }, []);
+
+  useEffect(() => {
+    const img = new window.Image();
+    img.src = item.media_url;
+    img.crossOrigin = "Anonymous";
+    const colorThief = new ColorThief();
+
+    img.onload = function () {
+      let color = colorThief.getColor(img);
+
+      if (isLight(color)) {
+        color = darkenColor(color, 30);
+      }
+
+      setDominantColor(`rgb(${color[0]}, ${color[1]}, ${color[2]})`);
+    };
+  }, [item.media_url]);
 
   const init = async () => {
     try {
@@ -61,14 +81,18 @@ const ProductCard = ({ rounded = false, item, hasMargin = true }) => {
           <div
             className={`${
               rounded && !item?.title ? "rounded-t-full" : ""
-            } bg-bgColor overflow-hidden aspect-[3/4] mb-1`}
+            } bg-bgColor overflow-hidden aspect-[3/4] mb-1 transition-colors duration-500`}
+            data-hover-bg
+            style={{
+              "--hover-bg-color": `${dominantColor}`,
+            }}
           >
             <div
               className={`${
                 rounded || item?.title
                   ? ""
                   : "mx-5 md:mx-10 w-[calc(100%-40px)] md:w-[calc(100%-80px)] shadow2"
-              } relative  h-full `}
+              } relative  h-full transition-colors`}
             >
               <Image
                 src={item.media_url}
@@ -88,7 +112,11 @@ const ProductCard = ({ rounded = false, item, hasMargin = true }) => {
           <div
             className={`${
               rounded ? "rounded-t-full" : ""
-            } bg-bgColor overflow-hidden aspect-[3/4] mb-1`}
+            } bg-bgColor overflow-hidden aspect-[3/4] mb-1 transition-colors duration-500`}
+            data-hover-bg
+            style={{
+              "--hover-bg-color": `${dominantColor}`,
+            }}
           >
             <div
               className={`${

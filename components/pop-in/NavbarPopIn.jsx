@@ -34,14 +34,35 @@ const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
           <div className="border-t-[3px] md:border-t-[5px] border-t-unveilBlack mt-[55px] md:mt-[50px]">
             <h4 className="b3 font-[500] mb-[10px] mt-8">Gallery</h4>
             <div className="flex flex-col gap-2">
-              <Link href="/gallery">
+              <Link href="/gallery?print">
+                <p
+                  onClick={() => setNavOpen(!navOpen)}
+                  className="cursor-pointer underline-on-hover s2"
+                >
+                  Prints Editions
+                </p>
+              </Link>
+
+              <Link href="/gallery?digital">
+                <p
+                  onClick={() => setNavOpen(!navOpen)}
+                  className="cursor-pointer underline-on-hover s2"
+                >
+                  Digital Editions
+                </p>
+              </Link>
+            </div>
+
+            <h4 className="b3 font-[500] mb-[10px] mt-8">Discover</h4>
+            <div className="flex flex-col gap-2">
+              {/* <Link href="/gallery">
                 <p
                   onClick={() => setNavOpen(!navOpen)}
                   className="cursor-pointer underline-on-hover s2"
                 >
                   Gallery
                 </p>
-              </Link>
+              </Link> */}
               <Link href="/people">
                 <p
                   onClick={() => setNavOpen(!navOpen)}
@@ -66,10 +87,6 @@ const NavbarPopIn = ({ navOpen, setNavOpen, navWarning }) => {
                   Curators
                 </p>
               </Link>
-            </div>
-
-            <h4 className="b3 font-[500] mb-[10px] mt-8">Discover</h4>
-            <div className="flex flex-col gap-2">
               <Link href="/editorial">
                 <p
                   onClick={() => setNavOpen(!navOpen)}

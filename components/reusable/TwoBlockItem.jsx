@@ -5,11 +5,14 @@ import Animate from "./Animate";
 import { getUserName } from "lib/utils";
 import { getCurrentExchangeRateETHUSD } from "lib/backend";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { darkenColor, isLight } from "lib/utils/color";
+import ColorThief from "colorthief";
 
 const TwoBlockItem = ({ item, i }) => {
   const [orientation, setOrientation] = useState(false);
   const [exchangeRate, setExchangeRate] = useState(1900);
   const [uniqueEditionTypes, setUniqueEditionTypes] = useState([]);
+  const [dominantColor, setDominantColor] = useState("rgba(21, 17, 0, 0.05)");
 
   useEffect(() => {
     if (item.title) {
@@ -53,14 +56,25 @@ const TwoBlockItem = ({ item, i }) => {
 
   useEffect(() => {
     const img = new window.Image();
+    img.src = item.media_url;
+    img.crossOrigin = "Anonymous";
+    const colorThief = new ColorThief();
+
     img.onload = function () {
+      let color = colorThief.getColor(img);
+
       if (this.width > this.height) {
         setOrientation(true);
       } else {
         setOrientation(false);
       }
+
+      if (isLight(color)) {
+        color = darkenColor(color, 30);
+      }
+
+      setDominantColor(`rgb(${color[0]}, ${color[1]}, ${color[2]})`);
     };
-    img.src = item.media_url;
   }, [item.media_url]);
 
   return (
@@ -69,7 +83,13 @@ const TwoBlockItem = ({ item, i }) => {
         <>
           {item.title && (
             <Link href={`/gallery/collection/${item.id}`}>
-              <div className="relative w-full overflow-hidden bg-bgColor aspect-square">
+              <div
+                className="relative w-full overflow-hidden bg-bgColor aspect-square transition-colors duration-500"
+                data-hover-bg
+                style={{
+                  "--hover-bg-color": `${dominantColor}`,
+                }}
+              >
                 <div
                   className={` ${
                     orientation
@@ -91,7 +111,13 @@ const TwoBlockItem = ({ item, i }) => {
           )}
           {item.name && (
             <Link href={`/gallery/artwork/${item.id}`}>
-              <div className="relative w-full overflow-hidden bg-bgColor aspect-square">
+              <div
+                className="relative w-full overflow-hidden bg-bgColor aspect-square transition-colors duration-500"
+                data-hover-bg
+                style={{
+                  "--hover-bg-color": `${dominantColor}`,
+                }}
+              >
                 <div
                   className={` ${
                     orientation

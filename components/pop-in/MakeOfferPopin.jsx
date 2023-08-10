@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
-import { useAsideAnimation } from "../../hooks/animations/useAsideAnimation";
+import { useAsideAnimation } from "@/hooks/animations/useAsideAnimation";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 import Close from "../svg/Close";
 import { makeOffer } from "lib/backend";
 import useLocalStorage from "@/hooks/useLocalStorage";
@@ -16,12 +17,20 @@ const MakeOfferPopIn = ({
   const { value } = useLocalStorage("token");
   const [loading, setLoading] = useState(false);
   const [ethAmount, setEthAmount] = useState();
+  const { authenticated } = useIsAuthenticated();
 
   const el = useRef();
 
   useAsideAnimation(el, offerOpen);
 
   const handleFormSubmit = async (e) => {
+    if (!authenticated) {
+      showTopStickyNotification("error", "Please log in to make an offer");
+      setOfferOpen(false);
+      setEdition(null);
+      return;
+    }
+
     e.preventDefault();
     const formData = new FormData(e.target);
     const message = formData.get("personal-message");
@@ -108,7 +117,7 @@ const MakeOfferPopIn = ({
                 data-lenis-prevent
                 className="textarea mt-2.5"
                 id="personal-message"
-                placeholder="Write a personal message (optional)"
+                placeholder="Write a personal message"
                 name="personal-message"
               />
               <button
