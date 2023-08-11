@@ -194,9 +194,6 @@ const HomepageHero = ({ data, featuredArtworks }) => {
       },
     });
 
-    gsap.set(background, {
-      backgroundColor: artworkContainers[0].dataset.cursorColor,
-    });
     gsap.set(indicators, {
       opacity: 1,
     });
@@ -223,6 +220,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
         {
           xPercent: 0,
           duration: 2,
+          backgroundColor: artworkContainers[0].dataset.cursorColor,
           ease: "expo.out",
         },
         "-=2.1"
