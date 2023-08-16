@@ -135,7 +135,7 @@ const PrintNft = ({ edition }) => {
     setFormData(data);
     console.log(data);
     if (provider) {
-      if (edition.shipping_signature) {
+      if (!edition.shipping_signature) {
         showTopStickyNotification("error", "Edition is not signed for Printing");
         return;
       }
