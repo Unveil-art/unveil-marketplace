@@ -9,6 +9,7 @@ import { Web3Context, rpcUrl } from "@/contexts/Web3AuthContext";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { CheckoutWithCard } from "@paperxyz/react-client-sdk";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 const PrintNft = ({ edition }) => {
   const [loading, setLoading] = useState(false);
@@ -103,7 +104,7 @@ const PrintNft = ({ edition }) => {
             clearInterval(_interval.current);
             clearTimeout(_timeout.current);
           } else if (data.result.status === "TRANSFER_FAILED") {
-            showTopStickyNotification("error", "Request Failed")
+            showTopStickyNotification("error", "Request Failed! Payment will be Refund in 5-7 working days")
             clearInterval(_interval.current);
             clearTimeout(_timeout.current);
           }
@@ -133,7 +134,7 @@ const PrintNft = ({ edition }) => {
 
   const onSubmitForm = async (data) => {
     setFormData(data);
-    console.log(data);
+    // console.log(data);
     if (provider) {
       if (!edition.shipping_signature) {
         showTopStickyNotification("error", "Edition is not signed for Printing");
