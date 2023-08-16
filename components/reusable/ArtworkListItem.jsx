@@ -79,33 +79,46 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
                 edition.signature
               );
             } else {
-              if(!edition.buyer_id || edition.buyer_id===edition.owner_id){
+              if (!edition.buyer_id || edition.buyer_id === edition.owner_id) {
                 const hash = await contract.methods
-                .getHashMessage(
-                  item.contract_address,
-                  item.json_uri,
-                  priceInWei
-                )
-                .call(function (error, result) {
-                  console.log(result);
-                });
-              if(edition?.shipping_price!==null){
-                const shippingPriceInWei = Web3.utils.toWei(edition?.shipping_price.toFixed(4));
-                const shipping_hash = await contract.methods
-                .getShippingHashMessage(
-                  item.contract_address,
-                  item.json_uri,
-                  shippingPriceInWei,
-                  "shipping"
-                ).call();
-                const shipping_signature = await rpc.signMessage(shipping_hash, wallet, "");
-                const signature = await rpc.signMessage(hash, wallet, "");
-                await listEdition(value, edition.id, !list.listed, signature,shipping_signature);
-              }else{
-                const signature = await rpc.signMessage(hash, wallet, "");
-                await listEdition(value, edition.id, !list.listed, signature);
-              }
-              
+                  .getHashMessage(
+                    item.contract_address,
+                    item.json_uri,
+                    priceInWei
+                  )
+                  .call(function (error, result) {
+                    console.log(result);
+                  });
+                if (edition?.shipping_price !== null) {
+                  const shippingPriceInWei = Web3.utils.toWei(edition?.shipping_price.toFixed(4));
+                  const shipping_hash = await contract.methods
+                    .getShippingHashMessage(
+                      item.contract_address,
+                      item.json_uri,
+                      shippingPriceInWei,
+                      "shipping"
+                    ).call();
+                  const shipping_signature = await rpc.signMessage(shipping_hash, wallet, "");
+                  const signature = await rpc.signMessage(hash, wallet, "");
+                  await listEdition(value, edition.id, !list.listed, signature, shipping_signature);
+                } else {
+                  const signature = await rpc.signMessage(hash, wallet, "");
+                  await listEdition(value, edition.id, !list.listed, signature);
+                }
+
+              } else {
+                if (edition?.shipping_price !== null) {
+                  const shippingPriceInWei = Web3.utils.toWei(edition?.shipping_price.toFixed(4));
+                  const shipping_hash = await contract.methods
+                    .getShippingHashMessage(
+                      item.contract_address,
+                      item.json_uri,
+                      shippingPriceInWei,
+                      "shipping"
+                    ).call();
+                  const shipping_signature = await rpc.signMessage(shipping_hash, wallet, "");
+                  await listEdition(value, edition.id, !list.listed, edition.signature, shipping_signature);
+                }
               }
             }
             if (fetchUser) {
@@ -140,8 +153,8 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
             wishlist
               ? `/gallery/artwork/${item.id}`
               : item.listed
-              ? `/gallery/artwork/${item.id}`
-              : `/artworks/${item.id}`
+                ? `/gallery/artwork/${item.id}`
+                : `/artworks/${item.id}`
           }
           className=" max-w-[106px] flex items-center justify-center min-h-[136px] min-w-[106px p-5 md:max-w-[120px] md:min-h-[140px] md:min-w-[120px] bg-bgColor my-[10px]"
         >
@@ -188,9 +201,8 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
             <button
               disabled={loading}
               onClick={(e) => handleListing(e)}
-              className={` btn btn-ghost ${
-                list.listed ? "bg-[#D6471A]" : "bg-unveilBlack"
-              } md:block text-white`}
+              className={` btn btn-ghost ${list.listed ? "bg-[#D6471A]" : "bg-unveilBlack"
+                } md:block text-white`}
             >
               {loading && (
                 <div className="flex justify-center h-[25px] items-center animate-spin">
