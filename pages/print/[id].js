@@ -183,8 +183,8 @@ const PrintNft = ({ edition }) => {
         city: data.city,
         country: data.country,
         phone: data.phone,
-        shipping_charge: edition.shipping_charge,
-        total_cost: edition.shipping_charge,
+        shipping_charge: parseFloat(edition.shipping_price.toFixed(4)),
+        total_cost: parseFloat(edition.shipping_price.toFixed(4)),
       });
 
       await postTransaction(token, {
