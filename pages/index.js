@@ -10,11 +10,20 @@ import FAQ from "../components/section/FAQ";
 import WhyCollect from "../components/section/WhyCollect";
 import NewlyCurated from "../components/section/NewlyCurated";
 import Editorial from "../components/section/Editorial";
+import HomepageHero from "@/components/section/HomepageHero";
 
 import { getFAQ, getHomePage, getEditorials } from "../lib/strapi";
 import useIsAuthenticated from "@/hooks/useIsAuthenticated";
+import { getFeaturedArtworks, getLatestArtworks } from "lib/backend";
+import * as Vibrant from "node-vibrant";
 
-export default function Home({ data, faq, editorials }) {
+export default function Home({
+  data,
+  faq,
+  editorials,
+  artworks,
+  featuredArtworks,
+}) {
   const homeData = data.data[0].attributes;
   const faqData = faq.data[0].attributes.faq;
   const editorialData = editorials.data;
@@ -22,8 +31,10 @@ export default function Home({ data, faq, editorials }) {
 
   return (
     <>
-      <FloatingArt data={homeData.page1} />
+      <HomepageHero data={homeData.page1} featuredArtworks={featuredArtworks} />
+      {/* <FloatingArt data={homeData.page1} /> */}
       <GridColThree data={homeData.page1.blocks} />
+      <NewlyCurated data={homeData.page3} artworks={artworks} />
       <Collection
         data={homeData.page5}
         oneLiner={homeData.page5.oneliner}
@@ -40,7 +51,6 @@ export default function Home({ data, faq, editorials }) {
         color={homeData.page2.fontcolor}
         imageMargin={homeData.page2.margin}
       />
-      <NewlyCurated data={homeData.page3} />
       <TrustedPartners data={homeData.page4} />
       <RequestAccess
         data={homeData.page6}
@@ -57,11 +67,30 @@ export async function getServerSideProps() {
   const data = await getHomePage();
   const faq = await getFAQ();
   const editorials = await getEditorials();
+  const artworks = await getLatestArtworks();
+  const featuredArtworks = await getFeaturedArtworks();
+
+  const modifiedFeaturedArtworks = await Promise.all(
+    featuredArtworks.map(async (artwork) => {
+      let v = new Vibrant(artwork.media_url, {
+        colorCount: 1,
+      });
+      const palette = await Vibrant.from(artwork.media_url).getPalette();
+
+      return {
+        ...artwork,
+        vibrant_color: palette.Vibrant.hex,
+      };
+    })
+  );
+
   return {
     props: {
       data,
       faq,
       editorials,
+      artworks,
+      featuredArtworks: modifiedFeaturedArtworks,
     },
   };
 }

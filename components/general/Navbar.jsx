@@ -2,7 +2,6 @@ import { gsap } from "gsap";
 import { useRef, useState, useEffect, useContext } from "react";
 import Router, { useRouter } from "next/router";
 import Link from "next/link";
-
 import Logo from "../svg/Logo";
 import Account from "../svg/Account";
 import NavbarPopIn from "../pop-in/NavbarPopIn";
@@ -13,12 +12,14 @@ import { StepContext } from "@/contexts/StepContext";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 import { getHomePage } from "../../lib/strapi";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { useLenis } from "@studio-freight/react-lenis";
 import Inbox from "../svg/Inbox";
 import InboxPopIn from "../pop-in/InboxPopIn";
 
 const Navbar = ({ value }) => {
   const { login, logout, email, session } = useContext(Web3Context);
   const el = useRef();
+  const query = gsap.utils.selector(el);
   const [loggedIn, setLoggedIn] = useState(false);
   const [inboxOpen, setInboxOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
@@ -67,21 +68,64 @@ const Navbar = ({ value }) => {
     }
   }, [session]);
 
+  useLenis(({ direction }) => {
+    const hide = query(".gsap-hide");
+    if (direction === 1) {
+      gsap.to(hide, { autoAlpha: 0, duration: 0.4 });
+    } else if (direction === -1) {
+      gsap.to(hide, { autoAlpha: 1, duration: 0.4 });
+    }
+  }, []);
+
   useEffect(() => {
-    const delay = Router.route === "/" ? 2.5 : 0.0;
-    gsap.fromTo(
-      el.current,
-      {
-        autoAlpha: 0,
-      },
-      {
-        display: "block",
-        autoAlpha: 1,
-        duration: 0.4,
-        ease: "none",
-        delay,
-      }
-    );
+    const isHome = Router.route === "/";
+
+    if (isHome) {
+      const stagger = gsap.utils.toArray(".gsap-menu-stagger");
+
+      gsap.fromTo(
+        el.current,
+        {
+          autoAlpha: 1,
+        },
+        {
+          display: "block",
+          autoAlpha: 1,
+          ease: "none",
+        }
+      );
+
+      gsap.fromTo(
+        stagger,
+        {
+          autoAlpha: 1,
+          y: -80,
+        },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.8,
+          delay: 0.4,
+          ease: "none",
+          stagger: {
+            amount: 0.3,
+          },
+        }
+      );
+    } else {
+      gsap.fromTo(
+        el.current,
+        {
+          autoAlpha: 0,
+        },
+        {
+          display: "block",
+          autoAlpha: 1,
+          duration: 0.4,
+          ease: "none",
+        }
+      );
+    }
   }, []);
 
   useEffect(() => {
@@ -105,7 +149,7 @@ const Navbar = ({ value }) => {
             {!isArrow && (
               <div
                 onClick={() => handleOpen(setNavOpen, navOpen)}
-                className="relative mt-2 md:mt-0 w-[20px] md:w-[31px] h-[12px] group cursor-pointer"
+                className="relative mt-2 md:mt-0 w-[20px] md:w-[31px] h-[12px] group cursor-pointer gsap-menu-stagger"
               >
                 <div
                   style={{ backgroundColor: color }}
@@ -119,7 +163,7 @@ const Navbar = ({ value }) => {
             )}
             {isArrow && (
               <div
-                className="rotate-180 cursor-pointer"
+                className="rotate-180 cursor-pointer gsap-menu-stagger"
                 onClick={() => {
                   if (step === 1) {
                     router.back();
@@ -134,7 +178,7 @@ const Navbar = ({ value }) => {
             <div className="xl:flex items-center ml-14 gap-6 hidden">
               <Link
                 href="/gallery?print"
-                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px]"
+                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px] gsap-menu-stagger gsap-hide"
                 style={{ color }}
               >
                 Prints Editions
@@ -142,7 +186,7 @@ const Navbar = ({ value }) => {
 
               <Link
                 href="/gallery?digital"
-                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px]"
+                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px] gsap-menu-stagger gsap-hide"
                 style={{ color }}
               >
                 Digital Editions
@@ -151,7 +195,7 @@ const Navbar = ({ value }) => {
           </div>
 
           <Link href="/">
-            <div className="w-[106px] md:w-[144px] top-2 md:top-0 left-1/2 -translate-x-1/2 absolute cursor-pointer">
+            <div className="w-[106px] md:w-[144px] top-2 md:top-0 left-1/2 -translate-x-1/2 absolute cursor-pointer gsap-menu-stagger">
               <Logo color={color} />
             </div>
           </Link>
@@ -164,11 +208,11 @@ const Navbar = ({ value }) => {
               {unreadCount>0 && <div className="bg-red-500 absolute -top-2 -right-2 p-1 text-white text-xs rounded-full px-2">{unreadCount > 99 ? "99+": unreadCount}</div>}
             </div>} */}
 
-            <div className="xl:flex items-center mr-8 gap-4 hidden">
+            <div className="xl:flex items-center mr-8 gap-4 hidden gsap-menu-stagger">
               <a
                 href="https://learn.unveil.art/"
                 target="_blank"
-                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px]"
+                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px] gsap-hide"
               >
                 How it works
               </a>
@@ -176,13 +220,13 @@ const Navbar = ({ value }) => {
               <a
                 href="https://learn.unveil.art/about"
                 target="_blank"
-                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px]"
+                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px] gsap-menu-stagger gsap-hide"
               >
                 About
               </a>
               <Link
                 href="/search"
-                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px]"
+                className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px] gsap-menu-stagger gsap-hide"
               >
                 Search
               </Link>
@@ -192,7 +236,7 @@ const Navbar = ({ value }) => {
             {value && (
               <div
                 onClick={() => handleOpen(setLoggedIn, loggedIn)}
-                className="z-40 mt-2 scale-75 cursor-pointer md:mt-0 md:scale-100"
+                className="z-40 mt-2 scale-75 cursor-pointer md:mt-0 md:scale-100 gsap-menu-stagger"
               >
                 <Account color={accountColor} />
               </div>
@@ -201,7 +245,7 @@ const Navbar = ({ value }) => {
             {!value && (
               <div
                 onClick={() => handleOpen(setLoginOpen, loginOpen)}
-                className="z-40 mt-2 cursor-pointer md:mt-0"
+                className="z-40 mt-2 cursor-pointer md:mt-0 gsap-menu-stagger"
               >
                 <p
                   style={{ color: accountColor }}

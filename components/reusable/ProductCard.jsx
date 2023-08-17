@@ -8,7 +8,7 @@ import { getCurrentExchangeRateETHUSD } from "lib/backend";
 import ColorThief from "colorthief";
 import { darkenColor, isLight } from "lib/utils/color";
 
-const ProductCard = ({ rounded = false, item }) => {
+const ProductCard = ({ rounded = false, item, hasMargin = true }) => {
   const [exchangeRate, setExchangeRate] = useState(1900);
   const [uniqueEditionTypes, setUniqueEditionTypes] = useState([]);
   const [dominantColor, setDominantColor] = useState("rgba(21, 17, 0, 0.05)");
@@ -74,7 +74,7 @@ const ProductCard = ({ rounded = false, item }) => {
         alpha: true,
         delay: "random",
       }}
-      className="[&:nth-child(3)]:mt-[120px]"
+      className={hasMargin && `[&:nth-child(3)]:mt-[120px]`}
     >
       {item?.title && (
         <Link href={`/gallery/collection/${item.id}`}>
