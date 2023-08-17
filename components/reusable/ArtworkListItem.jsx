@@ -89,36 +89,10 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
                   .call(function (error, result) {
                     console.log(result);
                   });
-                if (edition?.shipping_price !== null) {
-                  const shippingPriceInWei = Web3.utils.toWei(edition?.shipping_price.toFixed(4));
-                  const shipping_hash = await contract.methods
-                    .getShippingHashMessage(
-                      item.contract_address,
-                      item.json_uri,
-                      shippingPriceInWei,
-                      "shipping"
-                    ).call();
-                  const shipping_signature = await rpc.signMessage(shipping_hash, wallet, "");
-                  const signature = await rpc.signMessage(hash, wallet, "");
-                  await listEdition(value, edition.id, !list.listed, signature, shipping_signature);
-                } else {
-                  const signature = await rpc.signMessage(hash, wallet, "");
-                  await listEdition(value, edition.id, !list.listed, signature);
-                }
+                
+                const signature = await rpc.signMessage(hash, wallet, "");
+                await listEdition(value, edition.id, !list.listed, signature);
 
-              } else {
-                if (edition?.shipping_price !== null) {
-                  const shippingPriceInWei = Web3.utils.toWei(edition?.shipping_price.toFixed(4));
-                  const shipping_hash = await contract.methods
-                    .getShippingHashMessage(
-                      item.contract_address,
-                      item.json_uri,
-                      shippingPriceInWei,
-                      "shipping"
-                    ).call();
-                  const shipping_signature = await rpc.signMessage(shipping_hash, wallet, "");
-                  await listEdition(value, edition.id, !list.listed, edition.signature, shipping_signature);
-                }
               }
             }
             if (fetchUser) {
