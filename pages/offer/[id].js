@@ -230,10 +230,10 @@ const Details = () => {
             </div>
           </div>
           <div className="w-full lg:min-w-[400px] lg:max-w-[460px] mt-10 lg:mt-[120px] relative">
-            <div className="w-full lg:sticky lg:top-[120px]">
-              <div className="w-full h-[526px] bg-[#F0EDE4] flex justify-center items-center mb-4">
-                <div className="bg-unveilWhite w-full max-w-[220px] h-[300px] border-[#3F3030] shadow p-0 relative">
-                  {artwork && (
+            {artwork && (
+              <div className="w-full lg:sticky lg:top-[120px]">
+                <div className="w-full h-[526px] bg-[#F0EDE4] flex justify-center items-center mb-4">
+                  <div className="bg-unveilWhite w-full max-w-[220px] h-[300px] border-[#3F3030] shadow p-0 relative">
                     <Image
                       src={artwork?.media_url}
                       alt={artwork?.name}
@@ -242,12 +242,14 @@ const Details = () => {
                       priority
                       className="relative"
                     />
-                  )}
+                  </div>
                 </div>
+                <p className="text-center">{artwork.name}</p>
+                <p className="text-unveilGrey text-center">
+                  {artwork.owner.firstName}
+                </p>
               </div>
-              <p className="text-center">Artwork Name</p>
-              <p className="text-unveilGrey text-center">Alexander Sporre</p>
-            </div>
+            )}
           </div>
         </div>
       ) : (
