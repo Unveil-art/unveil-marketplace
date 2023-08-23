@@ -289,7 +289,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
   return (
     <>
       <section
-        className="md:h-[100vh] relative flex flex-col-reverse md:grid grid-cols-1 md:grid-cols-3 overflow-hidden"
+        className="md:h-[100vh] relative flex flex-col-reverse md:grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-8 overflow-hidden"
         ref={el}
       >
         <div
@@ -366,7 +366,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
             ))}
           </div>
         </div>
-        <div className="md:col-span-1 mt-[114px] mb-[69px] md:mb-0 md:mt-0 md:flex flex-col justify-center px-2 md:px-8">
+        <div className="md:col-span-1 mt-[114px] mb-[69px] md:mb-0 md:mt-0 md:flex flex-col justify-center px-2 md:pr-8 md:px-0">
           <h1 className="gsap-title h3">
             {heading[0].split(" ").map((word, index) => (
               <span

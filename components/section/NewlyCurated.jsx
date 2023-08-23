@@ -13,7 +13,7 @@ const NewlyCurated = ({ data, artworks }) => {
     <section className="pt-10 md:pt-[180px] pb-[130px]">
       <Title title={data.heading} />
       <OneLiner text={data.description} />
-      <div className="grid mx-[15px] md:mx-10 gap-x-10 gap-y-8 grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
+      <div className="grid mx-[15px] md:mx-10 gap-x-4 md:gap-x-10 gap-y-8 grid-cols-2 md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
         {artworks?.map((artwork, i) => (
           <ProductCard item={artwork} key={i} hasMargin={false} />
         ))}
