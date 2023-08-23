@@ -4,6 +4,7 @@ import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
 import Loader from "@/components/svg/Loader";
 import Image from "next/image";
 import {
+  canMakePrintRequest,
   getClientSecretForShipping,
   getCurrentExchangeRateETHUSD,
   getEditionById,
@@ -215,9 +216,25 @@ const PrintNft = ({ edition }) => {
         );
         return;
       }
-      if (payment === "Creditcard")
-        getShippingSecret(token, edition.artwork_id, edition.id, wallet);
-      if (payment === "Wallet") payWithWallet(data);
+      try {
+        setLoading(true);
+        const eligible = await canMakePrintRequest(token, edition.id);
+        if (!eligible) {
+          showTopStickyNotification(
+            "error",
+            "Already a request is under Process"
+          );
+          setLoading(false);
+        } else {
+          setLoading(false);
+          if (payment === "Creditcard")
+            getShippingSecret(token, edition.artwork_id, edition.id, wallet);
+          if (payment === "Wallet") payWithWallet(data);
+        }
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+      }
     } else {
       showTopStickyNotification(
         "error",
@@ -434,17 +451,19 @@ const PrintNft = ({ edition }) => {
                 </div>
               </div>
 
-              {payment!=="" && <button
-                className="flex items-center justify-center mt-10 mb-10 btn btn-primary btn-lg btn-full md:btn-wide"
-                type="submit"
-              >
-                {loading && (
-                  <div className="h-[25px] animate-spin flex items-center">
-                    <Loader color="#F6F4ED" />
-                  </div>
-                )}
-                {!loading && <>Request Print</>}
-              </button>}
+              {payment !== "" && (
+                <button
+                  className="flex items-center justify-center mt-10 mb-10 btn btn-primary btn-lg btn-full md:btn-wide"
+                  type="submit"
+                >
+                  {loading && (
+                    <div className="h-[25px] animate-spin flex items-center">
+                      <Loader color="#F6F4ED" />
+                    </div>
+                  )}
+                  {!loading && <>Request Print</>}
+                </button>
+              )}
             </form>
             {payment === "" && (
               <div className="flex my-4 flex-col gap-1">
