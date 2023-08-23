@@ -201,7 +201,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
     tl.fromTo(
       [words, stagger],
       {
-        xPercent: 150,
+        xPercent: size.width > 768 ? 150 : -100,
         autoAlpha: 1,
       },
       {
@@ -293,11 +293,11 @@ const HomepageHero = ({ data, featuredArtworks }) => {
         ref={el}
       >
         <div
-          className="md:col-span-2 flex flex-col md:flex-row md:pt-0 pt-12 md:pb-0 pb-10 items-center justify-center relative gsap-background"
+          className="md:col-span-2 flex flex-col md:pt-0 pt-12 md:pb-0 pb-10 items-center justify-center relative gsap-background"
           style={{ backgroundColor: background }}
         >
           <div
-            className="max-w-[285px] md:max-w-[446px] w-full rounded aspect-[4/5] gsap-parallax gsap-overflow"
+            className="max-w-[285px] md:max-w-[446px] 2xl:max-w-[600px] w-full rounded aspect-[4/5] gsap-parallax gsap-overflow"
             data-speed="-0.05"
           >
             <div className="relative w-full h-full grid-area-1/1">
@@ -351,7 +351,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
               ))}
             </div>
           </div>
-          <div className="md:absolute md:mt-0 mt-4 left-1/2 transform md:-translate-x-1/2 flex gap-2 bottom-[13vh]">
+          <div className="mt-4 flex gap-2">
             {featuredArtworks.map((_, i) => (
               <button
                 className="w-[84px] h-[3px] rounded-[31px] overflow-hidden grid-area-1/1 gsap-indicator opacity-0"
