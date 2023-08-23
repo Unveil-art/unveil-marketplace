@@ -142,9 +142,21 @@ const PrintRequest = () => {
           <div className="lg:flex justify-center w-full mt-[120px]">
             <div className="lg:max-w-2xl">
               <h1 className="lg:mb-20 mb-4">New Print Request</h1>
-              <p className="s2 lg:mb-10 mb-8">
-                Good news! you have recieved a print request
-              </p>
+              {printRequest.status === "ShipmentDelivered" && (
+                <p className="s2 lg:mb-10 mb-8">
+                  The print has been delivered to its owner
+                </p>
+              )}
+              {printRequest.status === "Activated" && (
+                <p className="s2 lg:mb-10 mb-8">
+                  Good news! you have recieved a print request
+                </p>
+              )}
+              {printRequest.status === "ArtistConfirmed" && (
+                <p className="s2 lg:mb-10 mb-8">
+                  You have accepted the print request
+                </p>
+              )}
               <div>
                 <div>
                   <h2 className="b3 lg:mb-6 mb-3">Shipping info</h2>

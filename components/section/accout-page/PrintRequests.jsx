@@ -40,8 +40,10 @@ const PrintRequests = ({ user }) => {
   // const acceptedOffers = offers.filter((offer) => offer.status === "ACCEPTED");
   // const rejectedOffers = offers.filter((offer) => offer.status === "REJECTED");
 
-  const activatedRequests = requests.filter(
-    (request) => request.status === "Activated"
+  const activatedRequests = requests.filter((request) =>
+    ["Activated", "ArtistConfirmed", "ShipmentDelivered"].includes(
+      request.status
+    )
   );
 
   useEffect(() => {
