@@ -21,9 +21,9 @@ const PrintRequests = ({ user }) => {
       setExchangeRate(_data.USD);
       let requestsData;
 
-      if (filter === 0) {
+      if (filter === 0 && user.role === "artist") {
         requestsData = await getPrintRequests(token, user.id);
-      } else if (filter === 1) {
+      } else {
         requestsData = await getSentPrintRequests(token, user.id);
       }
       setRequests(requestsData);
@@ -75,14 +75,18 @@ const PrintRequests = ({ user }) => {
           <div>
             {/* <h3 className="b3 mb-[15px] text-[17px]">Print Requests</h3> */}
             <div className="flex gap-2 overflow-auto md:pb-4 pb-2 flex-nowrap whitespace-nowrap">
-              <span
-                onClick={() => setFilter(0)}
-                className={`${
-                  filter === 0 ? "border-unveilBlack" : "border-unveilDrakGray"
-                } px-2 cursor-pointer border rounded-full  l2`}
-              >
-                Received
-              </span>
+              {user.role === "artist" && (
+                <span
+                  onClick={() => setFilter(0)}
+                  className={`${
+                    filter === 0
+                      ? "border-unveilBlack"
+                      : "border-unveilDrakGray"
+                  } px-2 cursor-pointer border rounded-full  l2`}
+                >
+                  Received
+                </span>
+              )}
               <span
                 onClick={() => setFilter(1)}
                 className={`${
