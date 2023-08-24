@@ -5,32 +5,28 @@ import Animate from "@/components/reusable/Animate";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import {
   getCurrentExchangeRateETHUSD,
-  getOwnedNfts,
-  getAllOffers,
-  getUserMe,
   getPrintRequests,
+  getSentPrintRequests,
 } from "lib/backend";
 
 const PrintRequests = ({ user }) => {
   const { value: token } = useLocalStorage("token");
-  const [ownedEditions, setOwnedEditions] = useState([]);
   const [exchangeRate, setExchangeRate] = useState(0);
-  const [offers, setOffers] = useState([]);
   const [requests, setRequests] = useState([]);
+  const [filter, setFilter] = useState(0);
 
   const init = async () => {
     try {
       const _data = await getCurrentExchangeRateETHUSD();
       setExchangeRate(_data.USD);
-      const data = await getUserMe(token);
-      const user_id = data.id;
-      const nfts = await getOwnedNfts(user_id);
-      const offers = await getAllOffers(token);
+      let requestsData;
 
-      const requestsData = await getPrintRequests(token, user.id);
+      if (filter === 0) {
+        requestsData = await getPrintRequests(token, user.id);
+      } else if (filter === 1) {
+        requestsData = await getSentPrintRequests(token, user.id);
+      }
       setRequests(requestsData);
-      setOwnedEditions(nfts);
-      setOffers(offers);
     } catch (err) {
       console.log(err);
     }
@@ -51,6 +47,15 @@ const PrintRequests = ({ user }) => {
       init();
     }
   }, [token]);
+
+  useEffect(() => {
+    if (filter === 0) {
+      init();
+    } else if (filter === 1) {
+      init();
+    } else {
+    }
+  }, [filter]);
   return (
     // TODO: buttons eroner in mobile
     <Animate options={{ alpha: true }}>
@@ -68,7 +73,26 @@ const PrintRequests = ({ user }) => {
 
         {activatedRequests.length !== 0 && (
           <div>
-            <h3 className="b3 mb-[15px] text-[17px]">Print Requests</h3>
+            {/* <h3 className="b3 mb-[15px] text-[17px]">Print Requests</h3> */}
+            <div className="flex gap-2 overflow-auto md:pb-4 pb-2 flex-nowrap whitespace-nowrap">
+              <span
+                onClick={() => setFilter(0)}
+                className={`${
+                  filter === 0 ? "border-unveilBlack" : "border-unveilDrakGray"
+                } px-2 cursor-pointer border rounded-full  l2`}
+              >
+                Received
+              </span>
+              <span
+                onClick={() => setFilter(1)}
+                className={`${
+                  filter === 1 ? "border-unveilBlack" : "border-unveilDrakGray"
+                } px-2 cursor-pointer border rounded-full  l2`}
+              >
+                Sent
+              </span>
+            </div>
+
             <hr className="mb-[15px] h-[2px] bg-unveilGreen" />
             {activatedRequests.map((offer, i) => (
               <PrintListItem
