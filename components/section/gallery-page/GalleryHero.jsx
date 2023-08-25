@@ -210,8 +210,8 @@ const GalleryHero = ({ artwork, dominantColor }) => {
     frameObject = {
       frame: arr[0],
       size: arr[1],
-      color: arr[2].split(" ")[0],
-      border: arr[3].split(" ")[2],
+      color: arr[2]?.split(" ")[0],
+      border: arr[3]?.split(" ")[2],
     };
   }
 

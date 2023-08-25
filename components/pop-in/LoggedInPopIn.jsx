@@ -50,7 +50,7 @@ const LoggedInPopIn = ({ setLoggedIn, loggedIn }) => {
                 <p className=" b3">Account name</p>
                 <div className="px-5 md:px-14 flex justify-center">
                   <p className="truncate l2 mr-1">
-                    {wallet.slice(0, 4)}...{wallet.slice(-4)}
+                    {wallet?.slice(0, 4)}...{wallet?.slice(-4)}
                   </p>
                   <button onClick={handleCopy}>
                     <Copy />

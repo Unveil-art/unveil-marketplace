@@ -19,8 +19,12 @@ const CreateForm = ({
   artwork = false,
   editionPrice,
   setEditionPrice,
-  setEditionPricing,
   editionPricing,
+  setEditionPricing,
+  shippingPrice,
+  setShippingPrice,
+  shippingPricing,
+  setShippingPricing,
   setActiveSize,
   activeSize,
   errors,
@@ -51,6 +55,7 @@ const CreateForm = ({
     { from: "First 12 months", percentage: "15%" },
   ]);
   const [royaltyTS, setRoyaltyTS] = useState({});
+  const [ethRate, setEthRate] = useState(0);
 
   const timestampMap = useMemo(() => {
     const _res = {};
@@ -102,7 +107,7 @@ const CreateForm = ({
     }
   }, []);
 
-  const notify = (message) => showTopStickyNotification("error", message)
+  const notify = (message) => showTopStickyNotification("error", message);
 
   const [sizeOpen, setSizeOpen] = useState(false);
   const [customSizeInput, setCustomSizeInput] = useState("");
@@ -186,6 +191,7 @@ const CreateForm = ({
 
       artwork.editions.forEach((edition) => {
         setEditionPrice((prevItems) => [...prevItems, edition.price]);
+        setShippingPrice((prevItems) => [...prevItems, edition.shipping_price]);
       });
 
       setRoyalties(artwork.royalties);
@@ -196,6 +202,7 @@ const CreateForm = ({
 
   const handleUSD = async () => {
     const res = await getCurrentExchangeRateETHUSD();
+
     artwork.editions.forEach((edition) => {
       setEditionPricing((prevItems) => [
         ...prevItems,
@@ -205,7 +212,19 @@ const CreateForm = ({
           usd: (res.USD * edition.price).toFixed(2),
         },
       ]);
+
+      setShippingPricing((prevItems) => [
+        ...prevItems,
+        {
+          activeSize: edition.size,
+          eth: edition.shipping_price,
+          usd: (res.USD * edition.shipping_price).toFixed(2),
+        },
+      ]);
     });
+
+    const ethEx = await getCurrentExchangeRateUSDETH();
+    setEthRate(ethEx.ETH);
   };
 
   const {
@@ -339,6 +358,19 @@ const CreateForm = ({
         updatedItems[index].eth = value;
       } else {
         updatedItems[index].usd = value;
+        updatedItems[index].eth = (value * ethRate).toFixed(4);
+      }
+      return updatedItems;
+    });
+  };
+
+  const handleChangeShipping = (value, index) => {
+    setShippingPricing((prevItems) => {
+      const updatedItems = [...prevItems];
+      if (eth) {
+        updatedItems[index].eth = value;
+      } else {
+        updatedItems[index].usd = value;
       }
       return updatedItems;
     });
@@ -390,9 +422,21 @@ const CreateForm = ({
           item.eth = (ethEx.ETH * item.usd).toFixed(4);
         }
       });
+
+      shippingPricing.forEach((item) => {
+        if (item.usd !== null) {
+          item.eth = (ethEx.ETH * item.usd).toFixed(4);
+        }
+      });
     } else {
       const usdEx = await getCurrentExchangeRateETHUSD();
       editionPricing.forEach((item) => {
+        if (item.eth !== null) {
+          item.usd = (usdEx.USD * item.eth).toFixed(2);
+        }
+      });
+
+      shippingPricing.forEach((item) => {
         if (item.eth !== null) {
           item.usd = (usdEx.USD * item.eth).toFixed(2);
         }
@@ -467,13 +511,13 @@ const CreateForm = ({
         <p className="mb-[15px] lg:mb-[35px] b3 pt-5 text-[13px] md:text-[16px] px-5">
           Editions
         </p>
-        <div className="grid grid-cols-3 pb-[15px] px-5">
+        <div className="grid grid-cols-2 pb-[15px] px-5">
           <div>
             <input
               className="radio-block left"
               type="radio"
               name="edition_type"
-              disabled
+              // disabled
               id="NFT_Backed_by_print"
               value="NFT_Backed_by_print"
               checked={editionType === "NFT_Backed_by_print"}
@@ -484,9 +528,9 @@ const CreateForm = ({
               })}
             />
             <label
-              data-cursor="Coming soon"
-              data-cursor-color="#b2b4ae"
-              className="b4 md:text-[16px] text-unveilGrey opacity-60 !cursor-default hover:!border-bgColorHover"
+              // data-cursor="Coming soon"
+              // data-cursor-color="#b2b4ae"
+              className="b4 md:text-[16px]"
               htmlFor="NFT_Backed_by_print"
             >
               NFT backed by print
@@ -511,7 +555,7 @@ const CreateForm = ({
               NFT Only
             </label>
           </div>
-          <div>
+          {/* <div>
             <input
               className="cursor-default radio-block right"
               type="radio"
@@ -534,7 +578,7 @@ const CreateForm = ({
             >
               Print only
             </label>
-          </div>
+          </div> */}
         </div>
         {editionType !== "NFT_Only" && (
           <>
@@ -700,7 +744,7 @@ const CreateForm = ({
                 </div>
               )}
             </div>
-            <div className="border-t border-[#DBDED6] px-5 py-[15px] items-end flex justify-between">
+            {/* <div className="border-t border-[#DBDED6] px-5 py-[15px] items-end flex justify-between">
               <div className="w-[70%]">
                 <p className="mb-[15px] b3 w-fit">Frame</p>
                 {!frameOpen && (
@@ -816,7 +860,7 @@ const CreateForm = ({
               >
                 {frameOpen ? "Save" : "Edit"}
               </p>
-            </div>
+            </div> */}
             <div className=" px-5 py-[15px] border-t  border-[#DBDED6]">
               <div className="flex items-end justify-between ">
                 <div>
@@ -963,15 +1007,19 @@ const CreateForm = ({
                 }
               })}
             </div>
-            <div className="grid grid-cols-6 gap-2 px-5 uppercase b4 my-[15px]">
+            <div className="grid grid-cols-7 gap-2 px-5 uppercase b5 my-[15px]">
               <div></div>
               <label htmlFor="paper-select">Paper</label>
               <label htmlFor="frame-select">Frame</label>
               <label htmlFor="technique-select">Technique</label>
-              <div className="flex justify-between w-full col-span-2 pr-[30px]">
-                <label htmlFor="pricing-select">
-                  Pricing ({eth ? "ETH" : "USD"})
-                </label>
+              <label htmlFor="shipping-select">
+                Shipping ({eth ? "ETH" : "USD"})
+              </label>
+              <label htmlFor="pricing-select">
+                Pricing ({eth ? "ETH" : "USD"})
+              </label>
+
+              <div>
                 <div className="flex items-center gap-1">
                   <p className={`${eth ? "opacity-60" : ""}`}>USD</p>
                   <div
@@ -991,16 +1039,27 @@ const CreateForm = ({
           </>
         )}
         {editionPricing.map((item, i) => {
-          if (editionType === "NFT_Only" || activeSize === item) {
+          if (editionType === "NFT_Only" || activeSize === item.activeSize) {
+            let filteredEditions;
+
+            if (editionType !== "NFT_Only") {
+              filteredEditions = editionPricing.filter(
+                (item) => item.activeSize === activeSize
+              );
+            } else {
+              filteredEditions = editionPricing;
+            }
             return (
               <div
                 key={i}
-                className={`grid grid-cols-6 gap-2 px-5 py-[15px]  ${
+                className={`grid grid-cols-7 gap-2 px-5 py-[15px]  ${
                   editionType !== "NFT_Only" ? "border-b border-[#DBDED6]" : ""
                 }`}
               >
                 <div className="my-auto">
-                  {i + 1}/{editionPricing.length}
+                  {/* show index based on filteredEditions */}
+                  {filteredEditions.indexOf(item) + 1} /{" "}
+                  {filteredEditions.length}
                 </div>
                 {editionType !== "NFT_Only" && (
                   <>
@@ -1067,7 +1126,7 @@ const CreateForm = ({
                         disabled={soldCopies}
                         defaultValue={
                           artwork.editions
-                            ? artwork.editions[i].technique
+                            ? artwork.editions[0].technique
                             : null
                         }
                         {...register(`technique[${i}]`, {
@@ -1087,6 +1146,38 @@ const CreateForm = ({
                           }`}
                         >
                           {errors.technique[i]?.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="relative md:w-[unset] w-full">
+                      <input
+                        type="text"
+                        className="input"
+                        placeholder="Select Shipping"
+                        disabled={soldCopies}
+                        name={`shipping[${i}]`}
+                        value={
+                          eth ? shippingPricing[i].eth : shippingPricing[i].usd
+                        }
+                        {...register(`shipping[${i}]`, {
+                          required: "Required",
+                          pattern: {
+                            value: /^[0-9]*\.?[0-9]*$/,
+                            message: "Invalid number",
+                          },
+                          onChange: (e) => {
+                            handleChangeShipping(e.target.value, i);
+                          },
+                        })}
+                      />
+                      {errors.shipping && errors.shipping[i] && (
+                        <p
+                          className={`text-red-500 opacity-0 b5 absolute -bottom-5 left-0 ${
+                            errors.shipping[i]?.message ? "opacity-100  " : ""
+                          }`}
+                        >
+                          {errors.shipping[i]?.message}
                         </p>
                       )}
                     </div>
@@ -1141,6 +1232,7 @@ const CreateForm = ({
                     onClick={() => {
                       if (!soldCopies) {
                         handleDeleteRow(i, setEditionPricing, true, i, item);
+                        handleDeleteRow(i, setShippingPricing, true, i, item);
                       }
                     }}
                   >
@@ -1175,6 +1267,11 @@ const CreateForm = ({
             onClick={() => {
               if (!soldCopies) {
                 setEditionPricing((prevItems) => [
+                  ...prevItems,
+                  { activeSize, eth: null, usd: null },
+                ]);
+
+                setShippingPricing((prevItems) => [
                   ...prevItems,
                   { activeSize, eth: null, usd: null },
                 ]);

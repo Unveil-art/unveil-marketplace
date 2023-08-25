@@ -81,11 +81,13 @@ const EditionPopIn = ({ edition, setEdition, dominantColor }) => {
                 >
                   Edition {edition.edition_index} of {edition.max_editions}
                 </p>
-                <img
-                  className="absolute px-20 top-[100px] shadow2"
-                  src={edition.media_url}
-                  alt={edition.edition_id}
-                />
+                <div className="absolute h-full top-0 left-0 w-full flex items-center justify-center">
+                  <img
+                    className="absolute px-20 shadow2 max-h-[74%]"
+                    src={edition.media_url}
+                    alt={edition.edition_id}
+                  />
+                </div>
               </div>
               <div className="black-gradient h-[25px]"></div>
             </div>

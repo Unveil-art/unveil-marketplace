@@ -39,6 +39,14 @@ const Sidebar = ({ accountState, setAccountState, user }) => {
         Offers
       </p>
       <p
+        onClick={() => handleAccountState(9)}
+        className={`${
+          accountState === 9 ? "text-unveilBlack" : ""
+        } cursor-pointer hover:text-unveilBlack unveilTransition whitespace-nowrap`}
+      >
+        Print Requests
+      </p>
+      <p
         onClick={() => handleAccountState(1)}
         className={`${
           accountState === 1 ? "text-unveilBlack" : ""
