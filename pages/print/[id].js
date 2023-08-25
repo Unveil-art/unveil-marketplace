@@ -77,10 +77,10 @@ const PrintNft = ({ edition }) => {
   };
 
   const pollForTransactionHash = (id) => {
-    console.log("polling started", id);
+    console.log("polling started");
 
     _interval.current = setInterval(() => {
-      console.log("polling running");
+      console.log("polling running...");
       axios({
         method: "GET",
         url: `https://withpaper.com/api/v1/transaction-status/${id}`,
@@ -207,7 +207,6 @@ const PrintNft = ({ edition }) => {
 
   const onSubmitForm = async (data) => {
     setFormData(data);
-    // console.log(data);
     if (provider) {
       if (!edition.shipping_signature) {
         showTopStickyNotification(
@@ -271,7 +270,6 @@ const PrintNft = ({ edition }) => {
                 inputBorderColor: "#3f3f3f",
               }}
               onPaymentSuccess={(result) => {
-                console.log("Payment successful.", result);
                 pollForTransactionHash(result.id);
               }}
               onError={(error) => {
