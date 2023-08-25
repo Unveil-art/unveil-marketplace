@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 
-const PrintListItem = ({ offer, currentExchangeRate = 0 }) => {
+const PrintListItem = ({ offer, currentExchangeRate = 0, sent }) => {
   const router = useRouter();
 
   const [artwork, setArtwork] = useState();
@@ -58,7 +58,7 @@ const PrintListItem = ({ offer, currentExchangeRate = 0 }) => {
       <div className="flex flex-col gap-1 md:flex-row">
         {/* <button className=" btn btn-secondary">print</button> */}
         <button
-          onClick={() => router.push(`/print/request/${offer.id}`)}
+          onClick={() => router.push(`/print/request/${sent ? 'sent':'received'}/${offer.id}`)}
           className=" btn btn-secondary"
         >
           Show info

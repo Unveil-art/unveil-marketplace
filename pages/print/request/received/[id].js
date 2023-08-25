@@ -144,7 +144,7 @@ const PrintRequest = () => {
               <h1 className="lg:mb-20 mb-4">New Print Request</h1>
               {printRequest.status === "ShipmentDelivered" && (
                 <p className="s2 lg:mb-10 mb-8">
-                  The print has been delivered to its owner
+                  Print delivery is Confirmed from buyer's end.
                 </p>
               )}
               {printRequest.status === "Activated" && (
@@ -154,7 +154,7 @@ const PrintRequest = () => {
               )}
               {printRequest.status === "ArtistConfirmed" && (
                 <p className="s2 lg:mb-10 mb-8">
-                  You have accepted the print request
+                  You have already accepted this print request
                 </p>
               )}
               <div>

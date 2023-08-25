@@ -100,6 +100,7 @@ const PrintRequests = ({ user }) => {
             <hr className="mb-[15px] h-[2px] bg-unveilGreen" />
             {activatedRequests.map((offer, i) => (
               <PrintListItem
+                sent={filter==1}
                 key={offer.id}
                 offer={offer}
                 currentExchangeRate={exchangeRate}
