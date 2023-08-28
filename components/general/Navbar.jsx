@@ -31,7 +31,10 @@ const Navbar = ({ value }) => {
   const { width } = useWindowSize();
 
   let color, accountColor;
-  if (path.includes("/gallery/artwork/") && colorBoolean) {
+  if (
+    (path.includes("/gallery/artwork/") || path.includes("/claim-nft")) &&
+    colorBoolean
+  ) {
     if (width < 768) {
       accountColor = "#F9F7F2";
     } else {

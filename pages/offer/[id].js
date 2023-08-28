@@ -50,7 +50,7 @@ const Details = () => {
         setPrice((res.USD * offerData?.amount).toFixed(2));
         setOriginalPrice((res.USD * offerData?.edition?.price).toFixed(2));
       }
-      if (offerData?.status !== "PENDING") router.push("/account");
+      // if (offerData?.status !== "PENDING") router.push("/account");
 
       setOffer(offerData);
       setArtwork(artworkData);
