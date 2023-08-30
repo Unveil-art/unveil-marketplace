@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
-import { useRouter } from "next/router";
 import ColorThief from "colorthief";
 import { StepContext } from "@/contexts/StepContext";
 import { getArtworkById } from "lib/backend";
@@ -7,7 +6,6 @@ import { darkenColor, isLight } from "lib/utils/color";
 import Image from "next/image";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import useLocalStorage from "@/hooks/useLocalStorage";
-import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 import useTouch from "@/hooks/useTouch";
 import Minting from "@/components/section/checkout-page/Minting";
