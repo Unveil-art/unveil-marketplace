@@ -55,7 +55,7 @@ const useTouch = (ref, onTouch) => {
     if (direction) {
       onTouch(direction);
     }
-  }, [direction, onTouch]);
+  }, [direction]);
 };
 
 export default useTouch;

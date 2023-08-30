@@ -7,11 +7,14 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import Head from "@/components/general/Head";
 import AskEmail from "./AskEmail";
 import { Web3Context } from "@/contexts/Web3AuthContext";
+import { useRouter } from "next/router";
 
 export default function Layout({ children }) {
   const { value } = useLocalStorage("token");
   const { displayRamper, hideRamper, account,ramperAmount } = useContext(Web3Context);
   const onramper_apiKey = process.env.NEXT_PUBLIC_RAMPER_API_KEY;
+  const router = useRouter();
+  const path = router.asPath;
 
   return (
     <>
@@ -50,7 +53,7 @@ export default function Layout({ children }) {
       <AskEmail />
       {children}
       <Cursor />
-      <Footer />
+      {!path.includes("claim-nft") && <Footer />}
     </>
   );
 }
