@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import ColorThief from "colorthief";
 import { StepContext } from "@/contexts/StepContext";
-import { getArtworkById } from "lib/backend";
+import { getClaimData, requestClaimNFT } from "lib/backend";
 import { darkenColor, isLight } from "lib/utils/color";
 import Image from "next/image";
 import { useWindowSize } from "@/hooks/useWindowSize";
@@ -10,16 +10,17 @@ import { Web3Context } from "@/contexts/Web3AuthContext";
 import useTouch from "@/hooks/useTouch";
 import Minting from "@/components/section/checkout-page/Minting";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import Link from "next/link";
 
 const STEPS = {
-  UNCLAIMED: "UNCLAIMED",
-  CLAIMED: "CLAIMED",
   PENDING: "PENDING",
+  REQUESTED: "REQUESTED",
+  CLAIMED: "CLAIMED",
   SIGNIN: "SIGNIN",
   MINTING: "MINTING",
 };
 
-const ClaimNFT = ({ artwork }) => {
+const ClaimNFT = ({ claim, claim_token }) => {
   const { setColor } = useContext(StepContext);
   const { login } = useContext(Web3Context);
   const { width } = useWindowSize();
@@ -30,7 +31,7 @@ const ClaimNFT = ({ artwork }) => {
 
   const swipeEl = useRef(null);
 
-  const [step, setStep] = useState(STEPS.UNCLAIMED);
+  const [step, setStep] = useState(claim.status);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const onSwipe = (direction) => {
@@ -46,14 +47,11 @@ const ClaimNFT = ({ artwork }) => {
 
   useTouch(swipeEl, onSwipe);
 
-  const init = async () => {
-    setStep(STEPS.PENDING);
-  };
-
   useEffect(() => {
-    setStep(STEPS.SIGNIN);
-    if (token) {
-      init();
+    if (!token) {
+      setStep(STEPS.SIGNIN);
+    } else {
+      setStep(claim.status);
     }
   }, [token]);
 
@@ -61,7 +59,7 @@ const ClaimNFT = ({ artwork }) => {
     setColor(true);
 
     const img = new window.Image();
-    img.src = artwork.media_url;
+    img.src = claim.edition.artwork.media_url;
     img.crossOrigin = "Anonymous";
     const colorThief = new ColorThief();
 
@@ -89,8 +87,26 @@ const ClaimNFT = ({ artwork }) => {
       }
     };
 
-    img.src = artwork.media_url;
+    img.src = claim.edition.artwork.media_url;
   }, []);
+
+  const delay = async (time) =>
+    new Promise((resolve, _) =>
+      setTimeout(() => {
+        resolve();
+      }, time)
+    );
+  const claimNFT = async () => {
+    try {
+      setStep(STEPS.MINTING);
+      await delay(4000);
+      await requestClaimNFT(claim_token, token);
+      setStep(STEPS.REQUESTED);
+    } catch (err) {
+      console.log(err);
+      setStep(STEPS.PENDING);
+    }
+  };
 
   return (
     <div>
@@ -114,8 +130,8 @@ const ClaimNFT = ({ artwork }) => {
                 >
                   <Image
                     fill={true}
-                    alt={artwork.name}
-                    src={artwork.media_url}
+                    alt={claim.edition.artwork.name}
+                    src={claim.edition.artwork.media_url}
                     style={{ objectFit: "contain", zIndex: 20 }}
                   />
                 </div>
@@ -155,15 +171,16 @@ const ClaimNFT = ({ artwork }) => {
                     <div className="mb-4">
                       <h1 className="h3 mt-4 md:mt-5 mb-6">Claim NFT</h1>
                       <p className="s2 md:max-w-[390px] mb-6">
-                        The NFT maha 01 is primed and awaiting its rightful
-                        owner to claim it on the blockchain.
+                        The NFT '{claim.edition.artwork.name}' is primed and
+                        awaiting its rightful owner to claim it on the
+                        blockchain.
                       </p>
                       <p className="uppercase b6">POWERED BY ETHEREUM</p>
                     </div>
                     <div className="mt-auto md:max-w-[390px]">
                       <button
                         className="btn btn-primary w-full btn-lg"
-                        onClick={login}
+                        onClick={() => login(undefined, false)}
                       >
                         Login/signup
                       </button>
@@ -171,7 +188,7 @@ const ClaimNFT = ({ artwork }) => {
                   </>
                 )}
 
-                {step === STEPS.UNCLAIMED && (
+                {step === STEPS.PENDING && (
                   <>
                     <div className="mb-4">
                       <h1 className="h3 mt-4 md:mt-5 mb-6">
@@ -184,28 +201,36 @@ const ClaimNFT = ({ artwork }) => {
                       </p>
                     </div>
                     <div className="mt-auto md:max-w-[390px]">
-                      <button className="btn btn-primary w-full btn-lg">
+                      <button
+                        onClick={claimNFT}
+                        className="btn btn-primary w-full btn-lg"
+                      >
                         Claim NFT
                       </button>
                     </div>
                   </>
                 )}
 
-                {step === STEPS.PENDING && (
+                {step === STEPS.REQUESTED && (
                   <>
                     <div className="mb-4">
                       <h1 className="h3 mt-4 md:mt-5 mb-6">
                         Claim request is pending
                       </h1>
                       <p className="s2 md:max-w-[390px] mb-6">
-                        The claim request for the NFT maha 01 is currently
-                        pending approval.
+                        The claim request for the NFT '
+                        {claim.edition.artwork.name}' is currently pending
+                        approval.
                       </p>
                     </div>
                     <div className="mt-auto md:max-w-[390px]">
-                      <button className="btn btn-secondary w-full btn-lg">
+                      <Link
+                        href={`https://etherscan.io/address/${claim.edition.artwork.contract_address}`}
+                        target="_blank"
+                        className="btn btn-secondary w-full btn-lg"
+                      >
                         View on Etherscan
-                      </button>
+                      </Link>
                     </div>
                   </>
                 )}
@@ -220,12 +245,19 @@ const ClaimNFT = ({ artwork }) => {
                       </p>
                     </div>
                     <div className="mt-auto md:max-w-[390px]">
-                      <button className="btn btn-primary w-full btn-lg mb-4">
+                      <Link
+                        href="/account"
+                        className="btn btn-primary w-full btn-lg mb-4"
+                      >
                         Return
-                      </button>
-                      <button className="btn btn-secondary w-full btn-lg">
+                      </Link>
+                      <Link
+                        href={`https://etherscan.io/address/${claim.edition.artwork.contract_address}`}
+                        target="_blank"
+                        className="btn btn-secondary w-full btn-lg"
+                      >
                         View on Etherscan
-                      </button>
+                      </Link>
                     </div>
                   </>
                 )}
@@ -234,7 +266,7 @@ const ClaimNFT = ({ artwork }) => {
           </div>
         </div>
       )}
-      {step === STEPS.MINTING && <Minting artwork={artwork} />}
+      {step === STEPS.MINTING && <Minting artwork={claim.edition.artwork} />}
     </div>
   );
 };
@@ -242,11 +274,12 @@ const ClaimNFT = ({ artwork }) => {
 export default ClaimNFT;
 
 export async function getServerSideProps({ params }) {
-  const artwork = await getArtworkById(params.id);
+  const claim = await getClaimData(params.token);
 
   return {
     props: {
-      artwork,
+      claim,
+      claim_token: params.token,
     },
   };
 }
