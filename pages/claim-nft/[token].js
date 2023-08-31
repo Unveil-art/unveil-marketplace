@@ -4,6 +4,7 @@ import { StepContext } from "@/contexts/StepContext";
 import { getClaimData, requestClaimNFT } from "lib/backend";
 import { darkenColor, isLight } from "lib/utils/color";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import Image from "next/image";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { Web3Context } from "@/contexts/Web3AuthContext";
 import useTouch from "@/hooks/useTouch";
@@ -170,7 +171,7 @@ const ClaimNFT = ({ claim, claim_token }) => {
                     <div className="mb-4">
                       <h1 className="h3 mt-4 md:mt-5 mb-6">Claim NFT</h1>
                       <p className="s2 md:max-w-[390px] mb-6">
-                        The NFT {claim.edition.artwork.name} is primed and
+                        The NFT {claim?.edition?.artwork?.name} is primed and
                         awaiting its rightful owner to claim it on the
                         blockchain.
                       </p>
@@ -201,7 +202,7 @@ const ClaimNFT = ({ claim, claim_token }) => {
                     </div>
                     <div className="mt-auto md:max-w-[390px]">
                       <button
-                        onClick={claimNFT}
+                        onClick={() => claimNFT()}
                         className="btn btn-primary w-full btn-lg"
                       >
                         Claim NFT
@@ -218,7 +219,7 @@ const ClaimNFT = ({ claim, claim_token }) => {
                       </h1>
                       <p className="s2 md:max-w-[390px] mb-6">
                         The claim request for the NFT
-                        {claim.edition.artwork.name} is currently pending
+                        {claim?.edition?.artwork?.name} is currently pending
                         approval.
                       </p>
                     </div>
@@ -239,7 +240,7 @@ const ClaimNFT = ({ claim, claim_token }) => {
                     <div className="mb-4">
                       <h1 className="h3 mt-4 md:mt-5 mb-6">Already claimed</h1>
                       <p className="s2 md:max-w-[390px] mb-6">
-                        The NFT {claim.edition.artwork.name} has been
+                        The NFT {claim?.edition?.artwork?.name} has been
                         successfully claimed, signifying its ownership on the
                         blockchain.
                       </p>
@@ -266,7 +267,7 @@ const ClaimNFT = ({ claim, claim_token }) => {
           </div>
         </div>
       )}
-      {step === STEPS.MINTING && <Minting artwork={claim.edition.artwork} />}
+      {step === STEPS.MINTING && <Minting artwork={claim?.edition?.artwork} />}
     </div>
   );
 };
