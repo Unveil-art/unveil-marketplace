@@ -276,14 +276,14 @@ const HomepageHero = ({ data, featuredArtworks }) => {
   }, [loaded, size]);
 
   useLenis(({ scroll }) => {
-    const parallax = query(".gsap-parallax");
-    parallax.forEach((el, index) => {
-      const speed = el.getAttribute("data-speed");
-      const direction = index % 2 === 0 ? 1 : -1;
-      gsap.set(el, {
-        y: scroll * speed * direction,
-      });
-    });
+    // const parallax = query(".gsap-parallax");
+    // parallax.forEach((el, index) => {
+    //   const speed = el.getAttribute("data-speed");
+    //   const direction = index % 2 === 0 ? 1 : -1;
+    //   gsap.set(el, {
+    //     y: scroll * speed * direction,
+    //   });
+    // });
   }, []);
 
   return (
