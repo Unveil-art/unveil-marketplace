@@ -7,7 +7,7 @@ import ProductCard from "../reusable/ProductCard";
 const HomepageSlider = () => {
   return (
     <section className="relative">
-      <div className="h-screen w-full bg-unveilYellow z-10 relative"></div>
+      <div className="h-screen w-full bg-unveilYellow z-10 relative gsap-scroll-item"></div>
       <div className="h-screen w-full bg-transparent gsap-scroll-transparent pointer-events-none"></div>
     </section>
   );

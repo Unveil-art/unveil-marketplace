@@ -37,7 +37,8 @@ export default function Home({
   useLenis(({ scroll }) => {
     const fixedEl = query(".gsap-fixed");
     const transparentEl = query(".gsap-scroll-transparent");
-    if (scroll > size.height) {
+    const scrollItem = query(".gsap-scroll-item");
+    if (scroll > scrollItem[0].scrollHeight) {
       gsap.set(fixedEl, {
         position: "static",
       });
