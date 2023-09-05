@@ -43,6 +43,11 @@ const Navbar = ({ value }) => {
     accountColor = step === 4 || step === 5 ? "#F9F7F2" : "#141414";
   }
 
+  if (path === "/" && colorBoolean) {
+    accountColor = "#F9F7F2";
+    color = "#F9F7F2";
+  }
+
   const isArrow =
     (router.asPath === "/checkout" && step !== 4) ||
     router.asPath.startsWith("/gallery/artwork/") ||
@@ -213,6 +218,7 @@ const Navbar = ({ value }) => {
                 href="https://learn.unveil.art/"
                 target="_blank"
                 className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px] gsap-hide"
+                style={{ color: accountColor }}
               >
                 How it works
               </a>
@@ -221,12 +227,14 @@ const Navbar = ({ value }) => {
                 href="https://learn.unveil.art/about"
                 target="_blank"
                 className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px] gsap-menu-stagger gsap-hide"
+                style={{ color: accountColor }}
               >
                 About
               </a>
               <Link
                 href="/search"
                 className="underline-on-hover uppercase b6 leading-tight inline-block relative tracking-[0.77px] gsap-menu-stagger gsap-hide"
+                style={{ color: accountColor }}
               >
                 Search
               </Link>

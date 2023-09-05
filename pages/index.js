@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useRef } from "react";
 
 // import FloatingArt from "../components/section/FloatingArt";
 import GridColThree from "../components/section/GridColThree";
@@ -19,6 +19,7 @@ import HomepageSlider from "@/components/section/HomepageSlider";
 import { useLenis } from "@studio-freight/react-lenis";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { gsap } from "gsap";
+import { StepContext } from "@/contexts/StepContext";
 
 export default function Home({
   data,
@@ -33,6 +34,7 @@ export default function Home({
   const el = useRef(null);
   const query = gsap.utils.selector(el);
   const size = useWindowSize();
+  const { setColor } = useContext(StepContext);
 
   useLenis(({ scroll }) => {
     const fixedEl = query(".gsap-fixed");
@@ -48,6 +50,7 @@ export default function Home({
       gsap.set(el.current, {
         height: "auto",
       });
+      setColor(false);
     } else {
       gsap.set(fixedEl, {
         position: "fixed",
@@ -60,6 +63,8 @@ export default function Home({
       gsap.set(el.current, {
         height: fixedEl[0].scrollHeight + size.height,
       });
+
+      setColor(true);
     }
     // gsap.set(el, {
     //   y: scroll * speed * direction,
