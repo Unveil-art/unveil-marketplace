@@ -6,7 +6,7 @@ export function useAuth() {
   const router = useRouter();
   const { setValue, removeValue } = useLocalStorage("token");
 
-  async function doLogin(_data) {
+  async function doLogin(_data, redirect = true) {
     const { data } = await axios({
       method: "POST",
       url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`,
@@ -15,7 +15,7 @@ export function useAuth() {
     });
     setValue(data.accessToken);
     console.log(data, "login response");
-    if (data?.user?.role === "artist") router.push("/account");
+    if (data?.user?.role === "artist" && redirect) router.push("/account");
   }
 
   const doLogout = async () => {
