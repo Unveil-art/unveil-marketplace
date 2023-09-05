@@ -143,7 +143,7 @@ const ClaimNFT = ({ claim, claim_token }) => {
               className={`${
                 isExpanded
                   ? "pointer-events-auto"
-                  : "hidden pointer-events-none"
+                  : "opacity-0 pointer-events-none"
               } absolute w-full h-full block md:hidden bg-bgBlackOpacity2 transition-opacity`}
               onClick={() => setIsExpanded(false)}
             />
@@ -159,7 +159,7 @@ const ClaimNFT = ({ claim, claim_token }) => {
                 className={`${
                   !isExpanded
                     ? "pointer-events-auto"
-                    : "opacity-0 pointer-events-none"
+                    : "hidden pointer-events-none"
                 } absolute pointer-events-auto block md:hidden top-0 left-0 w-full h-full bg-unveilWhite pt-[30px] bottom-sheet__inner transition-opacity`}
               >
                 <h2 className="text-center b1">Swipe to claim NFT</h2>
@@ -219,7 +219,7 @@ const ClaimNFT = ({ claim, claim_token }) => {
                       </h1>
                       <p className="s2 md:max-w-[390px] mb-6">
                         The claim request for the NFT
-                        {claim?.edition?.artwork?.name} is currently pending
+                        {claim?.edition?.artwork?.name} is currently pending for
                         approval.
                       </p>
                     </div>
