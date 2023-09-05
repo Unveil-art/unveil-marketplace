@@ -143,7 +143,7 @@ const ClaimNFT = ({ claim, claim_token }) => {
               className={`${
                 isExpanded
                   ? "pointer-events-auto"
-                  : "opacity-0 pointer-events-none"
+                  : "hidden pointer-events-none"
               } absolute w-full h-full block md:hidden bg-bgBlackOpacity2 transition-opacity`}
               onClick={() => setIsExpanded(false)}
             />
@@ -195,9 +195,9 @@ const ClaimNFT = ({ claim, claim_token }) => {
                         Ready to be claimed
                       </h1>
                       <p className="s2 md:max-w-[390px] mb-6">
-                        The NFT artwork maha 01 is prepared for minting,
-                        offering a digital masterpiece poised to be tokenized on
-                        the blockchain.
+                        The NFT {claim?.edition?.artwork?.name} is prepared for
+                        minting, offering a digital masterpiece poised to be
+                        tokenized on the blockchain.
                       </p>
                     </div>
                     <div className="mt-auto md:max-w-[390px]">
