@@ -137,11 +137,11 @@ const Minting = ({ artwork }) => {
           <p className="text-center b3 mt-[10px] text-unveilWhite">
             Your artwork is being minted and should complete shortly
           </p>
-          <button className="block mx-auto mt-2 opacity-50 cursor-not-allowed cursor btn btn-secondary md:hidden">
+          <button className="block mx-auto mt-2 opacity-50 cursor-not-allowed cursor btn btn-white btn-secondary md:hidden">
             View on Etherscan
           </button>
         </div>
-        <button className="absolute hidden -translate-x-1/2 opacity-50 cursor-not-allowed md:block cursor btn btn-secondary btn-wide bottom-10 left-1/2">
+        <button className="absolute hidden -translate-x-1/2 opacity-50 cursor-not-allowed md:block cursor btn btn-secondary btn-white btn-wide bottom-10 left-1/2">
           View on Etherscan
         </button>
       </div>
