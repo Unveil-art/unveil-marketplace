@@ -104,7 +104,7 @@ const Minting = ({ artwork }) => {
         className="absolute md:top-20 md:left-20 top-0 left-0 w-[150px] md:w-[300px] cursor-grab"
         ref={imgDrag1}
       >
-        <div className="w-full h-full img-drag">
+        <div className="w-full h-full img-drag shadow1">
           <div className="w-full h-full img-drag__inner">
             <img
               src={artwork.media_url}
@@ -118,7 +118,7 @@ const Minting = ({ artwork }) => {
         className="absolute bottom- md:bottom-20 md:right-20 right-0 w-[150px] md:w-[300px] cursor-grab"
         ref={imgDrag2}
       >
-        <div className="w-full h-full img-drag">
+        <div className="w-full h-full img-drag shadow1">
           <div className="w-full h-full img-drag__inner">
             <img
               src={artwork.media_url}
