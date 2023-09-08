@@ -119,7 +119,9 @@ const ClaimNFT = ({ claim, claim_token }) => {
             <div
               className={`h-[90%] unveilTransition md:h-screen overflow-hidden md:sticky  top-0 flex items-center justify-center`}
             >
-              <div className={`h-full aspect-[3/4] mb-1 pointer-events-none`}>
+              <div
+                className={`h-full w-full md:w-auto aspect-[3/4] mb-1 pointer-events-none`}
+              >
                 <div
                   className={`${
                     orientation
@@ -248,7 +250,7 @@ const ClaimNFT = ({ claim, claim_token }) => {
                     <div className="mt-auto md:max-w-[390px]">
                       <Link
                         href="/account"
-                        className="btn btn-primary w-full btn-lg mb-4"
+                        className="btn btn-primary w-full btn-lg mb-4 mr-2"
                       >
                         Return
                       </Link>
