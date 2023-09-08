@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import Link from "next/link";
+import { useLenis } from "@studio-freight/react-lenis";
 
 const HomepageSlider = () => {
   const el = useRef();
@@ -9,20 +10,21 @@ const HomepageSlider = () => {
   const animateSlider = useCallback(() => {
     let sliderTl = gsap.timeline({ paused: true });
     const progressTl = gsap.timeline();
-    const sliderIems = query(".gsap-slider-item");
+    const sliderItems = query(".gsap-slider-item");
+    const sliderItemsInner = query(".gsap-slider-item-inner");
     const sliderDuplicateTexts = query(".homepage-slider-duplicate-text");
 
     let currentIndex = 0;
     let previousIndex = 0;
     const timeToNextSlide = 8;
     let delay;
-    const length = sliderIems.length;
+    const length = sliderItems.length;
 
-    gsap.set(sliderIems, {
+    gsap.set(sliderItems, {
       xPercent: 100,
     });
 
-    gsap.set(sliderIems[currentIndex], {
+    gsap.set(sliderItems[currentIndex], {
       xPercent: 0,
     });
 
@@ -43,14 +45,26 @@ const HomepageSlider = () => {
     const slideArtworkin = () => {
       sliderTl.clear();
 
-      sliderTl.to(sliderIems[previousIndex], {
+      gsap.set(sliderItems, {
+        zIndex: 0,
+      });
+
+      gsap.set(sliderItems[previousIndex], {
+        zIndex: 1,
+      });
+
+      gsap.set(sliderItems[currentIndex], {
+        zIndex: 2,
+      });
+
+      sliderTl.to(sliderItems[previousIndex], {
         duration: 1,
-        xPercent: -100,
+        xPercent: -90,
         ease: "power2.inOut",
       });
 
       sliderTl.fromTo(
-        sliderIems[currentIndex],
+        sliderItems[currentIndex],
         {
           xPercent: 100,
         },
@@ -58,6 +72,18 @@ const HomepageSlider = () => {
           duration: 1,
           xPercent: 0,
           ease: "power2.inOut",
+        },
+        "-=1"
+      );
+      sliderTl.fromTo(
+        sliderItemsInner[currentIndex],
+        {
+          scale: 1.3,
+        },
+        {
+          duration: 1,
+          ease: "power2.inOut",
+          scale: 1,
         },
         "-=1"
       );
@@ -94,7 +120,7 @@ const HomepageSlider = () => {
           progressTl.kill();
           delay.kill();
 
-          gsap.killTweensOf(sliderIems);
+          gsap.killTweensOf(sliderItems);
           gsap.killTweensOf(sliderDuplicateTexts);
 
           gsap.set(sliderDuplicateTexts, {
@@ -115,9 +141,21 @@ const HomepageSlider = () => {
     animateSlider();
   }, []);
 
+  useLenis(({ scroll }) => {
+    const parallax = query(".gsap-parallax");
+    console.log(parallax);
+    parallax.forEach((el, index) => {
+      const speed = el.getAttribute("data-speed");
+      const direction = index % 2 === 0 ? 1 : -1;
+      gsap.set(el, {
+        y: scroll * speed * direction,
+      });
+    });
+  }, []);
+
   return (
     <section className="relative" ref={el}>
-      <div className="h-screen w-full bg-red-500 z-10 relative gsap-scroll-item">
+      <div className="h-screen w-ful z-10 relative gsap-scroll-item">
         <div className="sticky h-60 w-full top-0 left-0 md:block pointer-events-none z-20 homepage-slider-top-gradient" />
         <div className="absolute h-full w-full top-0 left-0 flex items-center md:px-16 px-6 z-10">
           <div className="flex items-center relative py-10 md:py-40">
@@ -134,35 +172,37 @@ const HomepageSlider = () => {
               </div>
               <div className="mb-4 text-white">
                 <div className="relative">
-                  <h1 className="h1-5 opacity-50 absolute curso">
-                    Thomas Albdorf
-                  </h1>
                   <div
                     className="h1-5 relative homepage-slider-duplicate-text"
                     aria-hidden
                   >
                     Thomas Albdorf
                   </div>
+                  <h1 className="h1-5 opacity-50 absolute top-0 transition-opacity">
+                    Thomas Albdorf
+                  </h1>
                 </div>
                 <div className="relative">
-                  <h1 className="h1-5 opacity-50 absolute">
-                    Awoiska van der Molen
-                  </h1>
                   <div
                     className="h1-5 relative homepage-slider-duplicate-text"
                     aria-hidden
                   >
                     Awoiska van der Molen
                   </div>
+                  <h1 className="h1-5 opacity-50 absolute top-0 transition-opacity">
+                    Awoiska van der Molen
+                  </h1>
                 </div>
                 <div className="relative">
-                  <h1 className="h1-5 opacity-50 absolute">Kim Boske</h1>
                   <div
                     className="h1-5 relative homepage-slider-duplicate-text"
                     aria-hidden
                   >
                     Kim Boske
                   </div>
+                  <h1 className="h1-5 opacity-50 absolute top-0 transition-opacity">
+                    Kim Boske
+                  </h1>
                 </div>
               </div>
               <div className="flex">
@@ -180,26 +220,37 @@ const HomepageSlider = () => {
           </div>
         </div>
         <div className="absolute w-full h-full top-0 left-0 overflow-hidden">
-          <div className="absolute w-full h-full top-0 left-0 gsap-slider-item">
-            <img
-              src="/images/bg-hero-image.jpg"
-              alt="hero image"
-              className="h-full w-full object-cover"
-            />
-          </div>
-          <div className="absolute w-full h-full top-0 left-0 gsap-slider-item">
-            <img
-              src="https://fellowship.xyz/wp-content/uploads/Taysa-Jorge-Solitude-Mysteries-to-Discover-2022-%C2%A9-Taysa-Jorge-aspect-ratio-16-9.jpg"
-              alt="hero image"
-              className="h-full w-full object-cover"
-            />
-          </div>
-          <div className="absolute w-full h-full top-0 left-0 gsap-slider-item">
-            <img
-              src="https://fellowship.xyz/wp-content/uploads/Tania-Franco-Klein-Our-Life-In-The-Shadows-Curtain-self-portrait-2016-Tania-Franco-Klein-Fellowship-drop-31-%C2%A9-Tania-Franco-Klein-2-aspect-ratio-16-9.jpg"
-              alt="hero image"
-              className="h-full w-full object-cover"
-            />
+          <div
+            className="absolute w-full h-[110%] top-0 left-0 gsap-parallax"
+            data-speed="-0.1"
+          >
+            <div className="absolute w-full h-full top-0 left-0 gsap-slider-item overflow-hidden">
+              <div className="absolute w-full h-full top-0 left-0 gsap-slider-item-inner">
+                <img
+                  src="/images/bg-hero-image.jpg"
+                  alt="hero image"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </div>
+            <div className="absolute w-full h-full top-0 left-0 gsap-slider-item overflow-hidden">
+              <div className="absolute w-full h-full top-0 left-0 gsap-slider-item-inner">
+                <img
+                  src="https://fellowship.xyz/wp-content/uploads/Taysa-Jorge-Solitude-Mysteries-to-Discover-2022-%C2%A9-Taysa-Jorge-aspect-ratio-16-9.jpg"
+                  alt="hero image"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </div>
+            <div className="absolute w-full h-full top-0 left-0 gsap-slider-item overflow-hidden">
+              <div className="absolute w-full h-full top-0 left-0 gsap-slider-item-inner">
+                <img
+                  src="https://fellowship.xyz/wp-content/uploads/Tania-Franco-Klein-Our-Life-In-The-Shadows-Curtain-self-portrait-2016-Tania-Franco-Klein-Fellowship-drop-31-%C2%A9-Tania-Franco-Klein-2-aspect-ratio-16-9.jpg"
+                  alt="hero image"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

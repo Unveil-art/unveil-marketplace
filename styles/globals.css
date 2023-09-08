@@ -536,4 +536,10 @@
   position: relative;
   will-change: background-size;
   cursor: pointer;
+
+  &:hover {
+    + h1 {
+      opacity: 0.65;
+    }
+  }
 }
