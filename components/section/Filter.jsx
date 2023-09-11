@@ -66,7 +66,7 @@ const Filter = ({
       <div className="hidden md:block">
         <p className="md:mb-2 b3 md:b6">Medium</p>
         <div className="flex items-center gap-1">
-          <span
+          <button
             onClick={() => {
               // change route query to digital
               router.push(
@@ -78,6 +78,7 @@ const Filter = ({
                 { shallow: true }
               );
             }}
+            disabled={category === 1}
             className={`${
               category === 1
                 ? "cursor-not-allowed opacity-60 border-opacity-0"
@@ -89,8 +90,8 @@ const Filter = ({
             } px-2 border tracking-[0.1em] rounded-full  unveilTransition md:px-4 l2 `}
           >
             Digital
-          </span>
-          <span
+          </button>
+          <button
             onClick={() => {
               router.push(
                 {
@@ -101,6 +102,7 @@ const Filter = ({
                 { shallow: true }
               );
             }}
+            disabled={category === 1}
             className={`${
               category === 1
                 ? "cursor-not-allowed opacity-60 border-opacity-0"
@@ -112,7 +114,7 @@ const Filter = ({
             } px-2 border tracking-[0.1em] rounded-full  unveilTransition md:px-4 l2 `}
           >
             Print
-          </span>
+          </button>
         </div>
       </div>
     </Animate>
