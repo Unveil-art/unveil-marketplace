@@ -536,6 +536,7 @@
   position: relative;
   will-change: background-size;
   cursor: pointer;
+  padding-right: 0.05em;
 
   &:hover {
     + h1 {
