@@ -4,6 +4,22 @@ import DraggableImage from "lib/animations/draggableImage";
 
 const Minting = ({ artwork }) => {
   const [dominantColor, setDominantColor] = useState("rgba(21, 17, 0, 0.05)");
+  const [counter, setCounter] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCounter((prev) => prev+1);
+    },700);
+    return () => {
+      clearInterval(timer);
+    }
+  },[])
+  const returnDots =(num) => {
+    let dot = "";
+    for(let i=0;i<num;i++){
+      dot+="."
+    }
+    return dot;
+  }
   const imgDrag1 = useRef();
   const imgDrag2 = useRef();
 
@@ -132,7 +148,7 @@ const Minting = ({ artwork }) => {
         <div>
           <div className="w-10 h-10 mx-auto border rounded-full border-unveilWhite"></div>
           <h1 className="text-center h4 mt-[10px] text-unveilWhite">
-            Mint in progress...
+            Mint in progress{returnDots(counter % 4)}
           </h1>
           <p className="text-center b3 mt-[10px] text-unveilWhite">
             Your artwork is being minted and should complete shortly

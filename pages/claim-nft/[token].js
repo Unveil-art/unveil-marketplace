@@ -11,6 +11,7 @@ import useTouch from "@/hooks/useTouch";
 import Minting from "@/components/section/checkout-page/Minting";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import Link from "next/link";
+import useIsAuthenticated from "@/hooks/useIsAuthenticated";
 
 const STEPS = {
   PENDING: "PENDING",
@@ -25,6 +26,7 @@ const ClaimNFT = ({ claim, claim_token }) => {
   const { login } = useContext(Web3Context);
   const { width } = useWindowSize();
   const { value: token } = useLocalStorage("token");
+  const { authenticated } = useIsAuthenticated();
   const [dominantColor, setDominantColor] = useState("rgba(21, 17, 0, 0.05)");
   const [orientation, setOrientation] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
