@@ -199,7 +199,7 @@ const Web3AuthProvider = ({ children }) => {
     return eth;
   };
 
-  const login = async (formEmail) => {
+  const login = async (formEmail, redirect = true) => {
     if (!web3Auth) {
       console.log("web3auth not initialized yet");
       return;
@@ -223,10 +223,13 @@ const Web3AuthProvider = ({ children }) => {
           setWallet(accounts);
           setAccount(accounts);
 
-          await doLogin({
-            requestId: nonceData.id,
-            signature: signedMessage,
-          });
+          await doLogin(
+            {
+              requestId: nonceData.id,
+              signature: signedMessage,
+            },
+            redirect
+          );
         } else {
           const email = await doWalletHasEmail(accounts);
           if (!email && !formEmail) {
@@ -249,10 +252,13 @@ const Web3AuthProvider = ({ children }) => {
             setWallet(accounts);
             setAccount(accounts);
 
-            await doLogin({
-              requestId: nonceData.id,
-              signature: signedMessage,
-            });
+            await doLogin(
+              {
+                requestId: nonceData.id,
+                signature: signedMessage,
+              },
+              redirect
+            );
           }
         }
       } catch (err) {

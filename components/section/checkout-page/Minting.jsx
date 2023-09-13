@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ColorThief from "colorthief";
+import DraggableImage from "lib/animations/draggableImage";
 
 const Minting = ({ artwork }) => {
   const [dominantColor, setDominantColor] = useState("rgba(21, 17, 0, 0.05)");
+  const imgDrag1 = useRef();
+  const imgDrag2 = useRef();
 
   function isLight(rgb) {
     const [r, g, b] = rgb;
@@ -83,6 +86,11 @@ const Minting = ({ artwork }) => {
         color = darkenColor(color, 15);
       }
 
+      if (imgDrag1.current && imgDrag2.current) {
+        new DraggableImage(imgDrag1.current);
+        new DraggableImage(imgDrag2.current);
+      }
+
       setDominantColor(`rgb(${color[0]}, ${color[1]}, ${color[2]})`);
     };
   }, []);
@@ -92,21 +100,35 @@ const Minting = ({ artwork }) => {
       style={{ backgroundColor: dominantColor }}
       className="fixed top-0 left-0 z-10 w-full h-screen bg-unveilBlack "
     >
-      <div className="absolute md:top-20 md:left-20 top-0 left-0 w-[150px] md:w-[300px]">
-        <img
-          src={artwork.media_url}
-          alt={artwork.name}
-          className="object-contain w-full h-full"
-        />
+      <div
+        className="absolute md:top-20 md:left-20 top-0 left-0 w-[150px] md:w-[300px] cursor-grab"
+        ref={imgDrag1}
+      >
+        <div className="w-full h-full img-drag shadow1">
+          <div className="w-full h-full img-drag__inner">
+            <img
+              src={artwork.media_url}
+              alt={artwork.name}
+              className="object-contain w-full h-full"
+            />
+          </div>
+        </div>
       </div>
-      <div className="absolute bottom- md:bottom-20 md:right-20 right-0 w-[150px] md:w-[300px]">
-        <img
-          src={artwork.media_url}
-          alt={artwork.name}
-          className="object-contain w-full h-full"
-        />
+      <div
+        className="absolute bottom- md:bottom-20 md:right-20 right-0 w-[150px] md:w-[300px] cursor-grab"
+        ref={imgDrag2}
+      >
+        <div className="w-full h-full img-drag shadow1">
+          <div className="w-full h-full img-drag__inner">
+            <img
+              src={artwork.media_url}
+              alt={artwork.name}
+              className="object-contain w-full h-full"
+            />
+          </div>
+        </div>
       </div>
-      <div className="h-[100svh] relative w-full flex items-center justify-center">
+      <div className="h-[100svh] relative w-full flex items-center justify-center pointer-events-none z-20">
         <div>
           <div className="w-10 h-10 mx-auto border rounded-full border-unveilWhite"></div>
           <h1 className="text-center h4 mt-[10px] text-unveilWhite">
@@ -115,11 +137,11 @@ const Minting = ({ artwork }) => {
           <p className="text-center b3 mt-[10px] text-unveilWhite">
             Your artwork is being minted and should complete shortly
           </p>
-          <button className="block mx-auto mt-2 opacity-50 cursor-not-allowed cursor btn btn-secondary md:hidden">
+          <button className="block mx-auto mt-2 opacity-50 cursor-not-allowed cursor btn btn-white btn-secondary md:hidden">
             View on Etherscan
           </button>
         </div>
-        <button className="absolute hidden -translate-x-1/2 opacity-50 cursor-not-allowed md:block cursor btn btn-secondary btn-wide bottom-10 left-1/2">
+        <button className="absolute hidden -translate-x-1/2 opacity-50 cursor-not-allowed md:block cursor btn btn-secondary btn-white btn-wide bottom-10 left-1/2">
           View on Etherscan
         </button>
       </div>
