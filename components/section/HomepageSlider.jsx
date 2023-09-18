@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import Link from "next/link";
 import { useLenis } from "@studio-freight/react-lenis";
 
-const HomepageSlider = () => {
+const HomepageSlider = ({data}) => {
   const el = useRef();
   const query = gsap.utils.selector(el);
 
@@ -161,58 +161,41 @@ const HomepageSlider = () => {
           <div className="flex items-center relative py-10 md:py-40">
             <div className="homepage-slider-content-gradient absolute w-full h-full top-0 -left-1 md:-left-40 -z-10 opacity-25 md:opacity-30" />
             <div className="mr-6 md:mr-14 vertical backwards s3 text-unveilWhite">
-              CHAPTER 01: UNSEEN
+              {data.horizontal_text ? data.horizontal_text : 'CHAPTER 01: UNSEEN'}
             </div>
             <div className="">
               <div className="flex mb-2.5">
                 <span className="nft-print mr-0.5 text-white border-unveilWhite">
-                  print
+                  {data.artwork_type ? data.artwork_type : 'print'}
                 </span>
-                <span className="nft bg-white border-0">Extended EDITION</span>
+                <span className="nft bg-white border-0">{data.edition_type ? data.edition_type : 'Extended EDITION'}</span>
               </div>
               <div className="mb-4 text-white">
-                <div className="relative">
+                {
+                  data.titles.map(({ title, id }) => (
+                    <div className="relative" key={id}>
                   <div
                     className="h1-5 relative homepage-slider-duplicate-text"
                     aria-hidden
                   >
-                    Thomas Albdorf
+                    {title}
                   </div>
                   <h1 className="h1-5 opacity-50 absolute top-0 transition-opacity">
-                    Thomas Albdorf
+                    {title}
                   </h1>
                 </div>
-                <div className="relative">
-                  <div
-                    className="h1-5 relative homepage-slider-duplicate-text"
-                    aria-hidden
-                  >
-                    Awoiska van der Molen
-                  </div>
-                  <h1 className="h1-5 opacity-50 absolute top-0 transition-opacity">
-                    Awoiska van der Molen
-                  </h1>
-                </div>
-                <div className="relative">
-                  <div
-                    className="h1-5 relative homepage-slider-duplicate-text"
-                    aria-hidden
-                  >
-                    Kim Boske
-                  </div>
-                  <h1 className="h1-5 opacity-50 absolute top-0 transition-opacity">
-                    Kim Boske
-                  </h1>
-                </div>
+                  ))
+                }
               </div>
               <div className="flex">
                 <Link
+                  target="_blank"
                   className="btn btn-primary-white inline-block mr-2"
-                  href="/"
+                  href={data.collection_link}
                 >
                   See Collection
                 </Link>
-                <Link className="btn btn-white hidden md:inline-block" href="/">
+                <Link target="_blank" className="btn btn-white hidden md:inline-block" href={data.ticket_link}>
                   Win tickets to Unseen
                 </Link>
               </div>
@@ -224,33 +207,20 @@ const HomepageSlider = () => {
             className="absolute w-full h-[110%] top-0 left-0 gsap-parallax"
             data-speed="-0.1"
           >
-            <div className="absolute w-full h-full top-0 left-0 gsap-slider-item overflow-hidden">
+            {
+              data.images.map(({ image: { data } }) => (
+                <div className="absolute w-full h-full top-0 left-0 gsap-slider-item overflow-hidden">
               <div className="absolute w-full h-full top-0 left-0 gsap-slider-item-inner">
                 <img
-                  src="/images/bg-hero-image.jpg"
-                  alt="hero image"
+                  src={data[0].attributes.url}
+                  alt={data[0].attributes.name}
                   className="h-full w-full object-cover"
                 />
               </div>
             </div>
-            <div className="absolute w-full h-full top-0 left-0 gsap-slider-item overflow-hidden">
-              <div className="absolute w-full h-full top-0 left-0 gsap-slider-item-inner">
-                <img
-                  src="https://fellowship.xyz/wp-content/uploads/Taysa-Jorge-Solitude-Mysteries-to-Discover-2022-%C2%A9-Taysa-Jorge-aspect-ratio-16-9.jpg"
-                  alt="hero image"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </div>
-            <div className="absolute w-full h-full top-0 left-0 gsap-slider-item overflow-hidden">
-              <div className="absolute w-full h-full top-0 left-0 gsap-slider-item-inner">
-                <img
-                  src="https://fellowship.xyz/wp-content/uploads/Tania-Franco-Klein-Our-Life-In-The-Shadows-Curtain-self-portrait-2016-Tania-Franco-Klein-Fellowship-drop-31-%C2%A9-Tania-Franco-Klein-2-aspect-ratio-16-9.jpg"
-                  alt="hero image"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </div>
+              ))
+            }
+
           </div>
         </div>
       </div>

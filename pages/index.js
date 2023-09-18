@@ -74,7 +74,7 @@ export default function Home({
   return (
     <div ref={el}>
       <div>
-        <HomepageSlider />
+        <HomepageSlider data={homeData.page0} />
       </div>
       <div className="fixed w-full h-full top-0 left-0 gsap-fixed">
         <HomepageHero
