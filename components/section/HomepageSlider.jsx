@@ -13,7 +13,7 @@ const HomepageSlider = ({data}) => {
     const sliderItems = query(".gsap-slider-item");
     const sliderItemsInner = query(".gsap-slider-item-inner");
     const sliderDuplicateTexts = query(".homepage-slider-duplicate-text");
-
+    console.log(data,"data++")
     let currentIndex = 0;
     let previousIndex = 0;
     const timeToNextSlide = 8;
@@ -161,31 +161,30 @@ const HomepageSlider = ({data}) => {
           <div className="flex items-center relative py-10 md:py-40">
             <div className="homepage-slider-content-gradient absolute w-full h-full top-0 -left-1 md:-left-40 -z-10 opacity-25 md:opacity-30" />
             <div className="mr-6 md:mr-14 vertical backwards s3 text-unveilWhite">
-              {data.horizontal_text ? data.horizontal_text : 'CHAPTER 01: UNSEEN'}
+              {data.horizontal_text}
             </div>
             <div className="">
               <div className="flex mb-2.5">
                 <span className="nft-print mr-0.5 text-white border-unveilWhite">
-                  {data.artwork_type ? data.artwork_type : 'print'}
+                  {data.artwork_type}
                 </span>
-                <span className="nft bg-white border-0">{data.edition_type ? data.edition_type : 'Extended EDITION'}</span>
+                <span className="nft bg-white border-0">{data.edition_type}</span>
               </div>
               <div className="mb-4 text-white">
-                {
-                  data.titles.map(({ title, id }) => (
-                    <div className="relative" key={id}>
-                  <div
+                {data.titles.map((data) => (
+                  <div className="relative" key={data.id}>
+                    <div
                     className="h1-5 relative homepage-slider-duplicate-text"
                     aria-hidden
                   >
-                    {title}
+                    {data.title}
                   </div>
                   <h1 className="h1-5 opacity-50 absolute top-0 transition-opacity">
-                    {title}
+                    {data.title}
                   </h1>
                 </div>
-                  ))
-                }
+                ))}
+
               </div>
               <div className="flex">
                 <Link
@@ -208,18 +207,18 @@ const HomepageSlider = ({data}) => {
             data-speed="-0.1"
           >
             {
-              data.images.map(({ image: { data } }) => (
-                <div className="absolute w-full h-full top-0 left-0 gsap-slider-item overflow-hidden">
-              <div className="absolute w-full h-full top-0 left-0 gsap-slider-item-inner">
-                <img
-                  src={data[0].attributes.url}
-                  alt={data[0].attributes.name}
-                  className="h-full w-full object-cover"
-                />
+              data.images.map((image) => (
+                <div className="absolute w-full h-full top-0 left-0 gsap-slider-item overflow-hidden" key={image.id}>
+                <div className="absolute w-full h-full top-0 left-0 gsap-slider-item-inner">
+                  <img
+                    src={image.image.data[0].attributes.url}
+                    alt={image.image.data[0].attributes.name}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
               </div>
-            </div>
               ))
-            }
+           }
 
           </div>
         </div>
