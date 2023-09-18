@@ -168,16 +168,6 @@ const AboutPrint = ({ item }) => {
 
           <div className="absolute bottom-[40px] md:bottom-[50px] right-8 max-w-[310px]">
             <ul>
-              <li className="s1">Hanna Redling</li>
-              <li className="s1">Julien Drach</li>
-              <li className="s1">Sonia Mangiapane</li>
-              <li className="s1">Maria Bodil</li>
-              <li className="s1">Wanda Tuerlincks</li>
-              <li className="s1">Joost Termeer</li>
-              <li className="s1">Bram van Stappen</li>
-              <li className="s1">Alexander Sporre</li>
-              <li className="s1">Hanna Redling</li>
-              <li className="s1">Julien Drach</li>
               <li className="s1">Sonia Mangiapane</li>
               <li className="s1">Maria Bodil</li>
               <li className="s1">Wanda Tuerlincks</li>
