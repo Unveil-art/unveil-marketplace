@@ -161,14 +161,14 @@ const HomepageSlider = ({data}) => {
           <div className="flex items-center relative py-10 md:py-40">
             <div className="homepage-slider-content-gradient absolute w-full h-full top-0 -left-1 md:-left-40 -z-10 opacity-25 md:opacity-30" />
             <div className="mr-6 md:mr-14 vertical backwards s3 text-unveilWhite">
-              {data.horizontal_text}
+              {data?.vertical_text}
             </div>
             <div className="">
               <div className="flex mb-2.5">
                 <span className="nft-print mr-0.5 text-white border-unveilWhite">
-                  {data.artwork_type}
+                  {data?.artwork_type}
                 </span>
-                <span className="nft bg-white border-0">{data.edition_type}</span>
+                <span className="nft bg-white border-0">{data?.edition_type}</span>
               </div>
               <div className="mb-4 text-white">
                 {data.titles.map((data) => (
@@ -177,10 +177,10 @@ const HomepageSlider = ({data}) => {
                     className="h1-5 relative homepage-slider-duplicate-text"
                     aria-hidden
                   >
-                    {data.title}
+                    {data?.title}
                   </div>
                   <h1 className="h1-5 opacity-50 absolute top-0 transition-opacity">
-                    {data.title}
+                    {data?.title}
                   </h1>
                 </div>
                 ))}
@@ -190,11 +190,11 @@ const HomepageSlider = ({data}) => {
                 <Link
                   target="_blank"
                   className="btn btn-primary-white inline-block mr-2"
-                  href={data.collection_link}
+                  href={data?.collection_link}
                 >
                   See Collection
                 </Link>
-                <Link target="_blank" className="btn btn-white hidden md:inline-block" href={data.ticket_link}>
+                <Link target="_blank" className="btn btn-white hidden md:inline-block" href={data?.ticket_link}>
                   Win tickets to Unseen
                 </Link>
               </div>
@@ -211,8 +211,8 @@ const HomepageSlider = ({data}) => {
                 <div className="absolute w-full h-full top-0 left-0 gsap-slider-item overflow-hidden" key={image.id}>
                 <div className="absolute w-full h-full top-0 left-0 gsap-slider-item-inner">
                   <img
-                    src={image.image.data[0].attributes.url}
-                    alt={image.image.data[0].attributes.name}
+                    src={image?.image?.data[0]?.attributes.url}
+                    alt={image?.image?.data[0]?.attributes.name}
                     className="h-full w-full object-cover"
                   />
                 </div>
