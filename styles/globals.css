@@ -13,6 +13,9 @@
   .btn-primary {
     @apply border bg-unveilBlack text-unveilWhite border-unveilBlack unveilTransition hover:bg-opacity-90;
   }
+  .btn-primary-white {
+    @apply border bg-unveilWhite text-unveilBlack unveilTransition hover:bg-opacity-90;
+  }
   .btn-secondary {
     @apply bg-transparent border border-unveilBlack hover:bg-bgColor unveilTransition;
   }
@@ -40,6 +43,9 @@
   h1,
   .h1 {
     @apply font-graphik text-[45px] md:text-[110px] leading-[90%] tracking-[-0.06em];
+  }
+  .h1-5 {
+    @apply font-graphik text-[24px] md:text-[68px] leading-[101%] md:leading-[100.06%] tracking-[-0.03em] md:tracking-[-0.06em];
   }
   h2,
   .h2 {
@@ -70,6 +76,12 @@
   }
   .s2 {
     @apply font-teodor !font-light text-[21px] md:text-[26px] leading-[24px] md:leading-[26px] tracking-[-0.01em] md:tracking-[-0.03em];
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .s3 {
+    @apply font-teodor !font-light text-[11px] md:text-[21px] leading-[1] tracking-[0.1em];
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -509,5 +521,52 @@
   .bottom-sheet__inner {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+  }
+}
+
+.homepage-slider-top-gradient {
+  opacity: 0.23;
+  background: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.homepage-slider-content-gradient {
+  border-radius: 990px;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    #000 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.vertical {
+  writing-mode: vertical-rl;
+}
+
+.backwards {
+  -moz-transform: scale(-1, -1);
+  -webkit-transform: scale(-1, -1);
+  -o-transform: scale(-1, -1);
+  -ms-transform: scale(-1, -1);
+  transform: scale(-1, -1);
+}
+
+.homepage-slider-duplicate-text {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: rgba(0, 0, 0, 0);
+  z-index: 1;
+  background-image: -webkit-linear-gradient(right, #ffffff, #ffffff, #ffffff);
+  background-position: 0% 100%;
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  display: inline;
+  position: relative;
+  will-change: background-size;
+  cursor: pointer;
+  padding-right: 0.05em;
+
+  &:hover {
+    + h1 {
+      opacity: 0.65;
+    }
   }
 }
