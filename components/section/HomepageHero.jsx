@@ -9,6 +9,12 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import Image from "next/image";
 import { useLenis } from "@studio-freight/react-lenis";
 
+const ARTWORK_COLOR = {
+  "Limited": "#ACA9BE",
+  "Extended": "#FFB800",
+  "1-of-1":"#D6471A"
+}
+
 const HomepageHero = ({ data, featuredArtworks }) => {
   const el = useRef();
   const once = useRef(false);
@@ -321,23 +327,34 @@ const HomepageHero = ({ data, featuredArtworks }) => {
                   </div>
                   <div className="absolute left-0 top-0 w-full h-full pointer-events-none black-gradient-2 overflow-hidden">
                     <div className="absolute bottom-6 left-5 pointer-events-auto gsap-fade">
-                      <div className="flex">
+                      <div className="flex gap-1">
                         {item.edition_type && (
                           <>
                             {item.edition_type === "NFT_Backed_by_print" && (
-                              <span className="nft">nft + print</span>
+                              <span className="nft">PRINT</span>
                             )}
                             {item.edition_type === "NFT_Only" && (
-                              <span className="nft">nft</span>
+                              <span className="nft bg-black text-unveilWhite">DIGITAL</span>
                             )}
                             {item.edition_type === "Print_Only" && (
-                              <span className="print">print</span>
+                              <span className="print">PRINT</span>
                             )}
                           </>
                         )}
-                        <div className="b5 text-unveilWhite ml-1.5">
+                        {/* <div className="b5 text-unveilWhite ml-1.5">
                           Edition of {item.editions?.length}
-                        </div>
+                        </div> */}
+                        {item.artwork_type && (
+                          <>
+                            {item.artwork_type === "Limited" && (
+                              <span className={`nft-print`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>LIMITED EDITION</span>
+                            )}
+                            {item.artwork_type === "Extended" && <span className={`nft`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>EXTENDED EDITION</span>}
+                            {item.artwork_type === "1-of-1" && (
+                              <span className={`print`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>1-OF-1</span>
+                            )}
+                          </>
+                        )}
                       </div>
                       <small className=" block text-white l2 text-[8px] md:text-[12px]">
                         {item.name}

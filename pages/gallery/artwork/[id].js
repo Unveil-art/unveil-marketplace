@@ -98,7 +98,7 @@ const Details = ({ artwork, browse }) => {
     };
     // }
   }, [artwork]);
-
+  console.log(artwork.artwork_type, "featured");
   return (
     <main className="mb-[100px]">
       <GalleryHero artwork={artwork} dominantColor={dominantColor} />

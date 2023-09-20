@@ -65,6 +65,12 @@ const GalleryHero = ({ artwork, dominantColor }) => {
   const el = useRef();
   const { isIntersecting } = useIntersection(el, "-200px");
 
+  const ARTWORK_COLOR = {
+    "Limited": "#ACA9BE",
+    "Extended": "#FFB800",
+    "1-of-1":"#D6471A"
+  }
+
   useEffect(() => {
     if (artwork.edition_type === "NFT_Only")
       if (isIntersecting) {
@@ -302,19 +308,32 @@ const GalleryHero = ({ artwork, dominantColor }) => {
         <div className="md:col-span-2 ">
           <div className="md:mb-[100px] my-10 md:mt-[180px] text-center px-[15px] md:pl-10 md:pr-5">
             {/* <p className="pb-5 l2 md:pb-0">{displayName}</p> */}
+            <div className="flex gap-1 justify-center">
             {artwork.edition_type && (
               <>
                 {artwork.edition_type === "NFT_Backed_by_print" && (
-                  <span className="nft-print">nft + print</span>
+                  <span className="nft-print">PRINT</span>
                 )}
                 {artwork.edition_type === "NFT_Only" && (
-                  <span className="nft">nft</span>
+                  <span className="nft bg-black text-unveilWhite">DIGITAL</span>
                 )}
                 {artwork.edition_type === "Print_Only" && (
-                  <span className="print">print</span>
+                  <span className="print">PRINT</span>
                 )}
               </>
             )}
+            {artwork.artwork_type && (
+        <>
+          {artwork.artwork_type === "Limited" && (
+            <span className={`nft-print`} style={{backgroundColor:ARTWORK_COLOR[artwork.artwork_type]}}>LIMITED EDITION</span>
+          )}
+          {artwork.artwork_type === "Extended" && <span className={`nft`} style={{backgroundColor:ARTWORK_COLOR[artwork.artwork_type]}}>EXTENDED EDITION</span>}
+          {artwork.artwork_type === "1-of-1" && (
+            <span className={`print`} style={{backgroundColor:ARTWORK_COLOR[artwork.artwork_type]}}>1-OF-1</span>
+          )}
+        </>
+      )}
+            </div>
             <h1 className="h3 mt-5 mb-3">{artwork.name}</h1>
             <p className="hidden md:block">
               From ${parseFloat(getUSD(lowestPrice)).toFixed()} (
