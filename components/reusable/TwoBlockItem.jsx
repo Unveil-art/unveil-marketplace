@@ -8,6 +8,13 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import { darkenColor, isLight } from "lib/utils/color";
 import ColorThief from "colorthief";
 
+
+const ARTWORK_COLOR = {
+  "Limited": "#ACA9BE",
+  "Extended": "#FFB800",
+  "1-of-1":"#D6471A"
+}
+
 const TwoBlockItem = ({ item, i }) => {
   const [orientation, setOrientation] = useState(false);
   const [exchangeRate, setExchangeRate] = useState(1900);
@@ -151,19 +158,30 @@ const TwoBlockItem = ({ item, i }) => {
               ))}
             </>
           )}
-          {item.edition_type && (
-            <>
-              {item.edition_type === "NFT_Backed_by_print" && (
-                <span className="nft-print">nft + print</span>
-              )}
-              {item.edition_type === "NFT_Only" && (
-                <span className="nft">nft</span>
-              )}
-              {item.edition_type === "Print_Only" && (
-                <span className="print">print</span>
-              )}
-            </>
+          <div className="flex gap-1 mt-2">
+      {item.edition_type && (
+        <>
+          {item.edition_type === "NFT_Backed_by_print" && (
+            <span className="nft-print">PRINT</span>
           )}
+          {item.edition_type === "NFT_Only" && <span className="nft bg-black text-white">DIGITAL</span>}
+          {item.edition_type === "Print_Only" && (
+            <span className="print">PRINT</span>
+          )}
+        </>
+        )}
+        {item.artwork_type && (
+        <>
+          {item.artwork_type === "Limited" && (
+            <span className={`nft-print`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>LIMITED EDITION</span>
+          )}
+          {item.artwork_type === "Extended" && <span className={`nft`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>EXTENDED EDITION</span>}
+          {item.artwork_type === "1-of-1" && (
+            <span className={`print`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>1-OF-1</span>
+          )}
+        </>
+            )}
+            </div>
           {item.title && (
             <Link href={`/gallery/collection/${item.id}`}>
               <h5 className="b3">{item.title}</h5>
