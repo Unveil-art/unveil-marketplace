@@ -5,11 +5,21 @@ import Animate from "./Animate";
 import { getUserName } from "lib/utils";
 import { getCurrentExchangeRateETHUSD } from "lib/backend";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { darkenColor, isLight } from "lib/utils/color";
+import ColorThief from "colorthief";
+
+
+const ARTWORK_COLOR = {
+  "Limited": "#ACA9BE",
+  "Extended": "#FFB800",
+  "1-of-1":"#D6471A"
+}
 
 const TwoBlockItem = ({ item, i }) => {
   const [orientation, setOrientation] = useState(false);
   const [exchangeRate, setExchangeRate] = useState(1900);
   const [uniqueEditionTypes, setUniqueEditionTypes] = useState([]);
+  const [dominantColor, setDominantColor] = useState("rgba(21, 17, 0, 0.05)");
 
   useEffect(() => {
     if (item.title) {
@@ -53,14 +63,25 @@ const TwoBlockItem = ({ item, i }) => {
 
   useEffect(() => {
     const img = new window.Image();
+    img.src = item.media_url;
+    img.crossOrigin = "Anonymous";
+    const colorThief = new ColorThief();
+
     img.onload = function () {
+      let color = colorThief.getColor(img);
+
       if (this.width > this.height) {
         setOrientation(true);
       } else {
         setOrientation(false);
       }
+
+      if (isLight(color)) {
+        color = darkenColor(color, 30);
+      }
+
+      setDominantColor(`rgb(${color[0]}, ${color[1]}, ${color[2]})`);
     };
-    img.src = item.media_url;
   }, [item.media_url]);
 
   return (
@@ -69,7 +90,13 @@ const TwoBlockItem = ({ item, i }) => {
         <>
           {item.title && (
             <Link href={`/gallery/collection/${item.id}`}>
-              <div className="relative w-full overflow-hidden bg-bgColor aspect-square">
+              <div
+                className="relative w-full overflow-hidden bg-bgColor aspect-square transition-colors duration-500"
+                data-hover-bg
+                style={{
+                  "--hover-bg-color": `${dominantColor}`,
+                }}
+              >
                 <div
                   className={` ${
                     orientation
@@ -91,7 +118,13 @@ const TwoBlockItem = ({ item, i }) => {
           )}
           {item.name && (
             <Link href={`/gallery/artwork/${item.id}`}>
-              <div className="relative w-full overflow-hidden bg-bgColor aspect-square">
+              <div
+                className="relative w-full overflow-hidden bg-bgColor aspect-square transition-colors duration-500"
+                data-hover-bg
+                style={{
+                  "--hover-bg-color": `${dominantColor}`,
+                }}
+              >
                 <div
                   className={` ${
                     orientation
@@ -125,19 +158,30 @@ const TwoBlockItem = ({ item, i }) => {
               ))}
             </>
           )}
-          {item.edition_type && (
-            <>
-              {item.edition_type === "NFT_Backed_by_print" && (
-                <span className="nft-print">nft + print</span>
-              )}
-              {item.edition_type === "NFT_Only" && (
-                <span className="nft">nft</span>
-              )}
-              {item.edition_type === "Print_Only" && (
-                <span className="print">print</span>
-              )}
-            </>
+          <div className="flex gap-1 mt-2">
+      {item.edition_type && (
+        <>
+          {item.edition_type === "NFT_Backed_by_print" && (
+            <span className="nft-print">PRINT</span>
           )}
+          {item.edition_type === "NFT_Only" && <span className="nft bg-black text-white">DIGITAL</span>}
+          {item.edition_type === "Print_Only" && (
+            <span className="print">PRINT</span>
+          )}
+        </>
+        )}
+        {item.artwork_type && (
+        <>
+          {item.artwork_type === "Limited" && (
+            <span className={`nft-print`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>LIMITED EDITION</span>
+          )}
+          {item.artwork_type === "Extended" && <span className={`nft`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>EXTENDED EDITION</span>}
+          {item.artwork_type === "1-of-1" && (
+            <span className={`print`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>1-OF-1</span>
+          )}
+        </>
+            )}
+            </div>
           {item.title && (
             <Link href={`/gallery/collection/${item.id}`}>
               <h5 className="b3">{item.title}</h5>

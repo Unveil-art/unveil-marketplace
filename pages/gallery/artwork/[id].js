@@ -81,29 +81,31 @@ const Details = ({ artwork, browse }) => {
   }
 
   useEffect(() => {
-    if (artwork.edition_type === "NFT_Only") {
-      const colorThief = new ColorThief();
-      let img = new Image();
-      img.src = artwork.media_url + "?" + Date.now();
-      img.crossOrigin = "Anonymous";
+    // if (artwork.edition_type === "NFT_Only") {
+    const colorThief = new ColorThief();
+    let img = new Image();
+    img.src = artwork.media_url + "?" + Date.now();
+    img.crossOrigin = "Anonymous";
 
-      img.onload = function () {
-        let color = colorThief.getColor(img);
+    img.onload = function () {
+      let color = colorThief.getColor(img);
 
-        if (isLight(color)) {
-          color = darkenColor(color, 15);
-        }
+      if (isLight(color)) {
+        color = darkenColor(color, 15);
+      }
 
-        setDominantColor(`rgb(${color[0]}, ${color[1]}, ${color[2]})`);
-      };
-    }
+      setDominantColor(`rgb(${color[0]}, ${color[1]}, ${color[2]})`);
+    };
+    // }
   }, [artwork]);
-
+  console.log(artwork.artwork_type, "featured");
   return (
     <main className="mb-[100px]">
       <GalleryHero artwork={artwork} dominantColor={dominantColor} />
       <GalleryAbout artwork={artwork} />
-      {/* <Provenance /> */}
+      {artwork.edition_type === "Print_Only" && (
+        <Provenance artwork={artwork} />
+      )}
       <AboutCurator owner={artwork.owner} />
       <ContinueBrowsing browse={browse} />
     </main>

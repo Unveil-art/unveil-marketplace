@@ -10,6 +10,7 @@ const OptionsPopIn = ({
   artwork,
   setEdition,
   dominantColor,
+  setOfferOpen,
 }) => {
   const [editionSizes, setEditionSizes] = useState([]);
   const [nftEditions, setNftEditions] = useState();
@@ -99,21 +100,36 @@ const OptionsPopIn = ({
                               </p>
                               <p className="b4">${edition.price}</p>
                             </div>
-                            <button
-                              onClick={() =>
-                                setEdition({
-                                  ...edition,
-                                  edition_index: i + 1,
-                                  max_editions: editionSize.editions.length,
-                                  media_url: artwork.media_url,
-                                  edition_type: artwork.edition_type,
-                                  artwork_id: artwork.id,
-                                })
-                              }
-                              className="w-full btn btn-secondary btn-full"
-                            >
-                              Buy from artist
-                            </button>
+                            {edition.max_copies === edition.sold_copies && (
+                              <button
+                                onClick={() => {
+                                  setOfferOpen(true);
+                                  setOptionsOpen(false);
+                                  setEdition(edition);
+                                }}
+                                className="btn btn-full disabled:opacity-40 disabled:cursor-not-allowed btn-secondary"
+                              >
+                                Make Offer
+                              </button>
+                            )}
+
+                            {edition.max_copies !== edition.sold_copies && (
+                              <button
+                                onClick={() =>
+                                  setEdition({
+                                    ...edition,
+                                    edition_index: i + 1,
+                                    max_editions: editionSize.editions.length,
+                                    media_url: artwork.media_url,
+                                    edition_type: artwork.edition_type,
+                                    artwork_id: artwork.id,
+                                  })
+                                }
+                                className="w-full btn btn-secondary btn-full"
+                              >
+                                Buy from artist
+                              </button>
+                            )}
                             {!edition.token_id && (
                               <p className="absolute -bottom-1 left-5 b5">
                                 Token ID #{edition.token_id}
@@ -193,25 +209,35 @@ const OptionsPopIn = ({
                         </div>
                       </div>
                       <div>
-                        <button
-                          disabled={edition.max_copies === edition.sold_copies}
-                          onClick={() =>
-                            setEdition({
-                              ...edition,
-                              edition_index: i + 1,
-                              max_editions: nftEditions.length,
-                              media_url: artwork.media_url,
-                              edition_type: artwork.edition_type,
-                              artwork_id: artwork.id,
-                            })
-                          }
-                          className="btn btn-full disabled:opacity-40 disabled:cursor-not-allowed btn-secondary"
-                        >
-                          {edition.max_copies === edition.sold_copies
-                            ? "Sold Out"
-                            : "Buy from artist"}
-                        </button>
-
+                        {edition.max_copies === edition.sold_copies && (
+                          <button
+                            onClick={() => {
+                              setOfferOpen(true);
+                              setOptionsOpen(false);
+                              setEdition(edition);
+                            }}
+                            className="btn btn-full disabled:opacity-40 disabled:cursor-not-allowed btn-secondary"
+                          >
+                            Make Offer
+                          </button>
+                        )}
+                        {edition.max_copies !== edition.sold_copies && (
+                          <button
+                            onClick={() =>
+                              setEdition({
+                                ...edition,
+                                edition_index: i + 1,
+                                max_editions: nftEditions.length,
+                                media_url: artwork.media_url,
+                                edition_type: artwork.edition_type,
+                                artwork_id: artwork.id,
+                              })
+                            }
+                            className="btn btn-full disabled:opacity-40 disabled:cursor-not-allowed btn-secondary"
+                          >
+                            Buy from artist
+                          </button>
+                        )}
                         <p className="mt-1 leading-snug b5">
                           {edition.token_id !== null
                             ? `Token ID #${edition.token_id}`

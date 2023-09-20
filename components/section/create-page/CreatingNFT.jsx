@@ -19,8 +19,12 @@ const CreatingNFT = () => {
     return dot;
   }
   return (
-    <section className="fixed top-0 left-0 z-30 w-full h-screen bg-unveilWhite pt-[120px]">
-      <Title title={`NFT is being created${returnDots(counter%4)} `} />
+    <section className="fixed top-0 left-0 z-30 w-full h-screen bg-unveilWhite pt-[120px] pb-[90px] flex flex-col">
+      <Title title={`NFT is being created${returnDots(counter % 4)} `} />
+      <p className="b3 ml-[40px] md:ml-[35vw] md:pr-[40px] mt-auto">
+        <span className="font-medium">Do not refresh.</span> Sign the
+        transaction in Metamask to create NFT may be requested
+      </p>
     </section>
   );
 };

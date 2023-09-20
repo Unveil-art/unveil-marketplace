@@ -10,13 +10,17 @@ import {
 import Loader from "@/components/svg/Loader";
 import Animate from "@/components/reusable/Animate";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
+import NewRecognitionPopIn from "@/components/pop-in/NewRecognitionPopIn";
 
 const Recognitions = () => {
   const [loading, setLoading] = useState(false);
   const [recognition, setRecognition] = useState();
+  const [showPopIn, setShowPopIn] = useState(false);
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -58,6 +62,7 @@ const Recognitions = () => {
     try {
       await postRecognition(value, data);
       setLoading(false);
+      reset();
       // toast.success("Success");
       showTopStickyNotification("success", "Success");
       fetchRecognitions();
@@ -102,7 +107,7 @@ const Recognitions = () => {
             </tbody>
           )}
         </table>
-        <h2 className="pt-[60px] pb-10">Add recognition</h2>
+        {/* <h2 className="pt-[60px] pb-10">Add recognition</h2>
         <form
           onSubmit={handleSubmit(onSubmitForm)}
           className="space-y-2 md:space-y-[15px] relative max-w-[640px]"
@@ -119,6 +124,7 @@ const Recognitions = () => {
               <option value="AWARD">Award</option>
               <option value="EXHIBITION">Exhibition</option>
               <option value="COLLECTION">Collection</option>
+              <option value="EDUCATION">EDUCATION</option>
             </select>
             <p
               className={`text-red-500 opacity-0 b5 absolute -bottom-[18px] left-0 ${
@@ -173,8 +179,18 @@ const Recognitions = () => {
               {errors.year?.message}
             </p>
           </div>
+          <div className="relative">
+            <input
+              placeholder="Add Link"
+              className="input"
+              type="text"
+              name="link"
+              id="link"
+              {...register("link")}
+            />
+          </div>
 
-          {/* <input placeholder="Add link" className="input mb-[15px]" type="text" /> */}
+          <input placeholder="Add link" className="input mb-[15px]" type="text" />
           <button
             type="submit"
             className="flex items-center justify-center btn btn-secondary btn-full btn-lg"
@@ -192,7 +208,21 @@ const Recognitions = () => {
               <br /> Adjustable info block about our verifications
             </p>
           </div>
-        </form>
+        </form> */}
+
+        <button
+          onClick={() => setShowPopIn(true)}
+          className="flex items-center justify-center mt-8 btn btn-secondary btn-full btn-lg max-w-[640px]"
+        >
+          Add Achievement
+        </button>
+
+        <NewRecognitionPopIn
+          open={showPopIn}
+          setOpen={setShowPopIn}
+          fetchRecognitions={fetchRecognitions}
+          value={value}
+        />
       </div>
     </Animate>
   );

@@ -2,10 +2,12 @@ import React, { useEffect, useState, useContext, useRef } from "react";
 import Wishlist from "../../svg/Wishlist";
 import OptionsPopIn from "@/components/pop-in/OptionsPopIn";
 import EditionPopIn from "@/components/pop-in/EditionPopIn";
+import MakeOfferPopIn from "@/components/pop-in/MakeOfferPopin";
 import {
   addToWishlist,
   artworkInWishlist,
   getArtistRecognitions,
+  getArtistStats,
   getCurrentExchangeRateETHUSD,
   removeFromWishlist,
 } from "lib/backend";
@@ -21,6 +23,7 @@ import ApplePay from "@/components/svg/ApplePay";
 import GooglePay from "@/components/svg/GooglePay";
 import Ideal from "@/components/svg/Ideal";
 import MetaMask from "@/components/svg/MetaMask";
+import Check2 from "@/components/svg/Check2";
 import { StepContext } from "@/contexts/StepContext";
 import { useIntersection } from "@/hooks/useIntersection";
 import Image from "next/image";
@@ -30,6 +33,7 @@ import Link from "next/link";
 import { Freshchat } from "reactjs-freshchat";
 import "reactjs-freshchat/dist/index.css";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
+import CountdownTimer from "@/components/reusable/CountdownTimer";
 
 const GalleryHero = ({ artwork, dominantColor }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
@@ -39,9 +43,11 @@ const GalleryHero = ({ artwork, dominantColor }) => {
   const [loading, setLoading] = useState(false);
   const { value: token } = useLocalStorage("token");
   const [recognitions, setRecognitions] = useState([]);
+  const [stats, setStats] = useState({});
   const [exchangeRate, setExchangeRate] = useState(1900);
   const [orientation, setOrientation] = useState(false);
   const { width } = useWindowSize();
+  const [offerOpen, setOfferOpen] = useState(false);
 
   // Popin states
   const [collectionOpen, setCollectionOpen] = useState(false);
@@ -58,6 +64,12 @@ const GalleryHero = ({ artwork, dominantColor }) => {
   const { setColor } = useContext(StepContext);
   const el = useRef();
   const { isIntersecting } = useIntersection(el, "-200px");
+
+  const ARTWORK_COLOR = {
+    "Limited": "#ACA9BE",
+    "Extended": "#FFB800",
+    "1-of-1":"#D6471A"
+  }
 
   useEffect(() => {
     if (artwork.edition_type === "NFT_Only")
@@ -204,8 +216,8 @@ const GalleryHero = ({ artwork, dominantColor }) => {
     frameObject = {
       frame: arr[0],
       size: arr[1],
-      color: arr[2].split(" ")[0],
-      border: arr[3].split(" ")[2],
+      color: arr[2]?.split(" ")[0],
+      border: arr[3]?.split(" ")[2],
     };
   }
 
@@ -213,9 +225,15 @@ const GalleryHero = ({ artwork, dominantColor }) => {
     const data = await getArtistRecognitions(artist_id);
     setRecognitions(data);
   };
+  const getStats = async (artist_id) => {
+    const data = await getArtistStats(artist_id);
+    setStats(data);
+  };
+
   useEffect(() => {
     if (artwork.owner_id) {
       getRecognitions(artwork.owner_id);
+      getStats(artwork.owner_id);
     }
   }, [artwork]);
 
@@ -228,6 +246,9 @@ const GalleryHero = ({ artwork, dominantColor }) => {
   // Find the lowest price
   const prices = artwork.editions.map((edition) => edition.price);
   const lowestPrice = Math.min(...prices);
+  const editionsClaimed = artwork.editions.filter(
+    (edition) => edition.buyer_id !== null
+  ).length;
 
   return (
     <>
@@ -247,7 +268,7 @@ const GalleryHero = ({ artwork, dominantColor }) => {
           style={{ backgroundColor: dominantColor }}
           className={`h-[65svh] unveilTransition md:h-screen overflow-hidden md:sticky  top-0 flex items-center justify-center md:col-span-3 `}
         >
-          <div className={`h-full  aspect-[3/4] mb-1`}>
+          <div className={`h-full aspect-[3/4] mb-1`}>
             <div
               className={`${
                 orientation
@@ -285,43 +306,136 @@ const GalleryHero = ({ artwork, dominantColor }) => {
             </div> */}
         </div>
         <div className="md:col-span-2 ">
-          <div className="md:mb-[100px] my-10 md:mt-[180px] md:space-y-10 text-center px-[15px] md:pl-10 md:pr-5">
-            <p className="pb-5 l2 md:pb-0">{displayName}</p>
-            <h1 className="h3">{artwork.name}</h1>
+          <div className="md:mb-[100px] my-10 md:mt-[180px] text-center px-[15px] md:pl-10 md:pr-5">
+            {/* <p className="pb-5 l2 md:pb-0">{displayName}</p> */}
+            <div className="flex gap-1 justify-center">
+            {artwork.edition_type && (
+              <>
+                {artwork.edition_type === "NFT_Backed_by_print" && (
+                  <span className="nft-print">PRINT</span>
+                )}
+                {artwork.edition_type === "NFT_Only" && (
+                  <span className="nft bg-black text-unveilWhite">DIGITAL</span>
+                )}
+                {artwork.edition_type === "Print_Only" && (
+                  <span className="print">PRINT</span>
+                )}
+              </>
+            )}
+            {artwork.artwork_type && (
+        <>
+          {artwork.artwork_type === "Limited" && (
+            <span className={`nft-print`} style={{backgroundColor:ARTWORK_COLOR[artwork.artwork_type]}}>LIMITED EDITION</span>
+          )}
+          {artwork.artwork_type === "Extended" && <span className={`nft`} style={{backgroundColor:ARTWORK_COLOR[artwork.artwork_type]}}>EXTENDED EDITION</span>}
+          {artwork.artwork_type === "1-of-1" && (
+            <span className={`print`} style={{backgroundColor:ARTWORK_COLOR[artwork.artwork_type]}}>1-OF-1</span>
+          )}
+        </>
+      )}
+            </div>
+            <h1 className="h3 mt-5 mb-3">{artwork.name}</h1>
             <p className="hidden md:block">
               From ${parseFloat(getUSD(lowestPrice)).toFixed()} (
               {lowestPrice.toFixed(2)} ETH)
             </p>
-            <div className="relative pt-10 md:pt-[100px] flex justify-between gap-5">
-              <div className="md:space-y-[6px] w-full md:block grid grid-cols-2 gap-[6px]">
-                <div className="rounded-[10px] unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] ">
-                  <p className="b5 leading-[23px]">Collection</p>
-                  <p className="truncate b3 !text-[13px] leading-normal  md:b4">
-                    {artwork.collection.title}
-                  </p>
-                </div>
-                {artwork.collection.curator_id && (
+            <div className="pt-10 md:pt-[100px]">
+              <div className="pb-10 md:pb-16">
+                <Link href={`/people/${artwork.owner.id}`}>
                   <div
-                    onClick={() => setCuratorOpen((prev) => !prev)}
-                    className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
+                    className="flex items-center mb-4"
+                    data-cursor="View artist"
+                    data-cursor-color="#b2b4ae"
                   >
-                    <p className="b5 leading-[23px]">Curator</p>
-                    <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                      {artwork.collection.curator_id}
+                    {artwork.owner.profileUrl && (
+                      <div className="mr-3.5 w-10 h-10 rounded-full overflow-hidden relative">
+                        <Image
+                          src={artwork.owner.profileUrl}
+                          alt={displayName}
+                          fill={true}
+                          style={{ objectFit: "cover" }}
+                        />
+                      </div>
+                    )}
+                    <div className="text-left">
+                      <h2 className="b5 mb-1 leading-tight">Artist</h2>
+                      <h2 className="b4 font-medium leading-tight">
+                        {displayName}
+                      </h2>
+                    </div>
+                  </div>
+                </Link>
+                <div className="">
+                  <ul className="l1">
+                    {recognitions.length > 0 && (
+                      <li className="flex items-center mb-1 last:mb-0">
+                        <span className="mr-2 inline-block">
+                          <Check2 />
+                        </span>
+                        <span>
+                          {displayName} has over {recognitions.length}{" "}
+                          recognitions
+                        </span>
+                      </li>
+                    )}
+                    {stats?.sales > 0 && (
+                      <li className="flex items-center mb-1 last:mb-0">
+                        <span className="mr-2 inline-block">
+                          <Check2 />
+                        </span>
+                        <span>
+                          Has made {stats.sales} sales by {stats.collectors}{" "}
+                          collectors
+                        </span>
+                      </li>
+                    )}
+                    {/* <li className="flex items-center mb-1 last:mb-0">
+                      <span className="mr-2 inline-block">
+                        <Check2 />
+                      </span>
+                      <span>2 reviews by experts</span>
+                    </li> */}
+                  </ul>
+                </div>
+              </div>
+              <div className="relative flex justify-between gap-5">
+                <div className="md:space-y-[6px] w-full md:block grid grid-cols-2 gap-[6px]">
+                  <div className="rounded-[10px] unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] ">
+                    <p className="b5 leading-[23px]">Collection</p>
+                    <p className="truncate b3 !text-[13px] leading-normal  md:b4">
+                      {artwork.collection.title}
                     </p>
                   </div>
-                )}
+                  {editionsClaimed > 0 && (
+                    <div className="rounded-[10px] unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] ">
+                      <p className="b5 leading-[23px]">Editions</p>
+                      <p className="truncate b3 !text-[13px] leading-normal  md:b4">
+                        {editionsClaimed} ediions claimed
+                      </p>
+                    </div>
+                  )}
+                  {artwork.collection.curator_id && (
+                    <div
+                      onClick={() => setCuratorOpen((prev) => !prev)}
+                      className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
+                    >
+                      <p className="b5 leading-[23px]">Curator</p>
+                      <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                        {artwork.collection.curator_id}
+                      </p>
+                    </div>
+                  )}
 
-                <div
-                  onClick={() => setSoldAsOpen((prev) => !prev)}
-                  className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
-                >
-                  <p className="b5 leading-[23px]">Sold as</p>
-                  <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                    {displaySoldAs}
-                  </p>
-                </div>
-                {/* <div
+                  <div
+                    onClick={() => setSoldAsOpen((prev) => !prev)}
+                    className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
+                  >
+                    <p className="b5 leading-[23px]">Sold as</p>
+                    <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                      {displaySoldAs}
+                    </p>
+                  </div>
+                  {/* <div
                   onClick={() => setPaymentOpen(true)}
                   className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
                 >
@@ -330,165 +444,177 @@ const GalleryHero = ({ artwork, dominantColor }) => {
                     ETH, Credit/Debit Card
                   </p>
                 </div> */}
-                {artwork.edition_type !== "NFT_Only" && (
+                  {artwork.edition_type !== "NFT_Only" && (
+                    <div
+                      onClick={() => setSizedOpen((prev) => !prev)}
+                      className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
+                    >
+                      <p className="b5 leading-[23px]">Available sizes</p>
+                      <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                        {artwork.size.map((item, i) => (
+                          <span key={i}>
+                            {item}
+                            {i < artwork.size.length - 1 && <>, </>}
+                          </span>
+                        ))}
+                      </p>
+                    </div>
+                  )}
+
                   <div
-                    onClick={() => setSizedOpen((prev) => !prev)}
+                    onClick={() => setRoyaltyOpen((prev) => !prev)}
                     className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
                   >
-                    <p className="b5 leading-[23px]">Available sizes</p>
+                    <p className="b5 leading-[23px]">Creator royalty</p>
                     <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                      {artwork.size.map((item, i) => (
-                        <span key={i}>
-                          {item}
-                          {i < artwork.size.length - 1 && <>, </>}
-                        </span>
-                      ))}
+                      {artwork.royalties[0]?.percentage}%
+                      {artwork.royalties[1]?.percentage ? ", " : ""}{" "}
+                      {artwork.royalties[1]?.percentage
+                        ? artwork.royalties[1]?.percentage
+                        : ""}
+                      {artwork.royalties[1]?.percentage ? "%" : ""}
                     </p>
                   </div>
-                )}
-
-                <div
-                  onClick={() => setRoyaltyOpen((prev) => !prev)}
-                  className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
-                >
-                  <p className="b5 leading-[23px]">Creator royalty</p>
-                  <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                    {artwork.royalties[0]?.percentage}%
-                    {artwork.royalties[1]?.percentage ? ", " : ""}{" "}
-                    {artwork.royalties[1]?.percentage
-                      ? artwork.royalties[1]?.percentage
-                      : ""}
-                    {artwork.royalties[1]?.percentage ? "%" : ""}
-                  </p>
-                </div>
-                <div
-                  onClick={() => setAddressOpen((prev) => !prev)}
-                  className="rounded-[10px] cursor-pointer hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px]"
-                >
-                  <p className="b5 leading-[23px]">Creator & royalty address</p>
-                  <p className="truncate b3 !text-[13px] leading-normal md:b4 w-[100px]">
-                    {artwork.owner.walletAddress.slice(0, 4).toLowerCase()}...
-                    {artwork.owner.walletAddress.slice(-4).toLowerCase()}
-                  </p>
-                </div>
-                {_recognitions && (
-                  <div className="rounded-[10px]  unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] ">
-                    <p className="b5 leading-[23px]">Recognitions</p>
-                    <p className="truncate b3 !text-[13px] leading-normal md:b4">
-                      {_recognitions}
+                  <div
+                    onClick={() => setAddressOpen((prev) => !prev)}
+                    className="rounded-[10px] cursor-pointer hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px]"
+                  >
+                    <p className="b5 leading-[23px]">
+                      Creator & royalty address
+                    </p>
+                    <p className="truncate b3 !text-[13px] leading-normal md:b4 w-[100px]">
+                      {artwork.owner.walletAddress.slice(0, 4).toLowerCase()}...
+                      {artwork.owner.walletAddress.slice(-4).toLowerCase()}
                     </p>
                   </div>
-                )}
-
-                <button
-                  disabled={loading}
-                  onClick={() => {
-                    if (inWishlist) {
-                      removeWishlist();
-                    } else {
-                      addWishlist();
-                    }
-                  }}
-                  className={`rounded-[10px]  unveilTransition hover:bg-bgColor col-span-2 md:justify-start justify-center items-center flex gap-2 h-[56px] md:h-[68px] border border-unveilBlack md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer`}
-                >
-                  {loading ? (
-                    <div className="animate-spin">
-                      <Loader color="#141414" />
+                  {_recognitions && (
+                    <div className="rounded-[10px]  unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] ">
+                      <p className="b5 leading-[23px]">Recognitions</p>
+                      <p className="truncate b3 !text-[13px] leading-normal md:b4">
+                        {_recognitions}
+                      </p>
                     </div>
-                  ) : (
-                    <Wishlist fill={inWishlist ? "#F66666" : "#141414"} />
                   )}
-                  <p className="b4">
-                    {inWishlist ? "Added" : "Add"} to wishlist
-                  </p>
-                </button>
 
-                <div className="flex flex-col justify-start p-4 md:p-5 items-start col-span-2 unveilTransition w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] !mt-5 md:!mt-9 bg-[#1511000D] rounded-lg">
-                  <p className="mb-8 md:mb-6">Buyer Guarantee</p>
+                  <button
+                    disabled={loading}
+                    onClick={() => {
+                      if (inWishlist) {
+                        removeWishlist();
+                      } else {
+                        addWishlist();
+                      }
+                    }}
+                    className={`rounded-[10px]  unveilTransition hover:bg-bgColor col-span-2 md:justify-start justify-center items-center flex gap-2 h-[56px] md:h-[68px] border border-unveilBlack md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer`}
+                  >
+                    {loading ? (
+                      <div className="animate-spin">
+                        <Loader color="#141414" />
+                      </div>
+                    ) : (
+                      <Wishlist fill={inWishlist ? "#F66666" : "#141414"} />
+                    )}
+                    <p className="b4">
+                      {inWishlist ? "Added" : "Add"} to wishlist
+                    </p>
+                  </button>
 
-                  <div className="flex flex-col items-start justify-center w-full mb-5 md:mb-6">
-                    <div className="flex items-center justify-center space-x-3">
-                      {/* icon */}
-                      <Wallet width={14} height={14} />
-                      <p className="l1">Secure payments</p>
+                  <div className="flex flex-col justify-start p-4 md:p-5 items-start col-span-2 unveilTransition w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] !mt-5 md:!mt-9 bg-[#1511000D] rounded-lg">
+                    <p className="mb-8 md:mb-6">Buyer Guarantee</p>
+
+                    <div className="flex flex-col items-start justify-center w-full mb-5 md:mb-6">
+                      <div className="flex items-center justify-center space-x-3">
+                        {/* icon */}
+                        <Wallet width={14} height={14} />
+                        <p className="l1">Secure payments</p>
+                      </div>
+                      <div className="flex items-center justify-center space-x-3">
+                        {/* icon */}
+                        <Account width={14} height={14} />
+                        <p className="l1">All artists are verified by Unveil</p>
+                      </div>
+                      <div className="flex items-center justify-center space-x-3">
+                        {/* icon */}
+                        <Search width={14} height={14} />
+                        <p className="l1">Artwork history is always visible</p>
+                      </div>
                     </div>
-                    <div className="flex items-center justify-center space-x-3">
-                      {/* icon */}
-                      <Account width={14} height={14} />
-                      <p className="l1">All artists are verified by Unveil</p>
+
+                    {/* button divs */}
+                    <div className="flex flex-col space-y-1.5 md:space-y-2.5 w-full justify-center items-center">
+                      <Link
+                        href="https://learn.unveil.art"
+                        target="_blank"
+                        className="btn btn-secondary btn-full !py-3 md:!py-2"
+                      >
+                        Learn more
+                      </Link>
+                      <button
+                        onClick={() => {
+                          setShowSupport(true);
+                        }}
+                        className="flex justify-center items-center btn btn-secondary btn-full !py-3 md:!py-2 gap-x-1"
+                      >
+                        Chat with us{" "}
+                        <div className="w-2 h-2 bg-[#83D61A] rounded-full" />
+                      </button>
                     </div>
-                    <div className="flex items-center justify-center space-x-3">
-                      {/* icon */}
-                      <Search width={14} height={14} />
-                      <p className="l1">Artwork history is always visible</p>
+                  </div>
+
+                  <div
+                    onClick={() => setPaymentOpen(true)}
+                    className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
+                  >
+                    <p className="b5 leading-[23px]">
+                      Accepted Payments Methods
+                    </p>
+
+                    <div className="flex justify-start items-center w-full space-x-2.5 grayscale">
+                      <MasterCardName />
+                      <VisaBlack />
+                      <ApplePay />
+                      <GooglePay />
+                      <Ideal />
                     </div>
                   </div>
 
-                  {/* button divs */}
-                  <div className="flex flex-col space-y-1.5 md:space-y-2.5 w-full justify-center items-center">
-                    <Link
-                      href="https://learn.unveil.art"
-                      target="_blank"
-                      className="btn btn-secondary btn-full !py-3 md:!py-2"
-                    >
-                      Learn more
-                    </Link>
-                    <button
-                      onClick={() => {
-                        setShowSupport(true);
-                      }}
-                      className="flex justify-center items-center btn btn-secondary btn-full !py-3 md:!py-2 gap-x-1"
-                    >
-                      Chat with us{" "}
-                      <div className="w-2 h-2 bg-[#83D61A] rounded-full" />
-                    </button>
+                  <div
+                    onClick={() => setPaymentOpen(true)}
+                    className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
+                  >
+                    <p className="b5 leading-[23px]">Approved wallets</p>
+
+                    <div className="flex justify-start items-center w-full space-x-2.5 grayscale">
+                      <MetaMask />
+                      <Torus />
+                    </div>
                   </div>
                 </div>
-
                 <div
-                  onClick={() => setPaymentOpen(true)}
-                  className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
+                  className={`md:block hidden group hover:scale-105 unveilTransition w-[160px] border bg-unveilWhite border-bgColorHover rounded-[10px] overflow-hidden fixed bottom-5 right-5 z-20 h-fit ${
+                    optionsOpen ? "translate-x-[200%]" : ""
+                  }`}
                 >
-                  <p className="b5 leading-[23px]">Accepted Payments Methods</p>
-
-                  <div className="flex justify-start items-center w-full space-x-2.5">
-                    <MasterCardName />
-                    <VisaBlack />
-                    <ApplePay />
-                    <GooglePay />
-                    <Ideal />
+                  <div className="aspect-[2/3] flex flex-col justify-center items-center m-[35px] relative">
+                    {artwork?.collection.live_time && (
+                      <div className="h5 mb-5 -mt-5">
+                        <CountdownTimer
+                          targetDate={new Date(artwork?.collection.live_time)}
+                        />
+                      </div>
+                    )}
+                    <img
+                      className="object-contain shadow2 group-hover:scale-90 unveilTransition"
+                      src={artwork.media_url}
+                      alt={artwork.name}
+                    />
                   </div>
-                </div>
-
-                <div
-                  onClick={() => setPaymentOpen(true)}
-                  className="rounded-[10px] hover:border-unveilBlack unveilTransition border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[220px] lg:w-[250px] 2xl:w-[280px] cursor-pointer"
-                >
-                  <p className="b5 leading-[23px]">Approved wallets</p>
-
-                  <div className="flex justify-start items-center w-full space-x-2.5">
-                    <MetaMask />
-                    <Torus />
+                  <div
+                    onClick={() => setOptionsOpen(!optionsOpen)}
+                    className="py-3 uppercase cursor-pointer  bg-unveilBlack text-unveilWhite l1 tracking-[0.18rem]"
+                  >
+                    Select edition
                   </div>
-                </div>
-              </div>
-              <div
-                className={`md:block hidden group hover:scale-105 unveilTransition w-[160px] border bg-unveilWhite border-bgColorHover rounded-[10px] overflow-hidden fixed bottom-5 right-5 z-20 h-fit ${
-                  optionsOpen ? "translate-x-[200%]" : ""
-                }`}
-              >
-                <div className="aspect-[2/3] flex justify-center items-center m-[35px] relative ">
-                  <img
-                    className="object-contain shadow2 group-hover:scale-90 unveilTransition"
-                    src={artwork.media_url}
-                    alt={artwork.name}
-                  />
-                </div>
-                <div
-                  onClick={() => setOptionsOpen(!optionsOpen)}
-                  className="py-3 uppercase cursor-pointer  bg-unveilBlack text-unveilWhite l1 tracking-[0.18rem]"
-                >
-                  Select edition
                 </div>
               </div>
             </div>
@@ -518,12 +644,25 @@ const GalleryHero = ({ artwork, dominantColor }) => {
         optionsOpen={optionsOpen}
         setOptionsOpen={setOptionsOpen}
         dominantColor={dominantColor}
+        setOfferOpen={setOfferOpen}
       />
-      <EditionPopIn
-        edition={edition}
-        setEdition={setEdition}
-        dominantColor={dominantColor}
-      />
+      {offerOpen && (
+        <MakeOfferPopIn
+          edition={edition}
+          setEdition={setEdition}
+          offerOpen={offerOpen}
+          setOfferOpen={setOfferOpen}
+          exchangeRate={exchangeRate}
+        />
+      )}
+
+      {!offerOpen && (
+        <EditionPopIn
+          edition={edition}
+          setEdition={setEdition}
+          dominantColor={dominantColor}
+        />
+      )}
 
       {/* About pop-ins */}
       <MoreInfoPopIn

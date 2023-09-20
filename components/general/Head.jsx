@@ -4,9 +4,12 @@ import Head from "next/head";
 const PageHead = () => {
   return (
     <Head>
-      <title>Unveil - A curated platform for photography NFTs- </title>
+      <title>Unveil | Photography, for visionary collectors! 📸</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      <meta name="description" content="Description" />
+      <meta
+        name="description"
+        content="Unveil curates world-class Photography Collectibles in printed & digital editions (NFTs)!"
+      />
       <link rel="icon" href="/favicon.png" />
     </Head>
   );

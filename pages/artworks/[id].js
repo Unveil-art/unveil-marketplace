@@ -75,6 +75,10 @@ const Edit = ({ artwork }) => {
       setEditionPricing((prevEditionPrice) =>
         prevEditionPrice.filter((price) => !inactiveSizes.includes(price))
       );
+
+      setShippingPricing((prevShippingPrice) =>
+        prevShippingPrice.filter((price) => !inactiveSizes.includes(price))
+      );
     }
   }, [sizes]);
 
@@ -90,6 +94,8 @@ const Edit = ({ artwork }) => {
   const { showRamper } = useContext(Web3Context);
   const [editionPricing, setEditionPricing] = useState([]);
   const [editionPrice, setEditionPrice] = useState([]);
+  const [shippingPricing, setShippingPricing] = useState([]);
+  const [shippingPrice, setShippingPrice] = useState([]);
   const [editionType, setEditionType] = useState("NFT_Only");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -161,7 +167,7 @@ const Edit = ({ artwork }) => {
 
         await postTransaction(value, {
           transaction_hash: tx.transactionHash,
-          amount: parseInt(convertWei(String(tx.gasUsed))),
+          amount: parseFloat(convertWei(String(tx.gasUsed))),
           currency: "ETH",
           transaction_type: "DEPLOY_ARTWORK",
           chain_link: process.env.NEXT_PUBLIC_CHAIN_LINK,
@@ -220,17 +226,40 @@ const Edit = ({ artwork }) => {
                     parseFloat(editionPricing[i].usd) * ethEx.ETH
                   ).toFixed(4)
                 ),
-            size: editionPricing[i],
+            shipping_price: shippingPricing[i].eth
+              ? parseFloat(shippingPricing[i].eth)
+              : parseFloat(
+                  parseFloat(
+                    parseFloat(shippingPricing[i].usd) * ethEx.ETH
+                  ).toFixed(4)
+                ),
+            size: editionPricing[i].activeSize,
             max_copies: 1,
           });
         } else {
           editions.push({
-            price: parseInt(editionPrice[i]),
-            paper: null,
-            frame: null,
-            technique: null,
-            size: null,
+            paper: values.paper[i],
+            frame: values.frame[i],
+            technique: values.technique[i],
+            price: editionPricing[i].eth
+              ? parseFloat(editionPricing[i].eth)
+              : parseFloat(
+                  parseFloat(
+                    parseFloat(editionPricing[i].usd) * ethEx.ETH
+                  ).toFixed(4)
+                ),
+            shipping_price: shippingPricing[i].eth
+              ? parseFloat(shippingPricing[i].eth)
+              : parseFloat(
+                  parseFloat(
+                    parseFloat(shippingPricing[i].usd) * ethEx.ETH
+                  ).toFixed(4)
+                ),
+            size: editionPricing[i].activeSize,
+            json_uri: null,
             max_copies: 1,
+            token_id: null,
+            transaction_hash: null,
           });
         }
       });
@@ -342,6 +371,10 @@ const Edit = ({ artwork }) => {
               setEditionPrice={setEditionPrice}
               setEditionPricing={setEditionPricing}
               editionPricing={editionPricing}
+              shippingPrice={shippingPrice}
+              setShippingPrice={setShippingPrice}
+              setShippingPricing={setShippingPricing}
+              shippingPricing={shippingPricing}
               setActiveSize={setActiveSize}
               activeSize={activeSize}
               frame={frame}

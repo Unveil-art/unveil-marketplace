@@ -5,10 +5,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { getUserName } from "lib/utils";
 import { getCurrentExchangeRateETHUSD } from "lib/backend";
+import ColorThief from "colorthief";
+import { darkenColor, isLight } from "lib/utils/color";
 
-const ProductCard = ({ rounded = false, item }) => {
+const ARTWORK_COLOR = {
+  "Limited": "#ACA9BE",
+  "Extended": "#FFB800",
+  "1-of-1":"#D6471A"
+}
+
+const ProductCard = ({ rounded = false, item, hasMargin = true }) => {
   const [exchangeRate, setExchangeRate] = useState(1900);
   const [uniqueEditionTypes, setUniqueEditionTypes] = useState([]);
+  const [dominantColor, setDominantColor] = useState("rgba(21, 17, 0, 0.05)");
 
   useEffect(() => {
     if (item.title) {
@@ -30,6 +39,23 @@ const ProductCard = ({ rounded = false, item }) => {
       setUniqueEditionTypes(flatUniqueTypes);
     }
   }, []);
+
+  useEffect(() => {
+    const img = new window.Image();
+    img.src = item.media_url;
+    img.crossOrigin = "Anonymous";
+    const colorThief = new ColorThief();
+
+    img.onload = function () {
+      let color = colorThief.getColor(img);
+
+      if (isLight(color)) {
+        color = darkenColor(color, 30);
+      }
+
+      setDominantColor(`rgb(${color[0]}, ${color[1]}, ${color[2]})`);
+    };
+  }, [item.media_url]);
 
   const init = async () => {
     try {
@@ -54,21 +80,25 @@ const ProductCard = ({ rounded = false, item }) => {
         alpha: true,
         delay: "random",
       }}
-      className="[&:nth-child(3)]:mt-[120px]"
+      className={hasMargin && `[&:nth-child(3)]:mt-[120px]`}
     >
       {item?.title && (
         <Link href={`/gallery/collection/${item.id}`}>
           <div
             className={`${
               rounded && !item?.title ? "rounded-t-full" : ""
-            } bg-bgColor overflow-hidden aspect-[3/4] mb-1`}
+            } bg-bgColor overflow-hidden aspect-[3/4] mb-1 transition-colors duration-500`}
+            data-hover-bg
+            style={{
+              "--hover-bg-color": `${dominantColor}`,
+            }}
           >
             <div
               className={`${
                 rounded || item?.title
                   ? ""
                   : "mx-5 md:mx-10 w-[calc(100%-40px)] md:w-[calc(100%-80px)] shadow2"
-              } relative  h-full `}
+              } relative  h-full transition-colors`}
             >
               <Image
                 src={item.media_url}
@@ -88,7 +118,11 @@ const ProductCard = ({ rounded = false, item }) => {
           <div
             className={`${
               rounded ? "rounded-t-full" : ""
-            } bg-bgColor overflow-hidden aspect-[3/4] mb-1`}
+            } bg-bgColor overflow-hidden aspect-[3/4] mb-1 transition-colors duration-500`}
+            data-hover-bg
+            style={{
+              "--hover-bg-color": `${dominantColor}`,
+            }}
           >
             <div
               className={`${
@@ -123,17 +157,30 @@ const ProductCard = ({ rounded = false, item }) => {
           ))}
         </>
       )}
+      <div className="flex gap-1">
       {item.edition_type && (
         <>
           {item.edition_type === "NFT_Backed_by_print" && (
-            <span className="nft-print">nft + print</span>
+            <span className="nft-print">PRINT</span>
           )}
-          {item.edition_type === "NFT_Only" && <span className="nft">nft</span>}
+          {item.edition_type === "NFT_Only" && <span className="nft bg-black text-white">DIGITAL</span>}
           {item.edition_type === "Print_Only" && (
-            <span className="print">print</span>
+            <span className="print">PRINT</span>
+          )}
+        </>
+        )}
+        {item.artwork_type && (
+        <>
+          {item.artwork_type === "Limited" && (
+            <span className={`nft-print`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>LIMITED EDITION</span>
+          )}
+          {item.artwork_type === "Extended" && <span className={`nft`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>EXTENDED EDITION</span>}
+          {item.artwork_type === "1-of-1" && (
+            <span className={`print`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>1-OF-1</span>
           )}
         </>
       )}
+      </div>
       {item.title && (
         <Link href={`/gallery/collection/${item.id}`}>
           <h5 className="b3">{item.title}</h5>

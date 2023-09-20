@@ -52,6 +52,7 @@ const Create = () => {
     border: "5x10",
   });
   const [editionPrice, setEditionPrice] = useState([]);
+  const [shippingPrice, setShippingPrice] = useState([]);
 
   useEffect(() => {
     const inactiveSizes = sizes
@@ -61,6 +62,10 @@ const Create = () => {
     if (inactiveSizes.length > 0) {
       setEditionPricing((prevEditionPrice) =>
         prevEditionPrice.filter((price) => !inactiveSizes.includes(price))
+      );
+
+      setShippingPricing((prevShippingPrice) =>
+        prevShippingPrice.filter((price) => !inactiveSizes.includes(price))
       );
     }
   }, [sizes]);
@@ -77,6 +82,11 @@ const Create = () => {
   const [editionPricing, setEditionPricing] = useState([
     { activeSize, eth: null, usd: null },
   ]);
+
+  const [shippingPricing, setShippingPricing] = useState([
+    { activeSize, eth: null, usd: null },
+  ]);
+
   const [editionType, setEditionType] = useState("NFT_Only");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -106,7 +116,14 @@ const Create = () => {
                 parseFloat(editionPricing[index].usd) * ethEx.ETH
               ).toFixed(4)
             ),
-        size: editionPricing[index],
+        shipping_price: shippingPricing[index].eth
+          ? parseFloat(shippingPricing[index].eth)
+          : parseFloat(
+              parseFloat(
+                parseFloat(shippingPricing[index].usd) * ethEx.ETH
+              ).toFixed(4)
+            ),
+        size: editionPricing[index].activeSize,
         json_uri: null,
         max_copies: 1,
         token_id: null,
@@ -204,8 +221,12 @@ const Create = () => {
             <CreateForm
               editionPrice={editionPrice}
               setEditionPrice={setEditionPrice}
-              setEditionPricing={setEditionPricing}
               editionPricing={editionPricing}
+              setEditionPricing={setEditionPricing}
+              shippingPrice={shippingPrice}
+              setShippingPrice={setShippingPrice}
+              shippingPricing={shippingPricing}
+              setShippingPricing={setShippingPricing}
               setActiveSize={setActiveSize}
               activeSize={activeSize}
               frame={frame}

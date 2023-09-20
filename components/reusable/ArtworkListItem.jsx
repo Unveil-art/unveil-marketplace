@@ -11,13 +11,14 @@ import {
 import useLocalStorage from "@/hooks/useLocalStorage";
 import RPC from "lib/RPC";
 import Web3 from "web3";
-import { MARKET_ABI } from "lib/constants";
+import { MARKET_ABI, MARKET_CONTRACT_ADDRESS } from "lib/constants";
 import Loader from "../svg/Loader";
 import { showTopStickyNotification } from "lib/utils/showTopStickyNotification";
 
 const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
   const [list, setList] = useState(item);
   const [loading, setLoading] = useState(false);
+  const [signLoading, setSignLoading] = useState(false);
   const { value } = useLocalStorage("token");
   const { value: wallet } = useLocalStorage("walletAddress");
   const { provider } = useContext(Web3Context);
@@ -28,10 +29,10 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
       if (value && item.id) {
         await removeFromWishlist(value, item.id);
         // toast.success("Remove from Wishlist");
-        showTopStickyNotification("success", "Remove from Wishlist")
+        showTopStickyNotification("success", "Remove from Wishlist");
       } else {
         // toast.error("User Not Logged In");
-        showTopStickyNotification("error", "User Not Logged In")
+        showTopStickyNotification("error", "User Not Logged In");
       }
       setLoading(false);
     } catch (err) {
@@ -39,7 +40,7 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
       console.log(err);
       if (err?.response?.data?.message)
         // toast.error(err?.response?.data?.message);
-        showTopStickyNotification("error", err?.response?.data?.message)
+        showTopStickyNotification("error", err?.response?.data?.message);
     }
   };
 
@@ -79,18 +80,19 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
                 edition.signature
               );
             } else {
-              if(!edition.buyer_id || edition.buyer_id===edition.owner_id){
+              if (!edition.buyer_id || edition.buyer_id === edition.owner_id) {
                 const hash = await contract.methods
-                .getHashMessage(
-                  item.contract_address,
-                  item.json_uri,
-                  priceInWei
-                )
-                .call(function (error, result) {
-                  console.log(result);
-                });
-              const signature = await rpc.signMessage(hash, wallet, "");
-              await listEdition(value, edition.id, !list.listed, signature);
+                  .getHashMessage(
+                    item.contract_address,
+                    item.json_uri,
+                    priceInWei
+                  )
+                  .call(function (error, result) {
+                    console.log(result);
+                  });
+
+                const signature = await rpc.signMessage(hash, wallet, "");
+                await listEdition(value, edition.id, !list.listed, signature);
               }
             }
             if (fetchUser) {
@@ -106,11 +108,79 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
 
       setList(data.data);
       // toast.success("Successful");
-      showTopStickyNotification("success", "Successful")
+      showTopStickyNotification("success", "Successful");
     } catch (error) {
       // toast.error(error.message);
-      showTopStickyNotification("error", error.message)
+      showTopStickyNotification("error", error.message);
       setLoading(false);
+    }
+  };
+
+  const isSigned = () => {
+    const editions = item.editions || [];
+    let signed = true;
+    for (let i = 0; i < editions.length; i++) {
+      let edition = editions[i];
+      if (edition.token_id!==null && !edition.shipping_signature) {
+        signed = false;
+      }
+    }
+    return signed;
+  };
+
+  const signForPrint = async () => {
+    if (!provider) {
+      showTopStickyNotification(
+        "error",
+        "Invalid Provider! please sign in again"
+      );
+      return;
+    }
+
+    try {
+      setSignLoading(true);
+      const rpc = new RPC(provider);
+      const contract = await rpc.getContract(
+        MARKET_ABI,
+        MARKET_CONTRACT_ADDRESS
+      );
+      const editions = item.editions || [];
+      for (let i = 0; i < editions.length; i++) {
+        let edition = editions[i];
+        if (edition.token_id!=null) {
+          const priceInWei = Web3.utils.toWei(
+            edition?.shipping_price.toFixed(4)
+          );
+          const shipping_message = await contract.methods
+            .getShippingHashMessage(
+              item.contract_address,
+              edition.token_id.toString(),
+              priceInWei,
+              "shipping"
+            )
+            .call();
+          const shipping_signature = await rpc.signMessage(
+            shipping_message,
+            wallet,
+            ""
+          );
+          console.log(shipping_signature, "sign", i);
+          await listEdition(
+            value,
+            edition.id,
+            true,
+            edition.signature,
+            shipping_signature
+          );
+        }
+        if (fetchUser) {
+          fetchUser();
+        }
+        setSignLoading(false);
+      }
+    } catch (err) {
+      console.log(err);
+      setSignLoading(false);
     }
   };
 
@@ -169,9 +239,23 @@ const ArtworkListItem = ({ i, item, fetchUser, wishlist = false }) => {
               <button className="btn btn-secondary md:block">Edit</button>
             </Link>
           )}
+          {item.listed && item.edition_type !== "NFT_Only" && !isSigned() && (
+            <button
+              disabled={loading || signLoading}
+              onClick={signForPrint}
+              className="btn flex gap-2 btn-ghost bg-unveilBlack text-white"
+            >
+              {signLoading && (
+                <div className="flex justify-center h-[25px] items-center animate-spin">
+                  <Loader color="#F7F4ED" />
+                </div>
+              )}
+              Sign for Print
+            </button>
+          )}
           {item.is_draft == false && (
             <button
-              disabled={loading}
+              disabled={loading || signLoading}
               onClick={(e) => handleListing(e)}
               className={` btn btn-ghost ${
                 list.listed ? "bg-[#D6471A]" : "bg-unveilBlack"
