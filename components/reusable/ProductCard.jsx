@@ -8,6 +8,12 @@ import { getCurrentExchangeRateETHUSD } from "lib/backend";
 import ColorThief from "colorthief";
 import { darkenColor, isLight } from "lib/utils/color";
 
+const ARTWORK_COLOR = {
+  "Limited": "#ACA9BE",
+  "Extended": "#FFB800",
+  "1-of-1":"#D6471A"
+}
+
 const ProductCard = ({ rounded = false, item, hasMargin = true }) => {
   const [exchangeRate, setExchangeRate] = useState(1900);
   const [uniqueEditionTypes, setUniqueEditionTypes] = useState([]);
@@ -151,17 +157,30 @@ const ProductCard = ({ rounded = false, item, hasMargin = true }) => {
           ))}
         </>
       )}
+      <div className="flex gap-1">
       {item.edition_type && (
         <>
           {item.edition_type === "NFT_Backed_by_print" && (
-            <span className="nft-print">nft + print</span>
+            <span className="nft-print">PRINT</span>
           )}
-          {item.edition_type === "NFT_Only" && <span className="nft">nft</span>}
+          {item.edition_type === "NFT_Only" && <span className="nft bg-black text-white">DIGITAL</span>}
           {item.edition_type === "Print_Only" && (
-            <span className="print">print</span>
+            <span className="print">PRINT</span>
+          )}
+        </>
+        )}
+        {item.artwork_type && (
+        <>
+          {item.artwork_type === "Limited" && (
+            <span className={`nft-print`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>LIMITED EDITION</span>
+          )}
+          {item.artwork_type === "Extended" && <span className={`nft`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>EXTENDED EDITION</span>}
+          {item.artwork_type === "1-of-1" && (
+            <span className={`print`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>1-OF-1</span>
           )}
         </>
       )}
+      </div>
       {item.title && (
         <Link href={`/gallery/collection/${item.id}`}>
           <h5 className="b3">{item.title}</h5>
