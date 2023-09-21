@@ -10,10 +10,10 @@ import Image from "next/image";
 import { useLenis } from "@studio-freight/react-lenis";
 
 const ARTWORK_COLOR = {
-  "Limited": "#ACA9BE",
-  "Extended": "#FFB800",
-  "1-of-1":"#D6471A"
-}
+  Limited: "#ACA9BE",
+  Extended: "#FFB800",
+  "1-of-1": "#D6471A",
+};
 
 const HomepageHero = ({ data, featuredArtworks }) => {
   const el = useRef();
@@ -310,7 +310,7 @@ const HomepageHero = ({ data, featuredArtworks }) => {
               {featuredArtworks.map((item, i) => (
                 <Link
                   key={i}
-                  className="gsap-artwork-container opacity-0 overflow-hidden relative w-full h-full inline-block"
+                  className="gsap-artwork-container opacity-0 overflow-hidden absolute w-full h-full inline-block"
                   data-cursor="View Artwork"
                   data-cursor-color={item.vibrant_color}
                   href={`/gallery/artwork/${item.id}`}
@@ -334,7 +334,9 @@ const HomepageHero = ({ data, featuredArtworks }) => {
                               <span className="nft">PRINT</span>
                             )}
                             {item.edition_type === "NFT_Only" && (
-                              <span className="nft bg-black text-unveilWhite">DIGITAL</span>
+                              <span className="nft bg-black text-unveilWhite">
+                                DIGITAL
+                              </span>
                             )}
                             {item.edition_type === "Print_Only" && (
                               <span className="print">PRINT</span>
@@ -347,20 +349,47 @@ const HomepageHero = ({ data, featuredArtworks }) => {
                         {item.artwork_type && (
                           <>
                             {item.artwork_type === "Limited" && (
-                              <span className={`nft-print`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>LIMITED EDITION</span>
+                              <span
+                                className={`nft-print`}
+                                style={{
+                                  backgroundColor:
+                                    ARTWORK_COLOR[item.artwork_type],
+                                }}
+                              >
+                                LIMITED EDITION
+                              </span>
                             )}
-                            {item.artwork_type === "Extended" && <span className={`nft`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>EXTENDED EDITION</span>}
+                            {item.artwork_type === "Extended" && (
+                              <span
+                                className={`nft`}
+                                style={{
+                                  backgroundColor:
+                                    ARTWORK_COLOR[item.artwork_type],
+                                }}
+                              >
+                                EXTENDED EDITION
+                              </span>
+                            )}
                             {item.artwork_type === "1-of-1" && (
-                              <span className={`print`} style={{backgroundColor:ARTWORK_COLOR[item.artwork_type]}}>1-OF-1</span>
+                              <span
+                                className={`print`}
+                                style={{
+                                  backgroundColor:
+                                    ARTWORK_COLOR[item.artwork_type],
+                                }}
+                              >
+                                1-OF-1
+                              </span>
                             )}
                           </>
                         )}
                       </div>
-                      <small className=" block text-white l2 text-[8px] md:text-[12px]">
+                      <small className="block text-white h5 my-1">
                         {item.name}
                       </small>
-                      <div className="text-unveilWhite b4">
-                        €2920 <span className="b5">(1,02 ETH)</span>
+                      <div className="text-unveilWhite b4 leading-none">
+                        €2920{" "}
+                        <span className="b5 leading-none">(1,02 ETH)</span>
                       </div>
                     </div>
                   </div>
