@@ -400,12 +400,12 @@ const HomepageHero = ({ data, featuredArtworks }) => {
           <div className="mt-4 flex gap-2">
             {featuredArtworks.map((_, i) => (
               <button
-                className="w-[84px] h-[3px] rounded-[31px] overflow-hidden grid-area-1/1 gsap-indicator opacity-0"
+                className="w-[84px] h-[3px] rounded-[31px] overflow-hidden relative gsap-indicator opacity-0"
                 key={i}
               >
-                <span className="opacity-20 bg-unveilBlack block h-full w-full" />
+                <span className="opacity-20 bg-unveilBlack block h-full w-full absolute top-0 left-0" />
                 <span
-                  className="bg-unveilWhite relative gsap-progress opacity-0 block h-full w-full"
+                  className="bg-unveilWhite gsap-progress opacity-0 block h-full w-full absolute top-0 left-0"
                   style={{ zIndex: 1 }}
                 />
               </button>
