@@ -203,8 +203,10 @@ const Navbar = ({ value }) => {
           </div>
 
           <Link href="/">
-            <div className="w-[106px] md:w-[144px] top-2 md:top-0 left-1/2 -translate-x-1/2 absolute cursor-pointer gsap-menu-stagger">
-              <Logo color={color} />
+            <div className="w-[106px] md:w-[144px] top-2 md:top-0 left-1/2 -translate-x-1/2 absolute cursor-pointer">
+              <span className="gsap-menu-stagger inline-block w-full">
+                <Logo color={color} />
+              </span>
             </div>
           </Link>
           <div className="flex items-center gap-4 lg:gap-6">

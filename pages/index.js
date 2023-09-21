@@ -31,6 +31,7 @@ export default function Home({
   const homeData = data.data[0].attributes;
   const faqData = faq.data[0].attributes.faq;
   const editorialData = editorials.data;
+  const { authenticated } = useIsAuthenticated();
   const el = useRef(null);
   const query = gsap.utils.selector(el);
   const size = useWindowSize();
