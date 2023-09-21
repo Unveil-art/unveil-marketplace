@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import Link from "next/link";
 import { useLenis } from "@studio-freight/react-lenis";
 
-const HomepageSlider = ({data}) => {
+const HomepageSlider = ({ data }) => {
   const el = useRef();
   const query = gsap.utils.selector(el);
 
@@ -13,7 +13,6 @@ const HomepageSlider = ({data}) => {
     const sliderItems = query(".gsap-slider-item");
     const sliderItemsInner = query(".gsap-slider-item-inner");
     const sliderDuplicateTexts = query(".homepage-slider-duplicate-text");
-    console.log(data,"data++")
     let currentIndex = 0;
     let previousIndex = 0;
     const timeToNextSlide = 8;
@@ -143,7 +142,6 @@ const HomepageSlider = ({data}) => {
 
   useLenis(({ scroll }) => {
     const parallax = query(".gsap-parallax");
-    console.log(parallax);
     parallax.forEach((el, index) => {
       const speed = el.getAttribute("data-speed");
       const direction = index % 2 === 0 ? 1 : -1;
@@ -168,23 +166,24 @@ const HomepageSlider = ({data}) => {
                 <span className="nft-print mr-0.5 text-white border-unveilWhite">
                   {data?.artwork_type}
                 </span>
-                <span className="nft bg-white border-0">{data?.edition_type}</span>
+                <span className="nft bg-white border-0">
+                  {data?.edition_type}
+                </span>
               </div>
               <div className="mb-4 text-white">
                 {data.titles.map((data) => (
                   <div className="relative" key={data.id}>
                     <div
-                    className="h1-5 relative homepage-slider-duplicate-text"
-                    aria-hidden
-                  >
-                    {data?.title}
+                      className="h1-5 relative homepage-slider-duplicate-text"
+                      aria-hidden
+                    >
+                      {data?.title}
+                    </div>
+                    <h1 className="h1-5 opacity-50 absolute top-0 transition-opacity">
+                      {data?.title}
+                    </h1>
                   </div>
-                  <h1 className="h1-5 opacity-50 absolute top-0 transition-opacity">
-                    {data?.title}
-                  </h1>
-                </div>
                 ))}
-
               </div>
               <div className="flex">
                 <Link
@@ -194,7 +193,11 @@ const HomepageSlider = ({data}) => {
                 >
                   See Collection
                 </Link>
-                <Link target="_blank" className="btn btn-white hidden md:inline-block" href={data?.ticket_link}>
+                <Link
+                  target="_blank"
+                  className="btn btn-white hidden md:inline-block"
+                  href={data?.ticket_link}
+                >
                   Win tickets to Unseen
                 </Link>
               </div>
@@ -206,9 +209,11 @@ const HomepageSlider = ({data}) => {
             className="absolute w-full h-[110%] top-0 left-0 gsap-parallax"
             data-speed="-0.1"
           >
-            {
-              data.images.map((image) => (
-                <div className="absolute w-full h-full top-0 left-0 gsap-slider-item overflow-hidden" key={image.id}>
+            {data.images.map((image) => (
+              <div
+                className="absolute w-full h-full top-0 left-0 gsap-slider-item overflow-hidden"
+                key={image.id}
+              >
                 <div className="absolute w-full h-full top-0 left-0 gsap-slider-item-inner">
                   <img
                     src={image?.image?.data[0]?.attributes.url}
@@ -217,9 +222,7 @@ const HomepageSlider = ({data}) => {
                   />
                 </div>
               </div>
-              ))
-           }
-
+            ))}
           </div>
         </div>
       </div>
