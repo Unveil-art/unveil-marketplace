@@ -139,18 +139,18 @@ const PeopleHeader = ({ collection, people }) => {
                 {collection && typeof collection != "string" && (
                   <>{collection.artworks.length}</>
                 )}
-                {people && <>{followers ? followers : "0"}</>}
+                {people && <>{followers ? followers : ""}</>}
               </p>
             </div>
             <div className="w-px h-14 bg-unveilGreen"></div>
             <div className="min-w-[90px]">
               <p className="b4">Sold artworks</p>
-              <p className="text-[27px]">0</p>
+              <p className="text-[27px]"></p>
             </div>
             <div className="w-px h-14 bg-unveilGreen"></div>
             <div className="">
               <p className="b4">Unique collectors</p>
-              <p className="text-[27px]">0</p>
+              <p className="text-[27px]"></p>
             </div>
           </div>
           <div className="flex flex-row gap-4 items-center">

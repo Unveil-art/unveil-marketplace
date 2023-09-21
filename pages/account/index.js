@@ -64,6 +64,9 @@ const AccountPage = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const userData = await getUserMe(value);
+      if(userData.role!=='artist'){
+        setAccountState(2);
+      }
       setUser(userData);
     };
     if (value) {
