@@ -107,7 +107,7 @@ const ItemStatistics = ({ artwork }) => {
       >
         <div
           className={`mx-auto max-w-[204px] md:max-w-[265px] sticky top-[120px] ${
-            artwork.edition_type !== "NFT_Only" ? "frame-2" : ""
+            artwork.artwork_type === "Limited" ? "frame-2" : ""
           }`}
         >
           <div
@@ -121,7 +121,7 @@ const ItemStatistics = ({ artwork }) => {
             />
           </div>
         </div>
-        {artwork.edition_type !== "NFT_Only" && (
+        {artwork.artwork_type === "Limited" && (
           <div>
             <div className="absolute bottom-[120px] z-[-1] left-[49.9%] transform -translate-x-1/2 max-w-[266px] md:max-w-[344px] w-full">
               <img
@@ -269,7 +269,7 @@ const ItemStatistics = ({ artwork }) => {
           </div>
           <div className="relative pt-5 md:pt-[80px] flex justify-between gap-5">
             <div className="md:space-y-[6px] w-full md:block grid grid-cols-2 gap-[6px]">
-              {artwork.edition_type !== "NFT_Only" && (
+              {artwork.artwork_type === "Limited" && (
                 <div className="rounded-[10px] hover:border-unveilBlack border border-bgColorHover md:py-[8px] px-[12px] py-[6px] md:px-[16px] text-left w-full md:w-[250px] lg:w-[290px] 2xl:w-[320px] cursor-pointer">
                   <p className="b5">Print material (PAB)</p>
                   <p className="truncate b4">
