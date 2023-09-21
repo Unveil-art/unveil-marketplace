@@ -23,7 +23,7 @@ const PeopleDetails = ({ userId, user }) => {
   const [artworks, setArtworks] = useState(null);
   const [collections, setCollections] = useState();
   const { authenticated } = useIsAuthenticated();
-  const [recognition, setRecognition] = useState(false);
+  const [recognition, setRecognition] = useState([]);
   const { value } = useLocalStorage("token");
 
   useEffect(() => {
