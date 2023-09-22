@@ -15,7 +15,7 @@ const HomepageSlider = ({ data }) => {
     const sliderDuplicateTexts = query(".homepage-slider-duplicate-text");
     let currentIndex = 0;
     let previousIndex = 0;
-    const timeToNextSlide = 8;
+    const timeToNextSlide = 4;
     let delay;
     const length = sliderItems.length;
 
