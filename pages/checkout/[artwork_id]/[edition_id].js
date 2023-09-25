@@ -291,6 +291,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       return;
     }
     setStep(4);
+
     // const hasEarlyAccess = await hasEACard();
     // if (!hasEarlyAccess) {
     //   setStep(3);
@@ -305,7 +306,6 @@ const EditionCheckout = ({ artwork, edition_id }) => {
     const canMint = await canMintThisEdition(edition_id);
     if (!canMint) {
       setStep(3);
-      // toast.info("Edition is Already Minted");
       showTopStickyNotification("error", "Edition is Already Minted");
       return;
     }
@@ -315,12 +315,6 @@ const EditionCheckout = ({ artwork, edition_id }) => {
       MARKET_ABI,
       MARKET_CONTRACT_ADDRESS // this is marketplace contract address
     );
-
-    // we will store only ETH Value in Edition Price
-    // No need to convert USD to ETH here
-    // const ethEx = await getCurrentExchangeRateUSDETH(); //  comment/remove this line
-    // const priceInEth = ethEx.ETH * edition.price; // comment/remove this conversion code
-    // const priceInWei = Web3.utils.toWei(edition.price.toFixed(4)); // priceInEth replace with edition.price
     const priceInWei = Web3.utils.toWei(edition.price.toFixed(4)); // priceInEth replace with edition.price
 
     try {
@@ -339,7 +333,7 @@ const EditionCheckout = ({ artwork, edition_id }) => {
         "TRANSACTION",
         transaction.events.LazyMint.returnValues.tokenId
       );
-      const mint = await mintEdition(
+      await mintEdition(
         value,
         {
           artwork_id: artwork.id,
