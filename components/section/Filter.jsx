@@ -5,16 +5,15 @@ import Animate from "@/components/reusable/Animate";
 const Filter = ({
   category,
   setCategory,
-  artist,
-  setArtist,
   medium,
-  setMedium,
+  editionFilter,
+  setEditionFilter,
 }) => {
   const router = useRouter();
   return (
     <Animate
       options={{ alpha: true, delay: 0.5 }}
-      className="ml-10 md:ml-[35vw] flex gap-10 flex-wrap pr-10 pb-10 md:pb-[60px]"
+      className="ml-10 md:ml-[35vw] flex gap-5 md:gap-10 flex-wrap pr-10 pb-10 md:pb-[60px]"
     >
       <div className="flex items-center gap-2 md:block">
         <p className="md:mb-2 b3 md:b6">Category</p>
@@ -63,10 +62,10 @@ const Filter = ({
           </span>
         </div>
       </div> */}
-      <div className="hidden md:block">
+      <div className="flex items-center gap-2 md:block">
         <p className="md:mb-2 b3 md:b6">Medium</p>
         <div className="flex items-center gap-1">
-          <span
+          <button
             onClick={() => {
               // change route query to digital
               router.push(
@@ -78,6 +77,7 @@ const Filter = ({
                 { shallow: true }
               );
             }}
+            disabled={category === 1}
             className={`${
               category === 1
                 ? "cursor-not-allowed opacity-60 border-opacity-0"
@@ -89,8 +89,8 @@ const Filter = ({
             } px-2 border tracking-[0.1em] rounded-full  unveilTransition md:px-4 l2 `}
           >
             Digital
-          </span>
-          <span
+          </button>
+          <button
             onClick={() => {
               router.push(
                 {
@@ -101,6 +101,7 @@ const Filter = ({
                 { shallow: true }
               );
             }}
+            disabled={category === 1}
             className={`${
               category === 1
                 ? "cursor-not-allowed opacity-60 border-opacity-0"
@@ -112,7 +113,47 @@ const Filter = ({
             } px-2 border tracking-[0.1em] rounded-full  unveilTransition md:px-4 l2 `}
           >
             Print
-          </span>
+          </button>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-2 md:block">
+        <p className="md:mb-2 b3 md:b6">Edition</p>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => {
+              setEditionFilter(0);
+            }}
+            disabled={medium === 0}
+            className={`${
+              medium === 0
+                ? "cursor-not-allowed opacity-60 border-opacity-0"
+                : "cursor-pointer"
+            } ${
+              editionFilter === 0
+                ? "border-unveilBlack"
+                : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
+            } px-2 border tracking-[0.1em] rounded-full  unveilTransition md:px-4 l2 `}
+          >
+            Extended
+          </button>
+          <button
+            onClick={() => {
+              setEditionFilter(1);
+            }}
+            disabled={medium === 0}
+            className={`${
+              medium === 0
+                ? "cursor-not-allowed opacity-60 border-opacity-0"
+                : "cursor-pointer"
+            } ${
+              editionFilter === 1
+                ? "border-unveilBlack"
+                : "border-bgColorHover hover:border-[rgba(0,0,0,0.3)]"
+            } px-2 border tracking-[0.1em] rounded-full  unveilTransition md:px-4 l2 `}
+          >
+            Limited
+          </button>
         </div>
       </div>
     </Animate>

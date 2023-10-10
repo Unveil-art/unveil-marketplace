@@ -149,6 +149,9 @@
   .curator {
     @apply px-[6px] pt-[3px] pb-[2px] my-auto border border-unveilYellow bg-unveilYellow l2 rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
   }
+  .live-now {
+    @apply px-[6px] pt-[3px] pb-[2px] my-auto border text-unveilWhite border-unveilWhite bg-transparent rounded-[60px] text-[8px] uppercase leading-[11px] tracking-[0.05em];
+  }
 
   /* animation for toast */
   @keyframes fadeInBottom {

@@ -24,6 +24,7 @@ export default function Gallery({ artworks }) {
   const [category, setCategory] = useState(0);
   const [artist, setArtist] = useState(0);
   const [medium, setMedium] = useState(null);
+  const [editionFilter, setEditionFilter] = useState(null);
 
   const router = useRouter();
 
@@ -218,6 +219,8 @@ export default function Gallery({ artworks }) {
           setArtist={setArtist}
           medium={medium}
           setMedium={setMedium}
+          editionFilter={editionFilter}
+          setEditionFilter={setEditionFilter}
         />
 
         {category === 0 && <GalleryBlockItems items={artworkSplit} />}
